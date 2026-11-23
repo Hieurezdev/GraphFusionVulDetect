@@ -1,204 +1,67 @@
-# Docker Deployment Guide
+# Docker deployment
 
-This directory contains Docker configuration files for the GraphFusionVulDetect application.
+Run commands from the repository root. Docker Engine/Desktop with Compose v2+ is required. The backend targets **linux/amd64**, Python 3.10 and CPU inference; Apple Silicon uses emulation. Allow at least 6 GB of Docker memory and several GB of free disk space. No host Python or Node installation is needed.
 
-## Files Overview
+## Configure and start
 
-### Docker Compose Files
-- `docker-compose.yml` - Basic setup for local development and testing
-- `docker-compose.dev.yml` - Development environment with hot reload and volume mounts
-- `docker-compose.prod.yml` - Production environment with optimized builds
-
-### Dockerfiles
-- `docker/be.dockerfile` - Basic backend Dockerfile
-- `docker/be.prod.dockerfile` - Production-optimized backend with security features
-- `docker/fe.dockerfile` - Development frontend Dockerfile
-- `docker/fe.prod.dockerfile` - Production frontend with Nginx
-- `docker/nginx.conf` - Nginx configuration for production frontend
-
-## Usage
-
-### Development Environment
-```bash
-# Start development environment with hot reload
-docker-compose -f docker-compose.dev.yml up --build
-
-# Stop and remove containers
-docker-compose -f docker-compose.dev.yml down
+```sh
+cp .env.example .env
+# Edit .env: set GEMINI_API_KEY1, SECRET_KEY and JWT_SECRET.
+# Generate each signing secret with: openssl rand -hex 32
+chmod 600 .env
+docker compose up --build -d --wait --wait-timeout 900
 ```
 
-### Basic Local Testing
-```bash
-# Start basic environment
-docker-compose up --build
+An existing private `.env` can be reused. The legacy `GEMINI_API_KEY1` name now holds the AstralX OpenAI-compatible API key. `BASE_URL`, `MODEL_NAME` and `CHATBOT_MAX_TOKENS` are read at runtime. Credentials never belong in frontend build arguments or image layers.
 
-# Run in background
-docker-compose up -d --build
+Open **http://localhost:8080**. Set `WEB_PORT=18080` when port 8080 is already occupied. Only the web port is published, bound to loopback. For a remote server, keep that binding and forward it over SSH:
 
-# Stop services
-docker-compose down
+```sh
+ssh -L 8080:127.0.0.1:8080 user@server
 ```
 
-### Production Environment
-```bash
-# Start production environment
-docker-compose -f docker-compose.prod.yml up --build -d
+The three services are React/Nginx, FastAPI, and local MongoDB 7. MongoDB and the backend are accessible only inside the Compose network. Nginx routes `/api/` to FastAPI with streaming buffering disabled; browser requests use the same origin.
 
-# View logs
-docker-compose -f docker-compose.prod.yml logs -f
+Compose deliberately overrides `MONGODB_URL` and `MONGODB_DATABASE` to use its local `mongodb` service and the `graphfusion` database. It creates a **new** database volume; it does not import or delete an existing host database. Redis, MinIO and Mongo Express are not required by the current app and are not started.
 
-# Stop production services
-docker-compose -f docker-compose.prod.yml down
+## Models and verification
+
+The two trained GNN checkpoints already tracked under `src/infrastructure/analysis_model/` are mounted read-only. Keep that directory alongside the Compose file when deploying a Git checkout. Model weights, `.env`, user storage and datasets are excluded from the build context. On first startup the configured CodeBERT model is downloaded from Hugging Face into the persistent `app_storage` volume. Internet access is required for this first download and subsequent LLM requests; allow extra startup time.
+
+The backend contains fixed Solidity 0.4.24, 0.8.0 and 0.8.20 binaries copied from official `ethereum/solc` images. It runs as a non-root user without a host Docker socket. Repair verification uses a temporary working directory, a credential-free compiler environment, a 25-second timeout and native CPU/address-space limits. The entire backend has Compose memory/CPU/process limits. This is process-level isolation inside the backend container, not a separate security sandbox per request.
+
+Analysis accepts standalone contracts. Filesystem/network imports are rejected; verification tests may import the supplied virtual `Contract.sol` or `Tests.sol`. Unsupported compiler versions and missing dependencies require manual review. Compilation and assertion tests do not prove security, and expert confirmation is still required before accepting a proposal.
+
+## Operations
+
+```sh
+docker compose ps
+docker compose logs --tail=100 backend
+curl --fail http://localhost:8080/health
+curl --fail http://localhost:8080/api/v1/health
+docker compose down
 ```
 
-## Services
+`down` retains MongoDB and application data. Do not use `down -v` unless you intend to delete those volumes. Back up both `mongodb_data` and `app_storage` before moving hosts. Avoid sharing raw environment/container inspection output because it can contain credentials.
 
-### Backend (GraphFusion API)
-- **Port**: 8000
-- **Health Check**: http://localhost:8000/health
-- **Framework**: FastAPI with uvicorn
-- **Python**: 3.12
+The base Compose file builds production frontend assets. The production override is optional:
 
-### Frontend (React Web App)
-- **Port**: 8080
-- **Framework**: React + Vite
-- **Production**: Served by Nginx
-- **API Proxy**: `/api/*` routes to backend
-
-### Redis (Caching & Session Store)
-- **Port**: 6379
-- **Version**: Redis 7 Alpine
-- **Health Check**: `redis-cli ping`
-- **Persistence**: AOF + RDB snapshots
-- **Memory Limit**: 512MB (production), 256MB (development)
-
-### MongoDB (Primary Database)
-- **Port**: 27017
-- **Version**: MongoDB 7
-- **Health Check**: `mongosh --eval "db.adminCommand('ping')"`
-- **Authentication**: Username/password based
-- **Persistence**: Data and config volumes
-
-### MinIO (Object Storage)
-- **Ports**: 9000 (API), 9001 (Console)
-- **Version**: Latest MinIO
-- **Health Check**: `/minio/health/live`
-- **Buckets**: graphfusion-data, graphfusion-models, graphfusion-artifacts
-- **Console**: Web UI at port 9001
-
-## Environment Variables
-
-### Backend
-- `PYTHONPATH`: Set to `/graphfusion`
-- `ENVIRONMENT`: `development` or `production`
-- `RELOAD`: Enable hot reload in development
-- `REDIS_URL`: Redis connection string (e.g., `redis://redis:6379/0`)
-- `MONGODB_URL`: MongoDB connection string
-- `MINIO_ENDPOINT`: MinIO server endpoint
-- `GEMINI_API_KEY`: Google Gemini API key
-- `SECRET_KEY`: Application secret key
-- `JWT_SECRET`: JWT signing secret
-
-### Frontend
-- `NODE_ENV`: `development` or `production`
-- `VITE_API_URL`: Backend API URL
-- `CHOKIDAR_USEPOLLING`: Enable for file watching in containers
-
-## Volumes
-
-### Development
-- Source code mounted for hot reload
-- Configuration files mounted
-- Redis data persistence
-
-### Production
-- Data directories mounted as read-only where appropriate
-- Storage mounted for persistent data
-- Redis data with optimized persistence settings
-
-## Networks
-
-All services communicate through a custom bridge network:
-- Development: `graphfusion-network-dev`
-- Production: `graphfusion-network-prod`
-
-## Health Checks
-
-Both services include health checks:
-- **Interval**: 30 seconds
-- **Timeout**: 10 seconds
-- **Retries**: 3
-- **Start Period**: 40 seconds
-
-## Security Features (Production)
-
-### Backend
-- Non-root user execution
-- Minimal system dependencies
-- Health check endpoint
-
-### Frontend
-- Security headers (X-Frame-Options, CSP, etc.)
-- Gzip compression
-- Static asset optimization
-- CORS handling
-
-## Troubleshooting
-
-### Check service status
-```bash
-docker-compose ps
+```sh
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ```
 
-### View logs
-```bash
-# All services
-docker-compose logs -f
+For backend source reload during development:
 
-# Specific service
-docker-compose logs -f backend
-docker-compose logs -f frontend
+```sh
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 ```
 
-### Restart specific service
-```bash
-docker-compose restart backend
-```
+The `*.prod.dockerfile` files mirror the default Dockerfiles for compatibility with existing deployment commands.
 
-### Rebuild services
-```bash
-docker-compose up --build --force-recreate
-```
+## Smoke test
 
-### Access running containers
-```bash
-# Backend container
-docker exec -it gfd-backend bash
+After startup, run the packaged compilers, passing/failing EVM assertions and one synthetic trained-detector inference without contacting the LLM provider or creating user records:
 
-# Frontend container (dev)
-docker exec -it gfd-frontend sh
-
-# Frontend container (prod)
-docker exec -it gfd-frontend-prod sh
-
-# Redis container
-docker exec -it gfd-redis redis-cli
-
-# Redis with authentication (production)
-docker exec -it gfd-redis-prod redis-cli -a your_redis_password_here
-```
-
-### Redis specific commands
-```bash
-# Check Redis status
-docker exec -it gfd-redis redis-cli ping
-
-# Monitor Redis activity
-docker exec -it gfd-redis redis-cli monitor
-
-# Check Redis info
-docker exec -it gfd-redis redis-cli info
-
-# View Redis logs
-docker-compose logs -f redis
+```sh
+docker compose exec -T backend python < docker/smoke.py
 ```

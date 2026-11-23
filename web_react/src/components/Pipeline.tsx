@@ -7,7 +7,7 @@ export const STAGES = [
   { node: "convert_to_fcg", title: "Function Call Graph Generation", note: "Builds the call graph of every function in the contract." },
   { node: "detect_vulnerability_src", title: "Source Code Vulnerability Detection", note: "Classifies the whole contract from its source." },
   { node: "detect_vulnerability_func", title: "Function-level Vulnerability Detection", note: "Scores each function in the graph. Runs only when the contract is flagged." },
-  { node: "explain_vulnerability_func", title: "Vulnerability Explanation", note: "Explains each flagged function. Runs only when the contract is flagged." },
+  { node: "explain_vulnerability_func", title: "AI explanation review", note: "Open the assistant and approve the reviewed content before any external AI explanation." },
 ] as const;
 
 export type StageState = "pending" | "running" | "done" | "skipped" | "error";
@@ -125,7 +125,7 @@ export const PipelineTrail = ({ results = [], isStreaming = false, renderDetail,
                 <code className="code-text text-xs text-muted-foreground">{stage.node}</code>
                 {!preview && (
                   <span className="ml-auto text-sm text-muted-foreground">
-                    {time ? <time className="measured text-cool" dateTime={result?.timestamp}>{time}</time> : t(STATE_LABEL[state])}
+                    {result?.output?.review_required ? t("Your review required") : time ? <time className="measured text-cool" dateTime={result?.timestamp}>{time}</time> : t(STATE_LABEL[state])}
                   </span>
                 )}
               </div>

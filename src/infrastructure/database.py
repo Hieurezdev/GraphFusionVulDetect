@@ -79,6 +79,8 @@ class DatabaseManager:
             await self.collections['file_uploads'].create_index([("user_id", 1)])
             await self.collections['file_uploads'].create_index([("created_at", -1)])
             await self.collections['file_uploads'].create_index([("file_hash", 1)])
+            await self.database.refactor_threads.create_index([("user_id", 1), ("context_id", 1), ("updated_at", -1)])
+            await self.database.ai_approvals.create_index("expires_at", expireAfterSeconds=0)
             
             logger.info("Database indexes created successfully")
             

@@ -197,6 +197,9 @@ const Analysis = () => {
       </main>
 
       <RefactorChatbot
+        sessionId={analysisData.sessionId}
+        initialCode={sessionStorage.getItem("contractFile") || undefined}
+        hasFinding={streamingResults.some(result => result.output?.predicted_class === "Vulnerable")}
         vulnerableFunctions={
           streamingResults
             .flatMap(result => result.output?.func_vulnerability_predictions || [])

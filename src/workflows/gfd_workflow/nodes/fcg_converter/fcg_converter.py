@@ -2,7 +2,7 @@
 
 import json
 import os
-import traceback
+import logging
 from pathlib import Path
 
 import dgl
@@ -12,6 +12,9 @@ from langchain_core.runnables import RunnableConfig
 from src.workflows.gfd_workflow.graph.state import State
 from .embedding_generator import extract_function_code, get_embeddings
 from .graph_converter import get_call_graph
+from src.services.finding_evidence import byte_location
+
+logger = logging.getLogger(__name__)
 
 
 def convert_to_fcg(state: State, config: RunnableConfig) -> State:
@@ -47,15 +50,13 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         sol_file_src = state["sol_file_path"]
         fcg_save_dir = Path(state["fcg_save_dir"])
 
-        print(f"Processing {sol_file_src}")
         fcg_file_path = fcg_save_dir / f'{Path(sol_file_src).stem}.fcg'
 
         # Generate the initial graph from the source file
         graph = get_call_graph(sol_file_src)
-        print(f"--- INFO: Graph from Slither has {len(graph.nodes())} nodes. ---")
         
         if not graph or len(graph.nodes()) == 0:
-            print(f"Compiler failed or produced an empty graph for: {sol_file_src}")
+            logger.warning("Local compiler produced no graph")
             state["fcg_file_path"] = f"Error: No graph generated for {sol_file_src}"
             state["mapping_file_path"] = f"Error: No graph generated for {sol_file_src}"
             state["fcg_edges"] = []  # Set edges to empty list on failure
@@ -72,6 +73,8 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         # --- Feature and Embedding Extraction ---
         features, embeddings, contract_indices = {}, {}, {}
         function_codes, final_json_node_mapping = {}, {}
+        source_locations = {}
+        source_bytes = Path(sol_file_src).read_bytes()
 
         # Pre-calculate graph-wide metrics
         katz_centrality = nx.katz_centrality(graph)
@@ -109,6 +112,8 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
             pretty_function_name = data['label'].split(".sol_")[1].replace("_", ".")
             function_codes[pretty_function_name] = function_code
             final_json_node_mapping[pretty_function_name] = stable_idx
+            location = byte_location(source_bytes, data['node_source_code_start'], data['node_source_code_length'], sol_file_src)
+            source_locations[pretty_function_name] = location.model_dump() if location else None
             
         # Set the extracted data as node attributes in the NetworkX graph
         nx.set_node_attributes(graph, features, 'features')
@@ -127,14 +132,12 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         # Save the DGL graph
         os.makedirs(fcg_save_dir, exist_ok=True)
         dgl.data.utils.save_graphs(str(fcg_file_path), [dgl_graph])
-        print(f"Saved FCG: {fcg_file_path}")
 
         # Save the stable mapping and code snippets to a JSON file
-        mapping_data = {"node": final_json_node_mapping, "code": function_codes}
+        mapping_data = {"node": final_json_node_mapping, "code": function_codes, "source_locations": source_locations}
         json_path = fcg_save_dir / f'{Path(sol_file_src).stem}_mapping.json'
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(mapping_data, f, indent=4, ensure_ascii=False)
-        print(f"Saved mapping: {json_path}")
         
         # Update state with the paths to the created files and the extracted edges
         state["mapping_file_path"] = str(json_path)
@@ -142,8 +145,7 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         state["fcg_edges"] = edges_with_stable_ids
     
     except Exception as e:
-        print(f"Error processing {sol_file_src}: {e}")
-        traceback.print_exc()
+        logger.error("Call graph generation failed", extra={"error_type": type(e).__name__})
         state["fcg_file_path"] = f"Error in processing file: {e}"
         state["mapping_file_path"] = f"Error in processing file: {e}"
         state["fcg_edges"] = [] # Set edges to empty list on error

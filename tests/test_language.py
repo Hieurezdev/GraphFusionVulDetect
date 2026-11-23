@@ -1,4 +1,5 @@
 from types import SimpleNamespace
+from langchain_core.messages import AIMessage
 
 from src.utils.language import language_instruction, normalize_language
 from src.workflows.gfd_workflow.nodes.func_vul_explainer import explain_vulnerability_func
@@ -11,7 +12,7 @@ class FakeLLM:
 
     def invoke(self, prompt):
         self.prompts.append(prompt)
-        return SimpleNamespace(content="ok")
+        return AIMessage(content="ok")
 
 
 def test_normalize_language_falls_back_to_english():
@@ -25,7 +26,7 @@ def test_instruction_names_the_language():
     assert "English" in language_instruction("en")
 
 
-def test_explainer_prompt_follows_language():
+def test_local_detection_defers_external_explanations_until_review():
     llm = FakeLLM()
     state = {
         "language": "vi",
@@ -35,9 +36,9 @@ def test_explainer_prompt_follows_language():
         ],
     }
     out = explain_vulnerability_func(state, {"configurable": {"llm": llm}})
-    assert len(llm.prompts) == 1
-    assert "Vietnamese" in llm.prompts[0]
-    assert out["func_vulnerability_explanations"][0]["function_name"] == "withdraw"
+    assert llm.prompts == []
+    assert out["external_ai_review_required"] is True
+    assert out["func_vulnerability_explanations"] == []
 
 
 def test_conversation_prompt_follows_language():
@@ -45,4 +46,4 @@ def test_conversation_prompt_follows_language():
     client = SimpleNamespace(get_instance=lambda: llm)
     state = {"code": "contract A {}", "language": "vi", "conversation_history": [{"role": "user", "content": "fix it"}]}
     handle_conversation(state, {"configurable": {"llm_client": client}})
-    assert llm.prompts and "Vietnamese" in llm.prompts[0]
+    assert llm.prompts and "Vietnamese" in llm.prompts[0][0].content

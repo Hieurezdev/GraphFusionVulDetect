@@ -70,7 +70,7 @@ class ProjectService {
    * Create a new project
    */
   async createProject(projectData: ProjectCreate): Promise<ProjectResponse> {
-    return await apiFetch<ProjectResponse>('/api/v1/projects', {
+    return await apiFetch<ProjectResponse>('/api/v1/projects/', {
       method: 'POST',
       body: projectData,
       requireAuth: true,
@@ -94,7 +94,7 @@ class ProjectService {
       params.append('status', status);
     }
 
-    return await apiFetch<ProjectResponse[]>(`/api/v1/projects?${params}`, {
+    return await apiFetch<ProjectResponse[]>(`/api/v1/projects/?${params}`, {
       requireAuth: true,
     });
   }

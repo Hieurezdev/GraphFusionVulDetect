@@ -98,8 +98,6 @@ async def register_user(user_data: UserRegister):
     """Register a new user"""
     users_collection = await get_users_collection()
 
-    print(f"Attempting to register user: {user_data.username}, email: {user_data.email}")
-    print(users_collection)
     
     # Check if user already exists
     existing_user = await users_collection.find_one({

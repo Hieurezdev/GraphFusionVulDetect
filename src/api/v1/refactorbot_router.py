@@ -1,250 +1,316 @@
-"""
-API Router for RefactorBot Service - Smart Contract Refactoring Assistant
-"""
+"""Reviewed external-AI requests, owned conversation history and local verification."""
 
 import logging
-from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, HTTPException, Depends, status
-from pydantic import BaseModel, Field
-from src.utils.language import normalize_language
+import hashlib
+import uuid
+from datetime import datetime, timedelta, timezone
+from typing import Literal
 
-from src.services.refactorbot_service import RefactorBotService
+import httpx
+from anyio import to_thread
+from fastapi import APIRouter, Depends, HTTPException, Query
+from motor.motor_asyncio import AsyncIOMotorDatabase
+from openai import APIError, APIConnectionError, APITimeoutError
+from pydantic import BaseModel, Field
+from pymongo.errors import DuplicateKeyError
+
+from src.config.settings import settings
+from src.infrastructure.database import get_db
+from src.models.ai_safety import (AiDisclosure, AiPayload, AiReview, ApprovedAiRequest, ConversationMessage,
+                                  FindingReview, FindingReviewRequest, ProposalReview, ProposalReviewRequest, VerificationResult)
 from src.models.entity import UserInDB
+from src.services.ai_safety import AiResponseError, AiSafetyError, require_approval, review_payload
+from src.services.refactorbot_service import RefactorBotService
+from src.services.solidity_validation import validate_solidity
 from .authentication_router import get_current_user
 
 logger = logging.getLogger(__name__)
-
 router = APIRouter(prefix="/refactor", tags=["refactorbot"])
-
-# Request/Response Models
-class RefactoringAdviceRequest(BaseModel):
-    """Request model for getting refactoring advice"""
-    code: str = Field(..., description="Solidity code to refactor", min_length=1)
-    issue_description: str = Field(..., description="Description of the issue or vulnerability", min_length=1)
-    language: str = Field("en", description="Language for the answer: en or vi")
-
-class RefactoringSuggestion(BaseModel):
-    """Model for a single refactoring suggestion"""
-    type: str = Field(..., description="Type of suggestion (code_fix, pattern_advice, resource_link, etc.)")
-    description: str = Field(..., description="Description of the suggestion")
-    code: Optional[str] = Field(None, description="Suggested code snippet if applicable")
-    content: Optional[str] = Field(None, description="Additional content or explanation")
-    url: Optional[str] = Field(None, description="Resource URL if applicable")
-
-class RefactoringAdviceResponse(BaseModel):
-    """Response model for refactoring advice"""
-    suggestions: List[RefactoringSuggestion] = Field(default_factory=list, description="List of refactoring suggestions")
-    explanation: str = Field(..., description="Detailed explanation of the suggestions")
-    analysis: Optional[Dict[str, Any]] = Field(None, description="Analysis results")
-    validation: Optional[Dict[str, Any]] = Field(None, description="Validation results")
-
-class ConversationMessage(BaseModel):
-    """Model for a conversation message"""
-    role: str = Field(..., description="Role of the message sender (user or assistant)")
-    content: str = Field(..., description="Content of the message")
-
-class ConversationRequest(BaseModel):
-    """Request model for conversation-based refactoring"""
-    code: str = Field(..., description="Current code being discussed", min_length=1)
-    conversation_history: List[ConversationMessage] = Field(
-        ..., 
-        description="Previous conversation messages",
-        min_items=1
-    )
-    language: str = Field("en", description="Language for the answer: en or vi")
-
-class ConversationResponse(BaseModel):
-    """Response model for conversation"""
-    bot_message: str = Field(..., description="Bot's response message")
-    suggested_code: Optional[str] = Field(None, description="Suggested code snippet if applicable")
-
-class ValidationRequest(BaseModel):
-    """Request model for validating refactored code"""
-    original_code: str = Field(..., description="Original code before refactoring", min_length=1)
-    suggested_code: str = Field(..., description="Suggested refactored code", min_length=1)
-
-class ValidationResponse(BaseModel):
-    """Response model for validation"""
-    is_valid: bool = Field(..., description="Whether the suggested code is valid")
-    message: str = Field(..., description="Validation message or errors")
-
-
-# Service instance
 refactorbot_service = RefactorBotService()
 
 
-@router.post("/advice", response_model=RefactoringAdviceResponse, status_code=status.HTTP_200_OK)
-async def get_refactoring_advice(
-    request: RefactoringAdviceRequest,
-    current_user: UserInDB = Depends(get_current_user)
-):
-    """
-    Get AI-powered refactoring advice for smart contract code.
-    
-    This endpoint analyzes the provided Solidity code and generates specific
-    refactoring suggestions to address the described issue or vulnerability.
-    
-    Args:
-        request: Contains the code and issue description
-        current_user: Current authenticated user
-    
-    Returns:
-        RefactoringAdviceResponse: Suggestions, explanations, and analysis
-    
-    Raises:
-        HTTPException: If analysis fails or encounters an error
-    """
+class RefactoringSuggestion(BaseModel):
+    type: str
+    description: str
+    code: str | None = None
+    content: str | None = None
+    url: str | None = None
+
+
+class RefactorResponse(BaseModel):
+    thread_id: str
+    explanation: str
+    bot_message: str
+    suggestions: list[RefactoringSuggestion]
+    suggested_code: str | None
+    verification: VerificationResult
+    disclosure: AiDisclosure
+    repair_attempts: int
+    finding_review: FindingReview | None = None
+    proposal_review: ProposalReview | None = None
+    proposal_origin: Literal["ai", "human_edit"] = "ai"
+
+
+class RefactorThread(BaseModel):
+    thread_id: str
+    context_id: str | None = None
+    code: str
+    conversation_history: list[ConversationMessage]
+    response: RefactorResponse
+    test_source: str | None = None
+
+
+class ValidationRequest(BaseModel):
+    original_code: str = Field(min_length=1)
+    suggested_code: str = Field(min_length=1)
+    thread_id: str | None = Field(default=None, max_length=64)
+    test_source: str | None = Field(default=None, max_length=30000)
+
+
+class ProposalEditRequest(BaseModel):
+    thread_id: str = Field(min_length=1, max_length=64)
+    previous_proposal: str | None
+    proposed_code: str = Field(min_length=1)
+
+
+class CompileRequest(BaseModel):
+    code: str = Field(min_length=1)
+    test_source: str | None = Field(default=None, max_length=30000)
+
+
+class StoredThread(BaseModel):
+    id: str = Field(alias="_id")
+    user_id: str
+    context_id: str | None
+    code: str
+    messages: list[ConversationMessage]
+    response: RefactorResponse
+    revision: int
+    test_source: str | None = None
+
+
+def source_hash(code: str) -> str:
+    return hashlib.sha256(code.encode("utf-8")).hexdigest()
+
+
+async def _owned_thread(payload: AiPayload, user_id: str, database: AsyncIOMotorDatabase) -> StoredThread | None:
+    if not payload.thread_id:
+        return None
+    document = await database.refactor_threads.find_one({"_id": payload.thread_id, "user_id": user_id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    thread = StoredThread.model_validate(document)
+    messages = [item.model_dump() for item in payload.conversation_history]
+    if messages[:-1] != [message.model_dump() for message in thread.messages] or payload.context_id != thread.context_id or payload.code != thread.code:
+        raise HTTPException(status_code=409, detail="Conversation changed. Reopen the function to load its latest history.")
+    return thread
+
+
+@router.post("/review", response_model=AiReview)
+async def review_external_request(payload: AiPayload, current_user: UserInDB = Depends(get_current_user)) -> AiReview:
+    review = review_payload(payload, current_user.id)
+    if payload.thread_id:
+        await _owned_thread(review.payload, current_user.id, await get_db())
+    return review
+
+
+async def _run_approved(request: ApprovedAiRequest, user: UserInDB, operation: str) -> RefactorResponse:
     try:
-        logger.info(f"Refactoring advice requested by user {current_user.username} for issue: {request.issue_description}")
-        logger.debug(f"Code length: {len(request.code)} characters")
-        
-        # Get refactoring advice from service
-        result = await refactorbot_service.get_refactoring_advice(
-            code=request.code,
-            issue_description=request.issue_description,
-            language=normalize_language(request.language)
-        )
-        
-        logger.debug(f"Service returned result with keys: {list(result.keys()) if result else 'NONE'}")
-        
-        # Check for errors in the result
-        if "error" in result:
-            logger.error(f"Error generating refactoring advice: {result['error']}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Failed to generate refactoring advice: {result['error']}"
-            )
-        
-        # Convert suggestions to response models
-        suggestions = [
-            RefactoringSuggestion(**suggestion)
-            for suggestion in result.get("suggestions", [])
-        ]
-        
-        response = RefactoringAdviceResponse(
-            suggestions=suggestions,
-            explanation=result.get("explanation", ""),
-            analysis=result.get("analysis"),
-            validation=result.get("validation")
-        )
-        
-        logger.info(f"Generated {len(suggestions)} refactoring suggestions successfully")
-        return response
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error in get_refactoring_advice: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"An unexpected error occurred: {str(e)}"
-        )
-
-
-@router.post("/conversation", response_model=ConversationResponse, status_code=status.HTTP_200_OK)
-async def continue_refactoring_conversation(
-    request: ConversationRequest,
-    current_user: UserInDB = Depends(get_current_user)
-):
-    """
-    Continue a conversational interaction for iterative code refinement.
-    
-    This endpoint allows users to have a back-and-forth conversation with the AI
-    to iteratively improve and refine their smart contract code.
-    
-    Args:
-        request: Contains the code and conversation history
-        current_user: Current authenticated user
-    
-    Returns:
-        ConversationResponse: Bot's message and optional suggested code
-    
-    Raises:
-        HTTPException: If conversation handling fails
-    """
+        payload, approval_id = require_approval(request, user.id, operation)
+    except AiSafetyError as error:
+        raise HTTPException(status_code=409, detail=str(error)) from error
+    database = await get_db()
+    thread = await _owned_thread(payload, user.id, database)
+    if operation == "conversation" and (thread is None or thread.response.finding_review is None
+            or thread.response.finding_review.decision != "confirmed"
+            or thread.response.finding_review.source_sha256 != source_hash(payload.code)):
+        raise HTTPException(status_code=409, detail="A qualified reviewer must confirm the finding and source lines before requesting a repair.")
     try:
-        logger.info(f"Conversation request by user {current_user.username} with {len(request.conversation_history)} messages")
-        
-        # Convert conversation messages to dict format
-        conversation_history = [
-            {"role": msg.role, "content": msg.content}
-            for msg in request.conversation_history
-        ]
-        
-        # Get conversation response from service
-        result = await refactorbot_service.get_code_fix_conversation(
-            conversation_history=conversation_history,
-            current_code=request.code,
-            language=normalize_language(request.language)
-        )
-        
-        # Check for errors
-        if "error" in result:
-            logger.error(f"Error in conversation: {result['error']}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Failed to process conversation: {result['error']}"
-            )
-        
-        response = ConversationResponse(
-            bot_message=result.get("bot_message", ""),
-            suggested_code=result.get("suggested_code")
-        )
-        
-        logger.info("Conversation processed successfully")
-        return response
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error in continue_refactoring_conversation: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"An unexpected error occurred: {str(e)}"
-        )
-
-
-@router.post("/validate", response_model=ValidationResponse, status_code=status.HTTP_200_OK)
-async def validate_refactoring(
-    request: ValidationRequest,
-    current_user: UserInDB = Depends(get_current_user)
-):
-    """
-    Validate suggested refactored code.
-    
-    This endpoint performs validation checks on the suggested refactored code,
-    including syntax validation and basic security checks.
-    
-    Args:
-        request: Contains original and suggested code
-        current_user: Current authenticated user
-    
-    Returns:
-        ValidationResponse: Validation result and message
-    
-    Raises:
-        HTTPException: If validation process fails
-    """
+        await database.ai_approvals.insert_one({"_id": approval_id, "user_id": user.id, "expires_at": datetime.now(timezone.utc) + timedelta(minutes=5)})
+    except DuplicateKeyError as error:
+        raise HTTPException(status_code=409, detail="This approval was already used. Review the content again.") from error
+    history = [message.model_dump() for message in payload.conversation_history]
     try:
-        logger.info(f"Validation request by user {current_user.username}")
-        
-        # Validate the refactored code
-        is_valid, message = refactorbot_service.validate_suggested_refactoring(
-            original_code=request.original_code,
-            suggested_code=request.suggested_code
-        )
-        
-        response = ValidationResponse(
-            is_valid=is_valid,
-            message=message
-        )
-        
-        logger.info(f"Validation result: {is_valid} - {message}")
-        return response
-        
-    except Exception as e:
-        logger.error(f"Unexpected error in validate_refactoring: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"An unexpected error occurred during validation: {str(e)}"
-        )
+        if operation == "advice":
+            result = await refactorbot_service.get_refactoring_advice(payload.code, payload.issue_description, payload.language)
+        else:
+            result = await refactorbot_service.get_code_fix_conversation(history, payload.code, payload.language)
+    except AiSafetyError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    except AiResponseError as error:
+        logger.warning("External AI response was unusable", extra={"error_type": type(error).__name__})
+        raise HTTPException(status_code=502, detail=str(error)) from error
+    except (APITimeoutError, httpx.TimeoutException) as error:
+        logger.warning("External AI request timed out", extra={"error_type": type(error).__name__})
+        raise HTTPException(status_code=504, detail="The AI provider timed out. Review and try again, or ask about a smaller code section.") from error
+    except APIConnectionError as error:
+        logger.warning("External AI provider could not be reached", extra={"error_type": type(error).__name__})
+        raise HTTPException(status_code=502, detail="Cannot connect to the configured AI provider. Ask the administrator to check the proxy and network connection.") from error
+    except APIError as error:
+        status = getattr(error, "status_code", None)
+        logger.error("External AI provider rejected the request", extra={"error_type": type(error).__name__, "upstream_status": status})
+        if status in (401, 403):
+            detail = "AI provider authentication failed. Ask the administrator to check the configured API key."
+        elif status == 429:
+            raise HTTPException(status_code=503, detail="The AI provider is busy or rate-limited. Wait before reviewing and trying again.") from error
+        elif status in (400, 422):
+            detail = "The AI provider rejected the request parameters or context length. Use less code/history or ask the administrator to check the proxy configuration."
+        else:
+            detail = "The AI provider is temporarily unavailable. Review and try again later."
+        raise HTTPException(status_code=502, detail=detail) from error
+    except (httpx.HTTPError, ValueError) as error:
+        logger.error("External AI request failed", extra={"error_type": type(error).__name__})
+        raise HTTPException(status_code=502, detail="The AI provider could not complete this request. Review and retry, or inspect the code manually.") from error
+    answer = result.get("bot_message") or result.get("explanation") or ""
+    thread_id = payload.thread_id or uuid.uuid4().hex
+    response = RefactorResponse(
+        thread_id=thread_id,
+        explanation=result.get("explanation") or answer,
+        bot_message=answer,
+        suggestions=result.get("refactoring_suggestions") or [],
+        suggested_code=result.get("suggested_code"),
+        verification=VerificationResult(**(result.get("validation_result") or {"status": "not_run", "message": "Explanation only. Confirm the finding before requesting a repair."})),
+        disclosure=AiDisclosure(model=settings.MODEL_NAME),
+        repair_attempts=result.get("repair_attempts") or 0,
+        finding_review=thread.response.finding_review if thread else None,
+    )
+    updated = {"user_id": user.id, "context_id": payload.context_id, "code": payload.code,
+               "messages": history + [{"role": "assistant", "content": answer}],
+               "response": response.model_dump(), "test_source": None, "updated_at": datetime.now(timezone.utc)}
+    if thread:
+        write = await database.refactor_threads.update_one({"_id": thread_id, "user_id": user.id, "revision": thread.revision}, {"$set": updated, "$inc": {"revision": 1}})
+        if write.matched_count != 1:
+            raise HTTPException(status_code=409, detail="Conversation changed while the AI was working. Reopen the function.")
+    else:
+        await database.refactor_threads.insert_one({"_id": thread_id, "revision": 1, **updated})
+    return response
+
+
+@router.post("/advice", response_model=RefactorResponse)
+async def get_refactoring_advice(request: ApprovedAiRequest, current_user: UserInDB = Depends(get_current_user)) -> RefactorResponse:
+    return await _run_approved(request, current_user, "advice")
+
+
+@router.post("/conversation", response_model=RefactorResponse)
+async def continue_refactoring_conversation(request: ApprovedAiRequest, current_user: UserInDB = Depends(get_current_user)) -> RefactorResponse:
+    return await _run_approved(request, current_user, "conversation")
+
+
+@router.get("/threads", response_model=RefactorThread | None)
+async def latest_conversation(context_id: str = Query(max_length=256), current_user: UserInDB = Depends(get_current_user)) -> RefactorThread | None:
+    database = await get_db()
+    thread = await database.refactor_threads.find_one({"user_id": current_user.id, "context_id": context_id}, sort=[("updated_at", -1)])
+    if thread is None:
+        return None
+    stored = StoredThread.model_validate(thread)
+    return RefactorThread(thread_id=stored.id, context_id=stored.context_id, code=stored.code, conversation_history=stored.messages, response=stored.response, test_source=stored.test_source)
+
+
+@router.post("/finding-review", response_model=FindingReview)
+async def review_finding(request: FindingReviewRequest, current_user: UserInDB = Depends(get_current_user)) -> FindingReview:
+    database = await get_db()
+    document = await database.refactor_threads.find_one({"_id": request.thread_id, "user_id": current_user.id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    stored = StoredThread.model_validate(document)
+    if request.end_line < request.start_line or request.end_line > len(stored.code.splitlines()):
+        raise HTTPException(status_code=422, detail="Select an existing inclusive source line range.")
+    review = FindingReview(**request.model_dump(), reviewer_id=current_user.id, reviewed_at=datetime.now(timezone.utc), source_sha256=source_hash(stored.code))
+    updated = await database.refactor_threads.update_one(
+        {"_id": stored.id, "user_id": current_user.id, "revision": stored.revision},
+        {"$set": {"response.finding_review": review.model_dump(), "response.proposal_review": None}, "$inc": {"revision": 1}})
+    if updated.matched_count != 1:
+        raise HTTPException(status_code=409, detail="Conversation changed. Reopen the finding before reviewing again.")
+    return review
+
+
+@router.post("/proposal-review", response_model=ProposalReview)
+async def review_proposal(request: ProposalReviewRequest, current_user: UserInDB = Depends(get_current_user)) -> ProposalReview:
+    database = await get_db()
+    document = await database.refactor_threads.find_one({"_id": request.thread_id, "user_id": current_user.id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    stored = StoredThread.model_validate(document)
+    response = stored.response
+    if not response.suggested_code or source_hash(response.suggested_code) != request.proposal_sha256:
+        raise HTTPException(status_code=409, detail="The proposal changed. Review the current diff again.")
+    if request.decision == "accepted_for_manual_application" and (
+        response.finding_review is None or response.finding_review.decision != "confirmed"
+        or response.finding_review.source_sha256 != source_hash(stored.code)
+        or response.verification.status != "passed" or response.verification.tests.status != "passed"
+        or not response.verification.tests.cases
+        or any(case.status != "passed" for case in response.verification.tests.cases)
+        or not stored.test_source
+        or response.verification.tests.test_source_sha256 != source_hash(stored.test_source)
+        or response.verification.source_sha256 != request.proposal_sha256
+    ):
+        raise HTTPException(status_code=409, detail="Manual review required: confirm the finding and pass compilation and behavioral tests for this exact proposal before accepting it.")
+    review = ProposalReview(**request.model_dump(), reviewer_id=current_user.id, reviewed_at=datetime.now(timezone.utc))
+    updated = await database.refactor_threads.update_one(
+        {"_id": stored.id, "user_id": current_user.id, "revision": stored.revision},
+        {"$set": {"response.proposal_review": review.model_dump()}, "$inc": {"revision": 1}})
+    if updated.matched_count != 1:
+        raise HTTPException(status_code=409, detail="Conversation changed. Reopen the finding before reviewing again.")
+    return review
+
+
+@router.post("/proposal", response_model=RefactorResponse)
+async def save_editor_proposal(request: ProposalEditRequest, current_user: UserInDB = Depends(get_current_user)) -> RefactorResponse:
+    database = await get_db()
+    document = await database.refactor_threads.find_one({"_id": request.thread_id, "user_id": current_user.id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    stored = StoredThread.model_validate(document)
+    finding = stored.response.finding_review
+    if finding is None or finding.decision != "confirmed" or finding.source_sha256 != source_hash(stored.code):
+        raise HTTPException(status_code=409, detail="Confirm the finding before saving a repair proposal.")
+    if stored.response.suggested_code != request.previous_proposal:
+        raise HTTPException(status_code=409, detail="The proposal changed. Reopen the finding before saving your draft.")
+    response = stored.response.model_copy(update={
+        "suggested_code": request.proposed_code, "proposal_origin": "human_edit", "proposal_review": None,
+        "verification": VerificationResult(status="not_run", message="The editor proposal changed. Compile and run tests again before review.", source_sha256=source_hash(request.proposed_code)),
+    })
+    updated = await database.refactor_threads.update_one(
+        {"_id": stored.id, "user_id": current_user.id, "revision": stored.revision},
+        {"$set": {"response": response.model_dump(), "updated_at": datetime.now(timezone.utc)}, "$inc": {"revision": 1}})
+    if updated.matched_count != 1:
+        raise HTTPException(status_code=409, detail="The proposal changed. Reopen the finding before saving your draft.")
+    return response
+
+
+@router.get("/threads/{thread_id}/report", response_model=RefactorThread)
+async def repair_report(thread_id: str, current_user: UserInDB = Depends(get_current_user)) -> RefactorThread:
+    database = await get_db()
+    document = await database.refactor_threads.find_one({"_id": thread_id, "user_id": current_user.id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    stored = StoredThread.model_validate(document)
+    return RefactorThread(thread_id=stored.id, context_id=stored.context_id, code=stored.code, conversation_history=stored.messages, response=stored.response, test_source=stored.test_source)
+
+
+@router.post("/validate", response_model=VerificationResult)
+async def validate_refactoring(request: ValidationRequest, current_user: UserInDB = Depends(get_current_user)) -> VerificationResult:
+    database = None
+    thread_query = {"_id": request.thread_id, "user_id": current_user.id,
+                    "code": request.original_code, "response.suggested_code": request.suggested_code}
+    if request.thread_id:
+        database = await get_db()
+        document = await database.refactor_threads.find_one(thread_query)
+        if document is None:
+            raise HTTPException(status_code=404, detail="The stored proposal is unavailable or changed. Reopen the finding before compiling.")
+        thread_query["revision"] = document["revision"]
+    if request.test_source:
+        result = await to_thread.run_sync(refactorbot_service.validate_suggested_refactoring, request.original_code, request.suggested_code, request.test_source)
+    else:
+        result = await to_thread.run_sync(refactorbot_service.validate_suggested_refactoring, request.original_code, request.suggested_code)
+    if database is not None:
+        updated = await database.refactor_threads.update_one(thread_query, {"$set": {"response.verification": result.model_dump(), "test_source": request.test_source, "response.proposal_review": None}, "$inc": {"revision": 1}})
+        if updated.matched_count != 1:
+            raise HTTPException(status_code=409, detail="The proposal changed during compilation. Reopen the finding before compiling again.")
+    return result
+
+
+@router.post("/compile", response_model=VerificationResult)
+async def compile_editor_source(request: CompileRequest, current_user: UserInDB = Depends(get_current_user)) -> VerificationResult:
+    """Compile a baseline or unsaved draft without changing review evidence."""
+    return await to_thread.run_sync(validate_solidity, request.code, None, request.test_source)

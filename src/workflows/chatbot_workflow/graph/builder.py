@@ -18,9 +18,7 @@ def decide_start_node(state: State) -> str:
 
 
 def check_issue_exists(state: State) -> str:
-    """Check if issue description exists to proceed to suggestions."""
-    if state.get("issue_description"):
-        return "generate_suggestions"
+    """Initial analysis ends before repair; an owned human review unlocks chat."""
     return "end"
 
 
@@ -62,10 +60,19 @@ def build_graph() -> StateGraph:
     # After generating suggestions, go to validation
     graph_builder.add_edge("generate_suggestions", "validate_refactoring")
     
-    # After validation, end workflow (wait for user input)
-    graph_builder.add_edge("validate_refactoring", END)
+    # Missing context/tools require user input; actual compiler failures get bounded repairs.
+    graph_builder.add_conditional_edges("validate_refactoring", after_validation, {
+        "repair": "generate_suggestions", "done": END
+    })
     
-    # After handling conversation, end workflow (wait for user input)
-    graph_builder.add_edge("handle_conversation", END)
+    # Chat proposals receive the same deterministic checks as initial suggestions.
+    graph_builder.add_edge("handle_conversation", "validate_refactoring")
     
     return graph_builder.compile()
+
+
+def after_validation(state: State) -> str:
+    result = state.get("validation_result") or {}
+    if result.get("status") == "failed" and state.get("suggested_code") and (state.get("repair_attempts") or 0) < 2:
+        return "repair"
+    return "done"

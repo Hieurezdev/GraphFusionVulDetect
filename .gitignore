@@ -181,3 +181,6 @@ output
 !web_react/src/lib
 
 storage/
+.env*
+!.env.example
+.DS_Store

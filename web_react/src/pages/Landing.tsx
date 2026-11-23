@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { writePreferences } from "@/lib/preferences";
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Wordmark } from "@/components/Wordmark";
 import { PointScan } from "@/components/scan/PointScan";
 import { FunctionCut } from "@/components/landing/FunctionCut";
@@ -97,7 +97,7 @@ const Landing = () => {
 
   return (
     <div className="lp">
-      <a className="lp-skip" href="#main">Skip to content</a>
+      <a className="lp-skip" href="#main">{t('Skip to content')}</a>
 
       <header className="lp-nav">
         <div className="shell lp-nav__bar">
@@ -111,13 +111,7 @@ const Landing = () => {
             <a href="#ways">{t("Ways in")}</a>
           </nav>
           <div className="lp-nav__actions">
-            <div className="lp-lang" role="group" aria-label={t("Language")}>
-              {(["en", "vi"] as const).map((code) => (
-                <button key={code} type="button" lang={code} aria-pressed={t.language === code} onClick={() => writePreferences({ language: code })}>
-                  {code.toUpperCase()}
-                </button>
-              ))}
-            </div>
+            <LanguageSwitcher id="language-select-landing" />
             {isAuthenticated ? (
               <Link to="/analysis" className="lp-btn lp-btn--line lp-btn--sm">{t("Open the app")}</Link>
             ) : (

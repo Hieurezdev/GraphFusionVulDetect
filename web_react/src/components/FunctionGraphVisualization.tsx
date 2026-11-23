@@ -114,7 +114,7 @@ export const FunctionGraphVisualization = ({
       .attr("style", (_d, i) => `--i: ${Math.min(i, 12)}`)
       .attr("tabindex", 0)
       .attr("role", "button")
-      .attr("aria-label", (d) => `${d.function_name}, ${d.prediction === 1 ? t("Vulnerable") : t("Safe")}, ${t("Confidence")} ${d.confidence}`)
+      .attr("aria-label", (d) => `${d.function_name}, ${d.prediction === 1 ? t("Potential vulnerability") : t("Not flagged")}, ${t("Confidence")} ${d.confidence}`)
       .on("keydown", (event: KeyboardEvent, d) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -144,12 +144,10 @@ export const FunctionGraphVisualization = ({
       .on("mouseenter", function(event, d) {
         const tooltip = d3.select("body")
           .append("div")
-          .attr("class", "fcg-tip")
-          .html(`
-            <div><b>${d.function_name}</b></div>
-            <div>${t("Status")}: ${d.prediction === 1 ? t("Vulnerable") : t("Safe")}</div>
-            <div>${t("Confidence")}: ${d.confidence}</div>
-          `);
+          .attr("class", "fcg-tip");
+        tooltip.append("div").append("b").text(d.function_name);
+        tooltip.append("div").text(`${t("Status")}: ${d.prediction === 1 ? t("Potential vulnerability") : t("Not flagged")}`);
+        tooltip.append("div").text(`${t("Model score — not calibrated")}: ${d.confidence}`);
 
         const [x, y] = d3.pointer(event, document.body);
         tooltip
@@ -280,7 +278,7 @@ export const FunctionGraphVisualization = ({
           </span>
           <span className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full border border-ok bg-ok-soft" aria-hidden="true" />
-            {t("Safe Functions")}
+            {t("Functions not flagged")}
           </span>
           <span className="sm:ml-auto">{t("Click a node to view its code")}</span>
           <span>{t("Drag to move")}</span>
@@ -294,7 +292,7 @@ export const FunctionGraphVisualization = ({
             <DialogTitle className="flex flex-wrap items-center gap-3">
               <span className="code-text min-w-0 break-all text-base">{selectedNode?.function_name}</span>
               <Badge variant={selectedNode?.prediction === 1 ? "destructive" : "ok"}>
-                {selectedNode?.prediction === 1 ? t("Vulnerable") : t("Safe")}
+                {selectedNode?.prediction === 1 ? t("Potential vulnerability") : t("Not flagged")}
               </Badge>
             </DialogTitle>
           </DialogHeader>
@@ -310,7 +308,7 @@ export const FunctionGraphVisualization = ({
                 <div>
                   <dt className="text-muted-foreground">{t("Security Status")}</dt>
                   <dd className={`mt-1 ${selectedNode.prediction === 1 ? "text-bad" : "text-ok"}`}>
-                    {selectedNode.prediction === 1 ? t("Vulnerable") : t("Safe")}
+                    {selectedNode.prediction === 1 ? t("Potential vulnerability") : t("Not flagged")}
                   </dd>
                 </div>
                 <div className="border-l border-rule pl-4">

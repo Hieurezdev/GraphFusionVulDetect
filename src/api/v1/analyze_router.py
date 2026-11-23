@@ -8,9 +8,11 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 from bson import ObjectId
+from bson.errors import InvalidId
 from src.services.analysis_service import vulnerability_analysis_service
+from src.services.finding_evidence import FunctionFinding, sarif_report
 from src.models.entity import (
     StreamingNodeOutput, AnalysisSession, AnalysisSessionCreate,
     AnalysisSessionStatus, AnalysisStep, ProjectFile, UserInDB
@@ -47,12 +49,14 @@ async def analyze_contract(
     """
     
     # Log received project_id for debugging
-    logger.info(f"Analysis request - project_id: {project_id}, file: {file.filename}")
+    logger.info("Local analysis requested", extra={"project_id": project_id})
     
     # Read file content
     file_content = await file.read()
     
     # Validate file
+    if not file.filename or Path(file.filename).name != file.filename or "\\" in file.filename:
+        raise HTTPException(status_code=400, detail="Use a plain Solidity filename without directory components")
     is_valid, error_message = vulnerability_analysis_service.validate_solidity_file(
         file.filename, file_content
     )
@@ -207,7 +211,7 @@ async def analyze_contract(
                 )
                 
         except Exception as e:
-            logger.error(f"Analysis error: {str(e)}", exc_info=True)
+            logger.error("Local analysis failed", extra={"error_type": type(e).__name__})
             
             # Mark session as failed
             await sessions_collection.update_one(
@@ -321,3 +325,38 @@ async def analysis_health_check():
             "status": "not_ready",
             "message": f"Analysis service is not ready: {str(e)}"
         }
+
+
+@router.get("/sessions/{session_id}/source")
+async def get_session_source(session_id: str, current_user: UserInDB = Depends(get_current_user)) -> dict[str, str]:
+    try:
+        object_id = ObjectId(session_id)
+    except InvalidId as error:
+        raise HTTPException(status_code=400, detail="Invalid session ID") from error
+    collection = await get_analysis_sessions_collection()
+    session = await collection.find_one({"_id": object_id, "user_id": current_user.id})
+    if session is None:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    path = Path(session["file_path"]).resolve()
+    if not path.is_relative_to(Path("storage").resolve()) or not path.is_file():
+        raise HTTPException(status_code=404, detail="The source file is no longer available")
+    return {"code": path.read_bytes().decode("utf-8"), "filename": session["filename"]}
+
+
+@router.get("/sessions/{session_id}/sarif")
+async def export_session_sarif(session_id: str, current_user: UserInDB = Depends(get_current_user)) -> JSONResponse:
+    source = await get_session_source(session_id, current_user)
+    collection = await get_analysis_sessions_collection()
+    session = await collection.find_one({"_id": ObjectId(session_id), "user_id": current_user.id})
+    if session is None:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    findings = []
+    contract_flagged = False
+    for step in session.get("steps", []):
+        output = step.get("result_data", {})
+        if step.get("step_name") == "detect_vulnerability_func":
+            findings = [FunctionFinding.model_validate(item) for item in output.get("func_vulnerability_predictions", [])]
+        if step.get("step_name") == "detect_vulnerability_src":
+            contract_flagged = output.get("predicted_class") == 1
+    report = sarif_report(source["code"], source["filename"], findings, contract_flagged, session.get("status") == "completed")
+    return JSONResponse(report, headers={"Content-Disposition": 'attachment; filename="graphfusion.sarif"'})

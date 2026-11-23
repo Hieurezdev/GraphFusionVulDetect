@@ -331,6 +331,10 @@ def get_call_graph(contract_path: str) -> Optional[nx.MultiDiGraph]:
         Optional[nx.MultiDiGraph]: A NetworkX graph representing the FCG,
                                    or None if Slither compilation fails.
     """
+    from src.services.solidity_validation import check_imports
+
+    with open(contract_path, encoding="utf-8") as source:
+        check_imports(source.read(), set())
     sc_version = '0.4.24'
     pattern =  re.compile(r'\d.\d.\d+')
     with open(contract_path, 'r') as f:
@@ -353,7 +357,7 @@ def get_call_graph(contract_path: str) -> Optional[nx.MultiDiGraph]:
     try:
         slither = Slither(contract_path, solc=solc_compiler)
     except Exception as e:
-        print("Error compiling:", e)
+        print("The requested Solidity compiler failed; source details are omitted from logs.")
         print("So change to default version 0.4.24")
         solc_compiler = f'ge-sc-artifacts/solc-0.4.24/solc-0.4.24'
         try:

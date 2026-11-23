@@ -1,7 +1,7 @@
 from typing import TypedDict, Optional, List, Dict, Any
 
 
-class State(TypedDict):
+class State(TypedDict, total=False):
     """State for the chatbot refactoring workflow."""
     # Input
     code: str
@@ -18,3 +18,4 @@ class State(TypedDict):
     suggested_code: Optional[str]
     explanation: Optional[str]
     validation_result: Optional[Dict[str, Any]]
+    repair_attempts: int

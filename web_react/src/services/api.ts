@@ -1,5 +1,5 @@
 // API Base Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
 
 interface ApiConfig {
   baseURL: string;
@@ -40,7 +40,7 @@ const createAuthHeaders = (): Record<string, string> => {
 interface FetchOptions {
   method?: string;
   headers?: Record<string, string>;
-  body?: any;
+  body?: object;
   requireAuth?: boolean;
 }
 

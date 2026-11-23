@@ -314,6 +314,9 @@ const ProjectAnalysis = () => {
 
       {selectedSession && (
         <RefactorChatbot
+          key={selectedSession.id}
+          sessionId={selectedSession.id}
+          hasFinding={selectedSession.steps?.some(step => step.result_data?.predicted_class === "Vulnerable")}
           vulnerableFunctions={
             selectedSession.steps
               ?.flatMap(step => step.result_data?.func_vulnerability_predictions || [])

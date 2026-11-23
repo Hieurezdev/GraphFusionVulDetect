@@ -4,6 +4,7 @@ import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from "@/
 import { FunctionGraphVisualization } from "./FunctionGraphVisualization";
 import { PipelineTrail, StageResult } from "./Pipeline";
 import { useT } from "@/i18n";
+import { AiResultNotice } from "./AiResultNotice";
 
 interface StreamingResultsProps {
   results: any[];
@@ -29,7 +30,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
       <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
         <div className="flex items-center gap-2">
           <dt className="text-muted-foreground">{t("Prediction")}</dt>
-          <dd><Badge variant={vulnerable ? "destructive" : "ok"}>{vulnerable ? t("Vulnerable") : t("Not vulnerable")}</Badge></dd>
+          <dd><Badge variant={vulnerable ? "destructive" : "outline"}>{vulnerable ? t("Potential vulnerability") : t("Not flagged")}</Badge></dd>
         </div>
         <div className="flex items-baseline gap-2">
           <dt className="text-muted-foreground">{t("Confidence")}</dt>
@@ -58,7 +59,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
                   <AccordionTrigger className="min-w-0 gap-3 px-2 py-3 hover:bg-paper-2 hover:no-underline">
                     <span className="code-text min-w-0 flex-1 truncate text-left text-sm text-ink">{func.function_name}</span>
                     <Badge variant={func.prediction === 1 ? "destructive" : "ok"}>
-                      {func.prediction === 1 ? t("Vulnerable") : t("Safe")}
+                      {func.prediction === 1 ? t("Potential vulnerability") : t("Not flagged")}
                     </Badge>
                     <span className="measured w-12 text-right text-sm text-cool">{func.confidence}</span>
                   </AccordionTrigger>
@@ -82,6 +83,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
   }
 
   if (result.node === "explain_vulnerability_func" && output.explanations) {
+    if (output.review_required) return <p className="rounded-md border border-rule p-4 text-sm text-ink-2">{t("Local detection is complete. Open Refactor Assistant to review what will be sent before requesting an AI explanation.")}</p>;
     return (
       <ul className="space-y-3">
         {output.explanations.map((explanation: any, idx: number) => (
@@ -123,6 +125,7 @@ export const StreamingResults = ({ results, isStreaming }: StreamingResultsProps
       </div>
 
       <PipelineTrail results={results} isStreaming={isStreaming} renderDetail={(r) => renderDetail(r, t)} />
+      <AiResultNotice kind="prediction" score={t("Shown separately for the contract and each function")} />
 
       {errors.map((error, idx) => (
         <div key={idx} role="alert" className="flex items-start gap-3 rounded-md bg-bad-soft p-4">

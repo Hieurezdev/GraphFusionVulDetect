@@ -1,0 +1,610 @@
+{
+  "schema_version": 1,
+  "suite_id": "timestamp-challenge-v1",
+  "provenance": "Newly authored synthetic fixtures, not independently audited production projects.",
+  "label_policy": "Reference labels concern security-sensitive timestamp dependence under each documented assumption. Negative means not this target vulnerability; it never means universally secure.",
+  "expert_review_complete": false,
+  "generalization_claim": "Synthetic stress/demo cases only. No claim of unseen production-project accuracy or absence from pretraining.",
+  "cases": [
+    {
+      "case_id": "case-01",
+      "file": "cases/Case01.sol",
+      "family_id": "direct",
+      "group": "baseline",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "fd4e111b327a8bc0b8de8310c42a737832925a53fcdf11625c38c072cc1c320b",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-02",
+      "file": "cases/Case02.sol",
+      "family_id": "direct",
+      "group": "repaired",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "535b6bd72fcd70090d1791bf29bde719efcefe14efc55a3309a6ba0be94d76ba",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-03",
+      "file": "cases/Case03.sol",
+      "family_id": "hash",
+      "group": "hard_positive",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "bdfac4cfcdedd606adbf8983b385bb6d4a5f97d003cdbd632191bdbaabc1995b",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. Hashing the timestamp does not remove this data dependency.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-04",
+      "file": "cases/Case04.sol",
+      "family_id": "hash",
+      "group": "repaired",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "56ffa823b70f747496e55fd2321b86c002092672b1e4e8870209f2990d986666",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. Predictable selection and oracle quality are outside this target.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-03",
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-05",
+      "file": "cases/Case05.sol",
+      "family_id": "helper",
+      "group": "hard_positive",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "09d62aa9bf690daec170875d7cc2f19f3aee85a47cac6ce5ffb4b6249af019da",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The dependency crosses sample() and choose().",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 19
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-06",
+      "file": "cases/Case06.sol",
+      "family_id": "helper",
+      "group": "hard_negative",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "8dd7f9184fa73ea93d23c9e0be3692a8a9717261a9fbcb4d278a8170e93a5d3f",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. The helper timestamp is used only in an event.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 15
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-07",
+      "file": "cases/Case07.sol",
+      "family_id": "storage",
+      "group": "hard_positive",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "d5e0f1e82f9316af0080b3d5a03c7f4fb0b642a4bf2339b1182296165ee252d9",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The dependency passes through storage.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 15
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-08",
+      "file": "cases/Case08.sol",
+      "family_id": "storage",
+      "group": "hard_negative",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "d8874feb89075026433c626a05228514c680401365b4d8e79013e3d55bc49c9c",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. recorded is not read by the acceptance decision.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 15
+      },
+      "variant_of": "case-07",
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-09",
+      "file": "cases/Case09.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "af08c7ae4f1f12dde9068b1eb3ca15e7095aef2bd9bdc403eb819c2c9cd5e266",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The benign-sounding comment must not override the code evidence.",
+      "evidence": {
+        "start_line": 11,
+        "end_line": 12
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-10",
+      "file": "cases/Case10.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "711860616d3b711d96b8c62516541abad2862831fad9c9d9141707be4d6820d7",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. A timestamp appears in a comment only.",
+      "evidence": {
+        "start_line": 11,
+        "end_line": 12
+      },
+      "variant_of": "case-02",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-11",
+      "file": "cases/Case11.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "656eb7adb5c7e0987336a83681f03a1389c97f500c80a00626bf163ed9a3fac6",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. Unicode comments also exercise byte-to-line mapping.",
+      "evidence": {
+        "start_line": 11,
+        "end_line": 12
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-12",
+      "file": "cases/Case12.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "cc6d089c31f122f53e85668cb58b2d8b6fa29c8d083ee0a132dbc96d4269cd1f",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. Only whitespace and layout differ.",
+      "evidence": {
+        "start_line": 11,
+        "end_line": 12
+      },
+      "variant_of": "case-02",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-13",
+      "file": "cases/Case13.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "7790926a4a8fad82d32e2950322ca9c53d7203ea0dd638075d19776f9af5c8ba",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. Only a local variable name differs.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-14",
+      "file": "cases/Case14.sol",
+      "family_id": "direct",
+      "group": "long_function",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "a94ba504f9ee78cc36094d363999b1cb0384fa57baa02a4eccdfe95fb0ab816b",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The evidence is after a long comment prefix and can fall outside the embedding token window.",
+      "evidence": {
+        "start_line": 150,
+        "end_line": 151
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-15",
+      "file": "cases/Case15.sol",
+      "family_id": "direct",
+      "group": "large_contract",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "2245d97cfb83bc727411c48dd07c9dda7477cdf1a217000e96e502bf55fd0314",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. There are 128 unrelated pure helper functions; inspect full-pipeline dilution.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-16",
+      "file": "cases/Case16.sol",
+      "family_id": "direct",
+      "group": "large_contract",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "ee8807f1d1b2f5884119b64a4cfba0074bf2e57c58ebece19ef5735b07e3cc53",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. There are 128 unrelated pure helper functions.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-02",
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-17",
+      "file": "cases/Case17.sol",
+      "family_id": "time_lock",
+      "group": "hard_negative",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "350cedb23beb06240e83685d18db517086683fbaccda065c511f1a626685eb0a",
+      "reference_label": "negative",
+      "reference_rationale": "This is an intentional coarse time lock with an authenticated beneficiary and a one-day cushion. The reference assumes small timestamp variations do not violate its documented timing policy; an expert must validate that assumption.",
+      "evidence": {
+        "start_line": 13,
+        "end_line": 15
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-18",
+      "file": "cases/Case18.sol",
+      "family_id": "time_authorization",
+      "group": "hard_positive",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "88cb73ebc9d058c62f3a035eac2467e795c416ae07b6bc063a9eb7f3e63472c8",
+      "reference_label": "positive",
+      "reference_rationale": "A public caller can select a time-derived ticket to obtain beneficiary control. This isolates timestamp-derived authorization misuse; the absence of real authorization is also relevant.",
+      "evidence": {
+        "start_line": 12,
+        "end_line": 14
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-19",
+      "file": "cases/Case19.sol",
+      "family_id": "helper",
+      "group": "hard_negative",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "50c5b0639c9b05495a9bd9c31bbe84c257468112a7d981d7d4980a65fde588ff",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. The timestamp is used solely as event metadata.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-20",
+      "file": "cases/Case20.sol",
+      "family_id": "direct",
+      "group": "hard_negative",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "dcb6af70be521422f13dabd6c62bf7af3dbc298501ece14d6af8f77410c7a712",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. The timestamp expression is unreachable and the final assignment is time independent.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 13
+      },
+      "variant_of": null,
+      "intended_behavior_preserving": false,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-21",
+      "file": "cases/Case21.sol",
+      "family_id": "direct",
+      "group": "long_function",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "4963159cdf6ebf699aede045a50865270531cf4b862a4cdd3b9a496ef3e18ea6",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The same long comment block follows the evidence instead of preceding it.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-14",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-22",
+      "file": "cases/Case22.sol",
+      "family_id": "helper",
+      "group": "long_function",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "e858e1e589d2a01e0331663147a29ed74fe7f0679546a885aecc7ddc4dd8b546",
+      "reference_label": "negative",
+      "reference_rationale": "The acceptance decision does not depend on block time. This is a negative reference only for the timestamp-manipulation target, not a security verdict about the whole contract. A long comment prefix precedes the event-only timestamp.",
+      "evidence": {
+        "start_line": 150,
+        "end_line": 151
+      },
+      "variant_of": "case-19",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-23",
+      "file": "cases/Case23.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "9beb3484f89c11435f12714f43d1b7d1f236abd77e9957cc598c1c6fd6d80396",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. now is the legacy timestamp alias in this compiler version.",
+      "evidence": {
+        "start_line": 10,
+        "end_line": 11
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    },
+    {
+      "case_id": "case-24",
+      "file": "cases/Case24.sol",
+      "family_id": "direct",
+      "group": "adversarial",
+      "target_function": "Probe.execute(uint256)",
+      "compiler": "0.4.24",
+      "source_sha256": "4b97f3461cb316f09afeb9d1914d17a7164a805d470fa05756b48ef4380b3462",
+      "reference_label": "positive",
+      "reference_rationale": "The acceptance decision depends on block time. The policy assumes that selecting or influencing a reachable block time must not select the accepted ticket; chain-specific exploitability still requires expert review. The instruction-like comment is untrusted code data. This case tests the detector representation; external-LLM injection screening is a separate assessment.",
+      "evidence": {
+        "start_line": 11,
+        "end_line": 12
+      },
+      "variant_of": "case-01",
+      "intended_behavior_preserving": true,
+      "expert_review": {
+        "status": "pending",
+        "label": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "rationale": null,
+        "source_sha256": null
+      }
+    }
+  ]
+}

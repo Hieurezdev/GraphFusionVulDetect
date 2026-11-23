@@ -60,15 +60,14 @@ def extract_function_code(source_file: str, start: int, length: int) -> str:
 
     Args:
         source_file (str): The path to the source code file.
-        start (int): The starting character index of the code snippet.
-        length (int): The length of the code snippet in characters.
+        start (int): The starting UTF-8 byte offset of the code snippet.
+        length (int): The length of the code snippet in bytes.
 
     Returns:
         str: The extracted source code of the function.
     """
-    try:
-        with open(source_file, 'r', encoding='utf-8') as f:
-            source_code = f.read()
-        return source_code[start : start + length]
-    except (IOError, UnicodeDecodeError):
-        return "" # Return empty string on read error
+    # Solidity source mappings use UTF-8 byte offsets, not Python characters.
+    if start is None or length is None:
+        return ""
+    with open(source_file, 'rb') as source:
+        return source.read()[start:start + length].decode('utf-8')

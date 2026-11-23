@@ -66,10 +66,8 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
   const stats = getVulnerabilityStats();
 
   const getVulnerabilityLevel = () => {
-    if (!stats.sourceVulnerable) return { level: t("Safe"), variant: "ok" as const };
-    if (stats.sourceConfidence > 80) return { level: t("High Risk"), variant: "destructive" as const };
-    if (stats.sourceConfidence > 60) return { level: t("Medium Risk"), variant: "outline" as const };
-    return { level: t("Low Risk"), variant: "secondary" as const };
+    if (!stats.sourceVulnerable) return { level: t("Not flagged"), variant: "outline" as const };
+    return { level: t("Potential vulnerability"), variant: "destructive" as const };
   };
 
   const vulnerabilityLevel = getVulnerabilityLevel();
@@ -98,10 +96,10 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               <p className="reading">
                 {stats.sourceConfidence.toFixed(1)}<span className="unit">&thinsp;%</span>
               </p>
-              <p className="mt-2 text-sm text-muted-foreground">{t("Source Analysis Confidence")}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{t("Model score — not calibrated")}</p>
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
-              <span className="text-muted-foreground">{t("Overall Risk Level")}</span>
+              <span className="text-muted-foreground">{t("Model finding")}</span>
               <Badge variant={vulnerabilityLevel.variant}>{vulnerabilityLevel.level}</Badge>
             </div>
             <p className="mt-5 flex max-w-[52ch] items-start gap-2 text-sm text-ink-2">
@@ -113,16 +111,16 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               <span>
                 {stats.sourceVulnerable ? (
                   <>
-                    <strong className="font-medium text-ink">{t("Vulnerability Detected:")}</strong>{" "}
-                    {t("The contract analysis indicates potential security issues with {p}% confidence.", { p: stats.sourceConfidence.toFixed(1) })}
+                    <strong className="font-medium text-ink">{t("Potential vulnerability")}</strong>{" "}
+                    {t("The local model flagged this contract. Its score is not a verified probability of correctness or a severity rating.")}
                     {stats.vulnerableFunctions > 0 && (
                       <> {t("{k} out of {n} functions flagged as vulnerable.", { k: stats.vulnerableFunctions, n: stats.totalFunctions })}</>
                     )}
                   </>
                 ) : (
                   <>
-                    <strong className="font-medium text-ink">{t("No Major Issues:")}</strong>{" "}
-                    {t("The contract appears to be secure based on the analysis with {p}% confidence.", { p: stats.sourceConfidence.toFixed(1) })}
+                    <strong className="font-medium text-ink">{t("Not flagged")}</strong>{" "}
+                    {t("No finding was detected within this model's scope. This does not establish that the contract is secure.")}
                   </>
                 )}
               </span>
@@ -143,7 +141,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
                 {[
                   { label: t("Total Functions"), value: stats.totalFunctions, tone: "text-ink" },
                   { label: t("Vulnerable Functions"), value: stats.vulnerableFunctions, tone: "text-bad" },
-                  { label: t("Safe Functions"), value: stats.safeFunctions, tone: "text-ok" },
+                  { label: t("Functions not flagged"), value: stats.safeFunctions, tone: "text-ok" },
                 ].map((stat, i) => (
                   <div key={stat.label} className={i === 0 ? "pr-3" : "border-l border-rule px-3"}>
                     <dt className="text-xs text-muted-foreground">{stat.label}</dt>
@@ -160,7 +158,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               </div>
               <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-bad" aria-hidden="true" />{t("Vulnerable Functions")}</li>
-                <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-ok" aria-hidden="true" />{t("Safe Functions")}</li>
+                <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-ok" aria-hidden="true" />{t("Functions not flagged")}</li>
               </ul>
             </>
           ) : (

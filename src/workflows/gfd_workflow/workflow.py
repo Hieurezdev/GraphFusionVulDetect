@@ -17,7 +17,10 @@ class GFDWorkflow:
     def initialize(self):
         """Called ONCE during app startup."""
         seed_everything(settings.SEED)
-        prepare_solc_artifacts()
+        import os
+
+        if os.environ.get("SOLIDITY_NATIVE") != "1":
+            prepare_solc_artifacts()
 
         self._load_embedding_model()
         self._load_graph_model()

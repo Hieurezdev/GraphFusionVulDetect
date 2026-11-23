@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field
 import os
 
 class Settings(BaseSettings):
@@ -12,7 +13,7 @@ class Settings(BaseSettings):
     BASE_URL: str
     GEMINI_API_KEY1: str
     CHATBOT_TEMPERATURE: float = 0.7
-    CHATBOT_MAX_TOKENS: int = 4096
+    CHATBOT_MAX_TOKENS: int | None = Field(default=None, gt=0)
 
     # Database
     MONGODB_URL: str

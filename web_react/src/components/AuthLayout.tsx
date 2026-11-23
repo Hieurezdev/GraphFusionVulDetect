@@ -4,6 +4,7 @@ import { Wordmark } from "@/components/Wordmark";
 import { PointScan } from "@/components/scan/PointScan";
 import { SAMPLE_SCAN, SAMPLE_EDGES } from "@/components/landing/sample";
 import { useT } from "@/i18n";
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 interface AuthLayoutProps {
   title: string;
@@ -35,9 +36,10 @@ export const AuthLayout = ({ title, description, children }: AuthLayoutProps) =>
     </aside>
 
     <main id="main" className="flex flex-col px-4 py-10 sm:px-12 lg:justify-center lg:px-16">
-      <Link to="/" className="mb-12 self-start rounded-sm lg:hidden" aria-label={t("GraphFusion home")}>
-        <Wordmark />
-      </Link>
+      <div className="mb-10 flex w-full max-w-sm items-center justify-between gap-3">
+        <Link to="/" className="self-start rounded-sm lg:hidden" aria-label={t("GraphFusion home")}><Wordmark /></Link>
+        <div className="ml-auto"><LanguageSwitcher id="language-select-auth" /></div>
+      </div>
       <div className="w-full max-w-sm">
         <h1 className="text-4xl leading-none">{title}</h1>
         <p className="mt-3 text-ink-2">{description}</p>

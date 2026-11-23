@@ -17,6 +17,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.refactor-ide .refactor-evidence-line { background: color-mix(in srgb, var(--color-bad) 9%, transparent); }
+.refactor-ide .refactor-evidence-gutter { border-left: 3px solid var(--color-bad); margin-left: 4px; }
+.refactor-ide button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.refactor-ide .chat-prose pre { max-width: 100%; overflow-x: auto; }
+
 @layer base {
   * { @apply border-border; }
   body { font-family: var(--font-body); font-weight: 300; font-variation-settings: "SHRP" 0; }

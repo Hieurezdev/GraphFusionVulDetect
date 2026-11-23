@@ -4,6 +4,7 @@ import tempfile
 import os
 from typing import AsyncGenerator, Dict, Any, Tuple
 from anyio import to_thread
+from langsmith import tracing_context
 
 # Define a unique sentinel object to signal the end of the iterator
 _SENTINEL = object()
@@ -80,7 +81,8 @@ class VulnerabilityAnalysisService:
             }
         elif node_name == "explain_vulnerability_func":
             output_data["output"] = {
-                "explanations": node_output_state.get("func_vulnerability_explanations")
+                "explanations": node_output_state.get("func_vulnerability_explanations"),
+                "review_required": node_output_state.get("external_ai_review_required", True),
             }
         else:
             # For any other nodes, include all non-internal data
@@ -89,6 +91,11 @@ class VulnerabilityAnalysisService:
                 if not k.startswith('_')
             }
         
+        if node_name in {"detect_vulnerability_src", "detect_vulnerability_func"}:
+            output_data["output"]["ai_generated"] = True
+            output_data["output"]["model"] = "CodeBERT + GNN"
+            output_data["output"]["confidence_calibrated"] = False
+            output_data["output"]["warning"] = "Model scores are not severity ratings or calibrated probabilities of correctness. Review evidence and test independently."
         return output_data
     
     async def analyze_solidity_file(self, file_path: str, temp_dir: str, language: str = "en") -> AsyncGenerator[str, None]:
@@ -112,16 +119,13 @@ class VulnerabilityAnalysisService:
         }
         
         # Stream analysis results
-        async for event in self._run_sync_iterator_in_thread(
-            self.app_graph.stream(initial_state, self.config)
-        ):
-            node_name, node_output_state = list(event.items())[0]
-            
-            # Format output for this processing step
-            output_data = self._format_node_output(node_name, node_output_state)
-            
-            # Yield as NDJSON line
-            yield json.dumps(output_data) + "\n"
+        with tracing_context(enabled=False):
+            async for event in self._run_sync_iterator_in_thread(
+                self.app_graph.stream(initial_state, self.config)
+            ):
+                node_name, node_output_state = list(event.items())[0]
+                output_data = self._format_node_output(node_name, node_output_state)
+                yield json.dumps(output_data) + "\n"
     
     async def save_uploaded_file(self, file_content: bytes, filename: str, temp_dir: str) -> str:
         """
@@ -136,8 +140,6 @@ class VulnerabilityAnalysisService:
             Path to the saved file
         """
         file_path = os.path.join(temp_dir, filename)
-        print(f"Saving uploaded file to: {file_path}")
-        print(f"content: {file_content[:100]}...")
         # Save file content
         with open(file_path, "wb") as buffer:
             buffer.write(file_content)

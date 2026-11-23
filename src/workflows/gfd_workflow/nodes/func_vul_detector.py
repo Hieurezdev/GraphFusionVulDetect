@@ -71,6 +71,7 @@ def detect_vulnerability_func(state: State, config: RunnableConfig) -> State:
             results.append({
                 "function_name": node_name,
                 "function_code": mapping_data.get("code", {}).get(node_name, ""),
+                "source_location": mapping_data.get("source_locations", {}).get(node_name),
                 "prediction": pred.item(),
                 "confidence": f"{confidence:.2%}"
             })
