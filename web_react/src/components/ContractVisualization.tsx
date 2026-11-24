@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, ShieldCheck } from "lucide-react";
+import { AlertTriangle, Info } from "lucide-react";
 import { PointScan, type ScanFn, type ScanPhase } from "@/components/scan/PointScan";
 import { useT } from "@/i18n";
 
@@ -66,7 +66,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
   const stats = getVulnerabilityStats();
 
   const getVulnerabilityLevel = () => {
-    if (!stats.sourceVulnerable) return { level: t("Safe"), variant: "ok" as const };
+    if (!stats.sourceVulnerable) return { level: t("Not flagged"), variant: "ok" as const };
     if (stats.sourceConfidence > 80) return { level: t("High Risk"), variant: "destructive" as const };
     if (stats.sourceConfidence > 60) return { level: t("Medium Risk"), variant: "outline" as const };
     return { level: t("Low Risk"), variant: "secondary" as const };
@@ -108,7 +108,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               {stats.sourceVulnerable ? (
                 <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-bad" aria-hidden="true" />
               ) : (
-                <ShieldCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-ok" aria-hidden="true" />
+                <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" aria-hidden="true" />
               )}
               <span>
                 {stats.sourceVulnerable ? (
@@ -121,8 +121,8 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
                   </>
                 ) : (
                   <>
-                    <strong className="font-medium text-ink">{t("No Major Issues:")}</strong>{" "}
-                    {t("The contract appears to be secure based on the analysis with {p}% confidence.", { p: stats.sourceConfidence.toFixed(1) })}
+                    <strong className="font-medium text-ink">{t("Not flagged:")}</strong>{" "}
+                    {t("The model did not flag this contract ({p}% confidence). That is not proof it is safe: a manual audit is still needed.", { p: stats.sourceConfidence.toFixed(1) })}
                   </>
                 )}
               </span>
@@ -143,7 +143,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
                 {[
                   { label: t("Total Functions"), value: stats.totalFunctions, tone: "text-ink" },
                   { label: t("Vulnerable Functions"), value: stats.vulnerableFunctions, tone: "text-bad" },
-                  { label: t("Safe Functions"), value: stats.safeFunctions, tone: "text-ok" },
+                  { label: t("Unflagged Functions"), value: stats.safeFunctions, tone: "text-ok" },
                 ].map((stat, i) => (
                   <div key={stat.label} className={i === 0 ? "pr-3" : "border-l border-rule px-3"}>
                     <dt className="text-xs text-muted-foreground">{stat.label}</dt>
@@ -160,7 +160,7 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               </div>
               <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-bad" aria-hidden="true" />{t("Vulnerable Functions")}</li>
-                <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-ok" aria-hidden="true" />{t("Safe Functions")}</li>
+                <li className="flex items-center gap-2"><span className="h-2 w-3 rounded-sm bg-ok" aria-hidden="true" />{t("Unflagged Functions")}</li>
               </ul>
             </>
           ) : (

@@ -67,8 +67,9 @@ def extract_function_code(source_file: str, start: int, length: int) -> str:
         str: The extracted source code of the function.
     """
     try:
-        with open(source_file, 'r', encoding='utf-8') as f:
+        with open(source_file, 'rb') as f:
             source_code = f.read()
-        return source_code[start : start + length]
+        # Slither offsets are bytes, not characters.
+        return source_code[start : start + length].decode('utf-8')
     except (IOError, UnicodeDecodeError):
         return "" # Return empty string on read error

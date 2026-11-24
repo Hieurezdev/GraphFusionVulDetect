@@ -1,34 +1,31 @@
-# Production optimized backend dockerfile
 FROM python:3.12-slim-trixie
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
+RUN apt-get update && apt-get install -y --no-install-recommends curl build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy uv from official image
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /graphfusion
+ENV PATH=/graphfusion/.venv/bin:$PATH
 
-# Copy dependency files
-COPY uv.lock pyproject.toml ./
-RUN uv sync --frozen --no-dev
+COPY uv.lock pyproject.toml .python-version ./
+# shortcut: dgl==2.0.0 has no Linux wheel on PyPI and data.dgl.ai is unreachable from the server; dgl 2.1.0
+# runs on torch 2.8 with old setuptools + torchdata 0.7.1 and graphbolt (unused) skipped. Drop this once the lock pins a Linux-installable dgl.
+RUN uv sync --frozen --no-dev --no-install-package dgl \
+    && uv pip install --no-deps dgl==2.1.0 torchdata==0.7.1 "setuptools<70" \
+    && sed -i 's/^load_graphbolt()$/try:\n    load_graphbolt()\nexcept (FileNotFoundError, ImportError):\n    pass  # no torch 2.8 build; graphbolt is unused here/' \
+       .venv/lib/python3.10/site-packages/dgl/graphbolt/__init__.py
 
-# Copy application code
+# Slither needs one solc per pragma version; graph_converter looks them up in ge-sc-artifacts/solc-X/solc-X.
+RUN B=https://binaries.soliditylang.org/linux-amd64 \
+    && curl -fsSL $B/list.json | python -c "import json,sys;[print(v,f) for v,f in json.load(sys.stdin)['releases'].items()]" \
+    | while read v f; do mkdir -p ge-sc-artifacts/solc-$v \
+        && curl -fsSL "$B/$f" -o ge-sc-artifacts/solc-$v/solc-$v && chmod +x ge-sc-artifacts/solc-$v/solc-$v || exit 1; done \
+    && test -x ge-sc-artifacts/solc-0.4.24/solc-0.4.24
+
+COPY .project-root ./
 COPY src ./src
-COPY core ./core
-COPY ge-sc-artifacts/ ./ge-sc-artifacts/
-
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash app \
-    && chown -R app:app /graphfusion
-USER app
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
 
 EXPOSE 8000
 
-CMD ["uv", "run", "src.main"]
+CMD ["python", "-m", "src.main"]

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,9 +9,12 @@ import { ContractVisualization } from "@/components/ContractVisualization";
 import { RefactorChatbot } from "@/components/RefactorChatbot";
 import { FileUpload } from "@/components/FileUpload";
 import { TruncatedText } from "@/components/TruncatedText";
-import { projectService, Project, AnalysisSession } from "@/services/project";
+import { projectService, Project, AnalysisSession, FunctionReview } from "@/services/project";
 import { toast } from "sonner";
 import { useT } from "@/i18n";
+
+// Monaco is large: load the IDE only when a finished analysis shows it.
+const ContractIDE = lazy(() => import("@/components/ContractIDE"));
 
 const ProjectAnalysis = () => {
   const navigate = useNavigate();
@@ -122,6 +125,13 @@ const ProjectAnalysis = () => {
     } finally {
       setIsAnalyzing(false);
     }
+  };
+
+  const handleReviewed = (reviews: FunctionReview[]) => {
+    if (!selectedSession) return;
+    const updated = { ...selectedSession, reviews };
+    setSelectedSession(updated);
+    setAnalysisSessions(prev => prev.map(s => (s.id === updated.id ? updated : s)));
   };
 
   const handleSessionClick = (session: AnalysisSession) => {
@@ -301,8 +311,20 @@ const ProjectAnalysis = () => {
                   <ContractVisualization data={toResults(selectedSession)} />
                 )}
 
+                {selectedSession.status === 'completed' && (
+                  <Suspense fallback={null}>
+                    <ContractIDE key={selectedSession.id} sessionId={selectedSession.id} results={toResults(selectedSession)} reviews={selectedSession.reviews || []} onReviewed={handleReviewed} />
+                  </Suspense>
+                )}
+
                 {selectedSession.steps && selectedSession.steps.length > 0 && (
-                  <StreamingResults results={toResults(selectedSession)} isStreaming={false} />
+                  <StreamingResults
+                    results={toResults(selectedSession)}
+                    isStreaming={false}
+                    sessionId={selectedSession.id}
+                    reviews={selectedSession.reviews || []}
+                    onReviewed={handleReviewed}
+                  />
                 )}
               </>
             ) : (
@@ -314,6 +336,9 @@ const ProjectAnalysis = () => {
 
       {selectedSession && (
         <RefactorChatbot
+          key={selectedSession.id}
+          sessionId={selectedSession.id}
+          reviews={selectedSession.reviews || []}
           vulnerableFunctions={
             selectedSession.steps
               ?.flatMap(step => step.result_data?.func_vulnerability_predictions || [])

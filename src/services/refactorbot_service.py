@@ -173,7 +173,7 @@ class RefactorBotService:
             warnings = "; ".join(validation_result["warnings"])
             return True, f"Basic validation passed with warnings: {warnings}"
         
-        return True, "Validation passed successfully."
+        return True, "Basic syntax check passed."
 
 
 

@@ -7,13 +7,15 @@ from typing import List
 from pathlib import Path
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form, Query
 from fastapi.responses import StreamingResponse
 from bson import ObjectId
 from src.services.analysis_service import vulnerability_analysis_service
+from src.services.sarif import session_to_sarif
 from src.models.entity import (
     StreamingNodeOutput, AnalysisSession, AnalysisSessionCreate,
-    AnalysisSessionStatus, AnalysisStep, ProjectFile, UserInDB
+    AnalysisSessionStatus, AnalysisStep, ProjectFile, UserInDB,
+    FunctionReview, FunctionReviewUpdate
 )
 from src.infrastructure.database import get_analysis_sessions_collection, get_projects_collection
 from src.utils.timezone import now_utc, now_vietnam, ensure_utc_for_db
@@ -304,6 +306,68 @@ async def get_analysis_session(
     session_doc["id"] = str(session_doc["_id"])
     del session_doc["_id"]
     return AnalysisSession(**session_doc)
+
+
+@router.put("/sessions/{session_id}/reviews", response_model=List[FunctionReview])
+async def review_function(
+    session_id: str,
+    review: FunctionReviewUpdate,
+    current_user: UserInDB = Depends(get_current_user)
+):
+    """Record an expert verdict (confirmed / false positive / needs manual review) on a flagged function."""
+    sessions_collection = await get_analysis_sessions_collection()
+    try:
+        session_doc = await sessions_collection.find_one({"_id": ObjectId(session_id), "user_id": current_user.id})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not session_doc:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+
+    flagged = {p.get("function_name") for step in session_doc.get("steps", [])
+               for p in (step.get("result_data") or {}).get("func_vulnerability_predictions", [])}
+    if review.function_name not in flagged:
+        raise HTTPException(status_code=404, detail="Function not found in this analysis")
+
+    entry = FunctionReview(**review.dict(), reviewer=current_user.username, reviewed_at=ensure_utc_for_db(now_vietnam()))
+    # Function names contain dots, so reviews live in a list rather than a dict keyed by name.
+    reviews = [r for r in session_doc.get("reviews", []) if r.get("function_name") != review.function_name]
+    reviews.append(entry.dict())
+    await sessions_collection.update_one({"_id": ObjectId(session_id)}, {"$set": {"reviews": reviews}})
+    return reviews
+
+
+@router.get("/sessions/{session_id}/source")
+async def get_session_source(session_id: str, current_user: UserInDB = Depends(get_current_user)):
+    """The analysed contract's source, for the in-browser IDE."""
+    sessions_collection = await get_analysis_sessions_collection()
+    try:
+        session_doc = await sessions_collection.find_one({"_id": ObjectId(session_id), "user_id": current_user.id})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not session_doc:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    try:
+        source = Path(session_doc["file_path"]).read_text(encoding="utf-8", errors="replace")
+    except FileNotFoundError:
+        raise HTTPException(status_code=410, detail="Contract file is no longer stored; re-run the analysis")
+    return {"filename": session_doc["filename"], "source": source}
+
+
+@router.get("/sessions/{session_id}/sarif")
+async def export_session_sarif(
+    session_id: str,
+    uri: str = Query(None, max_length=500, description="Path of the contract in your repo, so IDE/CI can point at it; defaults to the uploaded filename"),
+    current_user: UserInDB = Depends(get_current_user)
+):
+    """Export the alerts (lines, confidence, expert review) as SARIF for VS Code and GitHub code scanning."""
+    sessions_collection = await get_analysis_sessions_collection()
+    try:
+        session_doc = await sessions_collection.find_one({"_id": ObjectId(session_id), "user_id": current_user.id})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not session_doc:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    return session_to_sarif(session_doc, uri or session_doc["filename"])
 
 
 @router.get("/health")

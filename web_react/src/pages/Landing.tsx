@@ -16,7 +16,7 @@ const safe = SAMPLE_FUNCTIONS.length - flagged;
 
 const LAYER_ROWS: { key: keyof Layers; name: string; note: string; count: number; unit: string }[] = [
   { key: "ground", name: "Contract source", note: "Every line the parser read", count: 1, unit: "file" },
-  { key: "safe", name: "Safe functions", note: "Predicted not vulnerable", count: safe, unit: "fn" },
+  { key: "safe", name: "Unflagged functions", note: "Predicted not vulnerable", count: safe, unit: "fn" },
   { key: "edges", name: "Call edges", note: "Who calls whom", count: SAMPLE_EDGES.length, unit: "edges" },
   { key: "flagged", name: "Flagged functions", note: "Predicted vulnerable", count: flagged, unit: "fn" },
 ];

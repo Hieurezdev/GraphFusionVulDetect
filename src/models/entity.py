@@ -113,8 +113,23 @@ class AnalysisStep(BaseModel):
     completed_at: Optional[datetime] = Field(default=None, description="Step completion timestamp")
     error_message: Optional[str] = Field(default=None, description="Error message if step failed")
 
+class ReviewStatus(str, Enum):
+    PENDING = "pending"
+    CONFIRMED = "confirmed"
+    FALSE_POSITIVE = "false_positive"
+    NEEDS_MANUAL_REVIEW = "needs_manual_review"
+
+class FunctionReviewUpdate(BaseModel):
+    function_name: str = Field(..., min_length=1, max_length=300)
+    status: ReviewStatus
+    note: Optional[str] = Field(default=None, max_length=2000)
+
+class FunctionReview(FunctionReviewUpdate):
+    reviewer: str
+    reviewed_at: datetime
+
 class AnalysisSession(BaseModel):
-    id: Optional[str] = Field(default=None, alias="_id", description="Unique session identifier")
+    id: Optional[str] = Field(default=None, description="Unique session identifier")
     project_id: str = Field(..., description="ID of the project this analysis belongs to")
     user_id: str = Field(..., description="ID of the user who initiated the analysis")
     file_path: str = Field(..., description="Path to the file being analyzed")
@@ -124,6 +139,7 @@ class AnalysisSession(BaseModel):
     started_at: datetime = Field(default_factory=now_utc, description="Analysis start timestamp")
     completed_at: Optional[datetime] = Field(default=None, description="Analysis completion timestamp")
     error_message: Optional[str] = Field(default=None, description="Error message if analysis failed")
+    reviews: List[FunctionReview] = Field(default_factory=list, description="Expert verdicts on flagged functions")
 
 # Analysis related schemas
 class VulnerabilityType(str, Enum):

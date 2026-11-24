@@ -67,7 +67,7 @@ export const FunctionCut = () => {
       <div className="cut__read">
         <dl className="cut__facts">
           <div><dt>{t("Function")}</dt><dd className="code-text">{fn.name}</dd></div>
-          <div><dt>{t("Verdict")}</dt><dd className={fn.vulnerable ? "text-bad" : "text-ok"}>{fn.vulnerable ? t("Vulnerable") : t("Safe")}</dd></div>
+          <div><dt>{t("Verdict")}</dt><dd className={fn.vulnerable ? "text-bad" : "text-ok"}>{fn.vulnerable ? t("Vulnerable") : t("Not flagged")}</dd></div>
           <div><dt>{t("Confidence")}</dt><dd className="measured">{fn.confidence}</dd></div>
           <div><dt>{t("Calls")}</dt><dd className="code-text">{calls.length ? calls.join(", ") : t("none")}</dd></div>
           <div><dt>{t("Called by")}</dt><dd className="code-text">{calledBy.length ? calledBy.join(", ") : t("none")}</dd></div>

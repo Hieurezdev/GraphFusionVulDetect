@@ -72,6 +72,8 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         # --- Feature and Embedding Extraction ---
         features, embeddings, contract_indices = {}, {}, {}
         function_codes, final_json_node_mapping = {}, {}
+        function_lines, function_spans = {}, {}
+        source_bytes = Path(sol_file_src).read_bytes()
 
         # Pre-calculate graph-wide metrics
         katz_centrality = nx.katz_centrality(graph)
@@ -108,6 +110,11 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
             # Prepare data for the final JSON mapping file
             pretty_function_name = data['label'].split(".sol_")[1].replace("_", ".")
             function_codes[pretty_function_name] = function_code
+            start, length = data['node_source_code_start'], data['node_source_code_length']
+            if start is not None:  # [Solidity] built-ins have no source
+                function_lines[pretty_function_name] = [source_bytes[:start].count(b'\n') + 1,
+                                                        source_bytes[:start + length].count(b'\n') + 1]
+                function_spans[pretty_function_name] = [start, length]
             final_json_node_mapping[pretty_function_name] = stable_idx
             
         # Set the extracted data as node attributes in the NetworkX graph
@@ -130,7 +137,8 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
         print(f"Saved FCG: {fcg_file_path}")
 
         # Save the stable mapping and code snippets to a JSON file
-        mapping_data = {"node": final_json_node_mapping, "code": function_codes}
+        mapping_data = {"node": final_json_node_mapping, "code": function_codes,
+                        "lines": function_lines, "span": function_spans}
         json_path = fcg_save_dir / f'{Path(sol_file_src).stem}_mapping.json'
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(mapping_data, f, indent=4, ensure_ascii=False)

@@ -1,0 +1,48 @@
+# ScanGuard (GraphFusion) on GitHub: alerts show up on the exact lines in PRs and under Security > Code scanning.
+# Install: copy this file to .github/workflows/scanguard.yml in the repo holding your .sol files, and add the
+# repository secrets SCANGUARD_USERNAME and SCANGUARD_PASSWORD (an account on https://scanguard.ptitai.org).
+# Alerts are model output, not proof: confirm or reject each one on ScanGuard; the next run carries that verdict.
+name: ScanGuard
+
+on:
+  pull_request:
+    paths: ["**.sol"]
+  push:
+    branches: [main, master]
+    paths: ["**.sol"]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan Solidity files
+        env:
+          API: https://scanguard.ptitai.org/api/v1
+          SCANGUARD_USERNAME: ${{ secrets.SCANGUARD_USERNAME }}
+          SCANGUARD_PASSWORD: ${{ secrets.SCANGUARD_PASSWORD }}
+        run: |
+          set -euo pipefail
+          TOKEN=$(jq -n --arg u "$SCANGUARD_USERNAME" --arg p "$SCANGUARD_PASSWORD" '{username: $u, password: $p}' \
+            | curl -fsS -X POST "$API/auth/login" -H 'Content-Type: application/json' -d @- | jq -r .access_token)
+          mkdir -p sarif
+          git ls-files '*.sol' | while read -r f; do
+            # The analysis streams until done; its session id comes back in a header.
+            sid=$(curl -fsS -D - -o /dev/null -X POST "$API/analyze" -H "Authorization: Bearer $TOKEN" -F "file=@$f" \
+              | tr -d '\r' | awk -F': ' 'tolower($1) == "x-session-id" {print $2}')
+            curl -fsS -G "$API/sessions/$sid/sarif" --data-urlencode "uri=$f" -H "Authorization: Bearer $TOKEN" \
+              > "sarif/$(echo "$f" | tr '/' '_').sarif"
+            echo "$f -> session $sid"
+          done
+          # One run per upload: GitHub rejects several runs with the same tool and category.
+          jq -s '.[0].runs[0].results = [.[].runs[0].results[]] | .[0]' sarif/*.sarif > scanguard.sarif
+
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: scanguard.sarif
+          category: scanguard

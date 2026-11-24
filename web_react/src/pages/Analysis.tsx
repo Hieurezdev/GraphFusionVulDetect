@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { lazy, Suspense, useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -7,9 +7,12 @@ import { ArrowLeft, XCircle } from "lucide-react";
 import { StreamingResults } from "@/components/StreamingResults";
 import { ContractVisualization } from "@/components/ContractVisualization";
 import { RefactorChatbot } from "@/components/RefactorChatbot";
-import { projectService } from "@/services/project";
+import { projectService, FunctionReview } from "@/services/project";
 import { toast } from "sonner";
 import { useT } from "@/i18n";
+
+// Monaco is large: load the IDE only when a finished analysis shows it.
+const ContractIDE = lazy(() => import("@/components/ContractIDE"));
 
 interface AnalysisData {
   status: "pending" | "analyzing" | "complete" | "error";
@@ -27,6 +30,7 @@ const Analysis = () => {
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [streamingResults, setStreamingResults] = useState<any[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [reviews, setReviews] = useState<FunctionReview[]>([]);
 
   const handleBack = () => {
     const storedData = sessionStorage.getItem("contractAnalysis");
@@ -192,11 +196,25 @@ const Analysis = () => {
 
           <ContractVisualization data={streamingResults} isStreaming={isStreaming} />
 
-          <StreamingResults results={streamingResults} isStreaming={isStreaming} />
+          {analysisData.status === "complete" && analysisData.sessionId && (
+            <Suspense fallback={null}>
+              <ContractIDE key={analysisData.sessionId} sessionId={analysisData.sessionId} results={streamingResults} reviews={reviews} onReviewed={setReviews} />
+            </Suspense>
+          )}
+
+          <StreamingResults
+            results={streamingResults}
+            isStreaming={isStreaming}
+            sessionId={analysisData.sessionId}
+            reviews={reviews}
+            onReviewed={setReviews}
+          />
         </div>
       </main>
 
       <RefactorChatbot
+        sessionId={analysisData.sessionId}
+        reviews={reviews}
         vulnerableFunctions={
           streamingResults
             .flatMap(result => result.output?.func_vulnerability_predictions || [])

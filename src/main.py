@@ -16,5 +16,8 @@ if __name__ == "__main__":
         port=8000,
         log_level="info",
         access_log=True,
+        # Behind nginx: trust X-Forwarded-Proto so redirects keep https (else the browser blocks them).
+        proxy_headers=True,
+        forwarded_allow_ips="*",
         reload=False  # Set to True for development
     )

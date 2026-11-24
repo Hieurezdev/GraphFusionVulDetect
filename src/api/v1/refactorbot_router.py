@@ -5,13 +5,17 @@ API Router for RefactorBot Service - Smart Contract Refactoring Assistant
 import json
 import logging
 from typing import List, Dict, Any, Optional
+from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import StreamingResponse
+from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, Field
 from src.utils.language import normalize_language
 
 from src.services.refactorbot_service import RefactorBotService
 from src.models.entity import UserInDB
+from src.infrastructure.database import get_analysis_sessions_collection
+from src.workflows.gfd_workflow.utils.fix_check import check_fix, WHOLE_FILE
 from .authentication_router import get_current_user
 
 logger = logging.getLogger(__name__)
@@ -64,11 +68,22 @@ class ValidationRequest(BaseModel):
     """Request model for validating refactored code"""
     original_code: str = Field(..., description="Original code before refactoring", min_length=1)
     suggested_code: str = Field(..., description="Suggested refactored code", min_length=1)
+    session_id: Optional[str] = Field(None, description="Analysis session holding the contract; enables a real compile + Slither re-check")
+    function_name: Optional[str] = Field(None, description="Flagged function the suggestion replaces")
 
 class ValidationResponse(BaseModel):
     """Response model for validation"""
     is_valid: bool = Field(..., description="Whether the suggested code is valid")
     message: str = Field(..., description="Validation message or errors")
+    compiled: Optional[bool] = Field(None, description="Whether the patched contract compiles")
+    solc_version: Optional[str] = None
+    original_solc_version: Optional[str] = None
+    slither_error: Optional[str] = Field(None, description="Set when Slither could not analyse one side; its counts are then incomplete")
+    compiler_output: Optional[str] = None
+    findings_before: List[Dict[str, Any]] = Field(default_factory=list, description="Slither findings on the original function")
+    findings_after: List[Dict[str, Any]] = Field(default_factory=list, description="Slither findings on the patched function")
+    patched_lines: List[int] = Field(default_factory=list)
+    requires_review: bool = Field(True, description="Always true: a passing check is not proof the fix is correct")
 
 
 # Service instance
@@ -245,23 +260,63 @@ async def validate_refactoring(
     try:
         logger.info(f"Validation request by user {current_user.username}")
         
-        # Validate the refactored code
-        is_valid, message = refactorbot_service.validate_suggested_refactoring(
-            original_code=request.original_code,
-            suggested_code=request.suggested_code
-        )
-        
-        response = ValidationResponse(
-            is_valid=is_valid,
-            message=message
-        )
-        
+        if request.session_id and (request.function_name or WHOLE_FILE.search(request.suggested_code)):
+            response = await _check_against_contract(request, current_user)
+        else:
+            # No contract context: only the shallow syntax check is possible.
+            is_valid, message = refactorbot_service.validate_suggested_refactoring(
+                original_code=request.original_code,
+                suggested_code=request.suggested_code
+            )
+            response = ValidationResponse(
+                is_valid=is_valid,
+                message=f"{message.rstrip('.')}. Not compiled: open the fix from an analysis session to compile and re-check it."
+            )
+        is_valid, message = response.is_valid, response.message
+
         logger.info(f"Validation result: {is_valid} - {message}")
         return response
-        
+
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Unexpected error in validate_refactoring: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"An unexpected error occurred during validation: {str(e)}"
         )
+
+
+async def _check_against_contract(request: ValidationRequest, current_user: UserInDB) -> ValidationResponse:
+    """Splice the fix into the analysed contract, compile it and compare Slither findings before/after."""
+    sessions = await get_analysis_sessions_collection()
+    try:
+        session = await sessions.find_one({"_id": ObjectId(request.session_id), "user_id": current_user.id})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not session:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+
+    span = None  # a whole edited file (the IDE) replaces everything, so no function span is needed
+    if not WHOLE_FILE.search(request.suggested_code):
+        prediction = next((p for step in session.get("steps", [])
+                           for p in (step.get("result_data") or {}).get("func_vulnerability_predictions", [])
+                           if p.get("function_name") == request.function_name), None)
+        if not prediction or not prediction.get("span"):
+            raise HTTPException(status_code=404, detail="Function source location not found; re-run the analysis")
+        span = prediction["span"]
+
+    result = await run_in_threadpool(check_fix, session["file_path"], span, request.suggested_code)
+    before, after = len(result["findings_before"]), len(result["findings_after"])
+    scope = "this function" if span else "the contract"
+    if result["compiled"]:
+        upgraded = (f" (the original uses {result['original_solc_version']}: the fix changes the compiler version, review that too)"
+                    if result["original_solc_version"] != result["solc_version"] else "")
+        message = (f"Compiles with solc {result['solc_version']}{upgraded}. Slither findings on {scope}: "
+                   f"{before} before, {after} after. This is not proof the fix is correct: "
+                   "an expert must review the change and run the contract's own tests.")
+        if result["slither_error"]:
+            message += " Slither could not analyse every version, so these counts are incomplete."
+    else:
+        message = f"Does not compile with solc {result['solc_version']}. See the compiler output."
+    return ValidationResponse(is_valid=result["compiled"], message=message, **result)

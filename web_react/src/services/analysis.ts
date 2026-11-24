@@ -62,7 +62,7 @@ export class AnalysisService {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.UPLOAD}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.UPLOAD}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
@@ -145,7 +145,7 @@ export class AnalysisService {
    */
   static createAnalysisStream(filePath: string): EventSource {
     const token = localStorage.getItem('auth_token');
-    const url = new URL(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.STREAM}`);
+    const url = new URL(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.STREAM}`);
     url.searchParams.append('file_path', filePath);
     
     const eventSource = new EventSource(url.toString(), {

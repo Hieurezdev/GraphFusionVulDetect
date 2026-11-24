@@ -63,6 +63,17 @@ export interface AnalysisSession {
   started_at: string;
   completed_at?: string;
   error_message?: string;
+  reviews?: FunctionReview[];
+}
+
+export type ReviewStatus = 'pending' | 'confirmed' | 'false_positive' | 'needs_manual_review';
+
+export interface FunctionReview {
+  function_name: string;
+  status: ReviewStatus;
+  note?: string | null;
+  reviewer: string;
+  reviewed_at: string;
 }
 
 class ProjectService {
@@ -260,6 +271,23 @@ class ProjectService {
   /**
    * Get a specific analysis session
    */
+  async reviewFunction(sessionId: string, functionName: string, status: ReviewStatus, note?: string): Promise<FunctionReview[]> {
+    return await apiFetch<FunctionReview[]>(`/api/v1/sessions/${sessionId}/reviews`, {
+      method: 'PUT',
+      body: { function_name: functionName, status, note },
+      requireAuth: true,
+    });
+  }
+
+  async getSessionSource(sessionId: string): Promise<{ filename: string; source: string }> {
+    return await apiFetch(`/api/v1/sessions/${sessionId}/source`, { requireAuth: true });
+  }
+
+  /** SARIF for VS Code (SARIF Viewer) and GitHub code scanning. */
+  async getSessionSarif(sessionId: string): Promise<unknown> {
+    return await apiFetch<unknown>(`/api/v1/sessions/${sessionId}/sarif`, { requireAuth: true });
+  }
+
   async getAnalysisSession(sessionId: string): Promise<AnalysisSession> {
     return await apiFetch<AnalysisSession>(`/api/v1/analyze/sessions/${sessionId}`, {
       requireAuth: true,

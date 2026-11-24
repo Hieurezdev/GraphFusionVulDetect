@@ -29,9 +29,26 @@ export interface ConversationResponse {
   suggested_code?: string;
 }
 
+export interface SlitherFinding {
+  check: string;
+  impact: string;
+  confidence: string;
+  description: string;
+  lines: number[];
+}
+
 export interface ValidationResponse {
   is_valid: boolean;
   message: string;
+  compiled?: boolean | null;
+  solc_version?: string | null;
+  original_solc_version?: string | null;
+  slither_error?: string | null;
+  compiler_output?: string | null;
+  findings_before: SlitherFinding[];
+  findings_after: SlitherFinding[];
+  patched_lines: number[];
+  requires_review: boolean;
 }
 
 class RefactorBotService {
@@ -138,14 +155,18 @@ class RefactorBotService {
    */
   async validateRefactoring(
     originalCode: string,
-    suggestedCode: string
+    suggestedCode: string,
+    sessionId?: string,
+    functionName?: string
   ): Promise<ValidationResponse> {
     const response = await fetch(`${this.baseUrl}/validate`, {
       method: 'POST',
       headers: createAuthHeaders(),
       body: JSON.stringify({
         original_code: originalCode,
-        suggested_code: suggestedCode
+        suggested_code: suggestedCode,
+        session_id: sessionId,
+        function_name: functionName
       })
     });
 

@@ -5,7 +5,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { refactorBotService, ConversationMessage } from "@/services/refactorbot";
+import { refactorBotService, ConversationMessage, ValidationResponse, SlitherFinding } from "@/services/refactorbot";
+import type { FunctionReview } from "@/services/project";
+import { REVIEW_LABELS } from "./FunctionReviewControl";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useT } from "@/i18n";
@@ -19,7 +21,24 @@ interface VulnerableFunction {
 
 interface RefactorChatbotProps {
   vulnerableFunctions: VulnerableFunction[];
+  sessionId?: string;
+  reviews?: FunctionReview[];
 }
+
+export const FindingList = ({ title, findings }: { title: string; findings: SlitherFinding[] }) => (
+  <div>
+    <p className="text-xs text-muted-foreground">{title} ({findings.length})</p>
+    {findings.length > 0 && (
+      <ul className="mt-1 space-y-1">
+        {findings.map((f, i) => (
+          <li key={i} className="text-xs text-ink-2">
+            <span className="code-text text-ink">{f.check}</span> · {f.impact}/{f.confidence} · L{f.lines.join(", L")}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
 
 const lastSolidityBlock = (messages: ConversationMessage[]) => {
   for (let i = messages.length - 1; i >= 0; i--) {
@@ -30,7 +49,7 @@ const lastSolidityBlock = (messages: ConversationMessage[]) => {
   return "";
 };
 
-export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) => {
+export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }: RefactorChatbotProps) => {
   const t = useT();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFunction, setSelectedFunction] = useState<VulnerableFunction | null>(null);
@@ -44,6 +63,11 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
 
   const vulnerableOnly = vulnerableFunctions.filter(f => f.prediction === 1);
   const suggestedCode = useMemo(() => (isLoading ? "" : lastSolidityBlock(conversationHistory)), [conversationHistory, isLoading]);
+  const [validation, setValidation] = useState<ValidationResponse | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
+  const reviewOf = (name: string) => reviews.find(r => r.function_name === name)?.status ?? "pending";
+
+  useEffect(() => setValidation(null), [suggestedCode, selectedFunction]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ block: "end" });
@@ -89,7 +113,7 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
 
   const handleSelectFunction = (functionName: string) => {
     const func = vulnerableOnly.find(f => f.function_name === functionName);
-    if (!func) return;
+    if (!func || reviewOf(functionName) !== "confirmed") return;
     abortRef.current?.abort();
     setSelectedFunction(func);
     setError("");
@@ -118,13 +142,19 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
 
   const handleValidateCode = async () => {
     if (!selectedFunction || !suggestedCode) return;
+    setIsValidating(true);
     try {
-      const response = await refactorBotService.validateRefactoring(selectedFunction.function_code, suggestedCode);
+      const response = await refactorBotService.validateRefactoring(
+        selectedFunction.function_code, suggestedCode, sessionId, selectedFunction.function_name
+      );
+      setValidation(response);
       if (response.is_valid) toast.success(response.message);
       else toast.warning(response.message);
     } catch (err) {
       console.error("Error validating code:", err);
       toast.error(err instanceof Error ? err.message : t("Failed to validate code"));
+    } finally {
+      setIsValidating(false);
     }
   };
 
@@ -172,10 +202,12 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
               </SelectTrigger>
               <SelectContent>
                 {vulnerableOnly.map((func) => (
-                  <SelectItem key={func.function_name} value={func.function_name}>
+                  // A fix is only proposed for alerts an expert has confirmed.
+                  <SelectItem key={func.function_name} value={func.function_name} disabled={reviewOf(func.function_name) !== "confirmed"}>
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="h-3 w-3 text-bad" aria-hidden="true" />
                       <span className="code-text text-xs">{func.function_name}</span>
+                      <span className="text-xs text-muted-foreground">{t(REVIEW_LABELS[reviewOf(func.function_name)])}</span>
                       <span className="measured ml-auto text-xs text-cool">{func.confidence}</span>
                     </div>
                   </SelectItem>
@@ -189,6 +221,7 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
               <div className="flex h-full flex-col items-start justify-center gap-2 py-16 text-sm text-muted-foreground">
                 <p className="text-ink-2">{t("Select a vulnerable function to start analysis")}</p>
                 <p>{t("{n} flagged in this contract.", { n: vulnerableOnly.length })}</p>
+                <p>{t("Only alerts confirmed by an expert can be fixed here. Review each alert in the results first.")}</p>
               </div>
             ) : (
               <div className="space-y-5">
@@ -236,7 +269,7 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
                   <div className="rounded-md bg-ok-soft p-3">
                     <div className="mb-2 flex items-center justify-between gap-3">
                       <p className="text-xs text-ok">{t("Suggested Refactored Code")}</p>
-                      <Button size="sm" variant="outline" onClick={handleValidateCode}>
+                      <Button size="sm" variant="outline" onClick={handleValidateCode} disabled={isValidating} aria-busy={isValidating}>
                         <CheckCircle className="h-3 w-3" />
                         {t("Validate")}
                       </Button>
@@ -244,6 +277,27 @@ export const RefactorChatbot = ({ vulnerableFunctions }: RefactorChatbotProps) =
                     <pre className="code-text overflow-x-auto rounded-sm bg-paper p-3 text-xs text-ink-2">
                       {suggestedCode}
                     </pre>
+                    {validation && (
+                      <div className="mt-3 space-y-2 border-t border-rule pt-3" role="status">
+                        <p className={`text-sm ${validation.is_valid ? "text-ok" : "text-bad"}`}>{validation.message}</p>
+                        {validation.compiled != null && (
+                          <>
+                            <FindingList title={t("Slither findings before the fix")} findings={validation.findings_before} />
+                            <FindingList title={t("Slither findings after the fix")} findings={validation.findings_after} />
+                            {validation.slither_error && (
+                              <pre className="code-text whitespace-pre-wrap text-xs text-bad">{validation.slither_error}</pre>
+                            )}
+                          </>
+                        )}
+                        {validation.compiler_output && (
+                          <details className="text-xs">
+                            <summary className="cursor-pointer text-muted-foreground">{t("Compiler output")}</summary>
+                            <pre className="code-text mt-1 overflow-x-auto whitespace-pre-wrap rounded-sm bg-paper p-2 text-ink-2">{validation.compiler_output}</pre>
+                          </details>
+                        )}
+                        <p className="text-xs text-muted-foreground">{t("A passing check is not proof the fix is correct. Have an expert review the change and run the contract's tests before deploying.")}</p>
+                      </div>
+                    )}
                   </div>
                 )}
 

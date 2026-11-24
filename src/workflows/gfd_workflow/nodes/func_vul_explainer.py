@@ -26,15 +26,20 @@ def explain_vulnerability_func(state: State, config: RunnableConfig) -> State:
             continue  # Only explain functions predicted as vulnerable
         func_name = func_info["function_name"]
         func_code = func_info["function_code"]
+        first_line = (func_info.get("lines") or [1])[0]
+        numbered = "\n".join(f"{first_line + i:>4} | {line}" for i, line in enumerate(func_code.splitlines()))
         prompt = (
-            "You are a world-class smart contract security auditor. "
-            f"The following Solidity function has been flagged by a machine learning model as potentially vulnerable to a **Timestamp Dependency** attack. "
-            "Please analyze the code and provide a concise, expert explanation.\n\n"
-            f"Function Name: `{func_name}`\n"
-            f"```solidity\n{func_code}\n```\n\n"
-            "Your analysis should be short and only include these headings:\n"
-            "1.  **Vulnerability Explaination:** Explain why this function have vulnerability.\n"
-            "2.  **Impact:** Describe the potential consequences if this vulnerability is exploited (e.g., unfair advantage, locked funds).\n"
+            "You are a smart contract security auditor reviewing a machine-learning alert. "
+            f"A model flagged the following Solidity function as potentially vulnerable to **Timestamp Dependency** "
+            f"(confidence {func_info.get('confidence', 'unknown')}). The alert may be a false positive.\n\n"
+            f"Function Name: `{func_name}` (lines are numbered as in the original file)\n"
+            f"```solidity\n{numbered}\n```\n\n"
+            "Answer briefly, with only these headings:\n"
+            "1.  **Evidence:** Quote the exact line(s) that support the alert, citing them as `Lx`. "
+            "If no line supports it, say the alert looks like a false positive and why.\n"
+            "2.  **Impact:** The potential consequences if it is exploitable.\n"
+            "3.  **Needs manual review:** What an auditor must still check (callers, deployment context, other attack classes).\n"
+            "Never state or imply the code is safe, secure or free of vulnerabilities.\n"
         ) + language_instruction(state.get("language"))
         try:
             response = llm.invoke(prompt)

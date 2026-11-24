@@ -31,6 +31,7 @@ class GFDWorkflow:
         self.embedd_tokenizer = RobertaTokenizer.from_pretrained(emb_path)
         self.embedd_model = RobertaModel.from_pretrained(emb_path).to(self.device).eval()
 
+    # GNNs stay on CPU: the PyPI dgl build has no CUDA; only CodeBERT follows settings.DEVICE.
     def _load_graph_model(self):
         model = GraphNN(
             mtype=["GCN"], infeats=768,
@@ -40,8 +41,8 @@ class GFDWorkflow:
             gptype="max", ginfeat=1024,
             num_query_vectors=2,
         )
-        model.load_state_dict(torch.load(settings.GRAPH_VUL_MODEL_PATH, map_location=self.device))
-        self.graph_vul_model = model.to(self.device).eval()
+        model.load_state_dict(torch.load(settings.GRAPH_VUL_MODEL_PATH, map_location="cpu"))
+        self.graph_vul_model = model.eval()
 
     def _load_node_model(self):
         model = NodeClassifierGNN(
@@ -50,8 +51,8 @@ class GFDWorkflow:
             fc1_layer=256, fc2_layer=64,
             outclass=2, ginfeat=1024
         )
-        model.load_state_dict(torch.load(settings.NODE_VUL_MODEL_PATH, map_location=self.device))
-        self.node_vul_model = model.to(self.device).eval()
+        model.load_state_dict(torch.load(settings.NODE_VUL_MODEL_PATH, map_location="cpu"))
+        self.node_vul_model = model.eval()
 
     def _load_llm(self):
         from langchain_openai import ChatOpenAI

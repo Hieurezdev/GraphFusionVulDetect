@@ -1,16 +1,31 @@
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, XCircle } from "lucide-react";
+import { AlertTriangle, Download, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { toast } from "sonner";
+import { projectService } from "@/services/project";
 import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
 import { FunctionGraphVisualization } from "./FunctionGraphVisualization";
 import { PipelineTrail, StageResult } from "./Pipeline";
 import { useT } from "@/i18n";
+import { FunctionReviewControl, REVIEW_LABELS } from "./FunctionReviewControl";
+import type { FunctionReview } from "@/services/project";
 
-interface StreamingResultsProps {
+interface ReviewProps {
+  sessionId?: string;
+  reviews?: FunctionReview[];
+  onReviewed?: (reviews: FunctionReview[]) => void;
+}
+
+interface StreamingResultsProps extends ReviewProps {
   results: any[];
   isStreaming: boolean;
 }
 
-const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
+const lineLabel = (lines?: number[]) => (lines && lines.length === 2 ? `L${lines[0]}–L${lines[1]}` : "");
+
+const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: ReviewProps) => {
   const output = result.output;
   if (!output) return null;
 
@@ -29,7 +44,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
       <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
         <div className="flex items-center gap-2">
           <dt className="text-muted-foreground">{t("Prediction")}</dt>
-          <dd><Badge variant={vulnerable ? "destructive" : "ok"}>{vulnerable ? t("Vulnerable") : t("Not vulnerable")}</Badge></dd>
+          <dd><Badge variant={vulnerable ? "destructive" : "ok"}>{vulnerable ? t("Vulnerable") : t("Not flagged")}</Badge></dd>
         </div>
         <div className="flex items-baseline gap-2">
           <dt className="text-muted-foreground">{t("Confidence")}</dt>
@@ -57,13 +72,31 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
                 <AccordionItem key={idx} value={`function-${idx}`} className="border-rule">
                   <AccordionTrigger className="min-w-0 gap-3 px-2 py-3 hover:bg-paper-2 hover:no-underline">
                     <span className="code-text min-w-0 flex-1 truncate text-left text-sm text-ink">{func.function_name}</span>
+                    <span className="code-text text-xs text-muted-foreground">{lineLabel(func.lines)}</span>
+                    {func.prediction === 1 && (() => {
+                      const status = review.reviews?.find(r => r.function_name === func.function_name)?.status ?? "pending";
+                      return <Badge variant="outline">{t(REVIEW_LABELS[status])}</Badge>;
+                    })()}
                     <Badge variant={func.prediction === 1 ? "destructive" : "ok"}>
-                      {func.prediction === 1 ? t("Vulnerable") : t("Safe")}
+                      {func.prediction === 1 ? t("Vulnerable") : t("Not flagged")}
                     </Badge>
                     <span className="measured w-12 text-right text-sm text-cool">{func.confidence}</span>
                   </AccordionTrigger>
                   <AccordionContent className="px-2">
-                    <pre className="code-text well overflow-x-auto p-4 text-xs leading-relaxed text-ink-2">{func.function_code}</pre>
+                    <pre className="code-text well overflow-x-auto p-4 text-xs leading-relaxed text-ink-2">{
+                      func.lines?.length === 2
+                        ? (func.function_code as string).split("\n").map((line, i) => `${String(func.lines[0] + i).padStart(4)} | ${line}`).join("\n")
+                        : func.function_code
+                    }</pre>
+                    {func.prediction === 1 && review.onReviewed && (
+                      <FunctionReviewControl
+                        key={review.sessionId}
+                        sessionId={review.sessionId}
+                        functionName={func.function_name}
+                        review={review.reviews?.find(r => r.function_name === func.function_name)}
+                        onReviewed={review.onReviewed}
+                      />
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -90,7 +123,9 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
               <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-bad" aria-hidden="true" />
               <div className="min-w-0">
                 <h4 className="code-text break-words text-sm text-ink">{explanation.function_name}</h4>
-                <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-ink-2">{explanation.explanation}</p>
+                <div className="chat-prose mt-2">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{explanation.explanation}</ReactMarkdown>
+                </div>
               </div>
             </div>
           </li>
@@ -102,7 +137,19 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>) => {
   return null;
 };
 
-export const StreamingResults = ({ results, isStreaming }: StreamingResultsProps) => {
+const downloadSarif = async (sessionId: string, t: ReturnType<typeof useT>) => {
+  try {
+    const sarif = await projectService.getSessionSarif(sessionId);
+    const url = URL.createObjectURL(new Blob([JSON.stringify(sarif, null, 2)], { type: "application/sarif+json" }));
+    const a = Object.assign(document.createElement("a"), { href: url, download: `graphfusion-${sessionId}.sarif` });
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    toast.error(error instanceof Error ? error.message : t("Could not export SARIF"));
+  }
+};
+
+export const StreamingResults = ({ results, isStreaming, ...review }: StreamingResultsProps) => {
   const t = useT();
   if (results.length === 0 && !isStreaming) {
     return null;
@@ -114,6 +161,17 @@ export const StreamingResults = ({ results, isStreaming }: StreamingResultsProps
     <section className="space-y-6" aria-labelledby="analysis-results-head">
       <div className="flex items-center justify-between gap-4">
         <h2 id="analysis-results-head" className="text-xl">{t("Analysis Results")}</h2>
+        {!isStreaming && review.sessionId && (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => downloadSarif(review.sessionId!, t)}
+            title={t("Open in VS Code with the SARIF Viewer extension, or upload to GitHub code scanning")}
+          >
+            <Download className="h-3 w-3" aria-hidden="true" />
+            {t("Download SARIF (IDE/CI)")}
+          </Button>
+        )}
         {isStreaming && (
           <Badge variant="signal" role="status">
             <span className="stage__spin keep-motion" aria-hidden="true" />
@@ -122,7 +180,11 @@ export const StreamingResults = ({ results, isStreaming }: StreamingResultsProps
         )}
       </div>
 
-      <PipelineTrail results={results} isStreaming={isStreaming} renderDetail={(r) => renderDetail(r, t)} />
+      <PipelineTrail results={results} isStreaming={isStreaming} renderDetail={(r) => renderDetail(r, t, review)} />
+
+      <p className="text-xs text-muted-foreground">
+        {t("Alerts and their absence are model output, not proof: an expert must confirm each alert, and an unflagged contract still needs a manual audit.")}
+      </p>
 
       {errors.map((error, idx) => (
         <div key={idx} role="alert" className="flex items-start gap-3 rounded-md bg-bad-soft p-4">
