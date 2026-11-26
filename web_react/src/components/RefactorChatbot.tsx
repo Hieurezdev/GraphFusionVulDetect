@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { refactorBotService, ConversationMessage, ValidationResponse, SlitherFinding } from "@/services/refactorbot";
-import type { FunctionReview } from "@/services/project";
+import { projectService, type FunctionReview } from "@/services/project";
 import { REVIEW_LABELS } from "./FunctionReviewControl";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -116,7 +116,14 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
     }
   };
 
-  const handleSelectFunction = (key: string) => {
+  // The assistant only sees one function: tell it the compiler version, or it answers in the newest syntax and the fix fails to compile.
+  const pragmaRef = useRef<Promise<string> | null>(null);
+  const contractPragma = () => (pragmaRef.current ??= sessionId
+    ? projectService.getSessionSource(sessionId).then(s => s.source.match(/pragma\s+solidity[^;]*;/)?.[0] ?? "")
+        .catch(() => { pragmaRef.current = null; return ""; })  // a failed fetch is retried next time, not remembered
+    : Promise.resolve(""));
+
+  const handleSelectFunction = async (key: string) => {
     const func = vulnerableOnly.find(f => keyOf(f) === key);
     if (!func) return;
     abortRef.current?.abort();
@@ -128,9 +135,10 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
       setConversationHistory(cached);
       return;
     }
+    const pragma = await contractPragma();
     requestReply(func, [{
       role: "user",
-      content: `The function "${func.function_name}" was flagged for ${labelOf(func).toLowerCase()}${reviewOf(func) === "confirmed" ? " and an expert confirmed the alert" : "; no expert has confirmed the alert yet, so first say whether it looks real"}. Explain why, then give the fixed function.`
+      content: `The function "${func.function_name}" was flagged for ${labelOf(func).toLowerCase()}${reviewOf(func) === "confirmed" ? " and an expert confirmed the alert" : "; no expert has confirmed the alert yet, so first say whether it looks real"}. Explain why, then give the fixed function.` + (pragma ? ` The contract declares "${pragma}": the fix must compile with that compiler version.` : "")
     }]);
   };
 

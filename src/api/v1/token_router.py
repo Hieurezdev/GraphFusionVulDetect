@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List, Optional
-from src.services.token_service import TokenService
+from src.services.token_service import TokenService, SourceNotVerified, RateLimited, TokenNotFound
 # Assuming project_service is available to create projects
 # from src.services.project_service import project_service 
 import logging
@@ -41,6 +41,8 @@ def search_tokens(query: str):
                 thumb=c.get("thumb") or c.get("large") 
             ) for c in results
         ]
+    except RateLimited:
+        raise HTTPException(status_code=429, detail="The token directory is busy right now. Wait a minute and search again.")
     except Exception as e:
         logger.error(f"Search failed: {e}")
         raise HTTPException(status_code=502, detail="Token lookup failed upstream; try again later.")
@@ -52,7 +54,11 @@ def get_token_platforms(coin_id: str):
     """
     try:
         details = token_service.get_token_details(coin_id)
-        return details.get("platforms", {})
+        return token_service.supported_platforms(details.get("platforms", {}))
+    except RateLimited:
+        raise HTTPException(status_code=429, detail="The token directory is busy right now. Wait a minute and pick the token again.")
+    except TokenNotFound:
+        raise HTTPException(status_code=404, detail="This token was not found in the token directory.")
     except Exception as e:
         logger.error(f"Get details failed: {e}")
         raise HTTPException(status_code=502, detail="Token lookup failed upstream; try again later.")
@@ -87,6 +93,10 @@ async def analyze_token(request: TokenAnalyzeRequest):
 
     except HTTPException:
         raise
+    except SourceNotVerified:
+        raise HTTPException(status_code=404, detail="This contract's source code is not published on the block explorer, so it cannot be scanned.")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="This network is not supported.")
     except Exception as e:
         # requests errors embed the full URL, apikey included: log it, never return it.
         logger.error(f"Analysis setup failed: {e}")

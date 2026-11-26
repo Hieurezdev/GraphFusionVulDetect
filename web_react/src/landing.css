@@ -47,6 +47,9 @@
 .lp-hero h1 { max-width: 12ch; font-size: var(--text-display); line-height: 1; text-wrap: balance; }
 .lp-hero__visual { animation-delay: 80ms; }
 .lp-lead { margin-top: var(--space-lg); color: var(--color-ink-2); }
+.lp-entries { display: grid; gap: var(--space-md); margin: var(--space-xl) 0 var(--space-md); }
+.lp-entries dt { color: var(--color-ink); }
+.lp-entries dd { margin: 2px 0 0; color: var(--color-ink-2); font-size: 0.9375rem; }
 .lp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-top: var(--space-xl); }
 
 .lp-strip { display: grid; grid-template-columns: repeat(4, minmax(0, auto)); justify-content: start; margin: var(--space-2xl) 0 0; padding: var(--space-md) var(--space-lg); }

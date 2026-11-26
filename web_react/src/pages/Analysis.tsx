@@ -97,7 +97,6 @@ const Analysis = () => {
         if (done) {
           setIsStreaming(false);
           setAnalysisData(prev => prev ? { ...prev, status: "complete" } : null);
-          toast.success(t("Analysis complete"));
           break;
         }
 

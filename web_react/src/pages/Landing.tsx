@@ -134,8 +134,8 @@ const Landing = () => {
         <section className="lp-hero" aria-labelledby="hero-head">
           <div className="shell lp-split lp-split--5-7">
             <div className="lp-hero__text land">
-              <h1 id="hero-head">{t("Every contract, read function by function.")}</h1>
-              <p className="lead lp-lead">{t("Turn a Solidity file into a call graph you can audit.")}</p>
+              <h1 id="hero-head">{t("Check a smart contract before you trust it.")}</h1>
+              <p className="lead lp-lead">{t("Search a token by name or upload a Solidity file. GraphFusion scans the contract for two known kinds of bug and shows which functions to look at, and why.")}</p>
               <div className="lp-actions">
                 {isAuthenticated ? (
                   <Link to="/analysis" className="lp-btn">{t("Start an analysis")}</Link>
@@ -144,6 +144,17 @@ const Landing = () => {
                 )}
                 <a href="#layers" className="lp-btn lp-btn--line">{t("Open the sample scan")}</a>
               </div>
+              <dl className="lp-entries">
+                <div>
+                  <dt>{t("Search by token")}</dt>
+                  <dd>{t("Search an Ethereum token and its published source is fetched for you. No code needed.")}</dd>
+                </div>
+                <div>
+                  <dt>{t("Upload source code")}</dt>
+                  <dd>{t("Upload it and get the flagged functions with their lines, an explanation, and a fix you can compile and re-check.")}</dd>
+                </div>
+              </dl>
+              <p className="lp-help">{t("It checks for timestamp dependency and reentrancy. A result is a lead for review, never a safety certificate.")}</p>
               <dl className="lp-strip ticks" aria-label={t("Sample scan of Vault.sol")}>
                 <div><dt>{t("Functions")}</dt><dd className="measured">{SAMPLE_FUNCTIONS.length}</dd></div>
                 <div><dt>{t("Flagged")}</dt><dd className="measured">{flagged}</dd></div>
@@ -168,6 +179,7 @@ const Landing = () => {
         <section id="layers" className="lp-section" aria-labelledby="layers-head">
           <div className="shell lp-split lp-split--5-7">
             <div className="lp-text">
+              <p className="lp-help">{t("For developers")}</p>
               <h2 id="layers-head">{t("Hide what you are not auditing.")}</h2>
               <p className="lead lp-lead">{t("Every point belongs to a function, so each layer is one switch.")}</p>
               <ul className="lp-layers">

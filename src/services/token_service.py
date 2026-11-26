@@ -1,3 +1,4 @@
+import logging
 import requests
 import json
 import os
@@ -5,9 +6,26 @@ import re
 from typing import List, Dict, Optional, Any
 from pathlib import Path
 
+class RateLimited(RuntimeError):
+    """The public token directory (CoinGecko free tier) refused the call: too many requests in the last minute."""
+
+
+logger = logging.getLogger(__name__)
+
+
+class TokenNotFound(RuntimeError):
+    """The token directory has no coin with that id."""
+
+
+class SourceNotVerified(RuntimeError):
+    """The explorer knows the address but its source code was never published."""
+
+
 class TokenService:
     COINGECKO_BASE = "https://api.coingecko.com/api/v3"
+    _details: Dict[str, Any] = {}
     
+    # Ethereum only: the detection models were trained on Ethereum contracts, so other chains are not offered.
     # Map friendly chain names -> CoinGecko 'platforms' keys and explorer API base
     CHAIN_META = {
         "ethereum": {
@@ -15,36 +33,6 @@ class TokenService:
             "chainid": "1",
             "explorer_api": "https://api.etherscan.io/v2/api",
             "api_key_env": "ETHERSCAN_API_KEY"
-        },
-        "bsc": {
-            "cg_key": "binance-smart-chain",
-            "chainid": "56",
-            "explorer_api": "https://api.bscscan.com/api",
-            "api_key_env": "BSCSCAN_API_KEY"
-        },
-        "binance-smart-chain": {
-            "cg_key": "binance-smart-chain",
-            "chainid": "56",
-            "explorer_api": "https://api.bscscan.com/api",
-            "api_key_env": "BSCSCAN_API_KEY"
-        },
-        "polygon": {
-            "cg_key": "polygon-pos",
-            "chainid": "137",
-            "explorer_api": "https://api.polygonscan.com/api",
-            "api_key_env": "POLYGONSCAN_API_KEY"
-        },
-        "arbitrum": {
-            "cg_key": "arbitrum-one",
-            "chainid": "42161",
-            "explorer_api": "https://api.arbiscan.io/api",
-            "api_key_env": "ARBISCAN_API_KEY"
-        },
-        "base": {
-            "cg_key": "base",
-            "chainid": "8453",
-            "explorer_api": "https://api.basescan.org/api",
-            "api_key_env": "BASESCAN_API_KEY"
         }
     }
 
@@ -53,29 +41,38 @@ class TokenService:
         Search CoinGecko for the token name/symbol.
         Returns a list of simplified token objects.
         """
-        url = f"{self.COINGECKO_BASE}/search"
-        try:
-            r = requests.get(url, params={"query": query}, timeout=10)
-            r.raise_for_status()
-            data = r.json()
-            coins = data.get("coins", [])
-            
-            # Enrich coins with platform info if needed, but search endpoint 
-            # only gives basic info. We might need detailed info later.
-            return coins
-        except Exception as e:
-            print(f"Error searching Coingecko: {e}")
-            return []
+        r = requests.get(f"{self.COINGECKO_BASE}/search", params={"query": query}, timeout=10)
+        if r.status_code == 429:  # say so: an empty list would read as "no such token"
+            raise RateLimited("Token directory rate limit reached")
+        r.raise_for_status()
+        return r.json().get("coins", [])
+
+    def supported_platforms(self, platforms: Dict[str, str]) -> Dict[str, str]:
+        """Only the chains we can fetch source for, keyed as CoinGecko names them, and only where the token has an address."""
+        known = {meta["cg_key"] for meta in self.CHAIN_META.values()}
+        return {chain: address for chain, address in (platforms or {}).items() if chain in known and address}
 
     def get_token_details(self, coin_id: str) -> Dict[str, Any]:
         """
         Get detailed info (platforms/addresses) for a specific coin.
         """
+        if coin_id in self._details:  # a token's contract addresses do not change: ask the rate-limited directory once per token
+            return self._details[coin_id]
         url = f"{self.COINGECKO_BASE}/coins/{coin_id}"
         try:
             r = requests.get(url, params={"localization": "false", "tickers": "false", "community_data": "false", "developer_data": "false"}, timeout=10)
+            if r.status_code == 429:
+                raise RateLimited("Token directory rate limit reached")
+            if r.status_code == 404:
+                raise TokenNotFound(coin_id)
             r.raise_for_status()
-            return r.json()
+            if len(self._details) > 2000:
+                self._details.clear()
+            # Keep only what is used: the full coin record is ~30 KB (descriptions, links, market data).
+            self._details[coin_id] = {"platforms": r.json().get("platforms") or {}}
+            return self._details[coin_id]
+        except (RateLimited, TokenNotFound):
+            raise
         except Exception as e:
             raise RuntimeError(f"Error fetching coin details: {e}")
 
@@ -86,8 +83,10 @@ class TokenService:
         """
         chain_key = chain.lower()
         if chain_key not in self.CHAIN_META:
-            # Try to map common names or default to ethereum
-            chain_key = "ethereum"
+            # The UI sends CoinGecko's platform key ("polygon-pos", "arbitrum-one"); never guess Ethereum for an unknown chain.
+            chain_key = next((k for k, meta in self.CHAIN_META.items() if meta["cg_key"] == chain_key), None)
+            if chain_key is None:
+                raise ValueError(f"Unsupported chain: {chain}")
 
         meta = self.CHAIN_META[chain_key]
         base_url = meta.get("explorer_api")
@@ -132,6 +131,8 @@ class TokenService:
             
             raise RuntimeError("No source code found in explorer response.")
 
+        except SourceNotVerified:
+            raise
         except Exception as e:
             # Add more context to error
             raise RuntimeError(f"Failed to fetch source code from {chain}: {e}")
@@ -144,7 +145,7 @@ class TokenService:
         contract_name = data.get("ContractName", "UnknownContract")
         
         if not source_code:
-            raise RuntimeError("Contract source code is empty or not verified.")
+            raise SourceNotVerified("Contract source code is empty or not verified.")
 
         # Handle multi-file source (JSON format)
         if source_code.startswith("{{") and source_code.endswith("}}"):

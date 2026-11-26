@@ -31,6 +31,7 @@ const Index = () => {
   const [selectedToken, setSelectedToken] = useState<TokenSearchResult | null>(null);
   const [tokenPlatforms, setTokenPlatforms] = useState<Record<string, string>>({});
   const [selectedPlatform, setSelectedPlatform] = useState<string>("");
+  const [platformsLoaded, setPlatformsLoaded] = useState(false);
 
   const handleFileSelect = (file: File, content: string) => {
     setSelectedFile({ file, content });
@@ -48,7 +49,7 @@ const Index = () => {
         const results = await tokenService.searchTokens(searchQuery);
         setSearchResults(results);
     } catch (e) {
-        toast.error(t("Failed to search token"));
+        toast.error(e instanceof Error && e.message ? t(e.message) : t("Failed to search token"));
     } finally {
         setIsSearching(false);
     }
@@ -57,13 +58,17 @@ const Index = () => {
   const handleSelectToken = async (token: TokenSearchResult) => {
       setSelectedToken(token);
       setSelectedPlatform("");
+      setTokenPlatforms({});
+      setPlatformsLoaded(false);
       try {
           const platforms = await tokenService.getPlatforms(token.id);
           setTokenPlatforms(platforms);
+          setPlatformsLoaded(true);
           const keys = Object.keys(platforms);
           if (keys.length > 0) setSelectedPlatform(keys[0]);
       } catch (e) {
-          toast.error(t("Failed to load platforms"));
+          setSelectedToken(null);  // nothing to scan yet: let the user pick again instead of leaving a dead selection
+          toast.error(e instanceof Error && e.message ? t(e.message) : t("Failed to load platforms"));
       }
   };
 
@@ -90,7 +95,7 @@ const Index = () => {
                 content: tokenData.source_code 
             };
         } catch (e) {
-             toast.error(t("Failed to fetch source code"));
+             toast.error(e instanceof Error && e.message ? t(e.message) : t("Failed to fetch source code"));
              setIsCreatingProject(false);
              return;
         }
@@ -149,6 +154,7 @@ const Index = () => {
     ? t("{name}: the source is fetched when the analysis starts", { name: selectedToken.name })
     : t("Waiting for a contract");
 
+  const noSupportedChain = Boolean(selectedToken) && platformsLoaded && Object.keys(tokenPlatforms).length === 0;
   const startDisabled = isCreatingProject || (activeTab === "upload" ? !selectedFile : (!selectedToken || !selectedPlatform));
 
   return (
@@ -240,7 +246,7 @@ const Index = () => {
                 </ul>
               )}
 
-              {selectedToken && (
+              {selectedToken && !noSupportedChain && (
                 <div className="land space-y-2">
                   <Label>{t("Select Chain")}</Label>
                   <Select value={selectedPlatform} onValueChange={setSelectedPlatform}>
@@ -279,7 +285,7 @@ const Index = () => {
             </Button>
             {startDisabled && !isCreatingProject && (
               <p className="text-sm text-muted-foreground">
-                {activeTab === "upload" ? t("Choose a .sol file.") : t("Pick a token and its chain.")}
+                {activeTab === "upload" ? t("Choose a .sol file.") : noSupportedChain ? t("This token has no contract on Ethereum, the only network supported, so it cannot be scanned.") : t("Pick a token and its chain.")}
               </p>
             )}
           </div>
