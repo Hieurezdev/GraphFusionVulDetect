@@ -24,7 +24,7 @@ const Header = () => {
           <span className="hidden text-xs text-muted-foreground lg:inline">{t("Vulnerability Detector")}</span>
         </Link>
 
-        <nav className="flex items-center gap-4 sm:ml-6 sm:gap-5" aria-label={t("Main")}>
+        <nav className="flex min-w-0 items-center gap-4 overflow-x-auto sm:ml-6 sm:gap-5" aria-label={t("Main")}>
           <NavLink to="/analysis" end className={navLink} activeClassName={navActive}>
             {t("New Analysis")}
           </NavLink>

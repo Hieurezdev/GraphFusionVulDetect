@@ -50,7 +50,7 @@ const ReviewQueue = () => {
           <p className="mt-6 text-ink-2">{t("No analysis has flagged functions to review.")}</p>
         ) : (
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-12">
-            <aside aria-labelledby="queue-head">
+            <aside aria-labelledby="queue-head" className="min-w-0">
               <h2 id="queue-head" className="text-sm text-muted-foreground">{t("Analyses with alerts")}</h2>
               <ol className="mt-4 border-l border-rule-2">
                 {sessions.map(session => {

@@ -45,6 +45,13 @@ class LLMClient:
         
         logger.info(f"LLMClient initialized successfully with {len(self.clients)} client(s)")
 
+    @classmethod
+    def single(cls, client) -> "LLMClient":
+        """A pool of one ready-made chat model (the in-process local LLM), no API key needed."""
+        pool = cls.__new__(cls)
+        pool.clients = [client]
+        return pool
+
     def get_instance(self) -> ChatOpenAI:
         """
         Returns a random ChatOpenAI client instance from the active pool.

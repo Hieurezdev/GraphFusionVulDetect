@@ -73,6 +73,10 @@ class GFDWorkflow:
         return model.eval()
 
     def _load_llm(self):
+        if settings.LOCAL_LLM_MODEL:
+            from src.infrastructure.chat_model.local_llm import get_local_llm
+            self.llm = get_local_llm()
+            return
         from langchain_openai import ChatOpenAI
 
         self.llm = ChatOpenAI(

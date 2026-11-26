@@ -14,7 +14,8 @@ export const TruncatedText: React.FC<TruncatedTextProps> = ({
   maxLines = 1,
   showTooltip = true 
 }) => {
-  const truncateClass = maxLines === 1 ? "truncate" : `line-clamp-${maxLines}`;
+  // `truncate` only cuts a block box, and a flex child needs min-w-0 to shrink; a bare span let long names spill out.
+  const truncateClass = maxLines === 1 ? "block min-w-0 truncate" : `line-clamp-${maxLines}`;
   
   if (!showTooltip) {
     return (

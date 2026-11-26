@@ -68,8 +68,9 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
             <Accordion type="single" collapsible className="border-t border-rule">
               {output.func_vulnerability_predictions.map((func: any, idx: number) => (
                 <AccordionItem key={idx} value={`function-${idx}`} className="border-rule">
-                  <AccordionTrigger className="min-w-0 gap-3 px-2 py-3 hover:bg-paper-2 hover:no-underline">
-                    <span className="code-text min-w-0 flex-1 truncate text-left text-sm text-ink">{func.function_name}</span>
+                  <AccordionTrigger className="min-w-0 flex-wrap gap-x-3 gap-y-1 px-2 py-3 hover:bg-paper-2 hover:no-underline sm:flex-nowrap">
+                    {/* Narrow screens: the name gets its own line, the line range, badges and score wrap below it. */}
+                    <span className="code-text min-w-0 basis-full truncate text-left text-sm text-ink sm:flex-1 sm:basis-0">{func.function_name}</span>
                     <span className="code-text text-xs text-muted-foreground">{lineLabel(func.lines)}</span>
                     {func.prediction === 1 && (() => {
                       const status = findReview(review.reviews, review.vulnerability ?? DEFAULT_VULNERABILITY, func.function_name)?.status ?? "pending";

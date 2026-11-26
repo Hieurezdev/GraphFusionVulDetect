@@ -242,7 +242,7 @@ const ProjectAnalysis = () => {
         )}
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-12">
-          <aside aria-labelledby="history-head">
+          <aside aria-labelledby="history-head" className="min-w-0">
             <h2 id="history-head" className="text-sm text-muted-foreground">{t("Analysis History")}</h2>
             {analysisSessions.length === 0 ? (
               <p className="mt-4 text-sm text-ink-2">

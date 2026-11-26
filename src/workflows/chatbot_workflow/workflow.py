@@ -48,6 +48,11 @@ class ChatbotWorkflow:
         Load and configure the LLM client pool.
         """
         print("Loading LLM client configuration...")
+        if settings.LOCAL_LLM_MODEL:
+            from src.infrastructure.chat_model.local_llm import get_local_llm
+            self.llm_client = LLMClient.single(get_local_llm())
+            print(f"Using local LLM: {settings.LOCAL_LLM_MODEL}")
+            return
         
         # Get API keys from settings
         # Support multiple keys for load balancing

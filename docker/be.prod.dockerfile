@@ -16,6 +16,8 @@ RUN uv sync --frozen --no-dev --no-install-package dgl \
     # Slither 0.8.0 (the lock's pin) cannot parse custom errors or user-defined value types, i.e. most 0.8.x tokens. On the paper's
     # test sets 0.9.6 builds the same nodes and gives the same verdicts but one (eval/generalization/out/slither096).
     && uv pip install slither-analyzer==0.9.6 \
+    # peft loads LoRA adapters such as the optional local LLM (LOCAL_LLM_MODEL in .env).
+    && uv pip install peft==0.17.1 \
     && sed -i 's/^load_graphbolt()$/try:\n    load_graphbolt()\nexcept (FileNotFoundError, ImportError):\n    pass  # no torch 2.8 build; graphbolt is unused here/' \
        .venv/lib/python3.10/site-packages/dgl/graphbolt/__init__.py
 

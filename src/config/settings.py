@@ -11,10 +11,15 @@ class Settings(BaseSettings):
     REENTRANCY_GRAPH_VUL_MODEL_PATH: str = "src/infrastructure/analysis_model/best_model_GAT_2L_max_reentrancy.pt"
     REENTRANCY_NODE_VUL_MODEL_PATH: str = "src/infrastructure/analysis_model/best_node_classifier_model_reentrancy.pt"
     
-    # LLM
-    MODEL_NAME: str
-    BASE_URL: str
-    GEMINI_API_KEY1: str
+    # LLM: a remote OpenAI-compatible API (MODEL_NAME/BASE_URL/GEMINI_API_KEY1) ...
+    MODEL_NAME: str = ""
+    BASE_URL: str = ""
+    GEMINI_API_KEY1: str = ""
+    # ... or, when LOCAL_LLM_MODEL is set, a Hugging Face model run in-process on DEVICE (the API settings are then unused),
+    # e.g. suzeai/Qwen2.5-Coder-1.5B-explain-vul-wo-system (a LoRA adapter: needs `peft`)
+    LOCAL_LLM_MODEL: str = ""
+    LOCAL_LLM_MAX_NEW_TOKENS: int = 1024
+    LOCAL_LLM_MAX_INPUT_TOKENS: int = 8192
     CHATBOT_TEMPERATURE: float = 0.7
     CHATBOT_MAX_TOKENS: int = 4096
 
