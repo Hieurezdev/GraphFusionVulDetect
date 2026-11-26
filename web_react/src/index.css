@@ -120,3 +120,7 @@
   .scan__toggle:active { transform: none; }
   .trail__fill, .stage__marker, .stage__title, .stage__chevron, .trail__all { transition: none; }
 }
+
+/* Contract IDE: functions the model flagged */
+.monaco-editor .gfd-flagged-line { background: rgba(239, 68, 68, 0.22); }
+.monaco-editor .gfd-flagged-gutter { background: #ef4444; width: 4px !important; margin-left: 3px; }

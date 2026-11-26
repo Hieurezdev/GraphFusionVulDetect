@@ -11,6 +11,7 @@ import { refactorBotService, ValidationResponse } from "@/services/refactorbot";
 import { FunctionReviewControl, REVIEW_LABELS } from "./FunctionReviewControl";
 import { FindingList } from "./RefactorChatbot";
 import { useT } from "@/i18n";
+import { VULNERABILITY_LABELS, explanationsByFinding, findReview, findingKey, flaggedFunctions } from "@/lib/findings";
 
 // Bundle Monaco locally (no CDN); Solidity needs only the base editor worker.
 self.MonacoEnvironment = { getWorker: () => new EditorWorker() };
@@ -41,16 +42,16 @@ const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
   const [checking, setChecking] = useState(false);
   const [check, setCheck] = useState<ValidationResponse | null>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const decorationsRef = useRef<monaco.editor.IEditorDecorationsCollection | null>(null);
 
   const flagged = useMemo(
-    () => results.flatMap(r => r.output?.func_vulnerability_predictions || []).filter((p: any) => p.prediction === 1 && p.lines?.length === 2),
+    () => flaggedFunctions(results).filter((p: any) => p.lines?.length === 2),
     [results],
   );
-  const explanations = useMemo(
-    () => Object.fromEntries(results.flatMap(r => r.output?.explanations || []).map((e: any) => [e.function_name, e.explanation])),
-    [results],
-  );
-  const statusOf = (name: string) => reviews.find(r => r.function_name === name)?.status ?? "pending";
+  const explanations = useMemo(() => explanationsByFinding(results), [results]);
+  const reviewOf = (p: any) => findReview(reviews, p.vulnerability, p.function_name);
+  const statusOf = (p: any) => reviewOf(p)?.status ?? "pending";
+  const labelOf = (p: any) => t(VULNERABILITY_LABELS[p.vulnerability] ?? p.vulnerability);
 
   useEffect(() => {
     projectService.getSessionSource(sessionId)
@@ -63,13 +64,27 @@ const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
     const model = editorRef.current?.getModel();
     if (!model) return;
     monaco.editor.setModelMarkers(model, "graphfusion", flagged.map((p: any) => ({
-      severity: SEVERITY[statusOf(p.function_name)],
+      severity: SEVERITY[statusOf(p)],
       startLineNumber: p.lines[0], startColumn: 1,
       endLineNumber: p.lines[1], endColumn: model.getLineMaxColumn(Math.min(p.lines[1], model.getLineCount())),
       source: "GraphFusion",
-      message: `${p.function_name}: ${t("flagged")} (${p.confidence}) · ${t(REVIEW_LABELS[statusOf(p.function_name)])}`
-        + (explanations[p.function_name] ? `\n\n${explanations[p.function_name]}` : ""),
+      message: `${p.function_name}: ${labelOf(p)}, ${t("flagged")} (${p.confidence}) · ${t(REVIEW_LABELS[statusOf(p)])}`
+        + (explanations[findingKey(p.vulnerability, p.function_name)] ? `\n\n${explanations[findingKey(p.vulnerability, p.function_name)]}` : ""),
     })));
+    // Red band over each flagged function (not ones an expert rejected), plus a red mark in the gutter and the scrollbar.
+    decorationsRef.current?.clear();
+    decorationsRef.current = editorRef.current!.createDecorationsCollection(
+      flagged.filter((p: any) => statusOf(p) !== "false_positive").map((p: any) => ({
+        range: new monaco.Range(p.lines[0], 1, p.lines[1], 1),
+        options: {
+          isWholeLine: true,
+          className: "gfd-flagged-line",
+          linesDecorationsClassName: "gfd-flagged-gutter",
+          overviewRuler: { color: "#ef4444", position: monaco.editor.OverviewRulerLane.Full },
+          minimap: { color: "#ef4444", position: monaco.editor.MinimapPosition.Inline },
+        },
+      })),
+    );
   };
   useEffect(paintAlerts, [flagged, reviews, explanations, original]);
 
@@ -153,7 +168,7 @@ const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
             {flagged.length === 0 && <p className="mt-1 text-sm text-ink-2">{t("No function was flagged. That is not proof the contract is safe: review it manually.")}</p>}
             <ul className="mt-2 space-y-3">
               {flagged.map((p: any) => (
-                <li key={p.function_name} className="border-t border-rule pt-3">
+                <li key={findingKey(p.vulnerability, p.function_name)} className="border-t border-rule pt-3">
                   <button
                     type="button"
                     onClick={() => goTo(p.lines[0])}
@@ -164,11 +179,13 @@ const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
                     <span className="code-text min-w-0 flex-1 truncate">{p.function_name}</span>
                     <span className="code-text text-xs text-muted-foreground">L{p.lines[0]}–L{p.lines[1]}</span>
                   </button>
-                  <Badge variant="outline" className="mt-1">{t(REVIEW_LABELS[statusOf(p.function_name)])}</Badge>
+                  <p className="mt-1 text-xs text-muted-foreground">{labelOf(p)}</p>
+                  <Badge variant="outline" className="mt-1">{t(REVIEW_LABELS[statusOf(p)])}</Badge>
                   <FunctionReviewControl
                     sessionId={sessionId}
+                    vulnerability={p.vulnerability}
                     functionName={p.function_name}
-                    review={reviews.find(r => r.function_name === p.function_name)}
+                    review={reviewOf(p)}
                     onReviewed={onReviewed}
                   />
                 </li>

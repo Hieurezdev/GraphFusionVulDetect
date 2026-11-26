@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import { ArrowLeft, XCircle } from "lucide-react";
-import { StreamingResults } from "@/components/StreamingResults";
-import { ContractVisualization } from "@/components/ContractVisualization";
+import { AnalysisReport } from "@/components/AnalysisReport";
+import { flaggedFunctions } from "@/lib/findings";
 import { RefactorChatbot } from "@/components/RefactorChatbot";
 import { projectService, FunctionReview } from "@/services/project";
 import { toast } from "sonner";
@@ -111,8 +111,8 @@ const Analysis = () => {
               const parsed = JSON.parse(line);
               setStreamingResults(prev => [...prev, parsed]);
               
-              // Check for errors in the stream
-              if (parsed.node === "error") {
+              // An error without a vulnerability type stopped the whole analysis; one scan failing does not.
+              if (parsed.node === "error" && !parsed.vulnerability) {
                 throw new Error(parsed.output?.error || "Analysis failed");
               }
             } catch (parseError) {
@@ -194,34 +194,26 @@ const Analysis = () => {
             </div>
           )}
 
-          <ContractVisualization data={streamingResults} isStreaming={isStreaming} />
-
-          {analysisData.status === "complete" && analysisData.sessionId && (
-            <Suspense fallback={null}>
-              <ContractIDE key={analysisData.sessionId} sessionId={analysisData.sessionId} results={streamingResults} reviews={reviews} onReviewed={setReviews} />
-            </Suspense>
-          )}
-
-          <StreamingResults
+          <AnalysisReport
             results={streamingResults}
             isStreaming={isStreaming}
             sessionId={analysisData.sessionId}
             reviews={reviews}
             onReviewed={setReviews}
           />
+
+          {analysisData.status === "complete" && analysisData.sessionId && (
+            <Suspense fallback={null}>
+              <ContractIDE key={analysisData.sessionId} sessionId={analysisData.sessionId} results={streamingResults} reviews={reviews} onReviewed={setReviews} />
+            </Suspense>
+          )}
         </div>
       </main>
 
       <RefactorChatbot
         sessionId={analysisData.sessionId}
         reviews={reviews}
-        vulnerableFunctions={
-          streamingResults
-            .flatMap(result => result.output?.func_vulnerability_predictions || [])
-            .filter((func, index, self) =>
-              index === self.findIndex(f => f.function_name === func.function_name)
-            )
-        }
+        vulnerableFunctions={flaggedFunctions(streamingResults)}
       />
     </div>
   );

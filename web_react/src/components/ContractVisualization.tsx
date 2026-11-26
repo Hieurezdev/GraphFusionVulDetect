@@ -67,9 +67,8 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
 
   const getVulnerabilityLevel = () => {
     if (!stats.sourceVulnerable) return { level: t("Not flagged"), variant: "ok" as const };
-    if (stats.sourceConfidence > 80) return { level: t("High Risk"), variant: "destructive" as const };
-    if (stats.sourceConfidence > 60) return { level: t("Medium Risk"), variant: "outline" as const };
-    return { level: t("Low Risk"), variant: "secondary" as const };
+    // A model probability is not a risk rating: the explanation below may well call the alert a false positive.
+    return { level: t("Flagged: needs expert review"), variant: "outline" as const };
   };
 
   const vulnerabilityLevel = getVulnerabilityLevel();
@@ -98,10 +97,10 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               <p className="reading">
                 {stats.sourceConfidence.toFixed(1)}<span className="unit">&thinsp;%</span>
               </p>
-              <p className="mt-2 text-sm text-muted-foreground">{t("Source Analysis Confidence")}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{t("Model confidence")}</p>
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
-              <span className="text-muted-foreground">{t("Overall Risk Level")}</span>
+              <span className="text-muted-foreground">{t("Model verdict")}</span>
               <Badge variant={vulnerabilityLevel.variant}>{vulnerabilityLevel.level}</Badge>
             </div>
             <p className="mt-5 flex max-w-[52ch] items-start gap-2 text-sm text-ink-2">
@@ -113,8 +112,8 @@ export const ContractVisualization = ({ data, isStreaming = false }: ContractVis
               <span>
                 {stats.sourceVulnerable ? (
                   <>
-                    <strong className="font-medium text-ink">{t("Vulnerability Detected:")}</strong>{" "}
-                    {t("The contract analysis indicates potential security issues with {p}% confidence.", { p: stats.sourceConfidence.toFixed(1) })}
+                    <strong className="font-medium text-ink">{t("Possible vulnerability:")}</strong>{" "}
+                    {t("The model flagged this contract with {p}% confidence. This is a lead to check, not a confirmed bug.", { p: stats.sourceConfidence.toFixed(1) })}
                     {stats.vulnerableFunctions > 0 && (
                       <> {t("{k} out of {n} functions flagged as vulnerable.", { k: stats.vulnerableFunctions, n: stats.totalFunctions })}</>
                     )}

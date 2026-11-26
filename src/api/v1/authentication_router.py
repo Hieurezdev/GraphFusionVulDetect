@@ -5,6 +5,7 @@ from src.utils.helper import get_password_hash, verify_password
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from bson import ObjectId
+from bson.errors import InvalidId
 from src.models.entity import UserRegister, UserLogin, Token, UserProfile, UserInDB, PasswordChange
 from src.infrastructure.database import get_users_collection
 from src.utils.timezone import now_utc, now_vietnam, ensure_utc_for_db
@@ -36,14 +37,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 
 async def get_user(username: str) -> Optional[UserInDB]:
-    """Get user from database by username or email"""
+    """Get user from database by username, else by email (username first, so the lookup is deterministic)"""
     users_collection = await get_users_collection()
-    user_doc = await users_collection.find_one({
-        "$or": [
-            {"username": username},
-            {"email": username}
-        ]
-    })
+    user_doc = await users_collection.find_one({"username": username}) or await users_collection.find_one({"email": username})
     if user_doc:
         user_doc["_id"] = str(user_doc["_id"])
         return UserInDB(**user_doc)
@@ -70,15 +66,16 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     
     try:
         payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-    except jwt.PyJWTError:
+        user_id = ObjectId(payload["user_id"])
+    except (jwt.PyJWTError, KeyError, TypeError, ValueError, InvalidId):
         raise credentials_exception
-    
-    user = await get_user(username=username)
-    if user is None:
+
+    # Resolve by the immutable id, never by name: a username may equal someone else's email.
+    user_doc = await (await get_users_collection()).find_one({"_id": user_id})
+    if user_doc is None:
         raise credentials_exception
+    user_doc["_id"] = str(user_doc["_id"])
+    user = UserInDB(**user_doc)
     if payload.get("ver", 0) != user.token_version:
         raise credentials_exception
     return user
@@ -98,15 +95,11 @@ async def register_user(user_data: UserRegister):
     """Register a new user"""
     users_collection = await get_users_collection()
 
-    print(f"Attempting to register user: {user_data.username}, email: {user_data.email}")
-    print(users_collection)
     
     # Check if user already exists
+    names = [user_data.username, user_data.email]
     existing_user = await users_collection.find_one({
-        "$or": [
-            {"username": user_data.username},
-            {"email": user_data.email}
-        ]
+        "$or": [{"username": {"$in": names}}, {"email": {"$in": names}}]
     })
     
     if existing_user:
@@ -183,7 +176,8 @@ async def read_users_me(current_user: UserInDB = Depends(get_current_user)):
         email=current_user.email,
         full_name=current_user.full_name,
         created_at=current_user.created_at,
-        last_login=current_user.last_login
+        last_login=current_user.last_login,
+        role=current_user.role
     )
 
 
@@ -225,7 +219,8 @@ async def update_profile(
         email=updated_user.email,
         full_name=updated_user.full_name,
         created_at=updated_user.created_at,
-        last_login=updated_user.last_login
+        last_login=updated_user.last_login,
+        role=updated_user.role
     )
 
 

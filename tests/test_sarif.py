@@ -28,3 +28,16 @@ def test_sarif_carries_lines_reviews_and_suppressions():
     assert a["level"] == "error" and "L13 uses now" in a["message"]["text"]
     assert b["suppressions"][0]["justification"] == "now only logged"
     assert "not proof" in run["properties"]["disclaimer"]
+
+
+def test_sarif_keeps_the_two_scans_apart():
+    session = {"steps": [
+        {"step_name": "detect_vulnerability_src", "vulnerability": "reentrancy", "result_data": {"predicted_class": "Vulnerable", "confidence_score": 0.8}},
+        {"step_name": "detect_vulnerability_func", "vulnerability": "reentrancy", "result_data": {"func_vulnerability_predictions": [
+            {"function_name": "C.a()", "prediction": 1, "confidence": "90%", "lines": [12, 17]}]}},
+        {"step_name": "detect_vulnerability_src", "vulnerability": "timestamp", "result_data": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.9}},
+    ], "reviews": [{"vulnerability": "timestamp", "function_name": "C.a()", "status": "false_positive", "reviewer": "alice"}]}
+    run = session_to_sarif(session, "C.sol")["runs"][0]
+    assert [r["ruleId"] for r in run["results"]] == ["GFD-RE-CONTRACT", "GFD-RE-FUNC"]
+    assert run["results"][1]["properties"]["reviewStatus"] == "pending"   # the timestamp review is about another finding
+    assert {r["id"] for r in run["tool"]["driver"]["rules"]} == {"GFD-RE-FUNC", "GFD-RE-CONTRACT", "GFD-TS-FUNC", "GFD-TS-CONTRACT"}

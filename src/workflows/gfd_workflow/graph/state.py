@@ -1,5 +1,8 @@
 from typing import Annotated, TypedDict, Optional, List, Any
 
+# Vulnerability types /analyze can scan for -> the name shown in explanations and SARIF.
+VULNERABILITIES = {"timestamp": "Timestamp Dependency", "reentrancy": "Reentrancy"}
+
 # State TypedDict including new fields for the subquery workflow
 class State(TypedDict):
     sol_file_path: str
@@ -11,3 +14,4 @@ class State(TypedDict):
     func_vulnerability_predictions: Optional[List[dict]]
     func_vulnerability_explanations: Optional[List[dict]]
     language: Optional[str]
+    vulnerability: Optional[str]

@@ -1,0 +1,1 @@
+{"id": "114_MarketOracle", "http": 200, "seconds": 3.9, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_131608/114_MarketOracle.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.7918659448623657}}], "raw": ""}

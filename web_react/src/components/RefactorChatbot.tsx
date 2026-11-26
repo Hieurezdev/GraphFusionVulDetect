@@ -11,8 +11,10 @@ import { REVIEW_LABELS } from "./FunctionReviewControl";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useT } from "@/i18n";
+import { DEFAULT_VULNERABILITY, VULNERABILITY_LABELS, findReview, findingKey, notifyFindingsChanged } from "@/lib/findings";
 
 interface VulnerableFunction {
+  vulnerability?: string;
   function_name: string;
   prediction: number;
   confidence: string;
@@ -65,7 +67,10 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
   const suggestedCode = useMemo(() => (isLoading ? "" : lastSolidityBlock(conversationHistory)), [conversationHistory, isLoading]);
   const [validation, setValidation] = useState<ValidationResponse | null>(null);
   const [isValidating, setIsValidating] = useState(false);
-  const reviewOf = (name: string) => reviews.find(r => r.function_name === name)?.status ?? "pending";
+  const scanOf = (f: VulnerableFunction) => f.vulnerability ?? DEFAULT_VULNERABILITY;
+  const keyOf = (f: VulnerableFunction) => findingKey(scanOf(f), f.function_name);
+  const labelOf = (f: VulnerableFunction) => VULNERABILITY_LABELS[scanOf(f)] ?? scanOf(f);
+  const reviewOf = (f: VulnerableFunction) => findReview(reviews, scanOf(f), f.function_name)?.status ?? "pending";
 
   useEffect(() => setValidation(null), [suggestedCode, selectedFunction]);
 
@@ -86,7 +91,7 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
     let reply = "";
     const show = () => {
       const next = reply ? [...history, { role: "assistant" as const, content: reply }] : history;
-      cacheRef.current[func.function_name] = next;
+      cacheRef.current[keyOf(func)] = next;
       setConversationHistory(next);
     };
     try {
@@ -99,7 +104,7 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
         show();
       } else {
         console.error("RefactorBot stream failed:", err);
-        cacheRef.current[func.function_name] = history;
+        cacheRef.current[keyOf(func)] = history;
         setConversationHistory(history);
         setError(err instanceof Error ? err.message : t("Failed to send message"));
       }
@@ -111,13 +116,13 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
     }
   };
 
-  const handleSelectFunction = (functionName: string) => {
-    const func = vulnerableOnly.find(f => f.function_name === functionName);
-    if (!func || reviewOf(functionName) !== "confirmed") return;
+  const handleSelectFunction = (key: string) => {
+    const func = vulnerableOnly.find(f => keyOf(f) === key);
+    if (!func) return;
     abortRef.current?.abort();
     setSelectedFunction(func);
     setError("");
-    const cached = cacheRef.current[functionName];
+    const cached = cacheRef.current[key];
     if (cached && cached.length > 1) {
       setIsLoading(false);
       setConversationHistory(cached);
@@ -125,7 +130,7 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
     }
     requestReply(func, [{
       role: "user",
-      content: `The function "${func.function_name}" was flagged as vulnerable. Explain why, then give the fixed function.`
+      content: `The function "${func.function_name}" was flagged for ${labelOf(func).toLowerCase()}${reviewOf(func) === "confirmed" ? " and an expert confirmed the alert" : "; no expert has confirmed the alert yet, so first say whether it looks real"}. Explain why, then give the fixed function.`
     }]);
   };
 
@@ -145,9 +150,10 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
     setIsValidating(true);
     try {
       const response = await refactorBotService.validateRefactoring(
-        selectedFunction.function_code, suggestedCode, sessionId, selectedFunction.function_name
+        selectedFunction.function_code, suggestedCode, sessionId, selectedFunction.function_name, scanOf(selectedFunction)
       );
       setValidation(response);
+      notifyFindingsChanged();
       if (response.is_valid) toast.success(response.message);
       else toast.warning(response.message);
     } catch (err) {
@@ -194,7 +200,7 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
 
           <div className="border-b border-rule px-4 py-3">
             <Select
-              value={selectedFunction?.function_name || ""}
+              value={selectedFunction ? keyOf(selectedFunction) : ""}
               onValueChange={handleSelectFunction}
             >
               <SelectTrigger aria-label={t("Vulnerable function")}>
@@ -202,12 +208,12 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
               </SelectTrigger>
               <SelectContent>
                 {vulnerableOnly.map((func) => (
-                  // A fix is only proposed for alerts an expert has confirmed.
-                  <SelectItem key={func.function_name} value={func.function_name} disabled={reviewOf(func.function_name) !== "confirmed"}>
+                  // Anyone can ask for a fix; the expert's verdict is shown so an unconfirmed alert is not mistaken for a real bug.
+                  <SelectItem key={keyOf(func)} value={keyOf(func)}>
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="h-3 w-3 text-bad" aria-hidden="true" />
                       <span className="code-text text-xs">{func.function_name}</span>
-                      <span className="text-xs text-muted-foreground">{t(REVIEW_LABELS[reviewOf(func.function_name)])}</span>
+                      <span className="text-xs text-muted-foreground">{t(labelOf(func))} · {t(REVIEW_LABELS[reviewOf(func)])}</span>
                       <span className="measured ml-auto text-xs text-cool">{func.confidence}</span>
                     </div>
                   </SelectItem>
@@ -221,7 +227,7 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
               <div className="flex h-full flex-col items-start justify-center gap-2 py-16 text-sm text-muted-foreground">
                 <p className="text-ink-2">{t("Select a vulnerable function to start analysis")}</p>
                 <p>{t("{n} flagged in this contract.", { n: vulnerableOnly.length })}</p>
-                <p>{t("Only alerts confirmed by an expert can be fixed here. Review each alert in the results first.")}</p>
+                <p>{t("You can ask for a fix for any flagged function. Until an expert confirms the alert it may be a false positive, and only an expert can accept a fix.")}</p>
               </div>
             ) : (
               <div className="space-y-5">
@@ -280,6 +286,13 @@ export const RefactorChatbot = ({ vulnerableFunctions, sessionId, reviews = [] }
                     {validation && (
                       <div className="mt-3 space-y-2 border-t border-rule pt-3" role="status">
                         <p className={`text-sm ${validation.is_valid ? "text-ok" : "text-bad"}`}>{validation.message}</p>
+                        {validation.compiled != null && (
+                          <p className="text-xs text-ink-2">
+                            {validation.recorded
+                              ? t("This check is saved on the finding. An expert now accepts or rejects the fix in the fix workflow.")
+                              : validation.record_note}
+                          </p>
+                        )}
                         {validation.compiled != null && (
                           <>
                             <FindingList title={t("Slither findings before the fix")} findings={validation.findings_before} />

@@ -5,8 +5,9 @@ from src.services.token_service import TokenService
 # Assuming project_service is available to create projects
 # from src.services.project_service import project_service 
 import logging
+from .authentication_router import get_current_user
 
-router = APIRouter(prefix="/token", tags=["token"])
+router = APIRouter(prefix="/token", tags=["token"], dependencies=[Depends(get_current_user)])  # each call spends our explorer API quota
 logger = logging.getLogger("TokenRouter")
 token_service = TokenService() #Or instantiate properly if singleton
 
@@ -42,7 +43,7 @@ def search_tokens(query: str):
         ]
     except Exception as e:
         logger.error(f"Search failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=502, detail="Token lookup failed upstream; try again later.")
 
 @router.get("/platforms/{coin_id}")
 def get_token_platforms(coin_id: str):
@@ -54,7 +55,7 @@ def get_token_platforms(coin_id: str):
         return details.get("platforms", {})
     except Exception as e:
         logger.error(f"Get details failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=502, detail="Token lookup failed upstream; try again later.")
 
 @router.post("/analyze")
 async def analyze_token(request: TokenAnalyzeRequest):
@@ -84,6 +85,9 @@ async def analyze_token(request: TokenAnalyzeRequest):
             "abi": contract_data.get("abi")
         }
 
+    except HTTPException:
+        raise
     except Exception as e:
+        # requests errors embed the full URL, apikey included: log it, never return it.
         logger.error(f"Analysis setup failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=502, detail="Could not fetch the contract source from the explorer; check the chain and address.")

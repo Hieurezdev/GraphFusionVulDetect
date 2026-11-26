@@ -1,0 +1,1 @@
+{"id": "033_AMOCoinSale", "http": 200, "seconds": 0.9, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125541/033_AMOCoinSale.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.9021221399307251}}], "raw": ""}

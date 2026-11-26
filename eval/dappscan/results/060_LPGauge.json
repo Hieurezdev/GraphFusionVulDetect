@@ -1,0 +1,1 @@
+{"id": "060_LPGauge", "http": 200, "seconds": 2.1, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_130026/060_LPGauge.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.8465297818183899}}], "raw": ""}

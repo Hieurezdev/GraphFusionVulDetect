@@ -1,0 +1,320 @@
+{
+ "timestamp": {
+  "dappscan": {
+   "files": 36,
+   "graph_built": 17,
+   "contract_flagged": 12,
+   "labels": 65,
+   "verdicts": {
+    "không dựng được đồ thị": 36,
+    "phát hiện đúng hàm": 6,
+    "bỏ sót (hợp đồng có cờ, hàm không)": 8,
+    "dòng nằm ngoài mọi hàm": 3,
+    "hàm bị gắn cờ nhưng hợp đồng bị xếp không lỗi (bị ẩn)": 8,
+    "bỏ sót (hợp đồng bị xếp không lỗi)": 4
+   },
+   "alerts_shown": 30,
+   "alerts_matching_an_audit_label": 6,
+   "by_solidity": {
+    "0.4": "5/12",
+    "0.5": "5/6",
+    "0.6": "0/2",
+    "0.7": "0/1",
+    "0.8": "7/15"
+   },
+   "overlap_with_train": {
+    "functions": 1371,
+    "also_in_train": 210,
+    "share": 0.153
+   }
+  },
+  "size": {
+   "dưới 500 dòng": {
+    "files": 12,
+    "graph_built": 3,
+    "median_functions": 55,
+    "median_seconds": 0.7,
+    "max_seconds": 0.91,
+    "functions_over_512_tokens": "0/130",
+    "labels_found": "1/3"
+   },
+   "500–2.000 dòng": {
+    "files": 20,
+    "graph_built": 13,
+    "median_functions": 72,
+    "median_seconds": 1.4,
+    "max_seconds": 6.36,
+    "functions_over_512_tokens": "16/1086",
+    "labels_found": "5/24"
+   },
+   "trên 2.000 dòng": {
+    "files": 4,
+    "graph_built": 1,
+    "median_functions": 155,
+    "median_seconds": 2.3,
+    "max_seconds": 2.3,
+    "functions_over_512_tokens": "6/155",
+    "labels_found": "0/2"
+   }
+  },
+  "adversarial": {
+   "test_contracts": 193,
+   "originally_correct": 168,
+   "transforms": {
+    "rename": {
+     "generated": 80,
+     "did_not_compile": 4,
+     "compared": 66,
+     "vulnerable_now_missed": "0/34",
+     "safe_now_flagged": "2/32",
+     "flip_rate": 0.03,
+     "mean_abs_change_in_p": 0.084,
+     "flagged_functions_before_after": "65 -> 60",
+     "decoy_function_flagged": null
+    },
+    "comment_pad": {
+     "generated": 52,
+     "did_not_compile": 2,
+     "compared": 40,
+     "vulnerable_now_missed": "11/33",
+     "safe_now_flagged": "0/7",
+     "flip_rate": 0.275,
+     "mean_abs_change_in_p": 0.235,
+     "flagged_functions_before_after": "64 -> 9",
+     "decoy_function_flagged": null
+    },
+    "dead_code": {
+     "generated": 52,
+     "did_not_compile": 13,
+     "compared": 33,
+     "vulnerable_now_missed": "0/27",
+     "safe_now_flagged": "0/6",
+     "flip_rate": 0.0,
+     "mean_abs_change_in_p": 0.028,
+     "flagged_functions_before_after": "47 -> 47",
+     "decoy_function_flagged": null
+    },
+    "decoy": {
+     "generated": 80,
+     "did_not_compile": 2,
+     "compared": 67,
+     "vulnerable_now_missed": "0/35",
+     "safe_now_flagged": "26/32",
+     "flip_rate": 0.388,
+     "mean_abs_change_in_p": 0.297,
+     "flagged_functions_before_after": "66 -> 101",
+     "decoy_function_flagged": 67
+    },
+    "time_wrapper": {
+     "generated": 40,
+     "did_not_compile": 2,
+     "compared": 31,
+     "vulnerable_now_missed": "0/17",
+     "safe_now_flagged": "13/14",
+     "flip_rate": 0.419,
+     "mean_abs_change_in_p": 0.363,
+     "flagged_functions_before_after": "30 -> 18",
+     "decoy_function_flagged": null
+    }
+   }
+  },
+  "hard": {
+   "files": 60,
+   "graph_built": 58,
+   "positives": 30,
+   "hard_negatives": 28,
+   "found": 29,
+   "missed": 1,
+   "false_alarms": 27,
+   "correctly_cleared": 1,
+   "recall": 0.967,
+   "false_alarm_rate_on_hard_negatives": 0.964,
+   "precision": 0.518,
+   "by_source": {
+    "CodeSmells": {
+     "found": 10,
+     "missed": 0,
+     "false_alarm": 27,
+     "cleared": 1
+    },
+    "ContractFuzzer": {
+     "found": 19,
+     "missed": 1,
+     "false_alarm": 0,
+     "cleared": 0
+    }
+   },
+   "overlap_with_train": {
+    "functions": 2736,
+    "also_in_train": 1240,
+    "share": 0.453
+   }
+  }
+ },
+ "reentrancy": {
+  "dappscan": {
+   "files": 114,
+   "graph_built": 71,
+   "contract_flagged": 2,
+   "labels": 138,
+   "verdicts": {
+    "bỏ sót (hợp đồng bị xếp không lỗi)": 82,
+    "phát hiện đúng hàm": 1,
+    "không dựng được đồ thị": 53,
+    "dòng nằm ngoài mọi hàm": 1,
+    "bỏ sót (hợp đồng có cờ, hàm không)": 1
+   },
+   "alerts_shown": 1,
+   "alerts_matching_an_audit_label": 1,
+   "by_solidity": {
+    "0.4": "5/9",
+    "0.5": "10/14",
+    "0.6": "28/43",
+    "0.7": "6/15",
+    "0.8": "21/30",
+    "0.?": "1/3"
+   },
+   "overlap_with_train": {
+    "functions": 9885,
+    "also_in_train": 415,
+    "share": 0.042
+   }
+  },
+  "size": {
+   "dưới 500 dòng": {
+    "files": 18,
+    "graph_built": 9,
+    "median_functions": 29,
+    "median_seconds": 1.0,
+    "max_seconds": 3.25,
+    "functions_over_512_tokens": "3/323",
+    "labels_found": "1/9"
+   },
+   "500–2.000 dòng": {
+    "files": 62,
+    "graph_built": 46,
+    "median_functions": 95,
+    "median_seconds": 2.1,
+    "max_seconds": 8.14,
+    "functions_over_512_tokens": "90/4583",
+    "labels_found": "0/59"
+   },
+   "trên 2.000 dòng": {
+    "files": 34,
+    "graph_built": 16,
+    "median_functions": 220,
+    "median_seconds": 6.9,
+    "max_seconds": 51.66,
+    "functions_over_512_tokens": "126/4979",
+    "labels_found": "0/17"
+   }
+  },
+  "adversarial": {
+   "test_contracts": 80,
+   "originally_correct": 64,
+   "transforms": {
+    "comment_pad": {
+     "generated": 80,
+     "did_not_compile": 0,
+     "compared": 64,
+     "vulnerable_now_missed": "17/33",
+     "safe_now_flagged": "0/31",
+     "flip_rate": 0.266,
+     "mean_abs_change_in_p": 0.186,
+     "flagged_functions_before_after": "40 -> 3",
+     "decoy_function_flagged": null
+    },
+    "dead_code": {
+     "generated": 80,
+     "did_not_compile": 21,
+     "compared": 48,
+     "vulnerable_now_missed": "7/19",
+     "safe_now_flagged": "0/29",
+     "flip_rate": 0.146,
+     "mean_abs_change_in_p": 0.09,
+     "flagged_functions_before_after": "27 -> 15",
+     "decoy_function_flagged": null
+    },
+    "decoy": {
+     "generated": 80,
+     "did_not_compile": 1,
+     "compared": 64,
+     "vulnerable_now_missed": "0/33",
+     "safe_now_flagged": "0/31",
+     "flip_rate": 0.0,
+     "mean_abs_change_in_p": 0.005,
+     "flagged_functions_before_after": "40 -> 40",
+     "decoy_function_flagged": 0
+    }
+   }
+  },
+  "hard": {
+   "files": 32,
+   "graph_built": 29,
+   "positives": 14,
+   "hard_negatives": 15,
+   "found": 3,
+   "missed": 11,
+   "false_alarms": 6,
+   "correctly_cleared": 9,
+   "recall": 0.214,
+   "false_alarm_rate_on_hard_negatives": 0.4,
+   "precision": 0.333,
+   "by_source": {
+    "CodeSmells": {
+     "found": 0,
+     "missed": 2,
+     "false_alarm": 4,
+     "cleared": 3
+    },
+    "ContractFuzzer": {
+     "found": 2,
+     "missed": 0,
+     "false_alarm": 0,
+     "cleared": 0
+    },
+    "Doublade": {
+     "found": 1,
+     "missed": 3,
+     "false_alarm": 2,
+     "cleared": 6
+    },
+    "JiuZhou": {
+     "found": 0,
+     "missed": 1,
+     "false_alarm": 0,
+     "cleared": 0
+    },
+    "NPChecker": {
+     "found": 0,
+     "missed": 0,
+     "false_alarm": 0,
+     "cleared": 1
+    },
+    "NotSoSmartC": {
+     "found": 0,
+     "missed": 1,
+     "false_alarm": 0,
+     "cleared": 0
+    },
+    "Zeus": {
+     "found": 0,
+     "missed": 4,
+     "false_alarm": 0,
+     "cleared": 0
+    },
+    "eThor": {
+     "found": 0,
+     "missed": 1,
+     "false_alarm": 0,
+     "cleared": 0
+    }
+   },
+   "overlap_with_train": {
+    "functions": 1097,
+    "also_in_train": 729,
+    "share": 0.665
+   }
+  }
+ }
+}

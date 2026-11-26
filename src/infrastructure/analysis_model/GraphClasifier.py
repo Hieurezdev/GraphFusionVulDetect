@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch
 from typing import Optional
 import torch.nn.functional as F
-from torch.nn import Sequential
+from dgl.nn.pytorch import Sequential  # torch's Sequential cannot pass (graph, features) through the GPH layers
 
 
 def get_convolution_layer(
@@ -192,8 +192,8 @@ class GraphNN(nn.Module):
                 if i != j:
                     src.append(i)
                     dest.append(j)
-        src = torch.tensor(src)
-        dest = torch.tensor(dest)
+        src = torch.tensor(src, dtype=torch.long)  # an empty list (one contract) would default to float
+        dest = torch.tensor(dest, dtype=torch.long)
         return dgl.graph((src, dest), num_nodes=num_nodes)
 
     def create_graph(self, features):

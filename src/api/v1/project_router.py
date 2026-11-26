@@ -1,7 +1,7 @@
 import hashlib
 import logging
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Query
 from bson import ObjectId
 from src.models.entity import (
     ProjectCreate, ProjectUpdate, Project, ProjectResponse, 
@@ -74,8 +74,8 @@ async def create_project(
 
 @router.get("/", response_model=List[ProjectResponse])
 async def list_projects(
-    skip: int = 0,
-    limit: int = 20,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(20, ge=1, le=100),
     status: Optional[ProjectStatus] = None,
     current_user: UserInDB = Depends(get_current_user)
 ):
@@ -302,8 +302,8 @@ async def list_project_files(
 @router.get("/{project_id}/sessions", response_model=List[AnalysisSession])
 async def get_project_analysis_sessions(
     project_id: str,
-    skip: int = 0,
-    limit: int = 20,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(20, ge=1, le=100),
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Get analysis sessions for a specific project"""

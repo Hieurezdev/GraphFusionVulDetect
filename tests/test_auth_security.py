@@ -85,3 +85,15 @@ def test_logout_all_invalidates_every_token(client):
     assert client.get("/auth/me", headers=bearer(a)).status_code == 401
     assert client.get("/auth/me", headers=bearer(b)).status_code == 401
     assert client.get("/auth/me", headers=bearer(login(client).json()["access_token"])).status_code == 200
+
+
+def test_username_cannot_look_like_an_email(client):
+    # A username equal to someone's email made the old "$or" lookup resolve to the wrong account.
+    r = client.post("/auth/register", json={"username": "alice@example.com", "email": "mallory@example.com", "password": "secret1"})
+    assert r.status_code == 422
+
+
+def test_token_resolves_by_user_id_not_name(client):
+    token = login(client).json()["access_token"]
+    me = client.get("/auth/me", headers=bearer(token)).json()
+    assert me["username"] == "alice" and me["user_id"]

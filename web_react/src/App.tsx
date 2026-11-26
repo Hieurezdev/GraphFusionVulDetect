@@ -15,6 +15,7 @@ import ProjectAnalysis from "./pages/ProjectAnalysis";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import ReviewQueue from "./pages/ReviewQueue";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/analysis/live" element={<ProtectedRoute><Analysis /></ProtectedRoute>} />
             <Route path="/project" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
             <Route path="/project/:projectId" element={<ProtectedRoute><ProjectAnalysis /></ProtectedRoute>} />
+            <Route path="/review" element={<ProtectedRoute><ReviewQueue /></ProtectedRoute>} />
             <Route path="/projects" element={<Navigate to="/project" replace />} />
             <Route path="/projects/:projectId" element={<LegacyProjectRedirect />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

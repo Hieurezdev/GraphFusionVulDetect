@@ -1,0 +1,90 @@
+pragma solidity ^0.4.13;
+library SafeMath {
+ function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+ uint256 c = a * b;
+ assert(a == 0 || c / a == b);
+ return c;
+ }
+ function div(uint256 a, uint256 b) internal constant returns (uint256) {
+ uint256 c = a / b;
+ return c;
+ }
+ function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+ assert(b <= a);
+ return a - b;
+ }
+ function add(uint256 a, uint256 b) internal constant returns (uint256) {
+ uint256 c = a + b;
+ assert(c >= a);
+ return c;
+ }
+}
+contract ERC20Basic {
+ uint256 public totalSupply;
+ function balanceOf(address who) constant returns (uint256);
+ function transfer(address to, uint256 value) returns (bool);
+ event Transfer(address indexed from, address indexed to, uint256 value);
+}
+contract ERC20 is ERC20Basic {
+ function allowance(address owner, address spender) constant returns (uint256);
+ function transferFrom(address from, address to, uint256 value) returns (bool);
+ function approve(address spender, uint256 value) returns (bool);
+ event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+contract BasicToken is ERC20Basic {
+ using SafeMath for uint256;
+ mapping(address => uint256) balances;
+ function transfer(address _to, uint256 _value) returns (bool) {
+ balances[msg.sender] = balances[msg.sender].sub(_value);
+ balances[_to] = balances[_to].add(_value);
+ Transfer(msg.sender, _to, _value);
+ return true;
+ }
+ function balanceOf(address _owner) constant returns (uint256 balance) {
+ return balances[_owner];
+ }
+}
+contract StandardToken is ERC20, BasicToken {
+ mapping (address => mapping (address => uint256)) allowed;
+ function transferFrom(address _from, address _to, uint256 _value) returns (bool) {
+ var _allowance = allowed[_from][msg.sender];
+ balances[_to] = balances[_to].add(_value);
+ balances[_from] = balances[_from].sub(_value);
+ allowed[_from][msg.sender] = _allowance.sub(_value);
+ Transfer(_from, _to, _value);
+ return true;
+ }
+ function approve(address _spender, uint256 _value) returns (bool) {
+ require((_value == 0) || (allowed[msg.sender][_spender] == 0));
+ allowed[msg.sender][_spender] = _value;
+ Approval(msg.sender, _spender, _value);
+ return true;
+ }
+ function allowance(address _owner, address _spender) constant returns (uint256 remaining) {
+ return allowed[_owner][_spender];
+ }
+}
+contract E is StandardToken {
+	string public name = 'E';
+	string public symbol = 'E';
+	uint public decimals = 18;
+	uint public initialSupply = 2718281828459045235;
+	string public publisher = 'TokenDone.io';
+	uint public creationTime;
+	function E() {
+    uint256 zpad0 = 0; zpad0 = zpad0 + 1;
+    uint256 zpad1 = 1; zpad1 = zpad1 + 1;
+    uint256 zpad2 = 2; zpad2 = zpad2 + 1;
+    uint256 zpad3 = 3; zpad3 = zpad3 + 1;
+    uint256 zpad4 = 4; zpad4 = zpad4 + 1;
+    uint256 zpad5 = 5; zpad5 = zpad5 + 1;
+    uint256 zpad6 = 6; zpad6 = zpad6 + 1;
+    uint256 zpad7 = 7; zpad7 = zpad7 + 1;
+    uint256 zpad8 = 8; zpad8 = zpad8 + 1;
+    uint256 zpad9 = 9; zpad9 = zpad9 + 1;
+
+ totalSupply = initialSupply;
+ balances[0xe90fFFd34aEcFE44db61a6efD85663296094A09c] = initialSupply;
+ creationTime = now;
+	}
+}

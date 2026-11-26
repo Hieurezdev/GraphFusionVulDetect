@@ -1,0 +1,5763 @@
+[
+ {
+  "id": "000_PriceHelper",
+  "source": "BlockSec-blocksec_alpaca_v1.0_signed/bsc-alpaca-contract-cb13e32fe5a4ba6f63b0235bd4624715592e4abe/contracts/8.10/protocol/PriceHelper.sol",
+  "audit": "BlockSec-blocksec_alpaca_v1.0_signed",
+  "pragma": "pragma solidity 0.8.10;",
+  "orig_lines": 106,
+  "flat_lines": 783,
+  "offset": 679,
+  "deps_inlined": 8,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "getTokenPrice",
+    "raw_lines": "// SWC-116-Block values as a proxy for time",
+    "lines": [
+     [
+      116,
+      116
+     ]
+    ],
+    "flat_lines": [
+     [
+      795,
+      795
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "001_ImpossibleWrappedToken",
+  "source": "BlockSec-blocksec_impossible_finance_swap_v1.2/impossible-swap-core-29aaef89f996acdbee92b67c4d95fb608dc8b876/contracts/ImpossibleWrappedToken.sol",
+  "audit": "BlockSec-blocksec_impossible_finance_swap_v1.2",
+  "pragma": "pragma solidity =0.7.6;",
+  "orig_lines": 819,
+  "flat_lines": 1608,
+  "offset": 791,
+  "deps_inlined": 3,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L53-61",
+    "lines": [
+     [
+      53,
+      61
+     ]
+    ],
+    "flat_lines": [
+     [
+      844,
+      852
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L65-73",
+    "lines": [
+     [
+      65,
+      73
+     ]
+    ],
+    "flat_lines": [
+     [
+      856,
+      864
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "002_ve",
+  "source": "BlockSec-blocksec_multichain_vemult_v1.0_signed/veMULTI-bac804399d1ea280e5bd8cdc9488b6fa6a0a7fcc/contracts/ve.sol",
+  "audit": "BlockSec-blocksec_multichain_vemult_v1.0_signed",
+  "pragma": "pragma solidity 0.8.11;",
+  "orig_lines": 1344,
+  "flat_lines": 1345,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L1097-1104",
+    "lines": [
+     [
+      1097,
+      1104
+     ]
+    ],
+    "flat_lines": [
+     [
+      1098,
+      1105
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "003_contract",
+  "source": "Callisto_Network-McAfeeDex Security Audit/MCAFEEDEXCONTRACT-5db8389ce23ce11fb273c9573772287aa75ce43b/contract.sol",
+  "audit": "Callisto_Network-McAfeeDex Security Audit",
+  "pragma": "pragma solidity ^0.4.9;",
+  "orig_lines": 315,
+  "flat_lines": 316,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L224",
+    "lines": [
+     [
+      224,
+      224
+     ]
+    ],
+    "flat_lines": [
+     [
+      225,
+      225
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "004_CToken",
+  "source": "Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c/contracts/CToken.sol",
+  "audit": "Chainsecurity-Compound  cToken unredacted",
+  "pragma": "pragma solidity ^0.8.6;",
+  "orig_lines": 1202,
+  "flat_lines": 2038,
+  "offset": 837,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_setComptroller",
+    "raw_lines": "L930-947",
+    "lines": [
+     [
+      930,
+      947
+     ]
+    ],
+    "flat_lines": [
+     [
+      1767,
+      1784
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "005_Comptroller",
+  "source": "Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c/contracts/Comptroller.sol",
+  "audit": "Chainsecurity-Compound  cToken unredacted",
+  "pragma": "pragma solidity ^0.8.6;",
+  "orig_lines": 1359,
+  "flat_lines": 4003,
+  "offset": 2645,
+  "deps_inlined": 12,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "liquidateBorrowAllowed",
+    "raw_lines": "L465-501",
+    "lines": [
+     [
+      465,
+      501
+     ]
+    ],
+    "flat_lines": [
+     [
+      3110,
+      3146
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "006_TokensRelayer",
+  "source": "Chainsecurity-POA Network  OmniBridge/omnibridge-9e602a3719e32feabc18fc387b9474acfa28cfe2/contracts/upgradeable_contracts/components/common/TokensRelayer.sol",
+  "audit": "Chainsecurity-POA Network  OmniBridge",
+  "pragma": "pragma solidity 0.7.5;",
+  "orig_lines": 127,
+  "flat_lines": 973,
+  "offset": 847,
+  "deps_inlined": 12,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_relayTokens",
+    "raw_lines": "L99-117",
+    "lines": [
+     [
+      99,
+      117
+     ]
+    ],
+    "flat_lines": [
+     [
+      946,
+      964
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "007_ReferralFeeReceiver",
+  "source": "Chainsulting-1inch/liquidity-protocol-master/contracts/ReferralFeeReceiver.sol",
+  "audit": "Chainsulting-1inch",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 212,
+  "flat_lines": 2316,
+  "offset": 2106,
+  "deps_inlined": 23,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "N/A",
+    "raw_lines": "L11",
+    "lines": [
+     [
+      11,
+      11
+     ]
+    ],
+    "flat_lines": [
+     [
+      2117,
+      2117
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "008_LockupToken",
+  "source": "Chainsulting-DSLA Protocol-project1/Stacktical/DSLA Token Smart Contract/contracts/DSLA/LockupToken.sol",
+  "audit": "Chainsulting-DSLA Protocol-project1",
+  "pragma": "pragma solidity 0.4.24;",
+  "orig_lines": 88,
+  "flat_lines": 152,
+  "offset": 65,
+  "deps_inlined": 1,
+  "unresolved_imports": [
+   "openzeppelin-solidity/contracts/token/ERC20/ERC20Burnable.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "constructor",
+    "raw_lines": "L24",
+    "lines": [
+     [
+      24,
+      24
+     ]
+    ],
+    "flat_lines": [
+     [
+      89,
+      89
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "009_FountainBase",
+  "source": "Chainsulting-Furucombo-project2/trevi-b3f7fd332873321152db48c9d43fc23a60a29f1a/contracts/FountainBase.sol",
+  "audit": "Chainsulting-Furucombo-project2",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 352,
+  "flat_lines": 2009,
+  "offset": 1659,
+  "deps_inlined": 18,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_depositAngel",
+    "raw_lines": "L290-291",
+    "lines": [
+     [
+      290,
+      291
+     ]
+    ],
+    "flat_lines": [
+     [
+      1949,
+      1950
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_withdrawAngel",
+    "raw_lines": "L295-L308",
+    "lines": [
+     [
+      295,
+      308
+     ]
+    ],
+    "flat_lines": [
+     [
+      1954,
+      1967
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "010_CommunityVault",
+  "source": "Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9/contracts/CommunityVault.sol",
+  "audit": "Coinbae-Barnbridge_Vault",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 24,
+  "flat_lines": 189,
+  "offset": 166,
+  "deps_inlined": 3,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "setAllowance",
+    "raw_lines": "L19",
+    "lines": [
+     [
+      19,
+      19
+     ]
+    ],
+    "flat_lines": [
+     [
+      185,
+      185
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "011_wHakka",
+  "source": "Coinbae-Hakka_Finance_wHakka/code/wHakka.sol",
+  "audit": "Coinbae-Hakka_Finance_wHakka",
+  "pragma": "pragma solidity 0.5.17;",
+  "orig_lines": 601,
+  "flat_lines": 602,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "stakingRateMax",
+    "raw_lines": "L509",
+    "lines": [
+     [
+      509,
+      509
+     ]
+    ],
+    "flat_lines": [
+     [
+      510,
+      510
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "stake",
+    "raw_lines": "L556 - L573",
+    "lines": [
+     [
+      556,
+      573
+     ]
+    ],
+    "flat_lines": [
+     [
+      557,
+      574
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "unstake",
+    "raw_lines": "L576 - L592",
+    "lines": [
+     [
+      576,
+      592
+     ]
+    ],
+    "flat_lines": [
+     [
+      577,
+      593
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "unstake",
+    "raw_lines": "L580",
+    "lines": [
+     [
+      580,
+      580
+     ]
+    ],
+    "flat_lines": [
+     [
+      581,
+      581
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "012_MasterChef",
+  "source": "Coinbae-Pud.Fi Masterchef_Audit/MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/MasterChef.sol",
+  "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+  "pragma": "pragma solidity 0.6.7;",
+  "orig_lines": 391,
+  "flat_lines": 1531,
+  "offset": 1141,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "add",
+    "raw_lines": "L105 - L127",
+    "lines": [
+     [
+      105,
+      127
+     ]
+    ],
+    "flat_lines": [
+     [
+      1246,
+      1268
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "set",
+    "raw_lines": "L131 - L143",
+    "lines": [
+     [
+      131,
+      143
+     ]
+    ],
+    "flat_lines": [
+     [
+      1272,
+      1284
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L227 - L266",
+    "lines": [
+     [
+      227,
+      266
+     ]
+    ],
+    "flat_lines": [
+     [
+      1368,
+      1407
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L247 - L251",
+    "lines": [
+     [
+      247,
+      251
+     ]
+    ],
+    "flat_lines": [
+     [
+      1388,
+      1392
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L272 - L306",
+    "lines": [
+     [
+      272,
+      306
+     ]
+    ],
+    "flat_lines": [
+     [
+      1413,
+      1447
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "emergencyWithdraw",
+    "raw_lines": "L310 - L329",
+    "lines": [
+     [
+      310,
+      329
+     ]
+    ],
+    "flat_lines": [
+     [
+      1451,
+      1470
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "balance",
+    "raw_lines": "L378 - L381",
+    "lines": [
+     [
+      378,
+      381
+     ]
+    ],
+    "flat_lines": [
+     [
+      1519,
+      1522
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "013_SpaceMonkey",
+  "source": "Coinbae-SpaceMonkey/SpaceMonkey0x9298f766581650e81357f5C66C91cc003f2b75Aa/root/workspace/GXC/contracts/SPMK/SpaceMonkey.sol",
+  "audit": "Coinbae-SpaceMonkey",
+  "pragma": "pragma solidity ^0.8.4;",
+  "orig_lines": 686,
+  "flat_lines": 1078,
+  "offset": 393,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "transfer",
+    "raw_lines": "L53 - L64",
+    "lines": [
+     [
+      53,
+      64
+     ]
+    ],
+    "flat_lines": [
+     [
+      446,
+      457
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "014_Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382",
+  "source": "Coinbae-TapCoins_Token_Contract/code/Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol",
+  "audit": "Coinbae-TapCoins_Token_Contract",
+  "pragma": "pragma solidity ^0.4.11;",
+  "orig_lines": 517,
+  "flat_lines": 517,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "setUpgradeAgent",
+    "raw_lines": "L373 - L394",
+    "lines": [
+     [
+      373,
+      394
+     ]
+    ],
+    "flat_lines": [
+     [
+      374,
+      395
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "015_MintingFactoryV2",
+  "source": "Coinfabrik-MintingFactoryV2, BaseUpgradableMarketplace & KODAV3UpgradableGatedMarketplace/known-origin-contracts-v3-d592c5f4fa4e0b6fc65a1fce43e302706aedf607/contracts/minter/MintingFactoryV2.sol",
+  "audit": "Coinfabrik-MintingFactoryV2, BaseUpgradableMarketplace & KODAV3UpgradableGatedMarketplace",
+  "pragma": "pragma solidity 0.8.4;",
+  "orig_lines": 368,
+  "flat_lines": 1512,
+  "offset": 1146,
+  "deps_inlined": 13,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "mintBatchEdition",
+    "raw_lines": "L93 - L112",
+    "lines": [
+     [
+      93,
+      112
+     ]
+    ],
+    "flat_lines": [
+     [
+      1239,
+      1258
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "016_woonklyPOS",
+  "source": "Coinfabrik-Woonkly Security Audit (DEX STAKE)/STAKESmartContractPreRelease-main/woonklyPOS.sol",
+  "audit": "Coinfabrik-Woonkly Security Audit (DEX STAKE)",
+  "pragma": "pragma solidity ^0.6.6;",
+  "orig_lines": 1018,
+  "flat_lines": 1018,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "https://github.com/Woonkly/MartinHSolUtils/Utils.sol",
+   "https://github.com/Woonkly/OpenZeppelinBaseContracts/contracts/math/SafeMath.sol",
+   "https://github.com/Woonkly/OpenZeppelinBaseContracts/contracts/token/ERC20/ERC20.sol",
+   "https://github.com/Woonkly/OpenZeppelinBaseContracts/contracts/utils/ReentrancyGuard.sol",
+   "https://github.com/Woonkly/STAKESmartContractPreRelease/Erc20Manager.sol",
+   "https://github.com/Woonkly/STAKESmartContractPreRelease/IInvestiable.sol",
+   "https://github.com/Woonkly/STAKESmartContractPreRelease/IWStaked.sol",
+   "https://github.com/Woonkly/STAKESmartContractPreRelease/Pausabled.sol",
+   "https://github.com/Woonkly/STAKESmartContractPreRelease/StakeManager.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "processReward",
+    "raw_lines": "L743 - L769",
+    "lines": [
+     [
+      743,
+      769
+     ]
+    ],
+    "flat_lines": [
+     [
+      744,
+      770
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "017_TempusController",
+  "source": "Coinspect-Tempus Audit/tempus-protocol-ee5964bd416770e00639a4053b45f346e4bf8b93/contracts/TempusController.sol",
+  "audit": "Coinspect-Tempus Audit",
+  "pragma": "pragma solidity 0.8.6;",
+  "orig_lines": 521,
+  "flat_lines": 1533,
+  "offset": 1014,
+  "deps_inlined": 12,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exitTempusAMMAndRedeem",
+    "raw_lines": "L352-386",
+    "lines": [
+     [
+      352,
+      386
+     ]
+    ],
+    "flat_lines": [
+     [
+      1366,
+      1400
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "completeExitAndRedeem",
+    "raw_lines": "L395-436",
+    "lines": [
+     [
+      395,
+      436
+     ]
+    ],
+    "flat_lines": [
+     [
+      1409,
+      1450
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "018_ChimVesting",
+  "source": "Hacken-Chimeras/chim-chain-094d95aaed7adc95fafb60ebad6c64c7588f3cd2/ChimVesting.sol",
+  "audit": "Hacken-Chimeras",
+  "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+  "orig_lines": 425,
+  "flat_lines": 1162,
+  "offset": 739,
+  "deps_inlined": 8,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "checkLocks",
+    "raw_lines": "L242",
+    "lines": [
+     [
+      242,
+      242
+     ]
+    ],
+    "flat_lines": [
+     [
+      981,
+      981
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "019_IDO",
+  "source": "Hacken-Ground Zero/code/IDO.sol",
+  "audit": "Hacken-Ground Zero",
+  "pragma": "pragma solidity ^0.8.4;",
+  "orig_lines": 174,
+  "flat_lines": 4995,
+  "offset": 4822,
+  "deps_inlined": 28,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "claim",
+    "raw_lines": "L86 - L110",
+    "lines": [
+     [
+      86,
+      110
+     ]
+    ],
+    "flat_lines": [
+     [
+      4908,
+      4932
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "020_MateCore",
+  "source": "Hacken-Mate/mate-contracts-8d013762e0373e2bb3d0e0c4fc606b9bd4daacbe/MateCore.sol",
+  "audit": "Hacken-Mate",
+  "pragma": "pragma solidity >=0.8.0;",
+  "orig_lines": 276,
+  "flat_lines": 1575,
+  "offset": 1299,
+  "deps_inlined": 13,
+  "unresolved_imports": [
+   "./FeeManager.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_canExecuteOrder",
+    "raw_lines": "L86",
+    "lines": [
+     [
+      86,
+      86
+     ]
+    ],
+    "flat_lines": [
+     [
+      1385,
+      1385
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_executeOrder",
+    "raw_lines": "L166",
+    "lines": [
+     [
+      166,
+      166
+     ]
+    ],
+    "flat_lines": [
+     [
+      1465,
+      1465
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_executeOrder",
+    "raw_lines": "L225",
+    "lines": [
+     [
+      225,
+      225
+     ]
+    ],
+    "flat_lines": [
+     [
+      1524,
+      1524
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "021_OrderBook",
+  "source": "Hacken-Mate/mate-contracts-8d013762e0373e2bb3d0e0c4fc606b9bd4daacbe/OrderBook.sol",
+  "audit": "Hacken-Mate",
+  "pragma": "pragma solidity >=0.8.0;",
+  "orig_lines": 257,
+  "flat_lines": 1224,
+  "offset": 967,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "placeOrder",
+    "raw_lines": "L76",
+    "lines": [
+     [
+      76,
+      76
+     ]
+    ],
+    "flat_lines": [
+     [
+      1043,
+      1043
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "placeOrder",
+    "raw_lines": "L105",
+    "lines": [
+     [
+      105,
+      105
+     ]
+    ],
+    "flat_lines": [
+     [
+      1072,
+      1072
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "cancelExpiredOrders",
+    "raw_lines": "L145",
+    "lines": [
+     [
+      145,
+      145
+     ]
+    ],
+    "flat_lines": [
+     [
+      1112,
+      1112
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "022_UniswapHandler",
+  "source": "Hacken-Mate/mate-contracts-8d013762e0373e2bb3d0e0c4fc606b9bd4daacbe/UniswapHandler.sol",
+  "audit": "Hacken-Mate",
+  "pragma": "pragma solidity >=0.8.0;",
+  "orig_lines": 81,
+  "flat_lines": 838,
+  "offset": 758,
+  "deps_inlined": 8,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_swap",
+    "raw_lines": "L38",
+    "lines": [
+     [
+      38,
+      38
+     ]
+    ],
+    "flat_lines": [
+     [
+      796,
+      796
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "023_PowerBombAvaxCurve",
+  "source": "Hacken-Powerbomb-V1/powerbomb-lite-0f86ff1eecdd723be733a9b33ff4ffa3bbdadcee/hardhat/contracts/PowerBombAvaxCurve.sol",
+  "audit": "Hacken-Powerbomb-V1",
+  "pragma": "pragma solidity 0.8.9;",
+  "orig_lines": 414,
+  "flat_lines": 2339,
+  "offset": 1926,
+  "deps_inlined": 17,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "claimReward",
+    "raw_lines": "L269-293",
+    "lines": [
+     [
+      269,
+      293
+     ]
+    ],
+    "flat_lines": [
+     [
+      2195,
+      2219
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "024_StakingPlatform",
+  "source": "Hacken-Retreeb/staking-platform-de6c61f7559d9405ff6a764e8c0becdae8630ff7/StakingPlatform.sol",
+  "audit": "Hacken-Retreeb",
+  "pragma": "pragma solidity =0.8.9;",
+  "orig_lines": 255,
+  "flat_lines": 913,
+  "offset": 659,
+  "deps_inlined": 6,
+  "unresolved_imports": [
+   "./IStakingPlatform.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "startStaking",
+    "raw_lines": "L58-L60",
+    "lines": [
+     [
+      58,
+      60
+     ]
+    ],
+    "flat_lines": [
+     [
+      717,
+      719
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "deposit",
+    "raw_lines": "L72",
+    "lines": [
+     [
+      72,
+      72
+     ]
+    ],
+    "flat_lines": [
+     [
+      731,
+      731
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "deposit",
+    "raw_lines": "L82",
+    "lines": [
+     [
+      82,
+      82
+     ]
+    ],
+    "flat_lines": [
+     [
+      741,
+      741
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "withdraw",
+    "raw_lines": "L99",
+    "lines": [
+     [
+      99,
+      99
+     ]
+    ],
+    "flat_lines": [
+     [
+      758,
+      758
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "withdrawResidualBalance",
+    "raw_lines": "L125",
+    "lines": [
+     [
+      125,
+      125
+     ]
+    ],
+    "flat_lines": [
+     [
+      784,
+      784
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_percentageTimeRemaining",
+    "raw_lines": "L214",
+    "lines": [
+     [
+      214,
+      214
+     ]
+    ],
+    "flat_lines": [
+     [
+      873,
+      873
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_percentageTimeRemaining",
+    "raw_lines": "L216-L217",
+    "lines": [
+     [
+      216,
+      217
+     ]
+    ],
+    "flat_lines": [
+     [
+      875,
+      876
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_updateRewards",
+    "raw_lines": "L250-L252",
+    "lines": [
+     [
+      250,
+      252
+     ]
+    ],
+    "flat_lines": [
+     [
+      909,
+      911
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "025_Staking",
+  "source": "Hacken-RichQUACK/code/Staking.sol",
+  "audit": "Hacken-RichQUACK",
+  "pragma": "pragma solidity 0.8.11;",
+  "orig_lines": 344,
+  "flat_lines": 1844,
+  "offset": 1501,
+  "deps_inlined": 13,
+  "unresolved_imports": [
+   "./interfaces/IStaking.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "startPool",
+    "raw_lines": "L125",
+    "lines": [
+     [
+      125,
+      125
+     ]
+    ],
+    "flat_lines": [
+     [
+      1626,
+      1626
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "endPool",
+    "raw_lines": "L134",
+    "lines": [
+     [
+      134,
+      134
+     ]
+    ],
+    "flat_lines": [
+     [
+      1635,
+      1635
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "deposit",
+    "raw_lines": "L176",
+    "lines": [
+     [
+      176,
+      176
+     ]
+    ],
+    "flat_lines": [
+     [
+      1677,
+      1677
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "026_SamuraiLegendsStaking",
+  "source": "Hacken-Samurai Legends/contract_samurai-legends-tokens-aff9f451dffc6854f29375ac21f8cedba8ee1101/contracts/SamuraiLegendsStaking.sol",
+  "audit": "Hacken-Samurai Legends",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 523,
+  "flat_lines": 875,
+  "offset": 353,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "N/A",
+    "raw_lines": "L77",
+    "lines": [
+     [
+      77,
+      77
+     ]
+    ],
+    "flat_lines": [
+     [
+      430,
+      430
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "lastTimeRewardActiveAt",
+    "raw_lines": "L156",
+    "lines": [
+     [
+      156,
+      156
+     ]
+    ],
+    "flat_lines": [
+     [
+      509,
+      509
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "createPending",
+    "raw_lines": "L251",
+    "lines": [
+     [
+      251,
+      251
+     ]
+    ],
+    "flat_lines": [
+     [
+      604,
+      604
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "getClaimablePendingPortion",
+    "raw_lines": "L333",
+    "lines": [
+     [
+      333,
+      333
+     ]
+    ],
+    "flat_lines": [
+     [
+      686,
+      686
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "addReward",
+    "raw_lines": "L408",
+    "lines": [
+     [
+      408,
+      408
+     ]
+    ],
+    "flat_lines": [
+     [
+      761,
+      761
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "027_Staking",
+  "source": "Hacken-Talent Protocol/contracts-70acb4924503fad6416ffa44b117ab51bef3fd21/Staking.sol",
+  "audit": "Hacken-Talent Protocol",
+  "pragma": "pragma solidity ^0.8.7;",
+  "orig_lines": 799,
+  "flat_lines": 3334,
+  "offset": 2538,
+  "deps_inlined": 11,
+  "unresolved_imports": [
+   "./TalentFactory.sol",
+   "./TalentToken.sol",
+   "./staking/RewardCalculator.sol",
+   "./staking/StableThenToken.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "adminWithdraw",
+    "raw_lines": "L444",
+    "lines": [
+     [
+      444,
+      444
+     ]
+    ],
+    "flat_lines": [
+     [
+      2982,
+      2982
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_checkpoint",
+    "raw_lines": "L601",
+    "lines": [
+     [
+      601,
+      601
+     ]
+    ],
+    "flat_lines": [
+     [
+      3139,
+      3139
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_updateS",
+    "raw_lines": "L650-L651",
+    "lines": [
+     [
+      650,
+      651
+     ]
+    ],
+    "flat_lines": [
+     [
+      3188,
+      3189
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "onlyWhileStakingEnabled",
+    "raw_lines": "L748-L749",
+    "lines": [
+     [
+      748,
+      749
+     ]
+    ],
+    "flat_lines": [
+     [
+      3286,
+      3287
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "028_MasterChef",
+  "source": "ImmuneBytes-Bird Money(MasterChef)-Audit Report/bird-farm-contracts-dfd2502b73c8f54c9081682c3eb070fcd3c00629/contracts/MasterChef.sol",
+  "audit": "ImmuneBytes-Bird Money(MasterChef)-Audit Report",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 358,
+  "flat_lines": 1300,
+  "offset": 944,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L262",
+    "lines": [
+     [
+      262,
+      262
+     ]
+    ],
+    "flat_lines": [
+     [
+      1206,
+      1206
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "emergencyWithdraw",
+    "raw_lines": "L311",
+    "lines": [
+     [
+      311,
+      311
+     ]
+    ],
+    "flat_lines": [
+     [
+      1255,
+      1255
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "029_MasterChef",
+  "source": "ImmuneBytes-Bird Money-Final Audit Report/bird-farm-contracts-dfd2502b73c8f54c9081682c3eb070fcd3c00629/contracts/MasterChef.sol",
+  "audit": "ImmuneBytes-Bird Money-Final Audit Report",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 356,
+  "flat_lines": 1298,
+  "offset": 944,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L261-284",
+    "lines": [
+     [
+      261,
+      284
+     ]
+    ],
+    "flat_lines": [
+     [
+      1205,
+      1228
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L287-306",
+    "lines": [
+     [
+      287,
+      306
+     ]
+    ],
+    "flat_lines": [
+     [
+      1231,
+      1250
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "030_MainWorkflow",
+  "source": "Inspex-SuperLauncher V.2/v2-core-ba2ce0aedbefd79d6f2154f7ccc4954bba33592a/MainWorkflow.sol",
+  "audit": "Inspex-SuperLauncher V.2",
+  "pragma": "pragma solidity 0.8.10;",
+  "orig_lines": 446,
+  "flat_lines": 1523,
+  "offset": 1080,
+  "deps_inlined": 9,
+  "unresolved_imports": [
+   "../interfaces/ILpProvider.sol",
+   "../interfaces/IManager.sol",
+   "../logic/Guaranteed.sol",
+   "../logic/History.sol",
+   "../logic/Live.sol",
+   "../logic/Lottery.sol",
+   "../logic/LpProvision.sol",
+   "../logic/OverSubscribe.sol",
+   "../logic/Vesting.sol",
+   "./DataStore.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_transferOut",
+    "raw_lines": "L342",
+    "lines": [
+     [
+      342,
+      342
+     ]
+    ],
+    "flat_lines": [
+     [
+      1422,
+      1422
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "031_Staking",
+  "source": "Inspex-Tokens, Farm & Shop/-SpeedStar-Audit-3e39d7acf9c1aa9f3a5511c161c2035ba7d6bc1f/contracts/farm/Staking.sol",
+  "audit": "Inspex-Tokens, Farm & Shop",
+  "pragma": "pragma solidity 0.8.11;",
+  "orig_lines": 993,
+  "flat_lines": 5063,
+  "offset": 4070,
+  "deps_inlined": 21,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "depositStable",
+    "raw_lines": "L674",
+    "lines": [
+     [
+      674,
+      674
+     ]
+    ],
+    "flat_lines": [
+     [
+      4744,
+      4744
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "032_BaseRewards",
+  "source": "Iosiro-1inch Exchange Staking Rewards Smart Contract Audit/liquidity-protocol-c9c8bc600e8e7897f70f84b006de601d4f4bcbe3/BaseRewards.sol",
+  "audit": "Iosiro-1inch Exchange Staking Rewards Smart Contract Audit",
+  "pragma": "pragma solidity ^0.6.12;",
+  "orig_lines": 133,
+  "flat_lines": 327,
+  "offset": 196,
+  "deps_inlined": 4,
+  "unresolved_imports": [
+   "./BalanceAccounting.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "getReward",
+    "raw_lines": "L75",
+    "lines": [
+     [
+      75,
+      75
+     ]
+    ],
+    "flat_lines": [
+     [
+      271,
+      271
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "033_AMOCoinSale",
+  "source": "Iosiro-AMO Crowdsale Smart Contract Audit/AMO-Contracts-26b5b22f50e39cd9fc3a6df99aff83f5a74e89d3/AMOCoinSale.sol",
+  "audit": "Iosiro-AMO Crowdsale Smart Contract Audit",
+  "pragma": "pragma solidity ^0.4.18;",
+  "orig_lines": 499,
+  "flat_lines": 1099,
+  "offset": 601,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "onlyValidPurchase",
+    "raw_lines": "L132",
+    "lines": [
+     [
+      132,
+      132
+     ]
+    ],
+    "flat_lines": [
+     [
+      733,
+      733
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "startSale",
+    "raw_lines": "L349",
+    "lines": [
+     [
+      349,
+      349
+     ]
+    ],
+    "flat_lines": [
+     [
+      950,
+      950
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "endSale",
+    "raw_lines": "L358",
+    "lines": [
+     [
+      358,
+      358
+     ]
+    ],
+    "flat_lines": [
+     [
+      959,
+      959
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "034_Crowdfund",
+  "source": "Iosiro-Etherparty Smart Contract Audit/eth-smart-contracts-39ab46c841f2e8e5beff4508a3f05362bd583049/Crowdfund.sol",
+  "audit": "Iosiro-Etherparty Smart Contract Audit",
+  "pragma": "pragma solidity 0.4.24;",
+  "orig_lines": 342,
+  "flat_lines": 342,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "./Token.sol",
+   "./library/CanReclaimToken.sol",
+   "./library/NonZero.sol",
+   "./library/SafeMath.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "duringCrowdfund",
+    "raw_lines": "L61、68、76、162、173、180",
+    "lines": [
+     [
+      61,
+      180
+     ]
+    ],
+    "flat_lines": [
+     [
+      62,
+      181
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "035_SNXFlashLoanTool",
+  "source": "Iosiro-SNX FlashBurn Smart Contract Audit/flashburn-3aa02a3d63d9e0110a5b6669a4a4011ceee3cf2b/packages/contracts/contracts/SNXFlashLoanTool.sol",
+  "audit": "Iosiro-SNX FlashBurn Smart Contract Audit",
+  "pragma": "pragma solidity ^0.7.6;",
+  "orig_lines": 148,
+  "flat_lines": 1347,
+  "offset": 1200,
+  "deps_inlined": 11,
+  "unresolved_imports": [
+   "synthetix/contracts/interfaces/IAddressResolver.sol",
+   "synthetix/contracts/interfaces/ISynthetix.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "swap",
+    "raw_lines": "L143",
+    "lines": [
+     [
+      143,
+      143
+     ]
+    ],
+    "flat_lines": [
+     [
+      1343,
+      1343
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "036_Vester",
+  "source": "Iosiro-Synthetix Vest Tool Smart Contract Audit/tokenvest-36573f264d42d4549b9f903a014783e01029c978/Vester.sol",
+  "audit": "Iosiro-Synthetix Vest Tool Smart Contract Audit",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 167,
+  "flat_lines": 1861,
+  "offset": 1695,
+  "deps_inlined": 15,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "redeemWithTransfer",
+    "raw_lines": "L51 - L58",
+    "lines": [
+     [
+      51,
+      58
+     ]
+    ],
+    "flat_lines": [
+     [
+      1746,
+      1753
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "mint",
+    "raw_lines": "L128 - L132",
+    "lines": [
+     [
+      128,
+      132
+     ]
+    ],
+    "flat_lines": [
+     [
+      1823,
+      1827
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "037_Crowdsale",
+  "source": "New_Alchemy_Security_Audit-The Abyss DAICO Smart Contract Audit (New)/abyss-daico-21d6232a802cd966b86629cadeac0b7f3816f719/Crowdsale.sol",
+  "audit": "New_Alchemy_Security_Audit-The Abyss DAICO Smart Contract Audit (New)",
+  "pragma": "pragma solidity ^0.4.21;",
+  "orig_lines": 496,
+  "flat_lines": 1134,
+  "offset": 639,
+  "deps_inlined": 13,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "isValidContribution",
+    "raw_lines": "L148",
+    "lines": [
+     [
+      148,
+      148
+     ]
+    ],
+    "flat_lines": [
+     [
+      787,
+      787
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "038_FlashLoanLogic",
+  "source": "PeckShield-AaveV3/code/aave-v3-core-14f6148e21b477d78347db6a1603039c9559e275/contracts/protocol/libraries/logic/FlashLoanLogic.sol",
+  "audit": "PeckShield-AaveV3",
+  "pragma": "pragma solidity 0.8.7;",
+  "orig_lines": 241,
+  "flat_lines": 5154,
+  "offset": 4914,
+  "deps_inlined": 29,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "executeFlashLoanSimple",
+    "raw_lines": "L182-L240",
+    "lines": [
+     [
+      182,
+      240
+     ]
+    ],
+    "flat_lines": [
+     [
+      5096,
+      5154
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "039_Swap_Factory_Future",
+  "source": "PeckShield-Arche/Arche_v1.0_Eros-909f35e0064d636aaf61954a6026fda7b2bade7f/Swap_Factory_Future.sol",
+  "audit": "PeckShield-Arche",
+  "pragma": "",
+  "orig_lines": 467,
+  "flat_lines": 468,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "Impl_Delivery",
+    "raw_lines": "L360-L380",
+    "lines": [
+     [
+      360,
+      380
+     ]
+    ],
+    "flat_lines": [
+     [
+      361,
+      381
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "040_AToken",
+  "source": "PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f/contracts/AToken.sol",
+  "audit": "PeckShield-Atlantis",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 1460,
+  "flat_lines": 2677,
+  "offset": 1218,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "borrowFresh",
+    "raw_lines": "L738-L802",
+    "lines": [
+     [
+      738,
+      802
+     ]
+    ],
+    "flat_lines": [
+     [
+      1956,
+      2020
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "041_BankingNode",
+  "source": "PeckShield-BNPL/BNPL-0ee587a081668dcab166a3a275b8a6c4794ead4d/contracts/BankingNode.sol",
+  "audit": "PeckShield-BNPL",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 1110,
+  "flat_lines": 2672,
+  "offset": 1564,
+  "deps_inlined": 14,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "unstake",
+    "raw_lines": "L615-L637",
+    "lines": [
+     [
+      615,
+      637
+     ]
+    ],
+    "flat_lines": [
+     [
+      2179,
+      2201
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "042_MasterChef",
+  "source": "PeckShield-BabySwap/code/baby-swap-contract-cac289bf978d969c95721c2adb9f199cee72ffa6/contracts/farm/MasterChef.sol",
+  "audit": "PeckShield-BabySwap",
+  "pragma": "pragma solidity >=0.6.12;",
+  "orig_lines": 340,
+  "flat_lines": 1805,
+  "offset": 1468,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L249-L267",
+    "lines": [
+     [
+      249,
+      267
+     ]
+    ],
+    "flat_lines": [
+     [
+      1717,
+      1735
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "043_BufferBNBOptions",
+  "source": "PeckShield-Buffer/code/Buffer-Protocol-1c648bb35feca23bc801ce76aba63ca66af5917e/contracts/Options/BufferBNBOptions.sol",
+  "audit": "PeckShield-Buffer",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 469,
+  "flat_lines": 3370,
+  "offset": 2905,
+  "deps_inlined": 22,
+  "unresolved_imports": [
+   "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "create",
+    "raw_lines": "L142-L189",
+    "lines": [
+     [
+      142,
+      189
+     ]
+    ],
+    "flat_lines": [
+     [
+      3047,
+      3094
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "044_code",
+  "source": "PeckShield-COIN98/code/code.sol",
+  "audit": "PeckShield-COIN98",
+  "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+  "orig_lines": 291,
+  "flat_lines": 291,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "vote",
+    "raw_lines": "L181",
+    "lines": [
+     [
+      181,
+      181
+     ]
+    ],
+    "flat_lines": [
+     [
+      182,
+      182
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "045_StakingProxyUniV3",
+  "source": "PeckShield-Convex_Frax/frax-cvx-platform-2f8573ee796daa022c1050b4a749bf08049c439b/contracts/contracts/StakingProxyUniV3.sol",
+  "audit": "PeckShield-Convex_Frax",
+  "pragma": "pragma solidity 0.8.10;",
+  "orig_lines": 272,
+  "flat_lines": 1315,
+  "offset": 1044,
+  "deps_inlined": 13,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "lockAdditional",
+    "raw_lines": "L94-L113",
+    "lines": [
+     [
+      94,
+      113
+     ]
+    ],
+    "flat_lines": [
+     [
+      1138,
+      1157
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "046_CryptoHeroesUniverse",
+  "source": "PeckShield-CryptoHeroes/cryptoheroes-6cb0eaf8c88fdaab89d2b4c83535a189c7793001/CryptoHeroesUniverse.sol",
+  "audit": "PeckShield-CryptoHeroes",
+  "pragma": "pragma solidity ^0.6.12;",
+  "orig_lines": 263,
+  "flat_lines": 1670,
+  "offset": 1409,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L175 - L203",
+    "lines": [
+     [
+      175,
+      203
+     ]
+    ],
+    "flat_lines": [
+     [
+      1584,
+      1612
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "047_SinglePool",
+  "source": "PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919/contracts/pools/SinglePool.sol",
+  "audit": "PeckShield-DSG",
+  "pragma": "pragma solidity =0.6.12;",
+  "orig_lines": 222,
+  "flat_lines": 862,
+  "offset": 641,
+  "deps_inlined": 6,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "emergencyWithdraw",
+    "raw_lines": "L202-L214",
+    "lines": [
+     [
+      202,
+      214
+     ]
+    ],
+    "flat_lines": [
+     [
+      843,
+      855
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "048_SkyRewardPool",
+  "source": "PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd/contracts/distribution/SkyRewardPool.sol",
+  "audit": "PeckShield-DarkCrypto",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 289,
+  "flat_lines": 838,
+  "offset": 551,
+  "deps_inlined": 4,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L217-L234",
+    "lines": [
+     [
+      217,
+      234
+     ]
+    ],
+    "flat_lines": [
+     [
+      768,
+      785
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "049_code",
+  "source": "PeckShield-ERC20_FAT/code/code.sol",
+  "audit": "PeckShield-ERC20_FAT",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 1092,
+  "flat_lines": 1092,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_delegate",
+    "raw_lines": "L1030 - L1040",
+    "lines": [
+     [
+      1030,
+      1040
+     ]
+    ],
+    "flat_lines": [
+     [
+      1031,
+      1041
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "050_LCToken",
+  "source": "PeckShield-ERC20_LuckyChip/core-0d957aa387d29297fc6ebfc69140440be6d791c1/contracts/token/LCToken.sol",
+  "audit": "PeckShield-ERC20_LuckyChip",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 285,
+  "flat_lines": 1480,
+  "offset": 1197,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_delegate",
+    "raw_lines": "L222-L232",
+    "lines": [
+     [
+      222,
+      232
+     ]
+    ],
+    "flat_lines": [
+     [
+      1419,
+      1429
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "051_HegicPool",
+  "source": "PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda/contracts/Pool/HegicPool.sol",
+  "audit": "PeckShield-Hegic(v8888)",
+  "pragma": "pragma solidity 0.8.6;",
+  "orig_lines": 577,
+  "flat_lines": 3755,
+  "offset": 3179,
+  "deps_inlined": 23,
+  "unresolved_imports": [
+   "@chainlink/contracts/src/v0.7/interfaces/AggregatorV3Interface.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "provideFrom",
+    "raw_lines": "L373 - L409",
+    "lines": [
+     [
+      373,
+      409
+     ]
+    ],
+    "flat_lines": [
+     [
+      3552,
+      3588
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "052_Holdefi",
+  "source": "PeckShield-Holdefi/Holdefi-5a1e6e0d582120142e8a531f6806eba6665ef2f4/contracts/Holdefi.sol",
+  "audit": "PeckShield-Holdefi",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 1409,
+  "flat_lines": 1944,
+  "offset": 536,
+  "deps_inlined": 5,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "repayBorrowInternal",
+    "raw_lines": "L1292-L1344",
+    "lines": [
+     [
+      1292,
+      1344
+     ]
+    ],
+    "flat_lines": [
+     [
+      1828,
+      1880
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "053_masterchef",
+  "source": "PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37/masterchef.sol",
+  "audit": "PeckShield-KaoyaSwap",
+  "pragma": "pragma solidity 0.8.7;",
+  "orig_lines": 245,
+  "flat_lines": 1781,
+  "offset": 1538,
+  "deps_inlined": 6,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L196 - L208",
+    "lines": [
+     [
+      196,
+      208
+     ]
+    ],
+    "flat_lines": [
+     [
+      1734,
+      1746
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "054_MasterMilker",
+  "source": "PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07/contracts/MasterMilker.sol",
+  "audit": "PeckShield-MilkySwap",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 269,
+  "flat_lines": 1753,
+  "offset": 1486,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "emergencyWithdraw",
+    "raw_lines": "L237-L244",
+    "lines": [
+     [
+      237,
+      244
+     ]
+    ],
+    "flat_lines": [
+     [
+      1723,
+      1730
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "055_LPool",
+  "source": "PeckShield-OpenLeverage1.0/openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/liquidity/LPool.sol",
+  "audit": "PeckShield-OpenLeverage1.0",
+  "pragma": "pragma solidity 0.7.6;",
+  "orig_lines": 1026,
+  "flat_lines": 2540,
+  "offset": 1517,
+  "deps_inlined": 13,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "borrowFresh",
+    "raw_lines": "L845-L885",
+    "lines": [
+     [
+      845,
+      885
+     ]
+    ],
+    "flat_lines": [
+     [
+      2362,
+      2402
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "056_PikaPerpV2",
+  "source": "PeckShield-PikaPerpV2/PikaPerpV2-4a0965ff90ed099b7e2d3e8dda47cd589ee8e3a2/contracts/perp/PikaPerpV2.sol",
+  "audit": "PeckShield-PikaPerpV2",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 989,
+  "flat_lines": 3531,
+  "offset": 2543,
+  "deps_inlined": 12,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "closePositionWithId",
+    "raw_lines": "L402-459",
+    "lines": [
+     [
+      402,
+      459
+     ]
+    ],
+    "flat_lines": [
+     [
+      2945,
+      3002
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "057_PMintBurn",
+  "source": "PeckShield-PlutosV1/plutos-eth-contract-0777815/contracts/PMintBurn.sol",
+  "audit": "PeckShield-PlutosV1",
+  "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+  "orig_lines": 177,
+  "flat_lines": 206,
+  "offset": 29,
+  "deps_inlined": 4,
+  "unresolved_imports": [
+   "../assets/TokenBankInterface.sol",
+   "../erc20/ERC20Impl.sol",
+   "../erc20/SafeERC20.sol",
+   "../erc20/TokenInterface.sol",
+   "../utils/Ownable.sol",
+   "../utils/SafeMath.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L48-L63",
+    "lines": [
+     [
+      48,
+      63
+     ]
+    ],
+    "flat_lines": [
+     [
+      77,
+      92
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "058_RToken",
+  "source": "PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2/contracts/RToken.sol",
+  "audit": "PeckShield-Rikkei",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 1435,
+  "flat_lines": 2640,
+  "offset": 1206,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "borrowFresh",
+    "raw_lines": "L738-L802",
+    "lines": [
+     [
+      738,
+      802
+     ]
+    ],
+    "flat_lines": [
+     [
+      1944,
+      2008
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "059_MasterShiba",
+  "source": "PeckShield-ShibaNova/Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/MasterShiba.sol",
+  "audit": "PeckShield-ShibaNova",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 416,
+  "flat_lines": 1426,
+  "offset": 1012,
+  "deps_inlined": 10,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L339 - L341",
+    "lines": [
+     [
+      339,
+      341
+     ]
+    ],
+    "flat_lines": [
+     [
+      1351,
+      1353
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "060_LPGauge",
+  "source": "PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b/contracts/Token/LPGauge.sol",
+  "audit": "PeckShield-StackerVC",
+  "pragma": "pragma solidity ^0.6.11;",
+  "orig_lines": 173,
+  "flat_lines": 788,
+  "offset": 619,
+  "deps_inlined": 6,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L75-L89",
+    "lines": [
+     [
+      75,
+      89
+     ]
+    ],
+    "flat_lines": [
+     [
+      694,
+      708
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "061_MasterChef",
+  "source": "PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63/contracts/MasterChef.sol",
+  "audit": "PeckShield-SushiSwap",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 257,
+  "flat_lines": 1738,
+  "offset": 1483,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L219-L230",
+    "lines": [
+     [
+      219,
+      230
+     ]
+    ],
+    "flat_lines": [
+     [
+      1702,
+      1713
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "062_StakingV2",
+  "source": "PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df/contracts/exchange/StakingV2.sol",
+  "audit": "PeckShield-TranchessV1.1",
+  "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+  "orig_lines": 834,
+  "flat_lines": 1933,
+  "offset": 1102,
+  "deps_inlined": 15,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L340-L359",
+    "lines": [
+     [
+      340,
+      359
+     ]
+    ],
+    "flat_lines": [
+     [
+      1442,
+      1461
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "063_LiquidityStaking",
+  "source": "PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa/contracts/governance/LiquidityStaking.sol",
+  "audit": "PeckShield-Tranchessv1.0",
+  "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+  "orig_lines": 131,
+  "flat_lines": 543,
+  "offset": 414,
+  "deps_inlined": 4,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L60-L69",
+    "lines": [
+     [
+      60,
+      69
+     ]
+    ],
+    "flat_lines": [
+     [
+      474,
+      483
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "064_bVault",
+  "source": "PeckShield-btdotfinance/bt-finance-6300bc1271b73a1755fae02594d25fdf6fa39a9c/contracts/vault/bVault.sol",
+  "audit": "PeckShield-btdotfinance",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 454,
+  "flat_lines": 454,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L357-L375",
+    "lines": [
+     [
+      357,
+      375
+     ]
+    ],
+    "flat_lines": [
+     [
+      358,
+      376
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "065_LighthouseLib",
+  "source": "PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498/contracts/robonomics/LighthouseLib.sol",
+  "audit": "PepperSec-Aira-Robonomic",
+  "pragma": "pragma solidity ^0.4.24;",
+  "orig_lines": 91,
+  "flat_lines": 1259,
+  "offset": 1169,
+  "deps_inlined": 19,
+  "unresolved_imports": [
+   "ens/contracts/ENS.sol",
+   "ens/contracts/ENSRegistry.sol",
+   "ens/contracts/PublicResolver.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L24",
+    "lines": [
+     [
+      24,
+      24
+     ]
+    ],
+    "flat_lines": [
+     [
+      1193,
+      1193
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "066_RobotLiabilityLib",
+  "source": "PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498/contracts/robonomics/RobotLiabilityLib.sol",
+  "audit": "PepperSec-Aira-Robonomic",
+  "pragma": "pragma solidity ^0.4.24;",
+  "orig_lines": 143,
+  "flat_lines": 1414,
+  "offset": 1272,
+  "deps_inlined": 20,
+  "unresolved_imports": [
+   "ens/contracts/ENS.sol",
+   "ens/contracts/ENSRegistry.sol",
+   "ens/contracts/PublicResolver.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "finalize",
+    "raw_lines": "L104",
+    "lines": [
+     [
+      104,
+      104
+     ]
+    ],
+    "flat_lines": [
+     [
+      1376,
+      1376
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "067_FeeCollector",
+  "source": "QuillAudits-1inch-Fee Collector/fee-collector-3c2626763fd829500496f15476d5e98fbdf4f574/contracts/FeeCollector.sol",
+  "audit": "QuillAudits-1inch-Fee Collector",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 529,
+  "flat_lines": 1580,
+  "offset": 1053,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "updateRewardNonLP",
+    "raw_lines": "L340 - L343",
+    "lines": [
+     [
+      340,
+      343
+     ]
+    ],
+    "flat_lines": [
+     [
+      1393,
+      1396
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "068_FixedRateSwap",
+  "source": "QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5/contracts/FixedRateSwap.sol",
+  "audit": "QuillAudits-1inch-Fixed Rate Swap",
+  "pragma": "pragma solidity 0.8.9;",
+  "orig_lines": 442,
+  "flat_lines": 1745,
+  "offset": 1305,
+  "deps_inlined": 8,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "depositFor",
+    "raw_lines": "L137",
+    "lines": [
+     [
+      137,
+      137
+     ]
+    ],
+    "flat_lines": [
+     [
+      1442,
+      1442
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_swap",
+    "raw_lines": "L323",
+    "lines": [
+     [
+      323,
+      323
+     ]
+    ],
+    "flat_lines": [
+     [
+      1628,
+      1628
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "069_LimitOrderProtocol",
+  "source": "QuillAudits-1inch-Limit Order Protocol/limit-order-protocol-a14bde6a260458de5083cee117d734221e1cbc05/contracts/LimitOrderProtocol.sol",
+  "audit": "QuillAudits-1inch-Limit Order Protocol",
+  "pragma": "pragma solidity ^0.7.6;",
+  "orig_lines": 463,
+  "flat_lines": 1916,
+  "offset": 1456,
+  "deps_inlined": 23,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "fillOrderTo",
+    "raw_lines": "L28 - L346",
+    "lines": [
+     [
+      28,
+      346
+     ]
+    ],
+    "flat_lines": [
+     [
+      1484,
+      1802
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "070_BaseParaSwapAdapter",
+  "source": "QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878/contracts/adapters/BaseParaSwapAdapter.sol",
+  "audit": "QuillAudits-AAVE-ParaSwap Adapter",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 127,
+  "flat_lines": 1189,
+  "offset": 1063,
+  "deps_inlined": 14,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_pullAToken",
+    "raw_lines": "L79",
+    "lines": [
+     [
+      79,
+      79
+     ]
+    ],
+    "flat_lines": [
+     [
+      1142,
+      1142
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "071_BaseParaSwapSellAdapter",
+  "source": "QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878/contracts/adapters/BaseParaSwapSellAdapter.sol",
+  "audit": "QuillAudits-AAVE-ParaSwap Adapter",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 93,
+  "flat_lines": 1459,
+  "offset": 1367,
+  "deps_inlined": 18,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_sellOnParaSwap",
+    "raw_lines": "L35",
+    "lines": [
+     [
+      35,
+      35
+     ]
+    ],
+    "flat_lines": [
+     [
+      1402,
+      1402
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "072_acyc",
+  "source": "QuillAudits-ACYC Token Smart Contracts/AllCoinsYieldCapital0xB56A1f3310578f23120182Fb2e58c087EFE6e147/src/contracts/acyc.sol",
+  "audit": "QuillAudits-ACYC Token Smart Contracts",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 611,
+  "flat_lines": 1438,
+  "offset": 828,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_transfer",
+    "raw_lines": "L331",
+    "lines": [
+     [
+      331,
+      331
+     ]
+    ],
+    "flat_lines": [
+     [
+      1159,
+      1159
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "073_AbyssEth2Depositor",
+  "source": "QuillAudits-Abyss Finance-Abyss Eth2 Depositor/abyss-eth2depositor-a2d58dea4d79846dc682fe93ac3e0eca02323d11/contracts/AbyssEth2Depositor.sol",
+  "audit": "QuillAudits-Abyss Finance-Abyss Eth2 Depositor",
+  "pragma": "pragma solidity 0.6.11;",
+  "orig_lines": 118,
+  "flat_lines": 545,
+  "offset": 429,
+  "deps_inlined": 5,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L82",
+    "lines": [
+     [
+      82,
+      82
+     ]
+    ],
+    "flat_lines": [
+     [
+      511,
+      511
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "074_stakin_contract",
+  "source": "QuillAudits-Algovest/AlgoVestStaking0x090e69e7F48AFC059e480F297042DEA396B971e7/srv/tecmie/algovest/AVS-staking/contracts/stakin_contract.sol",
+  "audit": "QuillAudits-Algovest",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 471,
+  "flat_lines": 849,
+  "offset": 379,
+  "deps_inlined": 4,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "AVSTokenDonation",
+    "raw_lines": "L74 - L84",
+    "lines": [
+     [
+      74,
+      84
+     ]
+    ],
+    "flat_lines": [
+     [
+      453,
+      463
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "075_MasterChef",
+  "source": "QuillAudits-Alium Finance Smart Contract/alium-farm-e37d6af39af68049c2684085f025385407b4bd55/contracts/MasterChef.sol",
+  "audit": "QuillAudits-Alium Finance Smart Contract",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 417,
+  "flat_lines": 463,
+  "offset": 47,
+  "deps_inlined": 5,
+  "unresolved_imports": [
+   "@alium-official/alium-swap-lib/contracts/access/Ownable.sol",
+   "@alium-official/alium-swap-lib/contracts/math/SafeMath.sol",
+   "@alium-official/alium-swap-lib/contracts/token/BEP20/IBEP20.sol",
+   "@alium-official/alium-swap-lib/contracts/token/BEP20/SafeBEP20.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "emergencyWithdraw",
+    "raw_lines": "L163 - L171",
+    "lines": [
+     [
+      163,
+      171
+     ]
+    ],
+    "flat_lines": [
+     [
+      210,
+      218
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "076_Pool",
+  "source": "QuillAudits-Amplify Smart Contract/contracts-d8af5f11f3b6ab59d09a56ebc229012900dc1cc8/protocol/contracts/Liquidity/Pool.sol",
+  "audit": "QuillAudits-Amplify Smart Contract",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 332,
+  "flat_lines": 1434,
+  "offset": 1105,
+  "deps_inlined": 19,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "getBlockTimestamp",
+    "raw_lines": "L330",
+    "lines": [
+     [
+      330,
+      330
+     ]
+    ],
+    "flat_lines": [
+     [
+      1435,
+      1435
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "077_Vesting",
+  "source": "QuillAudits-Amplify Smart Contract (vesting)/contracts-d8af5f11f3b6ab59d09a56ebc229012900dc1cc8/Vesting.sol",
+  "audit": "QuillAudits-Amplify Smart Contract (vesting)",
+  "pragma": "pragma solidity 0.8.4;",
+  "orig_lines": 317,
+  "flat_lines": 317,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "../ERC20/IERC20.sol",
+   "../security/Ownable.sol",
+   "../security/ReentrancyGuard.sol",
+   "../utils/Counters.sol",
+   "../utils/NonZeroAddressGuard.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "getBlockTimestamp",
+    "raw_lines": "L218",
+    "lines": [
+     [
+      218,
+      218
+     ]
+    ],
+    "flat_lines": [
+     [
+      219,
+      219
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "078_BCubePublicSale",
+  "source": "QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0/contracts/BCubePublicSale.sol",
+  "audit": "QuillAudits-BCUBE Smart Contract",
+  "pragma": "pragma solidity 0.5.17;",
+  "orig_lines": 374,
+  "flat_lines": 1238,
+  "offset": 865,
+  "deps_inlined": 13,
+  "unresolved_imports": [
+   "@chainlink/contracts/src/v0.5/interfaces/AggregatorV3Interface.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "buyBcubeUsingUSDT",
+    "raw_lines": "L264 - L278",
+    "lines": [
+     [
+      264,
+      278
+     ]
+    ],
+    "flat_lines": [
+     [
+      1129,
+      1143
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "079_BsktLPPool",
+  "source": "QuillAudits-BasketCoin Smart Contract/code/BsktLPPool.sol",
+  "audit": "QuillAudits-BasketCoin Smart Contract",
+  "pragma": "pragma solidity ^0.5.0;",
+  "orig_lines": 458,
+  "flat_lines": 459,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "checkStart",
+    "raw_lines": "L363",
+    "lines": [
+     [
+      363,
+      363
+     ]
+    ],
+    "flat_lines": [
+     [
+      364,
+      364
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "080_Sliced",
+  "source": "QuillAudits-BitSliced Smart Contract/SLICED-Smart-Contract-d243190125c15dbe9628a844f764a5d0e484f3a0/Sliced.sol",
+  "audit": "QuillAudits-BitSliced Smart Contract",
+  "pragma": "pragma solidity =0.8.12;",
+  "orig_lines": 105,
+  "flat_lines": 819,
+  "offset": 715,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "sendTokens",
+    "raw_lines": "L72",
+    "lines": [
+     [
+      72,
+      72
+     ]
+    ],
+    "flat_lines": [
+     [
+      787,
+      787
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "081_Bollystake",
+  "source": "QuillAudits-BollyStake Smart Contract (new)/code/Bollystake.sol",
+  "audit": "QuillAudits-BollyStake Smart Contract (new)",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 1090,
+  "flat_lines": 1085,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "relock_stake",
+    "raw_lines": "L1022",
+    "lines": [
+     [
+      1022,
+      1022
+     ]
+    ],
+    "flat_lines": [
+     [
+      1023,
+      1023
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "082_ProfitSplitter",
+  "source": "QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159/contracts/profit/ProfitSplitter.sol",
+  "audit": "QuillAudits-Bond Appetit-Bond Appetit",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 249,
+  "flat_lines": 1818,
+  "offset": 1570,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_payToRecipients",
+    "raw_lines": "L228",
+    "lines": [
+     [
+      228,
+      228
+     ]
+    ],
+    "flat_lines": [
+     [
+      1798,
+      1798
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "083_ProfitSplitter",
+  "source": "QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-88680691fe8d872c5fc26e9500d19cf7caaa9861/contracts/profit/ProfitSplitter.sol",
+  "audit": "QuillAudits-Bond Appetit-Bond Appetit",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 249,
+  "flat_lines": 1818,
+  "offset": 1570,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_payToRecipients",
+    "raw_lines": "L228",
+    "lines": [
+     [
+      228,
+      228
+     ]
+    ],
+    "flat_lines": [
+     [
+      1798,
+      1798
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "084_BsktEthLPPool",
+  "source": "QuillAudits-BsktEthLPPool Smart Contract/code/BsktEthLPPool.sol",
+  "audit": "QuillAudits-BsktEthLPPool Smart Contract",
+  "pragma": "pragma solidity 0.5.0;",
+  "orig_lines": 491,
+  "flat_lines": 492,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "updateReward",
+    "raw_lines": "L400, L417",
+    "lines": [
+     [
+      400,
+      400
+     ],
+     [
+      417,
+      417
+     ]
+    ],
+    "flat_lines": [
+     [
+      401,
+      401
+     ],
+     [
+      418,
+      418
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exit",
+    "raw_lines": "L459-462",
+    "lines": [
+     [
+      459,
+      462
+     ]
+    ],
+    "flat_lines": [
+     [
+      460,
+      463
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "085_CCapableErc20",
+  "source": "QuillAudits-C.R.E.A.M. Finance-Flashloan/compound-protocol-e414160eb8a774140457c885bb099baae528df04/contracts/CCapableErc20.sol",
+  "audit": "QuillAudits-C.R.E.A.M. Finance-Flashloan",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 258,
+  "flat_lines": 2764,
+  "offset": 2507,
+  "deps_inlined": 9,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "gulp",
+    "raw_lines": "L133",
+    "lines": [
+     [
+      133,
+      133
+     ]
+    ],
+    "flat_lines": [
+     [
+      2640,
+      2640
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "086_CryptoBatz",
+  "source": "QuillAudits-CryptoBatz Smart Contract/crypto-batz-contracts-07ee07dd442c34622798f1ee5b73ef8ff59cef48/contracts/CryptoBatz.sol",
+  "audit": "QuillAudits-CryptoBatz Smart Contract",
+  "pragma": "pragma solidity ^0.8.8;",
+  "orig_lines": 567,
+  "flat_lines": 4033,
+  "offset": 3467,
+  "deps_inlined": 21,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "rollStartIndex",
+    "raw_lines": "L355 - L374",
+    "lines": [
+     [
+      355,
+      374
+     ]
+    ],
+    "flat_lines": [
+     [
+      3822,
+      3841
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "087_Fundum",
+  "source": "QuillAudits-Fundum Smart Contract/code/Fundum.sol",
+  "audit": "QuillAudits-Fundum Smart Contract",
+  "pragma": "pragma solidity ^0.8.4;",
+  "orig_lines": 441,
+  "flat_lines": 441,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "./Address.sol",
+   "./Context.sol",
+   "./IBEP20.sol",
+   "./Ownable.sol",
+   "./SafeMath.sol",
+   "./Uniswap.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "swapTokensForETH",
+    "raw_lines": "L351,369,388",
+    "lines": [
+     [
+      351,
+      351
+     ],
+     [
+      369,
+      369
+     ],
+     [
+      388,
+      388
+     ]
+    ],
+    "flat_lines": [
+     [
+      352,
+      352
+     ],
+     [
+      370,
+      370
+     ],
+     [
+      389,
+      389
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "088_CurveV1",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/CurveV1.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 134,
+  "flat_lines": 5407,
+  "offset": 5278,
+  "deps_inlined": 30,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exchange",
+    "raw_lines": "L49 - L85",
+    "lines": [
+     [
+      49,
+      85
+     ]
+    ],
+    "flat_lines": [
+     [
+      5327,
+      5363
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "089_UniswapV2",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/UniswapV2.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 392,
+  "flat_lines": 5921,
+  "offset": 5531,
+  "deps_inlined": 31,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "swapTokensForExactTokens",
+    "raw_lines": "L56",
+    "lines": [
+     [
+      56,
+      56
+     ]
+    ],
+    "flat_lines": [
+     [
+      5587,
+      5587
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "swapExactTokensForTokens",
+    "raw_lines": "L110",
+    "lines": [
+     [
+      110,
+      110
+     ]
+    ],
+    "flat_lines": [
+     [
+      5641,
+      5641
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "090_UniswapV3",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/UniswapV3.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 259,
+  "flat_lines": 5677,
+  "offset": 5420,
+  "deps_inlined": 32,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exactInputSingle",
+    "raw_lines": "L52",
+    "lines": [
+     [
+      52,
+      52
+     ]
+    ],
+    "flat_lines": [
+     [
+      5472,
+      5472
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exactInput",
+    "raw_lines": "L106",
+    "lines": [
+     [
+      106,
+      106
+     ]
+    ],
+    "flat_lines": [
+     [
+      5526,
+      5526
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exactOutputSingle",
+    "raw_lines": "L153",
+    "lines": [
+     [
+      153,
+      153
+     ]
+    ],
+    "flat_lines": [
+     [
+      5573,
+      5573
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exactOutputSingle",
+    "raw_lines": "L154",
+    "lines": [
+     [
+      154,
+      154
+     ]
+    ],
+    "flat_lines": [
+     [
+      5574,
+      5574
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "exactOutput",
+    "raw_lines": "L210",
+    "lines": [
+     [
+      210,
+      210
+     ]
+    ],
+    "flat_lines": [
+     [
+      5630,
+      5630
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "091_YearnV2",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/YearnV2.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 216,
+  "flat_lines": 5783,
+  "offset": 5572,
+  "deps_inlined": 31,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_deposit",
+    "raw_lines": "L78",
+    "lines": [
+     [
+      78,
+      78
+     ]
+    ],
+    "flat_lines": [
+     [
+      5650,
+      5650
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L132",
+    "lines": [
+     [
+      132,
+      132
+     ]
+    ],
+    "flat_lines": [
+     [
+      5704,
+      5704
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "092_WETHGateway",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/core/WETHGateway.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 246,
+  "flat_lines": 4232,
+  "offset": 3991,
+  "deps_inlined": 25,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "addLiquidityETH",
+    "raw_lines": "L98 - L112",
+    "lines": [
+     [
+      98,
+      112
+     ]
+    ],
+    "flat_lines": [
+     [
+      4089,
+      4103
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "removeLiquidityETH",
+    "raw_lines": "L120 - L140",
+    "lines": [
+     [
+      120,
+      140
+     ]
+    ],
+    "flat_lines": [
+     [
+      4111,
+      4131
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "openCreditAccountETH",
+    "raw_lines": "L151 - L171",
+    "lines": [
+     [
+      151,
+      171
+     ]
+    ],
+    "flat_lines": [
+     [
+      4142,
+      4162
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "repayCreditAccountETH",
+    "raw_lines": "L179 - L199",
+    "lines": [
+     [
+      179,
+      199
+     ]
+    ],
+    "flat_lines": [
+     [
+      4170,
+      4190
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "093_PoolService",
+  "source": "QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/pool/PoolService.sol",
+  "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+  "pragma": "pragma solidity ^0.7.4;",
+  "orig_lines": 488,
+  "flat_lines": 4899,
+  "offset": 4416,
+  "deps_inlined": 28,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "lendCreditAccount",
+    "raw_lines": "L238 - L258",
+    "lines": [
+     [
+      238,
+      258
+     ]
+    ],
+    "flat_lines": [
+     [
+      4654,
+      4674
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "094_StakingRewardsV3-1",
+  "source": "QuillAudits-Keep3r.Network-Keep3r.Network/StakingRewardsV3-13ecc6966ae1a413f62224382bfd4d64b1a22351/contracts/StakingRewardsV3-1.sol",
+  "audit": "QuillAudits-Keep3r.Network-Keep3r.Network",
+  "pragma": "pragma solidity 0.8.6;",
+  "orig_lines": 366,
+  "flat_lines": 367,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L210 - L226",
+    "lines": [
+     [
+      210,
+      226
+     ]
+    ],
+    "flat_lines": [
+     [
+      211,
+      227
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "095_LockletTokenVault",
+  "source": "QuillAudits-Locklet Smart Contract/locklet-evm-contracts-7fd89cbcf96a10429b9cfeee295dd4c51c2af982/contracts/LockletTokenVault.sol",
+  "audit": "QuillAudits-Locklet Smart Contract",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 485,
+  "flat_lines": 2472,
+  "offset": 1989,
+  "deps_inlined": 16,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "calculateClaim",
+    "raw_lines": "L410",
+    "lines": [
+     [
+      410,
+      410
+     ]
+    ],
+    "flat_lines": [
+     [
+      2399,
+      2399
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "blockTime",
+    "raw_lines": "430",
+    "lines": [
+     [
+      430,
+      430
+     ]
+    ],
+    "flat_lines": [
+     [
+      2419,
+      2419
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "096_MiniDOGE",
+  "source": "QuillAudits-MiniDOGE Smart Contract/code/MiniDOGE.sol",
+  "audit": "QuillAudits-MiniDOGE Smart Contract",
+  "pragma": "pragma solidity ^0.8.4;",
+  "orig_lines": 1197,
+  "flat_lines": 1197,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "transfer",
+    "raw_lines": "L572-575,586-590",
+    "lines": [
+     [
+      572,
+      575
+     ],
+     [
+      586,
+      590
+     ]
+    ],
+    "flat_lines": [
+     [
+      573,
+      576
+     ],
+     [
+      587,
+      591
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "097_moonship",
+  "source": "QuillAudits-Moonship Smart Contract/contracts-74658f327c56d66dae8e9c96bffa3f98e806c831/moonship.sol",
+  "audit": "QuillAudits-Moonship Smart Contract",
+  "pragma": "pragma solidity >=0.6.8;",
+  "orig_lines": 1466,
+  "flat_lines": 1464,
+  "offset": 2,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "transfer",
+    "raw_lines": "L995.1009",
+    "lines": [
+     [
+      995,
+      1009
+     ]
+    ],
+    "flat_lines": [
+     [
+      997,
+      1011
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "098_MainToken",
+  "source": "QuillAudits-NomadLand Smart Contract/code/MainToken.sol",
+  "audit": "QuillAudits-NomadLand Smart Contract",
+  "pragma": "pragma solidity ^0.4.23;",
+  "orig_lines": 743,
+  "flat_lines": 744,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "releaseOnce",
+    "raw_lines": "L481",
+    "lines": [
+     [
+      481,
+      481
+     ]
+    ],
+    "flat_lines": [
+     [
+      482,
+      482
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "releaseAll",
+    "raw_lines": "L509",
+    "lines": [
+     [
+      509,
+      509
+     ]
+    ],
+    "flat_lines": [
+     [
+      510,
+      510
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "freeze",
+    "raw_lines": "L526",
+    "lines": [
+     [
+      526,
+      526
+     ]
+    ],
+    "flat_lines": [
+     [
+      527,
+      527
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "099_BasketFacet",
+  "source": "QuillAudits-PieDAO-ExperiPie/PieVaults-facf3c246d9c43f5b1e0bad7dc2b0a9a2a2393c5/contracts/facets/Basket/BasketFacet.sol",
+  "audit": "QuillAudits-PieDAO-ExperiPie",
+  "pragma": "pragma solidity ^0.7.1;",
+  "orig_lines": 314,
+  "flat_lines": 1194,
+  "offset": 881,
+  "deps_inlined": 11,
+  "unresolved_imports": [
+   "diamond-2/contracts/libraries/LibDiamond.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "calcOutStandingAnnualizedFee",
+    "raw_lines": "L204",
+    "lines": [
+     [
+      204,
+      204
+     ]
+    ],
+    "flat_lines": [
+     [
+      1085,
+      1085
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "chargeOutstandingAnnualizedFee",
+    "raw_lines": "L214",
+    "lines": [
+     [
+      214,
+      214
+     ]
+    ],
+    "flat_lines": [
+     [
+      1095,
+      1095
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "100_VIDBToken",
+  "source": "QuillAudits-VIDB - v1.0/VIDBToken/VIDBToken.sol",
+  "audit": "QuillAudits-VIDB - v1.0",
+  "pragma": "pragma solidity ^0.5.0;",
+  "orig_lines": 789,
+  "flat_lines": 790,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "getLockedAmount",
+    "raw_lines": "L722",
+    "lines": [
+     [
+      722,
+      722
+     ]
+    ],
+    "flat_lines": [
+     [
+      723,
+      723
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "101_yWETH",
+  "source": "QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295/contracts/vaults/yWETH.sol",
+  "audit": "QuillAudits-Yearn Finance-Yearn Protocol V1",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 174,
+  "flat_lines": 191,
+  "offset": 19,
+  "deps_inlined": 2,
+  "unresolved_imports": [
+   "@openzeppelinV2/contracts/math/SafeMath.sol",
+   "@openzeppelinV2/contracts/ownership/Ownable.sol",
+   "@openzeppelinV2/contracts/token/ERC20/ERC20.sol",
+   "@openzeppelinV2/contracts/token/ERC20/ERC20Detailed.sol",
+   "@openzeppelinV2/contracts/token/ERC20/IERC20.sol",
+   "@openzeppelinV2/contracts/token/ERC20/SafeERC20.sol",
+   "@openzeppelinV2/contracts/utils/Address.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "depositETH",
+    "raw_lines": "L90 - L104",
+    "lines": [
+     [
+      90,
+      104
+     ]
+    ],
+    "flat_lines": [
+     [
+      109,
+      123
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdrawETH",
+    "raw_lines": "L144 - L162",
+    "lines": [
+     [
+      144,
+      162
+     ]
+    ],
+    "flat_lines": [
+     [
+      163,
+      181
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "102_yToken",
+  "source": "QuillAudits-Yearn Finance-Yearn Vaults V3/yearn-vaults-e390c2a6b2ba6e2ecc8f3a72a1ea4adfabd17544/contracts/yToken.sol",
+  "audit": "QuillAudits-Yearn Finance-Yearn Vaults V3",
+  "pragma": "pragma solidity ^0.6.12;",
+  "orig_lines": 198,
+  "flat_lines": 1887,
+  "offset": 1691,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdrawETH",
+    "raw_lines": "L187",
+    "lines": [
+     [
+      187,
+      187
+     ]
+    ],
+    "flat_lines": [
+     [
+      1878,
+      1878
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "103_Main",
+  "source": "QuillAudits-coalichain/CoaliSC-3f0920d650467279f7ceee08776bd74ecadd3237/Main.sol",
+  "audit": "QuillAudits-coalichain",
+  "pragma": "pragma solidity ^0.4.21;",
+  "orig_lines": 112,
+  "flat_lines": 715,
+  "offset": 604,
+  "deps_inlined": 3,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "createBallot",
+    "raw_lines": "L51",
+    "lines": [
+     [
+      51,
+      51
+     ]
+    ],
+    "flat_lines": [
+     [
+      655,
+      655
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "104_YVaultAssetProxy",
+  "source": "Runtime_Vеrification-ElementFinance/elf-contracts-637c6f959315cbb11a164555e588520c7d89122b/contracts/YVaultAssetProxy.sol",
+  "audit": "Runtime_Vеrification-ElementFinance",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 227,
+  "flat_lines": 719,
+  "offset": 493,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "reserveDeposit",
+    "raw_lines": "L49 - L80",
+    "lines": [
+     [
+      49,
+      80
+     ]
+    ],
+    "flat_lines": [
+     [
+      542,
+      573
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "105_CoreVoting",
+  "source": "Runtime_Vеrification-Element_Finance_Governance_Security_Audit_Report/council-3d751c959b42573c78ccd0bccbc80424bf6d9a90/contracts/CoreVoting.sol",
+  "audit": "Runtime_Vеrification-Element_Finance_Governance_Security_Audit_Report",
+  "pragma": "pragma solidity ^0.8.0;",
+  "orig_lines": 336,
+  "flat_lines": 410,
+  "offset": 75,
+  "deps_inlined": 2,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "execute",
+    "raw_lines": "L238 - L277",
+    "lines": [
+     [
+      238,
+      277
+     ]
+    ],
+    "flat_lines": [
+     [
+      313,
+      352
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "106_GnosisSafe",
+  "source": "Runtime_Vеrification-GnosisSafe/safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/GnosisSafe.sol",
+  "audit": "Runtime_Vеrification-GnosisSafe",
+  "pragma": "pragma solidity ^0.5.0;",
+  "orig_lines": 340,
+  "flat_lines": 947,
+  "offset": 607,
+  "deps_inlined": 13,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "execTransaction",
+    "raw_lines": "L70 - L105",
+    "lines": [
+     [
+      70,
+      105
+     ]
+    ],
+    "flat_lines": [
+     [
+      677,
+      712
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "107_StakefishERC721Wrapper",
+  "source": "Runtime_Vеrification-stakefish_ethereum_staking_audit_report/eth2-validation-services-contract-d91928f3a270f6115831fe3a21a69eb98bf57b26/contracts/StakefishERC721Wrapper.sol",
+  "audit": "Runtime_Vеrification-stakefish_ethereum_staking_audit_report",
+  "pragma": "pragma solidity 0.8.4;",
+  "orig_lines": 279,
+  "flat_lines": 944,
+  "offset": 667,
+  "deps_inlined": 6,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "mintTo",
+    "raw_lines": "L53-L71",
+    "lines": [
+     [
+      53,
+      71
+     ]
+    ],
+    "flat_lines": [
+     [
+      720,
+      738
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "108_CFVault",
+  "source": "SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/core/CFVault.sol",
+  "audit": "SlowMist-CFFv2 Smart Contract Security Audit Report",
+  "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+  "orig_lines": 205,
+  "flat_lines": 854,
+  "offset": 650,
+  "deps_inlined": 10,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L121 - L153",
+    "lines": [
+     [
+      121,
+      153
+     ]
+    ],
+    "flat_lines": [
+     [
+      771,
+      803
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "109_PRA",
+  "source": "SlowMist-ForTube2.0 Smart Contract Security Audit Report/bond-854527d0ea7ad2ddd3504b4d4ae3fcb57cb6445d/contracts/PRA.sol",
+  "audit": "SlowMist-ForTube2.0 Smart Contract Security Audit Report",
+  "pragma": "pragma solidity >=0.6.0;",
+  "orig_lines": 107,
+  "flat_lines": 494,
+  "offset": 388,
+  "deps_inlined": 1,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "lock",
+    "raw_lines": "L66 - L80",
+    "lines": [
+     [
+      66,
+      80
+     ]
+    ],
+    "flat_lines": [
+     [
+      454,
+      468
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "110_OKLGTokenLocker",
+  "source": "Solidity_Finance-OKLG - Smart Contract/contracts-e167d0d742d21bcc62d7a5b770a1f0ed1cf31eca/contracts/OKLGTokenLocker.sol",
+  "audit": "Solidity_Finance-OKLG - Smart Contract",
+  "pragma": "pragma solidity ^0.8.4;",
+  "orig_lines": 179,
+  "flat_lines": 827,
+  "offset": 649,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdrawLockedTokens",
+    "raw_lines": "L126",
+    "lines": [
+     [
+      126,
+      126
+     ]
+    ],
+    "flat_lines": [
+     [
+      775,
+      775
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "111_BorrowerOperations",
+  "source": "Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c/packages/contracts/contracts/BorrowerOperations.sol",
+  "audit": "Trail_of_Bits-Liquity",
+  "pragma": "pragma solidity 0.6.11;",
+  "orig_lines": 507,
+  "flat_lines": 3250,
+  "offset": 2745,
+  "deps_inlined": 15,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_moveTokensAndETHfromAdjustment",
+    "raw_lines": "L351",
+    "lines": [
+     [
+      351,
+      351
+     ]
+    ],
+    "flat_lines": [
+     [
+      3096,
+      3096
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "112_Liquidator",
+  "source": "Trail_of_Bits-MapleFinance/liquidations-35c628e5ab45fbffaab7aef43a030a98b712a94a/contracts/Liquidator.sol",
+  "audit": "Trail_of_Bits-MapleFinance",
+  "pragma": "pragma solidity 0.8.7;",
+  "orig_lines": 54,
+  "flat_lines": 203,
+  "offset": 151,
+  "deps_inlined": 2,
+  "unresolved_imports": [
+   "../modules/erc20-helper/src/ERC20Helper.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "liquidatePortion",
+    "raw_lines": "L41-L51",
+    "lines": [
+     [
+      41,
+      51
+     ]
+    ],
+    "flat_lines": [
+     [
+      192,
+      202
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "113_VaultCore",
+  "source": "Trail_of_Bits-OriginDollar/origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/vault/VaultCore.sol",
+  "audit": "Trail_of_Bits-OriginDollar",
+  "pragma": "pragma solidity 0.5.11;",
+  "orig_lines": 702,
+  "flat_lines": 2469,
+  "offset": 1768,
+  "deps_inlined": 18,
+  "unresolved_imports": [
+   "@openzeppelin/upgrades/contracts/Initializable.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "mintMultiple",
+    "raw_lines": "L88 - L128",
+    "lines": [
+     [
+      88,
+      128
+     ]
+    ],
+    "flat_lines": [
+     [
+      1856,
+      1896
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "114_MarketOracle",
+  "source": "Trail_of_Bits-ampleforth/market-oracle-888fccaf05786f3f7f49e18ff040f911d44906f4/contracts/MarketOracle.sol",
+  "audit": "Trail_of_Bits-ampleforth",
+  "pragma": "pragma solidity 0.4.24;",
+  "orig_lines": 146,
+  "flat_lines": 363,
+  "offset": 219,
+  "deps_inlined": 4,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "getPriceAnd24HourVolume",
+    "raw_lines": "L34 - L60",
+    "lines": [
+     [
+      34,
+      60
+     ]
+    ],
+    "flat_lines": [
+     [
+      253,
+      279
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "115_Hermez",
+  "source": "Trail_of_Bits-hermez/contracts-d52ed73a0c7deaf06fcb0f981e14326f95cd1b78/contracts/hermez/Hermez.sol",
+  "audit": "Trail_of_Bits-hermez",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 1146,
+  "flat_lines": 2150,
+  "offset": 1006,
+  "deps_inlined": 7,
+  "unresolved_imports": [
+   "@openzeppelin/upgrades/contracts/Initializable.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "addToken",
+    "raw_lines": "L642 - L664",
+    "lines": [
+     [
+      642,
+      664
+     ]
+    ],
+    "flat_lines": [
+     [
+      1648,
+      1670
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "116_MetaTransactionsFeature",
+  "source": "consensys-0x_Exchange_v4/protocol-475b608338561a1dce3199bfb9fb59ee9372149b/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol",
+  "audit": "consensys-0x_Exchange_v4",
+  "pragma": "pragma solidity ^0.6.5;",
+  "orig_lines": 553,
+  "flat_lines": 4501,
+  "offset": 3950,
+  "deps_inlined": 40,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "refundsAttachedEth",
+    "raw_lines": "L100-107",
+    "lines": [
+     [
+      100,
+      107
+     ]
+    ],
+    "flat_lines": [
+     [
+      4050,
+      4057
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "117_UniswapFeature",
+  "source": "consensys-0x_Exchange_v4/protocol-475b608338561a1dce3199bfb9fb59ee9372149b/contracts/zero-ex/contracts/src/features/UniswapFeature.sol",
+  "audit": "consensys-0x_Exchange_v4",
+  "pragma": "pragma solidity ^0.6.5;",
+  "orig_lines": 473,
+  "flat_lines": 1212,
+  "offset": 741,
+  "deps_inlined": 14,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "sellToUniswap",
+    "raw_lines": "L203-206",
+    "lines": [
+     [
+      203,
+      206
+     ]
+    ],
+    "flat_lines": [
+     [
+      944,
+      947
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "118_MixinScheduler",
+  "source": "consensys-0x_v3_Staking/0x-monorepo-b8e01d7be535196a3145a431291183ecfbb333c6/contracts/staking/contracts/src/sys/MixinScheduler.sol",
+  "audit": "consensys-0x_v3_Staking",
+  "pragma": "pragma solidity ^0.5.9;",
+  "orig_lines": 99,
+  "flat_lines": 1809,
+  "offset": 1712,
+  "deps_inlined": 18,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "_goToNextEpoch",
+    "raw_lines": "L71",
+    "lines": [
+     [
+      71,
+      71
+     ]
+    ],
+    "flat_lines": [
+     [
+      1783,
+      1783
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "119_LendingPool",
+  "source": "consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4/contracts/lendingpool/LendingPool.sol",
+  "audit": "consensys-Aave_Protocol_V2",
+  "pragma": "pragma solidity ^0.6.8;",
+  "orig_lines": 1034,
+  "flat_lines": 6337,
+  "offset": 5306,
+  "deps_inlined": 44,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L92-119",
+    "lines": [
+     [
+      92,
+      119
+     ]
+    ],
+    "flat_lines": [
+     [
+      5398,
+      5425
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "120_Amp",
+  "source": "consensys-Amp/amp-token-contracts-6871b6c64c712835b332e515cc553308dcbbc539/contracts/Amp.sol",
+  "audit": "consensys-Amp",
+  "pragma": "pragma solidity 0.6.9;",
+  "orig_lines": 1612,
+  "flat_lines": 2320,
+  "offset": 713,
+  "deps_inlined": 11,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_transferByPartition",
+    "raw_lines": "L1131-L1201",
+    "lines": [
+     [
+      1131,
+      1201
+     ]
+    ],
+    "flat_lines": [
+     [
+      1844,
+      1914
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "121_TransactionManager",
+  "source": "consensys-Connext NXTP — Noncustodial Xchain Transfer Protocol/nxtp-0656436d654cfe0313fa3c2bbc81aa86232ade16/packages/contracts/contracts/TransactionManager.sol",
+  "audit": "consensys-Connext NXTP — Noncustodial Xchain Transfer Protocol",
+  "pragma": "pragma solidity 0.8.4;",
+  "orig_lines": 850,
+  "flat_lines": 2984,
+  "offset": 2135,
+  "deps_inlined": 16,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "removeLiquidity",
+    "raw_lines": "L229 - L254",
+    "lines": [
+     [
+      229,
+      254
+     ]
+    ],
+    "flat_lines": [
+     [
+      2364,
+      2389
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "122_FLAaveV2",
+  "source": "consensys-DeFi_Saver/defisaver-v3-contracts-cb29669a84c2d6fffaf2231c0938eb407c060919/contracts/actions/flashloan/FLAaveV2.sol",
+  "audit": "consensys-DeFi_Saver",
+  "pragma": "pragma solidity ^0.7.0;",
+  "orig_lines": 155,
+  "flat_lines": 1957,
+  "offset": 1804,
+  "deps_inlined": 19,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "executeOperation",
+    "raw_lines": "L106-137",
+    "lines": [
+     [
+      106,
+      137
+     ]
+    ],
+    "flat_lines": [
+     [
+      1910,
+      1941
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "123_Hypervisor",
+  "source": "consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879/contracts/Hypervisor.sol",
+  "audit": "consensys-Gamma",
+  "pragma": "pragma solidity 0.7.6;",
+  "orig_lines": 588,
+  "flat_lines": 3051,
+  "offset": 2467,
+  "deps_inlined": 28,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "withdraw",
+    "raw_lines": "L175-216",
+    "lines": [
+     [
+      175,
+      216
+     ]
+    ],
+    "flat_lines": [
+     [
+      2642,
+      2683
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "124_UniProxy",
+  "source": "consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879/contracts/UniProxy.sol",
+  "audit": "consensys-Gamma",
+  "pragma": "",
+  "orig_lines": 406,
+  "flat_lines": 1503,
+  "offset": 1098,
+  "deps_inlined": 16,
+  "unresolved_imports": [
+   "@openzeppelin/contracts/math/SignedSafeMath.sol",
+   "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "deposit",
+    "raw_lines": "L75-82",
+    "lines": [
+     [
+      75,
+      82
+     ]
+    ],
+    "flat_lines": [
+     [
+      1173,
+      1180
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "125_Exchange",
+  "source": "consensys-GrowthDeFi WHEAT/wheat-v1-core-8360ac0a537589bb974e8a5a169bb3e7c95d2857/contracts/Exchange.sol",
+  "audit": "consensys-GrowthDeFi WHEAT",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 176,
+  "flat_lines": 1230,
+  "offset": 1057,
+  "deps_inlined": 12,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "convertFundsFromInput",
+    "raw_lines": "L80-90",
+    "lines": [
+     [
+      80,
+      90
+     ]
+    ],
+    "flat_lines": [
+     [
+      1137,
+      1147
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "126_IdleCDO",
+  "source": "consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435/contracts/IdleCDO.sol",
+  "audit": "consensys-Idle_Finance",
+  "pragma": "pragma solidity 0.8.4;",
+  "orig_lines": 758,
+  "flat_lines": 4199,
+  "offset": 3444,
+  "deps_inlined": 22,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_deposit",
+    "raw_lines": "L242-258",
+    "lines": [
+     [
+      242,
+      258
+     ]
+    ],
+    "flat_lines": [
+     [
+      3686,
+      3702
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "127_PaymentStartStandardExit",
+  "source": "consensys-OmiseGo_MoreVP/plasma-contracts-e13aaf759c979cf6516c1d8de865c9e324bc2db6/plasma_framework/contracts/src/exits/payment/controllers/PaymentStartStandardExit.sol",
+  "audit": "consensys-OmiseGo_MoreVP",
+  "pragma": "pragma solidity 0.5.11;",
+  "orig_lines": 221,
+  "flat_lines": 2341,
+  "offset": 2121,
+  "deps_inlined": 34,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "setupStartStandardExitData",
+    "raw_lines": "L124",
+    "lines": [
+     [
+      124,
+      124
+     ]
+    ],
+    "flat_lines": [
+     [
+      2245,
+      2245
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "128_Pod",
+  "source": "consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57/contracts/Pod.sol",
+  "audit": "consensys-PoolTogether_Pods",
+  "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+  "orig_lines": 670,
+  "flat_lines": 2805,
+  "offset": 2135,
+  "deps_inlined": 24,
+  "unresolved_imports": [
+   "@pooltogether/fixed-point/contracts/FixedPoint.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "depositTo",
+    "raw_lines": "L275-282",
+    "lines": [
+     [
+      275,
+      282
+     ]
+    ],
+    "flat_lines": [
+     [
+      2410,
+      2417
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "129_TokenDrop",
+  "source": "consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57/contracts/TokenDrop.sol",
+  "audit": "consensys-PoolTogether_Pods",
+  "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+  "orig_lines": 237,
+  "flat_lines": 849,
+  "offset": 612,
+  "deps_inlined": 6,
+  "unresolved_imports": [
+   "@pooltogether/fixed-point/contracts/FixedPoint.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "claim",
+    "raw_lines": "L141-155",
+    "lines": [
+     [
+      141,
+      155
+     ]
+    ],
+    "flat_lines": [
+     [
+      753,
+      767
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "130_YearnV2YieldSource",
+  "source": "consensys-PoolTogether_Sushi_and_Yearn_V2_Yield_Sources/pooltogether-yearnv2-yield-source-a34857f1555908a6263d2ebd189f0cb40e1858da/contracts/yield-source/YearnV2YieldSource.sol",
+  "audit": "consensys-PoolTogether_Sushi_and_Yearn_V2_Yield_Sources",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 277,
+  "flat_lines": 1968,
+  "offset": 1692,
+  "deps_inlined": 14,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "supplyTokenTo",
+    "raw_lines": "L118-L129",
+    "lines": [
+     [
+      118,
+      129
+     ]
+    ],
+    "flat_lines": [
+     [
+      1810,
+      1821
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "131_LockableERC777",
+  "source": "consensys-Skale_Token/skale-manager-50c8f4e037f6bf578d62bd752516b17237b55811/contracts/ERC777/LockableERC777.sol",
+  "audit": "consensys-Skale_Token",
+  "pragma": "pragma solidity ^0.5.3;",
+  "orig_lines": 518,
+  "flat_lines": 1179,
+  "offset": 662,
+  "deps_inlined": 7,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_burn",
+    "raw_lines": "L399-422",
+    "lines": [
+     [
+      399,
+      422
+     ]
+    ],
+    "flat_lines": [
+     [
+      1061,
+      1084
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "132_SkaleBalances",
+  "source": "consensys-Skale_Token/skale-manager-50c8f4e037f6bf578d62bd752516b17237b55811/contracts/delegation/SkaleBalances.sol",
+  "audit": "consensys-Skale_Token",
+  "pragma": "pragma solidity ^0.5.3;",
+  "orig_lines": 92,
+  "flat_lines": 3502,
+  "offset": 3413,
+  "deps_inlined": 27,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "tokensReceived",
+    "raw_lines": "L55-68",
+    "lines": [
+     [
+      55,
+      68
+     ]
+    ],
+    "flat_lines": [
+     [
+      3468,
+      3481
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "133_EternalHeroesFactory",
+  "source": "consensys-Skyweaver/Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/shop/EternalHeroesFactory.sol",
+  "audit": "consensys-Skyweaver",
+  "pragma": "pragma solidity ^0.5.16;",
+  "orig_lines": 421,
+  "flat_lines": 598,
+  "offset": 178,
+  "deps_inlined": 2,
+  "unresolved_imports": [
+   "multi-token-standard/contracts/interfaces/IERC1155.sol",
+   "multi-token-standard/contracts/utils/SafeMath.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_buy",
+    "raw_lines": "L279-285",
+    "lines": [
+     [
+      279,
+      285
+     ]
+    ],
+    "flat_lines": [
+     [
+      457,
+      463
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "134_DynamicLiquidTokenConverter",
+  "source": "consensys-Zer0_zBanc/zBanc-48da0ac1eebbe31a74742f1ae4281b156f03a4bc/solidity/contracts/converter/types/liquid-token/DynamicLiquidTokenConverter.sol",
+  "audit": "consensys-Zer0_zBanc",
+  "pragma": "pragma solidity 0.6.12;",
+  "orig_lines": 168,
+  "flat_lines": 1666,
+  "offset": 1498,
+  "deps_inlined": 21,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "reduceWeight",
+    "raw_lines": "L125-L130",
+    "lines": [
+     [
+      125,
+      130
+     ]
+    ],
+    "flat_lines": [
+     [
+      1623,
+      1628
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "135_ARCToken",
+  "source": "openzeppelin-Arcade_City_token/ac-token-dd4207e1538f96eb3cbbf9e714eb38015bfe7c5a/ARCToken.sol",
+  "audit": "openzeppelin-Arcade_City_token",
+  "pragma": "",
+  "orig_lines": 374,
+  "flat_lines": 375,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "buyRecipient",
+    "raw_lines": "L231",
+    "lines": [
+     [
+      231,
+      231
+     ]
+    ],
+    "flat_lines": [
+     [
+      232,
+      232
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "136_BAToken",
+  "source": "openzeppelin-Basic_Attention_Token/basic-attention-token-crowdsale-17a5f8440a256a6dc5d8dd894b9615182c2901b2/BAToken.sol",
+  "audit": "openzeppelin-Basic_Attention_Token",
+  "pragma": "pragma solidity ^0.4.10;",
+  "orig_lines": 91,
+  "flat_lines": 92,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "./SafeMath.sol",
+   "./StandardToken.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "N/A",
+    "raw_lines": "L19-20",
+    "lines": [
+     [
+      19,
+      20
+     ]
+    ],
+    "flat_lines": [
+     [
+      20,
+      21
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "137_Fundraiser",
+  "source": "openzeppelin-COSMOS_Fundraiser/fundraiser-lib-693cf3f32e9fd679216372876dda86fa57a3277e/src/truffle/contracts/Fundraiser.sol",
+  "audit": "openzeppelin-COSMOS_Fundraiser",
+  "pragma": "pragma solidity ^0.4.7;",
+  "orig_lines": 134,
+  "flat_lines": 134,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "donate",
+    "raw_lines": "L95",
+    "lines": [
+     [
+      95,
+      95
+     ]
+    ],
+    "flat_lines": [
+     [
+      96,
+      96
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "138_Fund",
+  "source": "openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add/Fund.sol",
+  "audit": "openzeppelin-Endaoment",
+  "pragma": "pragma solidity ^0.6.10;",
+  "orig_lines": 143,
+  "flat_lines": 196,
+  "offset": 55,
+  "deps_inlined": 1,
+  "unresolved_imports": [
+   "./EndaomentAdmin.sol",
+   "./OrgFactory.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "finalizeGrant",
+    "raw_lines": "L119-134",
+    "lines": [
+     [
+      119,
+      134
+     ]
+    ],
+    "flat_lines": [
+     [
+      174,
+      189
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "139_ProjectKudos",
+  "source": "openzeppelin-EtherCamp_ProjectKudos_public_code/virtual-accelerator-6665fdd4b71088443a74d1ed9fda52c6a8c8b975/ProjectKudos.sol",
+  "audit": "openzeppelin-EtherCamp_ProjectKudos_public_code",
+  "pragma": "pragma solidity ^0.4.0;",
+  "orig_lines": 344,
+  "flat_lines": 345,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "onlyOwner",
+    "raw_lines": "L331,332",
+    "lines": [
+     [
+      331,
+      331
+     ],
+     [
+      332,
+      332
+     ]
+    ],
+    "flat_lines": [
+     [
+      332,
+      332
+     ],
+     [
+      333,
+      333
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "140_GovernorAlpha",
+  "source": "openzeppelin-Fei_Protocol/fei-protocol-core-29aeefddd97f31c7f2a598fb3dca3ef24dc0beb4/GovernorAlpha.sol",
+  "audit": "openzeppelin-Fei_Protocol",
+  "pragma": "pragma solidity ^0.6.0;",
+  "orig_lines": 338,
+  "flat_lines": 340,
+  "offset": 2,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "votingPeriod",
+    "raw_lines": "L24",
+    "lines": [
+     [
+      24,
+      24
+     ]
+    ],
+    "flat_lines": [
+     [
+      26,
+      26
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "141_GNTAllocation",
+  "source": "openzeppelin-Golem_Network_Token/golem-crowdfunding-50100b27a7c6841ed430a028d100f5d45ba08fb1/GNTAllocation.sol",
+  "audit": "openzeppelin-Golem_Network_Token",
+  "pragma": "pragma solidity ^0.4.4;",
+  "orig_lines": 70,
+  "flat_lines": 287,
+  "offset": 217,
+  "deps_inlined": 1,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "GNTAllocation",
+    "raw_lines": "L22",
+    "lines": [
+     [
+      22,
+      22
+     ]
+    ],
+    "flat_lines": [
+     [
+      239,
+      239
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "142_Crowdsale",
+  "source": "openzeppelin-Hubii_Token/ico-142f43f3bec4afd0ffff3fce06946cf67cb0272f/Crowdsale.sol",
+  "audit": "openzeppelin-Hubii_Token",
+  "pragma": "pragma solidity ^0.4.11;",
+  "orig_lines": 516,
+  "flat_lines": 516,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "./CeilingStrategy.sol",
+   "./FinalizeAgent.sol",
+   "./FractionalERC20.sol",
+   "./Haltable.sol",
+   "./MintableToken.sol",
+   "./PricingStrategy.sol",
+   "./SafeMath.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "isCrowdsale",
+    "raw_lines": "L484,485",
+    "lines": [
+     [
+      484,
+      484
+     ],
+     [
+      485,
+      485
+     ]
+    ],
+    "flat_lines": [
+     [
+      485,
+      485
+     ],
+     [
+      486,
+      486
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "143_Controller",
+  "source": "openzeppelin-Opyn_Gamma_Protocol/GammaProtocol-d151621b33134789b29dc78eb89dad2b557b25b9/contracts/Controller.sol",
+  "audit": "openzeppelin-Opyn_Gamma_Protocol",
+  "pragma": "pragma solidity =0.6.10;",
+  "orig_lines": 816,
+  "flat_lines": 1921,
+  "offset": 1107,
+  "deps_inlined": 14,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_runActions",
+    "raw_lines": "L451-L508",
+    "lines": [
+     [
+      451,
+      508
+     ]
+    ],
+    "flat_lines": [
+     [
+      1558,
+      1615
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "144_AdminImpl",
+  "source": "openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/impl/AdminImpl.sol",
+  "audit": "openzeppelin-Solo_Margin_Protocol",
+  "pragma": "pragma solidity 0.5.4;",
+  "orig_lines": 361,
+  "flat_lines": 2660,
+  "offset": 2301,
+  "deps_inlined": 15,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-107",
+    "kind": "reentrancy",
+    "function": "_setPriceOracle",
+    "raw_lines": "L258-L275",
+    "lines": [
+     [
+      258,
+      275
+     ]
+    ],
+    "flat_lines": [
+     [
+      2559,
+      2576
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "145_ROSCA",
+  "source": "openzeppelin-WeTrust_ROSCA_contract_code/rosca-contracts-2af29be97d529488f5488fe0592f9e6b3585254f/contracts/ROSCA.sol",
+  "audit": "openzeppelin-WeTrust_ROSCA_contract_code",
+  "pragma": "pragma solidity ^0.4.4;",
+  "orig_lines": 546,
+  "flat_lines": 547,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "ROSCA",
+    "raw_lines": "L199",
+    "lines": [
+     [
+      199,
+      199
+     ]
+    ],
+    "flat_lines": [
+     [
+      200,
+      200
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "146_Crowdsale",
+  "source": "openzeppelin-iExec_RLC_Token/rlc-token-3d9aa99ba33bb035c59740a621b1f21cd45cbac5/Crowdsale.sol",
+  "audit": "openzeppelin-iExec_RLC_Token",
+  "pragma": "pragma solidity ^0.4.8;",
+  "orig_lines": 307,
+  "flat_lines": 413,
+  "offset": 106,
+  "deps_inlined": 1,
+  "unresolved_imports": [
+   "./ERC20.sol",
+   "./Ownable.sol",
+   "./Pausable.sol",
+   "./PullPayment.sol",
+   "./SafeMath.sol",
+   "./TokenSpender.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "minCapNotReached",
+    "raw_lines": "L69",
+    "lines": [
+     [
+      69,
+      69
+     ]
+    ],
+    "flat_lines": [
+     [
+      175,
+      175
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "",
+    "raw_lines": "L116、145、295",
+    "lines": [
+     [
+      116,
+      295
+     ]
+    ],
+    "flat_lines": [
+     [
+      222,
+      401
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "id": "147_RLC",
+  "source": "openzeppelin-iExec_RLC_Token/rlc-token-3d9aa99ba33bb035c59740a621b1f21cd45cbac5/RLC.sol",
+  "audit": "openzeppelin-iExec_RLC_Token",
+  "pragma": "pragma solidity ^0.4.8;",
+  "orig_lines": 106,
+  "flat_lines": 107,
+  "offset": 1,
+  "deps_inlined": 0,
+  "unresolved_imports": [
+   "./ERC20.sol",
+   "./Ownable.sol",
+   "./SafeMath.sol",
+   "./TokenSpender.sol"
+  ],
+  "labels": [
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "RLC",
+    "raw_lines": "L37",
+    "lines": [
+     [
+      37,
+      37
+     ]
+    ],
+    "flat_lines": [
+     [
+      38,
+      38
+     ]
+    ]
+   },
+   {
+    "swc": "SWC-116",
+    "kind": "timestamp",
+    "function": "unlock",
+    "raw_lines": "L49",
+    "lines": [
+     [
+      49,
+      49
+     ]
+    ],
+    "flat_lines": [
+     [
+      50,
+      50
+     ]
+    ]
+   }
+  ]
+ }
+]

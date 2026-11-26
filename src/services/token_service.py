@@ -134,7 +134,6 @@ class TokenService:
 
         except Exception as e:
             # Add more context to error
-            print(f"Request URL: {resp.url if 'resp' in locals() else 'N/A'}")
             raise RuntimeError(f"Failed to fetch source code from {chain}: {e}")
 
     def _process_contract_data(self, data: Dict[str, Any], address: str) -> Dict[str, Any]:

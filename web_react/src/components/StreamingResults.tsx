@@ -11,9 +11,12 @@ import { PipelineTrail, StageResult } from "./Pipeline";
 import { useT } from "@/i18n";
 import { FunctionReviewControl, REVIEW_LABELS } from "./FunctionReviewControl";
 import type { FunctionReview } from "@/services/project";
+import { DEFAULT_VULNERABILITY, findReview } from "@/lib/findings";
 
 interface ReviewProps {
   sessionId?: string;
+  /** The scan these results belong to; reviews are looked up per scan. */
+  vulnerability?: string;
   reviews?: FunctionReview[];
   onReviewed?: (reviews: FunctionReview[]) => void;
 }
@@ -21,6 +24,8 @@ interface ReviewProps {
 interface StreamingResultsProps extends ReviewProps {
   results: any[];
   isStreaming: boolean;
+  /** Inside AnalysisReport: no heading, export button or disclaimer of its own. */
+  embedded?: boolean;
 }
 
 const lineLabel = (lines?: number[]) => (lines && lines.length === 2 ? `L${lines[0]}–L${lines[1]}` : "");
@@ -29,14 +34,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
   const output = result.output;
   if (!output) return null;
 
-  if (result.node === "convert_to_fcg" && output.fcg_file_path) {
-    return (
-      <dl className="well flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 text-sm">
-        <dt className="text-muted-foreground">{t("FCG File Path")}</dt>
-        <dd className="code-text min-w-0 break-all text-xs text-ink-2">{output.fcg_file_path}</dd>
-      </dl>
-    );
-  }
+  if (result.node === "convert_to_fcg") return null;  // its output is a server file path: nothing a user can act on
 
   if (result.node === "detect_vulnerability_src") {
     const vulnerable = output.predicted_class === "Vulnerable";
@@ -74,7 +72,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
                     <span className="code-text min-w-0 flex-1 truncate text-left text-sm text-ink">{func.function_name}</span>
                     <span className="code-text text-xs text-muted-foreground">{lineLabel(func.lines)}</span>
                     {func.prediction === 1 && (() => {
-                      const status = review.reviews?.find(r => r.function_name === func.function_name)?.status ?? "pending";
+                      const status = findReview(review.reviews, review.vulnerability ?? DEFAULT_VULNERABILITY, func.function_name)?.status ?? "pending";
                       return <Badge variant="outline">{t(REVIEW_LABELS[status])}</Badge>;
                     })()}
                     <Badge variant={func.prediction === 1 ? "destructive" : "ok"}>
@@ -92,8 +90,9 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
                       <FunctionReviewControl
                         key={review.sessionId}
                         sessionId={review.sessionId}
+                        vulnerability={review.vulnerability}
                         functionName={func.function_name}
-                        review={review.reviews?.find(r => r.function_name === func.function_name)}
+                        review={findReview(review.reviews, review.vulnerability ?? DEFAULT_VULNERABILITY, func.function_name)}
                         onReviewed={review.onReviewed}
                       />
                     )}
@@ -137,7 +136,7 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
   return null;
 };
 
-const downloadSarif = async (sessionId: string, t: ReturnType<typeof useT>) => {
+export const downloadSarif = async (sessionId: string, t: ReturnType<typeof useT>) => {
   try {
     const sarif = await projectService.getSessionSarif(sessionId);
     const url = URL.createObjectURL(new Blob([JSON.stringify(sarif, null, 2)], { type: "application/sarif+json" }));
@@ -149,7 +148,7 @@ const downloadSarif = async (sessionId: string, t: ReturnType<typeof useT>) => {
   }
 };
 
-export const StreamingResults = ({ results, isStreaming, ...review }: StreamingResultsProps) => {
+export const StreamingResults = ({ results, isStreaming, embedded = false, ...review }: StreamingResultsProps) => {
   const t = useT();
   if (results.length === 0 && !isStreaming) {
     return null;
@@ -158,8 +157,8 @@ export const StreamingResults = ({ results, isStreaming, ...review }: StreamingR
   const errors = results.filter((r) => r.node === "error" && r.output?.error);
 
   return (
-    <section className="space-y-6" aria-labelledby="analysis-results-head">
-      <div className="flex items-center justify-between gap-4">
+    <section className="space-y-6" aria-labelledby={embedded ? undefined : "analysis-results-head"}>
+      {!embedded && <div className="flex items-center justify-between gap-4">
         <h2 id="analysis-results-head" className="text-xl">{t("Analysis Results")}</h2>
         {!isStreaming && review.sessionId && (
           <Button
@@ -178,13 +177,13 @@ export const StreamingResults = ({ results, isStreaming, ...review }: StreamingR
             {t("Analyzing…")}
           </Badge>
         )}
-      </div>
+      </div>}
 
       <PipelineTrail results={results} isStreaming={isStreaming} renderDetail={(r) => renderDetail(r, t, review)} />
 
-      <p className="text-xs text-muted-foreground">
+      {!embedded && <p className="text-xs text-muted-foreground">
         {t("Alerts and their absence are model output, not proof: an expert must confirm each alert, and an unflagged contract still needs a manual audit.")}
-      </p>
+      </p>}
 
       {errors.map((error, idx) => (
         <div key={idx} role="alert" className="flex items-start gap-3 rounded-md bg-bad-soft p-4">

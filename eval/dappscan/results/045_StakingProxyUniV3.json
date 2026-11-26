@@ -1,0 +1,1 @@
+{"id": "045_StakingProxyUniV3", "http": 200, "seconds": 1.8, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125733/045_StakingProxyUniV3.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.6204840540885925}}], "raw": ""}

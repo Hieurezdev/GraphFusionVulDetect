@@ -1,4 +1,5 @@
 from src.utils.language import normalize_language
+import asyncio
 import json
 import tempfile
 import os
@@ -8,23 +9,24 @@ from anyio import to_thread
 # Define a unique sentinel object to signal the end of the iterator
 _SENTINEL = object()
 
+ANALYSIS_SLOTS = 2
+_ANALYSIS_SLOTS = asyncio.Semaphore(ANALYSIS_SLOTS)
+
 class VulnerabilityAnalysisService:
     """Service for handling vulnerability analysis operations"""
     
     def __init__(self):
         self.app_graph = None
-        self.config = None
         
     def _initialize_if_needed(self):
         """Initialize models if not already done"""
-        if self.app_graph is None or self.config is None:
+        if self.app_graph is None:
             # Import here to avoid circular imports
             from .graph_loader import get_app_graph, get_models_config
             
             self.app_graph = get_app_graph()
-            self.config = get_models_config()
             
-            if self.app_graph is None or self.config is None:
+            if self.app_graph is None or get_models_config() is None:
                 raise RuntimeError("Models not loaded. Please ensure the application has started properly.")
     
     def _get_next_or_sentinel(self, sync_iterator):
@@ -93,56 +95,63 @@ class VulnerabilityAnalysisService:
     
     async def analyze_solidity_file(self, file_path: str, temp_dir: str, language: str = "en") -> AsyncGenerator[str, None]:
         """
-        Analyze a Solidity file and stream results as NDJSON
-        
-        Args:
-            file_path: Path to the Solidity file
-            temp_dir: Temporary directory for storing intermediate files
-            
-        Yields:
-            JSON strings containing analysis progress and results
+        Scan a Solidity file for every loaded vulnerability type at once and stream the results as NDJSON.
+
+        One pipeline run per vulnerability type, side by side; every event carries the type it belongs to.
+        The stream opens with a "start" event (the types being scanned) and closes with a "summary" event
+        (one verdict per type, the conclusion for the contract, what still needs manual review).
         """
         self._initialize_if_needed()
-        
-        # Create initial state for the graph
-        initial_state = {
-            "sol_file_path": file_path, 
-            "fcg_save_dir": temp_dir,
-            "language": normalize_language(language),
-        }
-        
-        # Stream analysis results
-        async for event in self._run_sync_iterator_in_thread(
-            self.app_graph.stream(initial_state, self.config)
-        ):
-            node_name, node_output_state = list(event.items())[0]
-            
-            # Format output for this processing step
-            output_data = self._format_node_output(node_name, node_output_state)
-            
-            # Yield as NDJSON line
-            yield json.dumps(output_data) + "\n"
+        from .graph_loader import get_models_config, get_vulnerabilities
+        from .findings import summarize
+
+        vulnerabilities = get_vulnerabilities()
+        yield json.dumps({"node": "start", "output": {"vulnerabilities": vulnerabilities}}) + "\n"
+
+        queue: asyncio.Queue = asyncio.Queue()
+
+        async def scan(vulnerability: str):
+            try:
+                initial_state = {
+                    "sol_file_path": file_path,
+                    "fcg_save_dir": os.path.join(temp_dir, vulnerability),  # the two runs write graph files with the same name
+                    "language": normalize_language(language),
+                    "vulnerability": vulnerability,
+                }
+                async for event in self._run_sync_iterator_in_thread(self.app_graph.stream(initial_state, get_models_config(vulnerability))):
+                    node_name, node_output_state = list(event.items())[0]
+                    if node_name == "convert_to_fcg" and not str(node_output_state.get("fcg_file_path", "")).endswith(".fcg"):
+                        raise RuntimeError("Could not build the call graph: the contract did not compile with the solc version of its pragma, "
+                                           "or it imports files that were not uploaded. It needs a manual review.")
+                    await queue.put({**self._format_node_output(node_name, node_output_state), "vulnerability": vulnerability})
+            except Exception as e:  # one scan failing must not hide the other's result
+                await queue.put({"node": "error", "vulnerability": vulnerability, "output": {"error": str(e)}})
+            finally:
+                await queue.put(None)
+
+        # One GPU and the compiler/Slither are shared by every user: run at most ANALYSIS_SLOTS contracts at once, queue the rest.
+        async with _ANALYSIS_SLOTS:
+            tasks = [asyncio.create_task(scan(v)) for v in vulnerabilities]
+            events, running = [], len(tasks)
+            try:
+                while running:
+                    event = await queue.get()
+                    if event is None:
+                        running -= 1
+                        continue
+                    events.append(event)
+                    yield json.dumps(event) + "\n"
+            finally:
+                # Client gone (or an error): stop the scans, or they keep the GPU busy after this slot is freed.
+                # A scan stops after the pipeline step its worker thread is in; the thread cannot be interrupted mid-step.
+                for task in tasks:
+                    task.cancel()
+
+            summary = summarize(events, vulnerabilities)
+            if all(v["status"] == "failed" for v in summary["vulnerabilities"].values()):
+                raise RuntimeError("; ".join(f"{v['label']}: {v['error']}" for v in summary["vulnerabilities"].values()))
+            yield json.dumps({"node": "summary", "output": summary}) + "\n"
     
-    async def save_uploaded_file(self, file_content: bytes, filename: str, temp_dir: str) -> str:
-        """
-        Save uploaded file content to a temporary location
-        
-        Args:
-            file_content: Raw file content
-            filename: Original filename
-            temp_dir: Temporary directory to save the file
-            
-        Returns:
-            Path to the saved file
-        """
-        file_path = os.path.join(temp_dir, filename)
-        print(f"Saving uploaded file to: {file_path}")
-        print(f"content: {file_content[:100]}...")
-        # Save file content
-        with open(file_path, "wb") as buffer:
-            buffer.write(file_content)
-            
-        return file_path
     
     def validate_solidity_file(self, filename: str, content: bytes) -> Tuple[bool, str]:
         """

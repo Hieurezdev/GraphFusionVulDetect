@@ -1,0 +1,814 @@
+{
+ "hardware": {
+  "gpu": "NVIDIA L40S, 46068 MiB",
+  "cpu": "INTEL(R) XEON(R) GOLD 6542Y",
+  "cores": 32,
+  "encoder_device": "cuda",
+  "gnn_device": "cpu",
+  "torch": "2.8.0+cu128",
+  "dgl": "2.1.0",
+  "peak_rss_mb": 2473,
+  "peak_gpu_mb": 980,
+  "gnn_parameters": 6312386,
+  "encoder_parameters": 124645632
+ },
+ "weights": "src/infrastructure/analysis_model/best_model_GCN_2L_max.pt",
+ "encoder": "Quangnguyen711/codebert-solidity-time-dep",
+ "base_encoder": "microsoft/codebert-base",
+ "splits": {
+  "Test": {
+   "files": 193,
+   "scored_by_all": 187,
+   "status": {
+    "no_graph": 6,
+    "ok": 187
+   },
+   "vulnerable": 96,
+   "non_vulnerable": 91,
+   "variants": {
+    "full": {
+     "non_vulnerable": {
+      "P": 0.939,
+      "R": 0.846,
+      "F1": 0.89
+     },
+     "vulnerable": {
+      "P": 0.867,
+      "R": 0.948,
+      "F1": 0.905
+     },
+     "macro_F1": 0.898,
+     "macro_F1_ci95": [
+      0.85,
+      0.936
+     ],
+     "accuracy": 0.898,
+     "predicted_vulnerable": 105,
+     "full_right_this_wrong": 0,
+     "full_wrong_this_right": 0
+    },
+    "no_graph": {
+     "non_vulnerable": {
+      "P": 0.927,
+      "R": 0.56,
+      "F1": 0.699
+     },
+     "vulnerable": {
+      "P": 0.697,
+      "R": 0.958,
+      "F1": 0.807
+     },
+     "macro_F1": 0.753,
+     "macro_F1_ci95": [
+      0.684,
+      0.812
+     ],
+     "accuracy": 0.765,
+     "predicted_vulnerable": 132,
+     "full_right_this_wrong": 30,
+     "full_wrong_this_right": 5
+    },
+    "base_encoder": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.513,
+      "R": 1.0,
+      "F1": 0.678
+     },
+     "macro_F1": 0.339,
+     "macro_F1_ci95": [
+      0.307,
+      0.368
+     ],
+     "accuracy": 0.513,
+     "predicted_vulnerable": 187,
+     "full_right_this_wrong": 77,
+     "full_wrong_this_right": 5
+    },
+    "base_no_graph": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.513,
+      "R": 1.0,
+      "F1": 0.678
+     },
+     "macro_F1": 0.339,
+     "macro_F1_ci95": [
+      0.307,
+      0.368
+     ],
+     "accuracy": 0.513,
+     "predicted_vulnerable": 187,
+     "full_right_this_wrong": 77,
+     "full_wrong_this_right": 5
+    },
+    "random_features": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.513,
+      "R": 1.0,
+      "F1": 0.678
+     },
+     "macro_F1": 0.339,
+     "macro_F1_ci95": [
+      0.307,
+      0.368
+     ],
+     "accuracy": 0.513,
+     "predicted_vulnerable": 187,
+     "full_right_this_wrong": 77,
+     "full_wrong_this_right": 5
+    },
+    "slither": {
+     "non_vulnerable": {
+      "P": 0.75,
+      "R": 0.725,
+      "F1": 0.737
+     },
+     "vulnerable": {
+      "P": 0.747,
+      "R": 0.771,
+      "F1": 0.759
+     },
+     "macro_F1": 0.748,
+     "macro_F1_ci95": [
+      0.684,
+      0.806
+     ],
+     "accuracy": 0.749,
+     "predicted_vulnerable": 99,
+     "full_right_this_wrong": 36,
+     "full_wrong_this_right": 8
+    },
+    "keyword": {
+     "non_vulnerable": {
+      "P": 1.0,
+      "R": 0.648,
+      "F1": 0.787
+     },
+     "vulnerable": {
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857
+     },
+     "macro_F1": 0.822,
+     "macro_F1_ci95": [
+      0.763,
+      0.873
+     ],
+     "accuracy": 0.829,
+     "predicted_vulnerable": 128,
+     "full_right_this_wrong": 20,
+     "full_wrong_this_right": 7
+    }
+   },
+   "seconds_per_contract": {
+    "slither": {
+     "median": 0.329,
+     "p95": 0.945,
+     "max": 3.487,
+     "total": 77.0
+    },
+    "graph_and_embed": {
+     "median": 0.522,
+     "p95": 1.348,
+     "max": 4.19,
+     "total": 112.5
+    },
+    "base_embed": {
+     "median": 0.189,
+     "p95": 0.399,
+     "max": 1.557,
+     "total": 37.6
+    },
+    "gnn": {
+     "median": 0.036,
+     "p95": 0.1627,
+     "max": 0.4619,
+     "total": 10.9
+    }
+   },
+   "flips_full_vs_no_graph": [
+    {
+     "file": "Test/NonVulnerable/0x1b5d56bfe749e492ae226cf9aa23c1426f828b7b.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.171,
+     "p_no_graph": 0.629,
+     "functions": 59,
+     "edges": 39
+    },
+    {
+     "file": "Test/NonVulnerable/0x2285b7f262c741e9c555ab7df9009b87c29353cf.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.17,
+     "p_no_graph": 0.6297,
+     "functions": 59,
+     "edges": 39
+    },
+    {
+     "file": "Test/NonVulnerable/0x34d264fadcae674c4aaea6d795b4d1448feb038b.sol",
+     "label": 0,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.5974,
+     "p_no_graph": 0.4499,
+     "functions": 23,
+     "edges": 10
+    },
+    {
+     "file": "Test/NonVulnerable/0x3597bfd533a99c9aa083587b074434e61eb0a258.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1271,
+     "p_no_graph": 0.5744,
+     "functions": 65,
+     "edges": 42
+    },
+    {
+     "file": "Test/NonVulnerable/0x3d1ba9be9f66b8ee101911bc36d3fb562eac2244.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1271,
+     "p_no_graph": 0.5744,
+     "functions": 65,
+     "edges": 42
+    },
+    {
+     "file": "Test/NonVulnerable/0x40f4d25fb85ea9c4fc4a82e8234664108b20e2cb.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1886,
+     "p_no_graph": 0.6323,
+     "functions": 61,
+     "edges": 44
+    },
+    {
+     "file": "Test/NonVulnerable/0x5af2be193a6abca9c8817001f45744777db30756.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1137,
+     "p_no_graph": 0.5711,
+     "functions": 62,
+     "edges": 41
+    },
+    {
+     "file": "Test/NonVulnerable/0x5e6c3565c2a7b048f22e62e41fc829811d8de2ba.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.4916,
+     "p_no_graph": 0.5318,
+     "functions": 15,
+     "edges": 8
+    },
+    {
+     "file": "Test/NonVulnerable/0x71d6a613af53a0c057f2d6833dc9ade678243267.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1756,
+     "p_no_graph": 0.6311,
+     "functions": 58,
+     "edges": 38
+    },
+    {
+     "file": "Test/NonVulnerable/0x8ae4bf2c33a8e667de34b54938b0ccd03eb8cc06.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.2082,
+     "p_no_graph": 0.635,
+     "functions": 63,
+     "edges": 45
+    },
+    {
+     "file": "Test/NonVulnerable/0xa645264c5603e96c3b0b078cdab68733794b0a71.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1867,
+     "p_no_graph": 0.6306,
+     "functions": 63,
+     "edges": 44
+    },
+    {
+     "file": "Test/NonVulnerable/0xafcb18e95b10a18baeaf69baac1ac610df9f7d12.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.4181,
+     "p_no_graph": 0.7824,
+     "functions": 55,
+     "edges": 35
+    },
+    {
+     "file": "Test/NonVulnerable/0xb04cfa8a26d602fb50232cee0daf29060264e04b.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1895,
+     "p_no_graph": 0.6324,
+     "functions": 61,
+     "edges": 44
+    },
+    {
+     "file": "Test/NonVulnerable/0xb2e59493763d0d0be2634b2d1afe066914b0fcc2.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1137,
+     "p_no_graph": 0.5711,
+     "functions": 62,
+     "edges": 41
+    },
+    {
+     "file": "Test/NonVulnerable/0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3073,
+     "p_no_graph": 0.6205,
+     "functions": 45,
+     "edges": 35
+    },
+    {
+     "file": "Test/NonVulnerable/0xb63b606ac810a52cca15e44bb630fd42d8d1d83d.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1137,
+     "p_no_graph": 0.5711,
+     "functions": 62,
+     "edges": 41
+    },
+    {
+     "file": "Test/NonVulnerable/0xc13dfb79ad78ea5dab5452299730431771802fc4.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3193,
+     "p_no_graph": 0.6241,
+     "functions": 45,
+     "edges": 35
+    },
+    {
+     "file": "Test/NonVulnerable/0xd14ccc72df063db59386c371e00292ca529400ac.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.215,
+     "p_no_graph": 0.6368,
+     "functions": 67,
+     "edges": 47
+    },
+    {
+     "file": "Test/NonVulnerable/0xd2e559d39935110df3ac7e77727dc8cd88416b34.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.2145,
+     "p_no_graph": 0.6367,
+     "functions": 65,
+     "edges": 46
+    },
+    {
+     "file": "Test/NonVulnerable/0xdd14691a124125f55956a6992df1c22fbc604a66.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.2082,
+     "p_no_graph": 0.635,
+     "functions": 63,
+     "edges": 45
+    },
+    {
+     "file": "Test/NonVulnerable/0xf12e01c57602972302a160159c92a103ed15f171.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1886,
+     "p_no_graph": 0.6323,
+     "functions": 61,
+     "edges": 44
+    },
+    {
+     "file": "Test/NonVulnerable/0xf221e4dd78c08177311dec144b674b04f3b9176e.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3193,
+     "p_no_graph": 0.6241,
+     "functions": 45,
+     "edges": 35
+    },
+    {
+     "file": "Test/NonVulnerable/0xf53900aa32417ebb42cb182e08e0a7791da4fc7c.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.4337,
+     "p_no_graph": 0.6815,
+     "functions": 20,
+     "edges": 10
+    },
+    {
+     "file": "Test/NonVulnerable/0xf68f16a1ea80665e0548d9fcfee435b82e92a5cc.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1271,
+     "p_no_graph": 0.5744,
+     "functions": 65,
+     "edges": 42
+    },
+    {
+     "file": "Test/NonVulnerable/0xf9ebc3598946e4d9fa7ebee011c8a3e2eb6715ba.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1756,
+     "p_no_graph": 0.6311,
+     "functions": 58,
+     "edges": 38
+    },
+    {
+     "file": "Test/NonVulnerable/0xfca47962d45adfdfd1ab2d972315db4ce7ccf094.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1174,
+     "p_no_graph": 0.5731,
+     "functions": 61,
+     "edges": 40
+    },
+    {
+     "file": "Test/NonVulnerable/0xfe022ed8253d921f42c980205f5a7e644fbddaa8.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1174,
+     "p_no_graph": 0.5731,
+     "functions": 61,
+     "edges": 40
+    },
+    {
+     "file": "Test/NonVulnerable/0xff7e960888ac6092d7b908e32750e54a16864997.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.2145,
+     "p_no_graph": 0.6367,
+     "functions": 65,
+     "edges": 46
+    },
+    {
+     "file": "Test/NonVulnerable/11775.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.4924,
+     "p_no_graph": 0.5371,
+     "functions": 94,
+     "edges": 70
+    },
+    {
+     "file": "Test/NonVulnerable/1518.sol",
+     "label": 0,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.8298,
+     "p_no_graph": 0.4648,
+     "functions": 56,
+     "edges": 44
+    },
+    {
+     "file": "Test/Vulnerable/0x2e2e617e4625c6a30a3290dde5b689212ff061e8.sol",
+     "label": 1,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3401,
+     "p_no_graph": 0.7606,
+     "functions": 15,
+     "edges": 5
+    },
+    {
+     "file": "Test/Vulnerable/0x34a3deb32b4705018f1e543a5867cf01aff3f15b.sol",
+     "label": 1,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3547,
+     "p_no_graph": 0.8871,
+     "functions": 48,
+     "edges": 25
+    },
+    {
+     "file": "Test/Vulnerable/0x3d11a869c9a97c1c9c6a0ce058a98db20bb753db.sol",
+     "label": 1,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.7964,
+     "p_no_graph": 0.4793,
+     "functions": 27,
+     "edges": 13
+    },
+    {
+     "file": "Test/Vulnerable/0x4a0a5236e4d1ae19fc00c167e1d33f37870f53b1.sol",
+     "label": 1,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3128,
+     "p_no_graph": 0.5575,
+     "functions": 40,
+     "edges": 22
+    },
+    {
+     "file": "Test/Vulnerable/11191.sol",
+     "label": 1,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.9148,
+     "p_no_graph": 0.2979,
+     "functions": 26,
+     "edges": 49
+    }
+   ]
+  },
+  "Train": {
+   "files": 101,
+   "scored_by_all": 99,
+   "status": {
+    "no_graph": 2,
+    "ok": 99
+   },
+   "vulnerable": 50,
+   "non_vulnerable": 49,
+   "variants": {
+    "full": {
+     "non_vulnerable": {
+      "P": 0.968,
+      "R": 0.612,
+      "F1": 0.75
+     },
+     "vulnerable": {
+      "P": 0.721,
+      "R": 0.98,
+      "F1": 0.831
+     },
+     "macro_F1": 0.79,
+     "macro_F1_ci95": [
+      0.703,
+      0.867
+     ],
+     "accuracy": 0.798,
+     "predicted_vulnerable": 68,
+     "full_right_this_wrong": 0,
+     "full_wrong_this_right": 0
+    },
+    "no_graph": {
+     "non_vulnerable": {
+      "P": 0.933,
+      "R": 0.571,
+      "F1": 0.709
+     },
+     "vulnerable": {
+      "P": 0.696,
+      "R": 0.96,
+      "F1": 0.807
+     },
+     "macro_F1": 0.758,
+     "macro_F1_ci95": [
+      0.667,
+      0.837
+     ],
+     "accuracy": 0.768,
+     "predicted_vulnerable": 69,
+     "full_right_this_wrong": 5,
+     "full_wrong_this_right": 2
+    },
+    "base_encoder": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.505,
+      "R": 1.0,
+      "F1": 0.671
+     },
+     "macro_F1": 0.336,
+     "macro_F1_ci95": [
+      0.288,
+      0.377
+     ],
+     "accuracy": 0.505,
+     "predicted_vulnerable": 99,
+     "full_right_this_wrong": 30,
+     "full_wrong_this_right": 1
+    },
+    "base_no_graph": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.505,
+      "R": 1.0,
+      "F1": 0.671
+     },
+     "macro_F1": 0.336,
+     "macro_F1_ci95": [
+      0.288,
+      0.377
+     ],
+     "accuracy": 0.505,
+     "predicted_vulnerable": 99,
+     "full_right_this_wrong": 30,
+     "full_wrong_this_right": 1
+    },
+    "random_features": {
+     "non_vulnerable": {
+      "P": 0.0,
+      "R": 0.0,
+      "F1": 0.0
+     },
+     "vulnerable": {
+      "P": 0.505,
+      "R": 1.0,
+      "F1": 0.671
+     },
+     "macro_F1": 0.336,
+     "macro_F1_ci95": [
+      0.288,
+      0.377
+     ],
+     "accuracy": 0.505,
+     "predicted_vulnerable": 99,
+     "full_right_this_wrong": 30,
+     "full_wrong_this_right": 1
+    },
+    "slither": {
+     "non_vulnerable": {
+      "P": 0.5,
+      "R": 0.224,
+      "F1": 0.31
+     },
+     "vulnerable": {
+      "P": 0.506,
+      "R": 0.78,
+      "F1": 0.614
+     },
+     "macro_F1": 0.462,
+     "macro_F1_ci95": [
+      0.359,
+      0.556
+     ],
+     "accuracy": 0.505,
+     "predicted_vulnerable": 77,
+     "full_right_this_wrong": 37,
+     "full_wrong_this_right": 8
+    },
+    "keyword": {
+     "non_vulnerable": {
+      "P": 1.0,
+      "R": 0.061,
+      "F1": 0.115
+     },
+     "vulnerable": {
+      "P": 0.521,
+      "R": 1.0,
+      "F1": 0.685
+     },
+     "macro_F1": 0.4,
+     "macro_F1_ci95": [
+      0.327,
+      0.481
+     ],
+     "accuracy": 0.535,
+     "predicted_vulnerable": 96,
+     "full_right_this_wrong": 27,
+     "full_wrong_this_right": 1
+    }
+   },
+   "seconds_per_contract": {
+    "slither": {
+     "median": 0.337,
+     "p95": 1.312,
+     "max": 3.255,
+     "total": 50.8
+    },
+    "graph_and_embed": {
+     "median": 0.482,
+     "p95": 1.959,
+     "max": 4.177,
+     "total": 70.7
+    },
+    "base_embed": {
+     "median": 0.172,
+     "p95": 0.774,
+     "max": 0.875,
+     "total": 22.7
+    },
+    "gnn": {
+     "median": 0.0472,
+     "p95": 0.1492,
+     "max": 0.1795,
+     "total": 5.9
+    }
+   },
+   "flips_full_vs_no_graph": [
+    {
+     "file": "Train/NonVulnerable/0xf297d09924f8fd807bdb0d9fb47b52f6826c70b1.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.1867,
+     "p_no_graph": 0.8945,
+     "functions": 18,
+     "edges": 16
+    },
+    {
+     "file": "Train/NonVulnerable/0xf50400935bec25cf89031146b8604371197f2cae.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.2046,
+     "p_no_graph": 0.6487,
+     "functions": 33,
+     "edges": 22
+    },
+    {
+     "file": "Train/NonVulnerable/11323.sol",
+     "label": 0,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.6769,
+     "p_no_graph": 0.452,
+     "functions": 29,
+     "edges": 20
+    },
+    {
+     "file": "Train/NonVulnerable/15.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.3128,
+     "p_no_graph": 0.7559,
+     "functions": 50,
+     "edges": 43
+    },
+    {
+     "file": "Train/NonVulnerable/16590.sol",
+     "label": 0,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.5378,
+     "p_no_graph": 0.44,
+     "functions": 144,
+     "edges": 109
+    },
+    {
+     "file": "Train/NonVulnerable/6929.sol",
+     "label": 0,
+     "full": 0,
+     "no_graph": 1,
+     "p_full": 0.4865,
+     "p_no_graph": 0.6617,
+     "functions": 31,
+     "edges": 16
+    },
+    {
+     "file": "Train/Vulnerable/22273.sol",
+     "label": 1,
+     "full": 1,
+     "no_graph": 0,
+     "p_full": 0.8068,
+     "p_no_graph": 0.4864,
+     "functions": 52,
+     "edges": 40
+    }
+   ]
+  }
+ }
+}

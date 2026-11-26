@@ -1,0 +1,1 @@
+{"id": "055_LPool", "http": 200, "seconds": 6.5, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125934/055_LPool.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.5412667393684387}}], "raw": ""}

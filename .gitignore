@@ -181,3 +181,8 @@ output
 !web_react/src/lib
 
 storage/
+# Large local artifacts: not in git (GitHub's 100 MB limit; data stays on the server)
+src/infrastructure/analysis_model/*_reentrancy.pt
+assets/datasets/SourceCodeSyntaxDatasetFull/
+assets/datasets/*.zip
+1-s2.0-S2405959526000238-main.pdf

@@ -1,0 +1,1765 @@
+{
+ "encoder": "Quangnguyen711/codebert-solidity-re-entrancy",
+ "device": "cuda",
+ "torch": "2.4.0+cu121",
+ "dgl": "2.4.0+cu121",
+ "config": {
+  "mtype": [
+   "GAT"
+  ],
+  "infeats": 768,
+  "hfeats": [
+   2048,
+   2048
+  ],
+  "fc1_layer": 256,
+  "fc2_layer": 64,
+  "n_gph": 2,
+  "outclass": 2,
+  "gptype": "max",
+  "ginfeat": 1024,
+  "num_query_vectors": 1,
+  "lr": 0.0001,
+  "batch": 256,
+  "epochs": 100,
+  "seed": 42,
+  "parameters": 55134658
+ },
+ "data": {
+  "train_graphs": 565,
+  "train_fit": 452,
+  "train_validation": 113,
+  "test_graphs": 144,
+  "train_vulnerable": 275,
+  "test_vulnerable": 71,
+  "no_graph": {
+   "Train/NonVulnerable/0x11dc9acbbd6eac0096ac6d08beb36121303f4c0d.sol": "no graph",
+   "Train/NonVulnerable/0x2545ca44b7220e4a640b40696e7318b360e18920.sol": "no graph",
+   "Train/NonVulnerable/0x2d5b6ad223654018aa31c5660a48fee33d016adf.sol": "no graph",
+   "Train/NonVulnerable/0x43a86b8a97ac68f8cfe3b38a2e9a25af1c048497.sol": "no graph",
+   "Train/NonVulnerable/0x448fae87f7f5b58c6f215abd53d5cd8125e733c5.sol": "no graph",
+   "Train/NonVulnerable/0x4ad0a7b4884adc2f5bf769253efe89549d10f7b4.sol": "no graph",
+   "Train/NonVulnerable/0x55f64d09b3b95cf8bbc2577b8fab32433c0746fa.sol": "no graph",
+   "Train/NonVulnerable/0x65c6a77bf78a6aa5bbb2075026ab027b8c920261.sol": "no graph",
+   "Train/NonVulnerable/0x958a8f594101d2c0485a52319f29b2647f2ebc06.sol": "no graph",
+   "Train/NonVulnerable/0xcbd901db55c9139828f7b5d5cbfd5afeab01d066.sol": "no graph",
+   "Train/NonVulnerable/0xdda65daa223aaae4add64e4e390cda7101c4ab41.sol": "no graph",
+   "Train/NonVulnerable/0xfaf4a5fbf621b049215c19a73babd0b94fd9155f.sol": "no graph",
+   "Train/NonVulnerable/40118.sol": "no graph",
+   "Train/NonVulnerable/40241.sol": "no graph",
+   "Train/NonVulnerable/40353.sol": "no graph",
+   "Train/NonVulnerable/40469.sol": "no graph",
+   "Train/Vulnerable/0x0aaf8865a6cbf417e7ad51fe71fe60f1a0c192f8.sol": "no graph",
+   "Train/Vulnerable/0x0b4597d45be69bf1571b32e78ec02730f9743d3e.sol": "no graph",
+   "Train/Vulnerable/0x17cba58578eecaee898242a02edac75b8cc17231.sol": "no graph",
+   "Train/Vulnerable/0x25af8d824b3b078a589e47418a95b4388d1552f4.sol": "no graph",
+   "Train/Vulnerable/0x2e208cf41b721c3cb4ac78cc05938619bdccc0d0.sol": "no graph",
+   "Train/Vulnerable/0x358bd9446e79ee20c0fbaa4f3bff31d794bfe8b9.sol": "no graph",
+   "Train/Vulnerable/0x38e9d51419dc53bb8c899a5fd473ce111b1757c4.sol": "no graph",
+   "Train/Vulnerable/0x45afe0ff6a92bc9f346fc440a9d2a881d42094ff.sol": "no graph",
+   "Train/Vulnerable/0x4df6de08d11f11ebad5d9e136b768849426fb8a7.sol": "no graph",
+   "Train/Vulnerable/0x53ebb10ca7f91e6c90d7ce9249cea70e75948b16.sol": "no graph",
+   "Train/Vulnerable/0x5c68bb8b8b000c5d750e4d70427d8a99c49bdaaa.sol": "no graph",
+   "Train/Vulnerable/0x5ec71419f100642130e596c352d93dea7589a31f.sol": "no graph",
+   "Train/Vulnerable/0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b.sol": "no graph",
+   "Train/Vulnerable/0x7cfcf4d781de39588ca516565134da4aee71f94d.sol": "no graph",
+   "Train/Vulnerable/0x819ae35e142d86401bf2de6622eb6ffe8dd89b9c.sol": "no graph",
+   "Train/Vulnerable/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4.sol": "no graph",
+   "Train/Vulnerable/0x91efffb9c6cd3a66474688d0a48aa6ecfe515aa5.sol": "no graph",
+   "Train/Vulnerable/0x9806af0a04e49da7d0bb31e18f1b31c83c6cac29.sol": "no graph",
+   "Train/Vulnerable/0x9eefd01e00ff980fa3f4c5419003c8a925fe08df.sol": "no graph",
+   "Train/Vulnerable/0xb15367df8a39ea06f8f81ed35d49e056ee05f3b7.sol": "no graph",
+   "Train/Vulnerable/0xbec591de75b8699a3ba52f073428822d0bfc0d7e.sol": "no graph",
+   "Train/Vulnerable/0xc0ffee0505d21342cd503bc57ed33fc2cec7f225.sol": "no graph",
+   "Train/Vulnerable/0xc6b330df38d6ef288c953f1f2835723531073ce2.sol": "no graph",
+   "Train/Vulnerable/0xce05254ae8a1195afa33140f02d63f9fa0c2462c.sol": "no graph",
+   "Train/Vulnerable/0xdbef8a8e4ae5b2222d6696c0740f36af342bd9d7.sol": "no graph",
+   "Train/Vulnerable/0xe4c94d45f7aef7018a5d66f44af780ec6023378e.sol": "no graph",
+   "Train/Vulnerable/0xe825363f3bedabc95b2a9d42dbc73ec7b82b57d3.sol": "no graph",
+   "Train/Vulnerable/0xe994c93026b13337fda5a96c4141e2e3bc7c47af.sol": "no graph",
+   "Train/Vulnerable/3054.sol": "no graph",
+   "Train/Vulnerable/SendBalance.sol": "no graph",
+   "Test/NonVulnerable/0xe6bb2220819569b8e9d8265c49ca6c79e15a1559.sol": "no graph",
+   "Test/Vulnerable/0xb4c757a71d084df8f9f393cc47639701f595fd87.sol": "no graph",
+   "Test/Vulnerable/0xd2e16a20dd7b1ae54fb0312209784478d069c7b0.sol": "no graph"
+  }
+ },
+ "selected_epoch": 37,
+ "validation": {
+  "n": 113,
+  "vulnerable": 55,
+  "P": 0.868,
+  "R": 0.836,
+  "F1": 0.852,
+  "P_non_vulnerable": 0.85,
+  "R_non_vulnerable": 0.879,
+  "F1_non_vulnerable": 0.864,
+  "accuracy": 0.858,
+  "predicted_vulnerable": 53
+ },
+ "test_one_contract_at_a_time": {
+  "n": 144,
+  "vulnerable": 71,
+  "P": 0.711,
+  "R": 0.831,
+  "F1": 0.766,
+  "P_non_vulnerable": 0.803,
+  "R_non_vulnerable": 0.671,
+  "F1_non_vulnerable": 0.731,
+  "accuracy": 0.75,
+  "predicted_vulnerable": 83
+ },
+ "test_batched_like_notebook": {
+  "n": 144,
+  "vulnerable": 71,
+  "P": 0.682,
+  "R": 0.845,
+  "F1": 0.755,
+  "P_non_vulnerable": 0.804,
+  "R_non_vulnerable": 0.616,
+  "F1_non_vulnerable": 0.698,
+  "accuracy": 0.729,
+  "predicted_vulnerable": 88
+ },
+ "train_fit": {
+  "n": 452,
+  "vulnerable": 220,
+  "P": 0.839,
+  "R": 0.832,
+  "F1": 0.836,
+  "P_non_vulnerable": 0.842,
+  "R_non_vulnerable": 0.849,
+  "F1_non_vulnerable": 0.845,
+  "accuracy": 0.841,
+  "predicted_vulnerable": 218
+ },
+ "notebook_style_best_test": {
+  "F1": 0.776,
+  "accuracy": 0.743,
+  "note": "best epoch picked on Test, as the notebook does; optimistic"
+ },
+ "test_predictions": [
+  {
+   "file": "NonVulnerable/0x073c4ea5a89d0e5aa0408a1b6dd8bbfcdba985c0.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x1e5028fcb334d79633f5a6665347d2eaa02cb406.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x240f9f86b1465bf1b8eb29bc88cbf65573dfdd97.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x347e94e12c623d7b9d51b3f143ff42b73d619773.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x3875151e877cb7c048d9b8f5045debf46babe02b.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x4566d68ea96fc2213f2446f0dd0f482146cee96d.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x461733c17b0755ca5649b6db08b3e213fcf22546.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x4b9a0d1d725b91c47729d35e3dd174179891cc6c.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x4f416e928a2cf93d90772c9d8e070a8b1f5b3f36.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x522b0f328ca716b5b676cab767372d48853ff040.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x56ba2ee7890461f463f7be02aac3099f6d5811a8.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x58843adfa79b5592427df09a7649969390359be3.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x5c84c9dd997e16578e62c9f7557e708db05c1076.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x5d315fb1c83e2cc81b76aadd6fcf3a06966d3376.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x6091295974c12c4305b8bf6d2062bf48f37a3b36.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x650734bfd0465b7c6cd2932ea555e721308fd0b3.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x6693bc7a3f8875b36c9bbe57c4917a1506e5a327.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x66b1e7e51a441f41a0584820a629ba36fd2e2dda.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x6745dde69632ea1820ad6781d0a49b9670472837.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x6805661283c64a79323d187f9d6b2ca4dae59fd0.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x6ffd92d59b9da3b9608ac58b3a08729b556bfec8.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x73185bc2a1aa75ec49ba9239b28ea22fda5940fa.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x7400a765bea6e0044e8f0040dc52786585e79f1a.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x783a1cbc37a8ef2f368908490b72bfe801da1877.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x7963aa3202d186e0da113423da0fccf879b69cb2.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x7d6ccc156bbaa5220b62cb0f8eb322fdac92a2d1.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x7db13804af21248d06a5aa68f4cac4432f1e2b95.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x8314d1aaee9c0804a00af704a7f713003aef6f0c.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x8901e8ec84c4914f63a6fb3b74bcc62863a60ff1.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x8abb673ea728e3006dd44df0f96e2964b59e4cb2.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0x8b7b6c61238088593bf75eec8fbf58d0a615d30c.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x8ffb52208c08d4254e06737be0e1f0fe271b76b2.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x947e7997501cc0c6d775d0c33dac2d03bc7986b6.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0x961fa070ef41c2b68d1a50905ea9198ef7dbfbf8.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xa206d217c0642735e82a6b11547bf00659623163.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xae5a801527695745d42034eb236662927ab1f95b.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xb1440250b73cc3f5ca364484f0655b5fa81c410e.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0xb328f05fa01cc2f9add1ed05c5636e7d9c9b9954.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xb4daca5ea0de976da3304ba86e806ecb293d49bf.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0xb81f5b60e186cf84ab21e43064b4defd77e96d4d.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0xbe1b06a4268f7b523b0e7b986d91f2d4a2572b52.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/0xc8d9890df1ff2e87be05e9edab3cca26f054b611.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xcbe7ab529a147149b1cf982c3a169f728bc0c3ca.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xd0a6bd21ee04b796c35696b4989910cee0f599c9.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xd0a6e6c54dbc68db5db3a091b171a77407ff7ccf.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xd80e96496cd0b3f95bb4941b1385023fbca1e6ba.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xdbdf54969a4e943bb8c7dd9f04ea853bca018301.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xdde7188eb7921888f90c7d334fbe5a65c8ac8c65.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xe19ca313512e0231340e778abe7110401c737c23.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xe3552daa316997d90fcb8e8644c535986408700a.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xe50afd8ff67cf109c47da0587fbf87090ac8c5d8.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/0xf6e7ea2e29e64f62b667d5c6e0cf65ebb5ab5b5d.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/10107.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/10604.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/1123.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/14458.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/14741.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/1710.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/19402.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/22805.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/23387.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/29601.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/30178.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/34577.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/35649.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/35806.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/36334.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/37676.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/39269.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "NonVulnerable/39664.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/40341.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/4591.sol",
+   "label": 0,
+   "pred": 0
+  },
+  {
+   "file": "NonVulnerable/simple_dao_fixed.sol",
+   "label": 0,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x02cb5958a36145efbacb99fac2614657bf20d4e8.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x0adf73d077646177ed942330cb062b44282abf9e.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x0f17caa887cd584ebe662f15f48545085142304e.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x106b419718298f91ca576728a670597fb2e0ee4e.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x134decfcc18a98f721496d83a4622e57e54f0c6b.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x19397c7fde68a3b33503d491cac89011a5d9a61f.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x1a55ae1553e5f41966fd8a204422e379713d1d24.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x1c923bc27998465f0b197ef73c7aeec9359169d3.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x25984508b7060e460b224c8d5c7eb4fae76e440c.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x29c4bf3b662b1a57e841f27c161e27f61da63d69.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x312802f59528256ca45da2b5dbb365ec4d037398.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x3219663cbd7a5b39a9f2be3f23d07e3ce0eb6d58.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x36f0deb0af8ab453b6b4fcc8b0b7fe2f1b44e55f.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x3b9dc0e353b7bc689893a87cd697f08e06feee81.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x40f4991411ac5377675c421e87378e10470134a3.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x44cba3a62a15ac8f66ff75bf7abd058dcca7d7ed.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x451f94927c0c726c2560106da3308d2a204f5d1f.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x45d147c800d401350b24fc1cd5fbc98040b177c8.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x4900320fe47208de0b79db1273a78ab8c8f3528d.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x4d4adc193e8b8c82e26c36cde939aa10991326b9.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x4e73b32ed6c35f570686b89848e5f39f20ecc106.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x4e8ecf79ade5e2c49b9e30d795517a81e0bf00b8.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x522b0f328ca716b5b676cab767372d48853ff040.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x539da201f33a25e4a782d3b42eb0f0a83c0fd753.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x5a890d8c8573d623bd72727f2ae8f3caa0d4aed1.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x63c66a8afb5041ca4abe5bc0d1a50bcdfb72c159.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x69beaaf17c42508f92b0d72c8085b725207d65a3.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x6cdd4f8e44395c598c90947223211ab62b04a7d2.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x6dd1a58e5422bf0328e42f88c7d18c8d8ce11061.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x6ef02644549af0e3761ae1a88fe02fe1d7016aea.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x7183169973eda16209f66a602f2e27e1303bf414.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x7541b76cb60f4c60af330c208b0623b7f54bf615.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x7a46c781b593068d5e987b191e9c2f7413e22aee.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x82103eabce34b0e814fb71d1b840371542edaa40.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x89145f218a049963af6575ce8dfbe503fec73037.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x8c7777c45481dba411450c228cb692ac3d550344.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x8ddc117d6a7a5fcaa33579741bd34d50898b4d2d.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0x930dc12a561312db13ec38b01d82bddb3a327ff5.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x98fe1d52649a3a13863647c6789f16e46e090377.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0x9bbb9387c9e2477a6b5d81afece00255875c48ce.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0xa524571c94049cea9b0e1a23dea30dc08b5f6083.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xaf538b53efa0728722cee1a53a05e636bb192f5e.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xb078c6c920bd68d3cdc9ab9e544b5bf0f45ead4e.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xbb5350b4727835d8da25250719330ff6664bf1c8.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xbece02eea2e769674404791d5b8984898df45459.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xbf4a2ddaa16148a9d0fa2093ffac450adb7cd4aa.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xc03b0dbd201ee426d907e367f996706cf53b8028.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0xc0e6df904ee408b13f4f22487246af0a7755830a.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/0xc0ffeee61948d8993864a73a099c0e38d887d3f4.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xc71346323dd42721b8a987942868e7f0dd97a29f.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xcc8aabf5199a93c6cff2495761cbb70e056b41a5.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xe180443f92a24067251cd0177227b53938312927.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xebf5ffaed443093dbda54eed6dc77f7bba6dc7f2.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xee62b5ed03fff475499dc1d20a7a9fb08fa78574.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xee68907c93b57d57a1c4d60940ff1b310e18e467.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xf015c35649c82f5467c9c74b7f28ee67665aad68.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xf3aa1d9f7fddbc4aa9bcdcac5afa798867347339.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/0xf53cbc0a85bc81e1b99d6197d74d735df749f8a5.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/13952.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/1403.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/15458.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/17009.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/21697.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/22074.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/23421.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/Reentrance_exploit.sol",
+   "label": 1,
+   "pred": 0
+  },
+  {
+   "file": "Vulnerable/cross-function-reentrancy.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/dumbDAO.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/reentrancy_dao.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/reentrancy_insecure.sol",
+   "label": 1,
+   "pred": 1
+  },
+  {
+   "file": "Vulnerable/simple_dao.sol",
+   "label": 1,
+   "pred": 1
+  }
+ ],
+ "history": [
+  {
+   "epoch": 0,
+   "train_loss": 2.4812,
+   "val_f1": 0.655,
+   "val_acc": 0.487,
+   "val_loss": 0.9055,
+   "test_f1": 0.66,
+   "test_acc": 0.493
+  },
+  {
+   "epoch": 1,
+   "train_loss": 1.221,
+   "val_f1": 0.0,
+   "val_acc": 0.513,
+   "val_loss": 1.1157,
+   "test_f1": 0.0,
+   "test_acc": 0.507
+  },
+  {
+   "epoch": 2,
+   "train_loss": 0.8153,
+   "val_f1": 0.655,
+   "val_acc": 0.487,
+   "val_loss": 0.82,
+   "test_f1": 0.66,
+   "test_acc": 0.493
+  },
+  {
+   "epoch": 3,
+   "train_loss": 0.8068,
+   "val_f1": 0.651,
+   "val_acc": 0.735,
+   "val_loss": 0.5556,
+   "test_f1": 0.617,
+   "test_acc": 0.646
+  },
+  {
+   "epoch": 4,
+   "train_loss": 0.6098,
+   "val_f1": 0.593,
+   "val_acc": 0.708,
+   "val_loss": 0.6351,
+   "test_f1": 0.6,
+   "test_acc": 0.667
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.6009,
+   "val_f1": 0.793,
+   "val_acc": 0.788,
+   "val_loss": 0.5281,
+   "test_f1": 0.776,
+   "test_acc": 0.743
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.5912,
+   "val_f1": 0.667,
+   "val_acc": 0.735,
+   "val_loss": 0.5056,
+   "test_f1": 0.662,
+   "test_acc": 0.667
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.5508,
+   "val_f1": 0.674,
+   "val_acc": 0.752,
+   "val_loss": 0.5436,
+   "test_f1": 0.652,
+   "test_acc": 0.674
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.5439,
+   "val_f1": 0.769,
+   "val_acc": 0.788,
+   "val_loss": 0.4695,
+   "test_f1": 0.723,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 9,
+   "train_loss": 0.5224,
+   "val_f1": 0.752,
+   "val_acc": 0.779,
+   "val_loss": 0.4732,
+   "test_f1": 0.702,
+   "test_acc": 0.688
+  },
+  {
+   "epoch": 10,
+   "train_loss": 0.5063,
+   "val_f1": 0.771,
+   "val_acc": 0.805,
+   "val_loss": 0.4784,
+   "test_f1": 0.707,
+   "test_acc": 0.694
+  },
+  {
+   "epoch": 11,
+   "train_loss": 0.4904,
+   "val_f1": 0.772,
+   "val_acc": 0.796,
+   "val_loss": 0.4579,
+   "test_f1": 0.71,
+   "test_acc": 0.688
+  },
+  {
+   "epoch": 12,
+   "train_loss": 0.4807,
+   "val_f1": 0.755,
+   "val_acc": 0.788,
+   "val_loss": 0.4804,
+   "test_f1": 0.698,
+   "test_acc": 0.688
+  },
+  {
+   "epoch": 13,
+   "train_loss": 0.4807,
+   "val_f1": 0.755,
+   "val_acc": 0.788,
+   "val_loss": 0.4659,
+   "test_f1": 0.707,
+   "test_acc": 0.694
+  },
+  {
+   "epoch": 14,
+   "train_loss": 0.4745,
+   "val_f1": 0.76,
+   "val_acc": 0.788,
+   "val_loss": 0.4491,
+   "test_f1": 0.726,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 15,
+   "train_loss": 0.4718,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4511,
+   "test_f1": 0.732,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 16,
+   "train_loss": 0.4641,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4482,
+   "test_f1": 0.727,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 17,
+   "train_loss": 0.4626,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4448,
+   "test_f1": 0.727,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 18,
+   "train_loss": 0.446,
+   "val_f1": 0.755,
+   "val_acc": 0.788,
+   "val_loss": 0.4764,
+   "test_f1": 0.703,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 19,
+   "train_loss": 0.4557,
+   "val_f1": 0.765,
+   "val_acc": 0.788,
+   "val_loss": 0.4235,
+   "test_f1": 0.745,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 20,
+   "train_loss": 0.4691,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4403,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 21,
+   "train_loss": 0.4471,
+   "val_f1": 0.737,
+   "val_acc": 0.779,
+   "val_loss": 0.4728,
+   "test_f1": 0.703,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 22,
+   "train_loss": 0.4414,
+   "val_f1": 0.796,
+   "val_acc": 0.814,
+   "val_loss": 0.4196,
+   "test_f1": 0.753,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 23,
+   "train_loss": 0.4501,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4455,
+   "test_f1": 0.721,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 24,
+   "train_loss": 0.4277,
+   "val_f1": 0.772,
+   "val_acc": 0.796,
+   "val_loss": 0.4151,
+   "test_f1": 0.738,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 25,
+   "train_loss": 0.4214,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4246,
+   "test_f1": 0.745,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 26,
+   "train_loss": 0.4132,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4265,
+   "test_f1": 0.742,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 27,
+   "train_loss": 0.4117,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4205,
+   "test_f1": 0.753,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 28,
+   "train_loss": 0.4047,
+   "val_f1": 0.768,
+   "val_acc": 0.796,
+   "val_loss": 0.4184,
+   "test_f1": 0.753,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 29,
+   "train_loss": 0.4032,
+   "val_f1": 0.772,
+   "val_acc": 0.796,
+   "val_loss": 0.4109,
+   "test_f1": 0.753,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 30,
+   "train_loss": 0.3982,
+   "val_f1": 0.763,
+   "val_acc": 0.796,
+   "val_loss": 0.4236,
+   "test_f1": 0.738,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 31,
+   "train_loss": 0.3934,
+   "val_f1": 0.772,
+   "val_acc": 0.796,
+   "val_loss": 0.4052,
+   "test_f1": 0.761,
+   "test_acc": 0.743
+  },
+  {
+   "epoch": 32,
+   "train_loss": 0.3954,
+   "val_f1": 0.852,
+   "val_acc": 0.858,
+   "val_loss": 0.3936,
+   "test_f1": 0.745,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 33,
+   "train_loss": 0.395,
+   "val_f1": 0.78,
+   "val_acc": 0.805,
+   "val_loss": 0.4082,
+   "test_f1": 0.761,
+   "test_acc": 0.743
+  },
+  {
+   "epoch": 34,
+   "train_loss": 0.3788,
+   "val_f1": 0.838,
+   "val_acc": 0.85,
+   "val_loss": 0.4029,
+   "test_f1": 0.756,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 35,
+   "train_loss": 0.3753,
+   "val_f1": 0.841,
+   "val_acc": 0.85,
+   "val_loss": 0.3935,
+   "test_f1": 0.756,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 36,
+   "train_loss": 0.3752,
+   "val_f1": 0.75,
+   "val_acc": 0.788,
+   "val_loss": 0.4157,
+   "test_f1": 0.755,
+   "test_acc": 0.743
+  },
+  {
+   "epoch": 37,
+   "train_loss": 0.3736,
+   "val_f1": 0.852,
+   "val_acc": 0.858,
+   "val_loss": 0.3888,
+   "test_f1": 0.755,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 38,
+   "train_loss": 0.3755,
+   "val_f1": 0.763,
+   "val_acc": 0.796,
+   "val_loss": 0.4085,
+   "test_f1": 0.763,
+   "test_acc": 0.75
+  },
+  {
+   "epoch": 39,
+   "train_loss": 0.3871,
+   "val_f1": 0.841,
+   "val_acc": 0.85,
+   "val_loss": 0.3864,
+   "test_f1": 0.756,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 40,
+   "train_loss": 0.3622,
+   "val_f1": 0.841,
+   "val_acc": 0.85,
+   "val_loss": 0.3836,
+   "test_f1": 0.755,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 41,
+   "train_loss": 0.3782,
+   "val_f1": 0.812,
+   "val_acc": 0.832,
+   "val_loss": 0.4032,
+   "test_f1": 0.747,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 42,
+   "train_loss": 0.35,
+   "val_f1": 0.844,
+   "val_acc": 0.85,
+   "val_loss": 0.3788,
+   "test_f1": 0.745,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 43,
+   "train_loss": 0.3534,
+   "val_f1": 0.745,
+   "val_acc": 0.788,
+   "val_loss": 0.4311,
+   "test_f1": 0.717,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 44,
+   "train_loss": 0.3435,
+   "val_f1": 0.844,
+   "val_acc": 0.85,
+   "val_loss": 0.378,
+   "test_f1": 0.761,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 45,
+   "train_loss": 0.3502,
+   "val_f1": 0.717,
+   "val_acc": 0.77,
+   "val_loss": 0.4331,
+   "test_f1": 0.699,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 46,
+   "train_loss": 0.3472,
+   "val_f1": 0.83,
+   "val_acc": 0.841,
+   "val_loss": 0.3789,
+   "test_f1": 0.756,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 47,
+   "train_loss": 0.3292,
+   "val_f1": 0.83,
+   "val_acc": 0.841,
+   "val_loss": 0.3766,
+   "test_f1": 0.755,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 48,
+   "train_loss": 0.3238,
+   "val_f1": 0.788,
+   "val_acc": 0.814,
+   "val_loss": 0.4076,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 49,
+   "train_loss": 0.3207,
+   "val_f1": 0.844,
+   "val_acc": 0.85,
+   "val_loss": 0.3724,
+   "test_f1": 0.755,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 50,
+   "train_loss": 0.3345,
+   "val_f1": 0.819,
+   "val_acc": 0.832,
+   "val_loss": 0.3792,
+   "test_f1": 0.756,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 51,
+   "train_loss": 0.336,
+   "val_f1": 0.824,
+   "val_acc": 0.841,
+   "val_loss": 0.3916,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 52,
+   "train_loss": 0.3127,
+   "val_f1": 0.8,
+   "val_acc": 0.823,
+   "val_loss": 0.4017,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 53,
+   "train_loss": 0.3156,
+   "val_f1": 0.844,
+   "val_acc": 0.85,
+   "val_loss": 0.3685,
+   "test_f1": 0.755,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 54,
+   "train_loss": 0.2985,
+   "val_f1": 0.758,
+   "val_acc": 0.796,
+   "val_loss": 0.4249,
+   "test_f1": 0.757,
+   "test_acc": 0.764
+  },
+  {
+   "epoch": 55,
+   "train_loss": 0.3001,
+   "val_f1": 0.844,
+   "val_acc": 0.85,
+   "val_loss": 0.3686,
+   "test_f1": 0.758,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 56,
+   "train_loss": 0.2987,
+   "val_f1": 0.812,
+   "val_acc": 0.832,
+   "val_loss": 0.3945,
+   "test_f1": 0.735,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 57,
+   "train_loss": 0.2883,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3772,
+   "test_f1": 0.745,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 58,
+   "train_loss": 0.2883,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3782,
+   "test_f1": 0.733,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 59,
+   "train_loss": 0.2869,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3735,
+   "test_f1": 0.742,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 60,
+   "train_loss": 0.282,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3735,
+   "test_f1": 0.738,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 61,
+   "train_loss": 0.279,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.382,
+   "test_f1": 0.743,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 62,
+   "train_loss": 0.2725,
+   "val_f1": 0.833,
+   "val_acc": 0.841,
+   "val_loss": 0.3689,
+   "test_f1": 0.758,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 63,
+   "train_loss": 0.2724,
+   "val_f1": 0.8,
+   "val_acc": 0.823,
+   "val_loss": 0.3951,
+   "test_f1": 0.74,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 64,
+   "train_loss": 0.2751,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3765,
+   "test_f1": 0.738,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 65,
+   "train_loss": 0.2541,
+   "val_f1": 0.824,
+   "val_acc": 0.841,
+   "val_loss": 0.3872,
+   "test_f1": 0.743,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 66,
+   "train_loss": 0.2569,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3709,
+   "test_f1": 0.748,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 67,
+   "train_loss": 0.2555,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3783,
+   "test_f1": 0.735,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 68,
+   "train_loss": 0.2553,
+   "val_f1": 0.827,
+   "val_acc": 0.841,
+   "val_loss": 0.3676,
+   "test_f1": 0.732,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 69,
+   "train_loss": 0.2493,
+   "val_f1": 0.792,
+   "val_acc": 0.814,
+   "val_loss": 0.3923,
+   "test_f1": 0.74,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 70,
+   "train_loss": 0.2453,
+   "val_f1": 0.804,
+   "val_acc": 0.823,
+   "val_loss": 0.3865,
+   "test_f1": 0.735,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 71,
+   "train_loss": 0.2396,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3753,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 72,
+   "train_loss": 0.2333,
+   "val_f1": 0.804,
+   "val_acc": 0.823,
+   "val_loss": 0.3811,
+   "test_f1": 0.74,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 73,
+   "train_loss": 0.2285,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3769,
+   "test_f1": 0.738,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 74,
+   "train_loss": 0.2259,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3765,
+   "test_f1": 0.73,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 75,
+   "train_loss": 0.2238,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3812,
+   "test_f1": 0.726,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 76,
+   "train_loss": 0.2237,
+   "val_f1": 0.804,
+   "val_acc": 0.823,
+   "val_loss": 0.3892,
+   "test_f1": 0.74,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 77,
+   "train_loss": 0.2179,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3784,
+   "test_f1": 0.737,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 78,
+   "train_loss": 0.2171,
+   "val_f1": 0.8,
+   "val_acc": 0.823,
+   "val_loss": 0.4128,
+   "test_f1": 0.704,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 79,
+   "train_loss": 0.2247,
+   "val_f1": 0.815,
+   "val_acc": 0.823,
+   "val_loss": 0.3787,
+   "test_f1": 0.735,
+   "test_acc": 0.694
+  },
+  {
+   "epoch": 80,
+   "train_loss": 0.2392,
+   "val_f1": 0.758,
+   "val_acc": 0.796,
+   "val_loss": 0.4658,
+   "test_f1": 0.716,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 81,
+   "train_loss": 0.2441,
+   "val_f1": 0.811,
+   "val_acc": 0.823,
+   "val_loss": 0.3732,
+   "test_f1": 0.738,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 82,
+   "train_loss": 0.2215,
+   "val_f1": 0.812,
+   "val_acc": 0.832,
+   "val_loss": 0.3914,
+   "test_f1": 0.731,
+   "test_acc": 0.729
+  },
+  {
+   "epoch": 83,
+   "train_loss": 0.2025,
+   "val_f1": 0.804,
+   "val_acc": 0.823,
+   "val_loss": 0.395,
+   "test_f1": 0.74,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 84,
+   "train_loss": 0.1971,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3816,
+   "test_f1": 0.744,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 85,
+   "train_loss": 0.2004,
+   "val_f1": 0.796,
+   "val_acc": 0.823,
+   "val_loss": 0.4351,
+   "test_f1": 0.704,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 86,
+   "train_loss": 0.1992,
+   "val_f1": 0.807,
+   "val_acc": 0.814,
+   "val_loss": 0.3892,
+   "test_f1": 0.71,
+   "test_acc": 0.66
+  },
+  {
+   "epoch": 87,
+   "train_loss": 0.2081,
+   "val_f1": 0.784,
+   "val_acc": 0.814,
+   "val_loss": 0.4517,
+   "test_f1": 0.7,
+   "test_acc": 0.708
+  },
+  {
+   "epoch": 88,
+   "train_loss": 0.2059,
+   "val_f1": 0.811,
+   "val_acc": 0.823,
+   "val_loss": 0.3815,
+   "test_f1": 0.75,
+   "test_acc": 0.722
+  },
+  {
+   "epoch": 89,
+   "train_loss": 0.2042,
+   "val_f1": 0.8,
+   "val_acc": 0.823,
+   "val_loss": 0.4186,
+   "test_f1": 0.713,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 90,
+   "train_loss": 0.2283,
+   "val_f1": 0.807,
+   "val_acc": 0.814,
+   "val_loss": 0.3807,
+   "test_f1": 0.707,
+   "test_acc": 0.66
+  },
+  {
+   "epoch": 91,
+   "train_loss": 0.2392,
+   "val_f1": 0.788,
+   "val_acc": 0.814,
+   "val_loss": 0.4203,
+   "test_f1": 0.695,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 92,
+   "train_loss": 0.2474,
+   "val_f1": 0.816,
+   "val_acc": 0.832,
+   "val_loss": 0.3947,
+   "test_f1": 0.723,
+   "test_acc": 0.701
+  },
+  {
+   "epoch": 93,
+   "train_loss": 0.2901,
+   "val_f1": 0.819,
+   "val_acc": 0.832,
+   "val_loss": 0.3981,
+   "test_f1": 0.732,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 94,
+   "train_loss": 0.2453,
+   "val_f1": 0.771,
+   "val_acc": 0.805,
+   "val_loss": 0.4585,
+   "test_f1": 0.705,
+   "test_acc": 0.715
+  },
+  {
+   "epoch": 95,
+   "train_loss": 0.2414,
+   "val_f1": 0.821,
+   "val_acc": 0.823,
+   "val_loss": 0.394,
+   "test_f1": 0.713,
+   "test_acc": 0.66
+  },
+  {
+   "epoch": 96,
+   "train_loss": 0.2137,
+   "val_f1": 0.689,
+   "val_acc": 0.752,
+   "val_loss": 0.5222,
+   "test_f1": 0.712,
+   "test_acc": 0.736
+  },
+  {
+   "epoch": 97,
+   "train_loss": 0.2116,
+   "val_f1": 0.818,
+   "val_acc": 0.823,
+   "val_loss": 0.3876,
+   "test_f1": 0.719,
+   "test_acc": 0.674
+  },
+  {
+   "epoch": 98,
+   "train_loss": 0.216,
+   "val_f1": 0.78,
+   "val_acc": 0.805,
+   "val_loss": 0.4068,
+   "test_f1": 0.703,
+   "test_acc": 0.694
+  },
+  {
+   "epoch": 99,
+   "train_loss": 0.1899,
+   "val_f1": 0.703,
+   "val_acc": 0.761,
+   "val_loss": 0.4908,
+   "test_f1": 0.705,
+   "test_acc": 0.715
+  }
+ ]
+}

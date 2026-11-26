@@ -1,0 +1,1 @@
+{"id": "073_AbyssEth2Depositor", "http": 200, "seconds": 9.7, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_130508/073_AbyssEth2Depositor.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.9560773372650146}}], "raw": ""}

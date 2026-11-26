@@ -49,6 +49,8 @@ export interface ValidationResponse {
   findings_after: SlitherFinding[];
   patched_lines: number[];
   requires_review: boolean;
+  recorded?: boolean;
+  record_note?: string | null;
 }
 
 class RefactorBotService {
@@ -157,7 +159,8 @@ class RefactorBotService {
     originalCode: string,
     suggestedCode: string,
     sessionId?: string,
-    functionName?: string
+    functionName?: string,
+    vulnerability?: string
   ): Promise<ValidationResponse> {
     const response = await fetch(`${this.baseUrl}/validate`, {
       method: 'POST',
@@ -166,7 +169,8 @@ class RefactorBotService {
         original_code: originalCode,
         suggested_code: suggestedCode,
         session_id: sessionId,
-        function_name: functionName
+        function_name: functionName,
+        vulnerability
       })
     });
 

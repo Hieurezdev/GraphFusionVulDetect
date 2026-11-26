@@ -1,0 +1,1482 @@
+[
+ {
+  "id": "000_PriceHelper",
+  "product_solc": "0.8.10",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.10",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "001_ImpossibleWrappedToken",
+  "product_solc": "0.7.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.6",
+  "graph_nodes": 28,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "002_ve",
+  "product_solc": "0.8.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.11",
+  "graph_nodes": 75,
+  "slither_error": null,
+  "graph_seconds": 1.1
+ },
+ {
+  "id": "003_contract",
+  "product_solc": "0.4.9",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 46,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "004_CToken",
+  "product_solc": "0.8.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "005_Comptroller",
+  "product_solc": "0.8.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "2988 |             Error err = addToMarketInternal(CToken(msg.sender), borrower);",
+  "compiles_with": "0.8.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "006_TokensRelayer",
+  "product_solc": "0.7.5",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.5",
+  "graph_nodes": 83,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "007_ReferralFeeReceiver",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "008_LockupToken",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/008_LockupToken.sol:74:25: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "009_FountainBase",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 172,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "010_CommunityVault",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.0",
+  "graph_nodes": 17,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "011_wHakka",
+  "product_solc": "0.5.17",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.17",
+  "graph_nodes": 55,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "012_MasterChef",
+  "product_solc": "0.6.7",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.7",
+  "graph_nodes": 112,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "013_SpaceMonkey",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 145,
+  "slither_error": null,
+  "graph_seconds": 1.2
+ },
+ {
+  "id": "014_Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382",
+  "product_solc": "0.4.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.4.11",
+  "graph_nodes": 56,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "015_MintingFactoryV2",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 145,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "016_woonklyPOS",
+  "product_solc": "0.6.6",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "017_TempusController",
+  "product_solc": "0.8.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.6",
+  "graph_nodes": 101,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "018_ChimVesting",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "019_IDO",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 602,
+  "slither_error": null,
+  "graph_seconds": 2.2
+ },
+ {
+  "id": "020_MateCore",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "021_OrderBook",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 120,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "022_UniswapHandler",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 96,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "023_PowerBombAvaxCurve",
+  "product_solc": "0.8.9",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.9",
+  "graph_nodes": 188,
+  "slither_error": null,
+  "graph_seconds": 0.8
+ },
+ {
+  "id": "024_StakingPlatform",
+  "product_solc": "0.8.9",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "025_Staking",
+  "product_solc": "0.8.11",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "026_SamuraiLegendsStaking",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 67,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "027_Staking",
+  "product_solc": "0.8.7",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "028_MasterChef",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 87,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "029_MasterChef",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 87,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "030_MainWorkflow",
+  "product_solc": "0.8.10",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "031_Staking",
+  "product_solc": "0.8.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.11",
+  "graph_nodes": 587,
+  "slither_error": null,
+  "graph_seconds": 2.4
+ },
+ {
+  "id": "032_BaseRewards",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "033_AMOCoinSale",
+  "product_solc": "0.4.18",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/033_AMOCoinSale.sol:102:18: Error: Expected token Semicolon got 'LParen'",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 72,
+  "slither_error": null,
+  "graph_seconds": 0.8
+ },
+ {
+  "id": "034_Crowdfund",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/034_Crowdfund.sol:9:23: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "035_SNXFlashLoanTool",
+  "product_solc": "0.7.6",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "036_Vester",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 122,
+  "slither_error": null,
+  "graph_seconds": 0.7
+ },
+ {
+  "id": "037_Crowdsale",
+  "product_solc": "0.4.21",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.4.21",
+  "graph_nodes": 114,
+  "slither_error": null,
+  "graph_seconds": 0.8
+ },
+ {
+  "id": "038_FlashLoanLogic",
+  "product_solc": "0.8.7",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.7",
+  "graph_nodes": 221,
+  "slither_error": null,
+  "graph_seconds": 1.2
+ },
+ {
+  "id": "039_Swap_Factory_Future",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/039_Swap_Factory_Future.sol:23:2: Error: Expected pragma, import directive or contract/interface/library definition.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "040_AToken",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.16",
+  "graph_nodes": 201,
+  "slither_error": null,
+  "graph_seconds": 13.1
+ },
+ {
+  "id": "041_BankingNode",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '('",
+  "compiles_with": "0.8.39",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "042_MasterChef",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: No visibility specified. Did you intend to add \"public\"?",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "043_BufferBNBOptions",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "044_code",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "045_StakingProxyUniV3",
+  "product_solc": "0.8.10",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.10",
+  "graph_nodes": 131,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "046_CryptoHeroesUniverse",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "047_SinglePool",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 56,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "048_SkyRewardPool",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 53,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "049_code",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 74,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "050_LCToken",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 106,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "051_HegicPool",
+  "product_solc": "0.8.6",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "052_Holdefi",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 116,
+  "slither_error": null,
+  "graph_seconds": 0.9
+ },
+ {
+  "id": "053_masterchef",
+  "product_solc": "0.8.7",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.7",
+  "graph_nodes": 121,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "054_MasterMilker",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 114,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "055_LPool",
+  "product_solc": "0.7.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.6",
+  "graph_nodes": 220,
+  "slither_error": null,
+  "graph_seconds": 3.5
+ },
+ {
+  "id": "056_PikaPerpV2",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 501,
+  "slither_error": null,
+  "graph_seconds": 1.5
+ },
+ {
+  "id": "057_PMintBurn",
+  "product_solc": "0.4.21",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/057_PMintBurn.sol:23:11: Error: Expected identifier, got 'Payable'",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "058_RToken",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.16",
+  "graph_nodes": 195,
+  "slither_error": null,
+  "graph_seconds": 5.3
+ },
+ {
+  "id": "059_MasterShiba",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 98,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "060_LPGauge",
+  "product_solc": "0.6.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.11",
+  "graph_nodes": 50,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "061_MasterChef",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 116,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "062_StakingV2",
+  "product_solc": "0.6.10",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.10",
+  "graph_nodes": 143,
+  "slither_error": null,
+  "graph_seconds": 2.2
+ },
+ {
+  "id": "063_LiquidityStaking",
+  "product_solc": "0.6.10",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.10",
+  "graph_nodes": 41,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "064_bVault",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.16",
+  "graph_nodes": 79,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "065_LighthouseLib",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/065_LighthouseLib.sol:898:24: Error: Definition of base has to precede definition of derived contract",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "066_RobotLiabilityLib",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/066_RobotLiabilityLib.sol:564:28: Error: Definition of base has to precede definition of derived contract",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "067_FeeCollector",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 88,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "068_FixedRateSwap",
+  "product_solc": "0.8.9",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.9",
+  "graph_nodes": 96,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "069_LimitOrderProtocol",
+  "product_solc": "0.7.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.6",
+  "graph_nodes": 128,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "070_BaseParaSwapAdapter",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 88,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "071_BaseParaSwapSellAdapter",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 95,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "072_acyc",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 144,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "073_AbyssEth2Depositor",
+  "product_solc": "0.6.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.11",
+  "graph_nodes": 40,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "074_stakin_contract",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.0",
+  "graph_nodes": 49,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "075_MasterChef",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "076_Pool",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 194,
+  "slither_error": null,
+  "graph_seconds": 4
+ },
+ {
+  "id": "077_Vesting",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "078_BCubePublicSale",
+  "product_solc": "0.5.17",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/078_BCubePublicSale.sol:926:3: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "079_BsktLPPool",
+  "product_solc": "0.5.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.0",
+  "graph_nodes": 55,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "080_Sliced",
+  "product_solc": "0.8.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.12",
+  "graph_nodes": 72,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "081_Bollystake",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 67,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "082_ProfitSplitter",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "083_ProfitSplitter",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "084_BsktEthLPPool",
+  "product_solc": "0.5.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.0",
+  "graph_nodes": 60,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "085_CCapableErc20",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.16",
+  "graph_nodes": 235,
+  "slither_error": null,
+  "graph_seconds": 11.2
+ },
+ {
+  "id": "086_CryptoBatz",
+  "product_solc": "0.8.8",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Function has override specified but does not override anything.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "087_Fundum",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "088_CurveV1",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "089_UniswapV2",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "090_UniswapV3",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "091_YearnV2",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "092_WETHGateway",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "093_PoolService",
+  "product_solc": "0.7.4",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Unknown pragma \"abicoder\"",
+  "compiles_with": "0.7.6",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "094_StakingRewardsV3-1",
+  "product_solc": "0.8.6",
+  "compiles_with_product_solc": false,
+  "solc_error": "",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "095_LockletTokenVault",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 156,
+  "slither_error": null,
+  "graph_seconds": 0.7
+ },
+ {
+  "id": "096_MiniDOGE",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 177,
+  "slither_error": null,
+  "graph_seconds": 0.9
+ },
+ {
+  "id": "097_moonship",
+  "product_solc": "0.6.8",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.8",
+  "graph_nodes": 164,
+  "slither_error": null,
+  "graph_seconds": 0.9
+ },
+ {
+  "id": "098_MainToken",
+  "product_solc": "0.4.23",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.4.23",
+  "graph_nodes": 62,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "099_BasketFacet",
+  "product_solc": "0.7.1",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Undeclared identifier.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "100_VIDBToken",
+  "product_solc": "0.5.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.0",
+  "graph_nodes": 67,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "101_yWETH",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/101_yWETH.sol:32:19: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "102_yToken",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 175,
+  "slither_error": null,
+  "graph_seconds": 0.9
+ },
+ {
+  "id": "103_Main",
+  "product_solc": "0.4.21",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/103_Main.sol:500:14: Error: Expected identifier, got 'LParen'",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 56,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "104_YVaultAssetProxy",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 61,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "105_CoreVoting",
+  "product_solc": "0.8.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.0",
+  "graph_nodes": 25,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "106_GnosisSafe",
+  "product_solc": "0.5.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.0",
+  "graph_nodes": 55,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "107_StakefishERC721Wrapper",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 72,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "108_CFVault",
+  "product_solc": "0.4.21",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/108_CFVault.sol:12:17: Error: Expected identifier, got 'LParen'",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "109_PRA",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.0",
+  "graph_nodes": 29,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "110_OKLGTokenLocker",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 62,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "111_BorrowerOperations",
+  "product_solc": "0.6.11",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.11",
+  "graph_nodes": 534,
+  "slither_error": null,
+  "graph_seconds": 27.5
+ },
+ {
+  "id": "112_Liquidator",
+  "product_solc": "0.8.7",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Undeclared identifier.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "113_VaultCore",
+  "product_solc": "0.5.11",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/113_VaultCore.sol:1015:18: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "114_MarketOracle",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.4.24",
+  "graph_nodes": 24,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "115_Hermez",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "116_MetaTransactionsFeature",
+  "product_solc": "0.6.5",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Data location must be \"calldata\" for parameter in external function, but \"memory\" was given.",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "117_UniswapFeature",
+  "product_solc": "0.6.5",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.5",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "118_MixinScheduler",
+  "product_solc": "0.5.9",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.9",
+  "graph_nodes": 75,
+  "slither_error": null,
+  "graph_seconds": 0.3
+ },
+ {
+  "id": "119_LendingPool",
+  "product_solc": "0.6.8",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier already declared.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "120_Amp",
+  "product_solc": "0.6.9",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.9",
+  "graph_nodes": 109,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "121_TransactionManager",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0.4
+ },
+ {
+  "id": "122_FLAaveV2",
+  "product_solc": "0.7.0",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.0",
+  "graph_nodes": 166,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "123_Hypervisor",
+  "product_solc": "0.7.6",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.7.6",
+  "graph_nodes": 178,
+  "slither_error": null,
+  "graph_seconds": 1.2
+ },
+ {
+  "id": "124_UniProxy",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/124_UniProxy.sol:171:40: Error: Expected ',' but got identifier",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "125_Exchange",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "126_IdleCDO",
+  "product_solc": "0.8.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.8.4",
+  "graph_nodes": 607,
+  "slither_error": null,
+  "graph_seconds": 2
+ },
+ {
+  "id": "127_PaymentStartStandardExit",
+  "product_solc": "0.5.11",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/127_PaymentStartStandardExit.sol:1249:34: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "128_Pod",
+  "product_solc": "0.7.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Undeclared identifier.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "129_TokenDrop",
+  "product_solc": "0.7.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Undeclared identifier.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "130_YearnV2YieldSource",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 162,
+  "slither_error": null,
+  "graph_seconds": 0.5
+ },
+ {
+  "id": "131_LockableERC777",
+  "product_solc": "0.5.3",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.3",
+  "graph_nodes": 67,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "132_SkaleBalances",
+  "product_solc": "0.5.3",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.3",
+  "graph_nodes": 314,
+  "slither_error": null,
+  "graph_seconds": 2.9
+ },
+ {
+  "id": "133_EternalHeroesFactory",
+  "product_solc": "0.5.16",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/133_EternalHeroesFactory.sol:191:9: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "134_DynamicLiquidTokenConverter",
+  "product_solc": "0.6.12",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.12",
+  "graph_nodes": 180,
+  "slither_error": null,
+  "graph_seconds": 1.1
+ },
+ {
+  "id": "135_ARCToken",
+  "product_solc": "0.4.24",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.4.24",
+  "graph_nodes": 30,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "136_BAToken",
+  "product_solc": "0.4.10",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/136_BAToken.sol:6:21: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "137_Fundraiser",
+  "product_solc": "0.4.7",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 13,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "138_Fund",
+  "product_solc": "0.6.10",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "139_ProjectKudos",
+  "product_solc": "0.4.0",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 15,
+  "slither_error": null,
+  "graph_seconds": 0.1
+ },
+ {
+  "id": "140_GovernorAlpha",
+  "product_solc": "0.6.0",
+  "compiles_with_product_solc": false,
+  "solc_error": "Error: Expected ';' but got '{'",
+  "compiles_with": "0.6.12",
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "141_GNTAllocation",
+  "product_solc": "0.4.4",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "142_Crowdsale",
+  "product_solc": "0.4.11",
+  "compiles_with_product_solc": false,
+  "solc_error": "/bench/flat/142_Crowdsale.sol:28:23: Error: Identifier not found or not unique.",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "143_Controller",
+  "product_solc": "0.6.10",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.6.10",
+  "graph_nodes": 143,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "144_AdminImpl",
+  "product_solc": "0.5.4",
+  "compiles_with_product_solc": true,
+  "solc_error": "",
+  "compiles_with": "0.5.4",
+  "graph_nodes": 115,
+  "slither_error": null,
+  "graph_seconds": 0.6
+ },
+ {
+  "id": "145_ROSCA",
+  "product_solc": "0.4.4",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": "0.4.26",
+  "graph_nodes": 25,
+  "slither_error": null,
+  "graph_seconds": 0.2
+ },
+ {
+  "id": "146_Crowdsale",
+  "product_solc": "0.4.8",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ },
+ {
+  "id": "147_RLC",
+  "product_solc": "0.4.8",
+  "compiles_with_product_solc": null,
+  "solc_error": "no such solc",
+  "compiles_with": null,
+  "graph_nodes": null,
+  "slither_error": null,
+  "graph_seconds": 0
+ }
+]

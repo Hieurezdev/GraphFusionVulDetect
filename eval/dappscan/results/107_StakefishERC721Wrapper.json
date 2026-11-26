@@ -1,0 +1,1 @@
+{"id": "107_StakefishERC721Wrapper", "http": 200, "seconds": 3.4, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_131354/107_StakefishERC721Wrapper.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.6950610280036926}}], "raw": ""}

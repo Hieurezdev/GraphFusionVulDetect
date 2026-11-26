@@ -6,7 +6,8 @@ from src.utils.timezone import now_utc, now_vietnam, to_vietnam
 
 # Authentication schemas
 class UserRegister(BaseModel):
-    username: str = Field(..., min_length=3, max_length=50, description="Username for the account")
+    username: str = Field(..., min_length=3, max_length=50, pattern=r"^[A-Za-z0-9_.-]+$",
+                          description="Username for the account; no '@', so it can never look like someone's email")
     email: EmailStr = Field(..., description="Email address for the account")
     password: str = Field(..., min_length=6, description="Password for the account")
     full_name: Optional[str] = Field(default=None, max_length=100, description="Full name of the user")
@@ -32,6 +33,7 @@ class UserProfile(BaseModel):
     bio: Optional[str] = Field(default=None, description="A short bio of the user")
     created_at: Optional[datetime] = Field(default=None, description="Account creation timestamp")
     last_login: Optional[datetime] = Field(default=None, description="Last login timestamp")
+    role: str = Field(default="user", description="user, or expert: only experts confirm or reject alerts")
 
 class UserInDB(BaseModel):
     id: str = Field(..., alias="_id")
@@ -44,6 +46,7 @@ class UserInDB(BaseModel):
     last_login: Optional[datetime] = None
     token_version: int = 0
     password_changed_at: Optional[datetime] = None
+    role: str = "user"  # set to "expert" in the database; there is no self-service way to become one
 
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
@@ -107,6 +110,7 @@ class AnalysisSessionCreate(BaseModel):
 
 class AnalysisStep(BaseModel):
     step_name: str = Field(..., description="Name of the analysis step")
+    vulnerability: Optional[str] = Field(default=None, description="Vulnerability scan the step belongs to; none for start/summary and for sessions stored before the dual scan")
     status: str = Field(..., description="Status of the step (started, completed, failed)")
     result_data: Dict[str, Any] = Field(default_factory=dict, description="Result data from the step")
     started_at: datetime = Field(default_factory=now_utc, description="Step start timestamp")
@@ -120,6 +124,7 @@ class ReviewStatus(str, Enum):
     NEEDS_MANUAL_REVIEW = "needs_manual_review"
 
 class FunctionReviewUpdate(BaseModel):
+    vulnerability: str = Field(default="timestamp", description="Scan that flagged the function: timestamp or reentrancy")
     function_name: str = Field(..., min_length=1, max_length=300)
     status: ReviewStatus
     note: Optional[str] = Field(default=None, max_length=2000)
@@ -128,18 +133,50 @@ class FunctionReview(FunctionReviewUpdate):
     reviewer: str
     reviewed_at: datetime
 
+class FixDecision(str, Enum):
+    PROPOSED = "proposed"
+    ACCEPTED = "accepted"
+    REJECTED = "rejected"
+    NEEDS_MANUAL_REVIEW = "needs_manual_review"
+
+class FixDecisionUpdate(BaseModel):
+    vulnerability: str = Field(default="timestamp")
+    function_name: str = Field(..., min_length=1, max_length=300)
+    decision: FixDecision
+    note: Optional[str] = Field(default=None, max_length=2000)
+    suggested_code: str = Field(..., max_length=200_000, description="The fix code the expert reviewed; the decision only applies if it is still the recorded one")
+
+class FunctionFix(BaseModel):
+    """A proposed fix for a confirmed finding, with the result of compiling and re-checking it, and the expert's decision."""
+    vulnerability: str = "timestamp"
+    function_name: str
+    suggested_code: str
+    compiled: bool
+    solc_version: Optional[str] = None
+    findings_before: int = 0
+    findings_after: int = 0
+    compiler_output: Optional[str] = None
+    checked_by: str
+    checked_at: datetime
+    decision: FixDecision = FixDecision.PROPOSED
+    decided_by: Optional[str] = None
+    decided_at: Optional[datetime] = None
+    note: Optional[str] = None
+
 class AnalysisSession(BaseModel):
     id: Optional[str] = Field(default=None, description="Unique session identifier")
-    project_id: str = Field(..., description="ID of the project this analysis belongs to")
+    project_id: Optional[str] = Field(default=None, description="ID of the project this analysis belongs to; none for a quick single-file analysis")
     user_id: str = Field(..., description="ID of the user who initiated the analysis")
     file_path: str = Field(..., description="Path to the file being analyzed")
     filename: str = Field(..., description="Name of the file being analyzed")
+    vulnerabilities: List[str] = Field(default_factory=lambda: ["timestamp"], description="Vulnerability types this analysis scanned for")
     status: AnalysisSessionStatus = Field(default=AnalysisSessionStatus.CREATED, description="Session status")
     steps: List[AnalysisStep] = Field(default_factory=list, description="Analysis steps and their results")
     started_at: datetime = Field(default_factory=now_utc, description="Analysis start timestamp")
     completed_at: Optional[datetime] = Field(default=None, description="Analysis completion timestamp")
     error_message: Optional[str] = Field(default=None, description="Error message if analysis failed")
     reviews: List[FunctionReview] = Field(default_factory=list, description="Expert verdicts on flagged functions")
+    fixes: List[FunctionFix] = Field(default_factory=list, description="Checked fixes for confirmed findings and the expert's decision on each")
 
 # Analysis related schemas
 class VulnerabilityType(str, Enum):

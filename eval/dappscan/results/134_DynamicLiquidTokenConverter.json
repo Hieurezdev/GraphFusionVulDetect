@@ -1,0 +1,1 @@
+{"id": "134_DynamicLiquidTokenConverter", "http": 200, "seconds": 14.0, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_131759/134_DynamicLiquidTokenConverter.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.9373586177825928}}], "raw": ""}

@@ -1,0 +1,5870 @@
+{
+ "summary": {
+  "timestamp": {
+   "files": 36,
+   "file_stage": {
+    "no_graph": 19,
+    "functions_scored": 12,
+    "contract_cleared": 5
+   },
+   "labels": 65,
+   "label_verdict": {
+    "no_graph": 36,
+    "flagged": 6,
+    "missed": 8,
+    "contract_cleared": 13,
+    "line_outside_any_function": 2
+   },
+   "recall_all_labels": 0.092,
+   "recall_where_functions_scored": 0.429,
+   "alerts": 30,
+   "alerts_in_labelled_file": 25,
+   "alerts_matching_label": 7,
+   "functions_scored": 1029
+  },
+  "reentrancy": {
+   "files": 114,
+   "file_stage": {
+    "functions_scored": 48,
+    "no_graph": 43,
+    "contract_cleared": 23
+   },
+   "labels": 138,
+   "label_verdict": {
+    "missed": 52,
+    "flagged": 8,
+    "no_graph": 53,
+    "contract_cleared": 24,
+    "line_outside_any_function": 1
+   },
+   "recall_all_labels": 0.058,
+   "recall_where_functions_scored": 0.133,
+   "alerts": 128,
+   "alerts_in_labelled_file": 89,
+   "alerts_matching_label": 10,
+   "functions_scored": 7686
+  }
+ },
+ "cases": [
+  {
+   "case": "000_PriceHelper",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.8.10;",
+   "flat_lines": 783,
+   "stage": "no_graph",
+   "seconds": 0.2,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "001_ImpossibleWrappedToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity =0.7.6;",
+   "flat_lines": 1608,
+   "stage": "functions_scored",
+   "seconds": 1.3,
+   "contract_confidence": 0.5082909464836121,
+   "functions": 28,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 28
+  },
+  {
+   "case": "002_ve",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.11;",
+   "flat_lines": 1345,
+   "stage": "functions_scored",
+   "seconds": 25.7,
+   "contract_confidence": 0.9947853684425354,
+   "functions": 75,
+   "flagged": 4,
+   "flagged_in_labelled_file": 4,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 75
+  },
+  {
+   "case": "003_contract",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.9;",
+   "flat_lines": 316,
+   "stage": "functions_scored",
+   "seconds": 1.2,
+   "contract_confidence": 0.9116418957710266,
+   "functions": 46,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 46
+  },
+  {
+   "case": "004_CToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.6;",
+   "flat_lines": 2038,
+   "stage": "no_graph",
+   "seconds": 0.2,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "005_Comptroller",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.6;",
+   "flat_lines": 4003,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "006_TokensRelayer",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.7.5;",
+   "flat_lines": 973,
+   "stage": "contract_cleared",
+   "seconds": 1.0,
+   "contract_confidence": 0.5269923210144043,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 83
+  },
+  {
+   "case": "007_ReferralFeeReceiver",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 2316,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "008_LockupToken",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.4.24;",
+   "flat_lines": 152,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "009_FountainBase",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 2009,
+   "stage": "contract_cleared",
+   "seconds": 2.9,
+   "contract_confidence": 0.6125859618186951,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 172
+  },
+  {
+   "case": "010_CommunityVault",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 189,
+   "stage": "contract_cleared",
+   "seconds": 0.3,
+   "contract_confidence": 0.8863705396652222,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 17
+  },
+  {
+   "case": "011_wHakka",
+   "kinds": [
+    "reentrancy",
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.5.17;",
+   "flat_lines": 602,
+   "stage": "functions_scored",
+   "seconds": 33.8,
+   "contract_confidence": 0.5578902959823608,
+   "functions": 55,
+   "flagged": 5,
+   "flagged_in_labelled_file": 5,
+   "flagged_matching_a_label": 3,
+   "flatten_ok": true,
+   "graph_nodes": 55
+  },
+  {
+   "case": "012_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.7;",
+   "flat_lines": 1531,
+   "stage": "functions_scored",
+   "seconds": 1.5,
+   "contract_confidence": 0.7399130463600159,
+   "functions": 112,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 112
+  },
+  {
+   "case": "013_SpaceMonkey",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.4;",
+   "flat_lines": 1078,
+   "stage": "functions_scored",
+   "seconds": 1.8,
+   "contract_confidence": 0.6406028270721436,
+   "functions": 145,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 145
+  },
+  {
+   "case": "014_Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.11;",
+   "flat_lines": 517,
+   "stage": "functions_scored",
+   "seconds": 1.2,
+   "contract_confidence": 0.6960286498069763,
+   "functions": 57,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 56
+  },
+  {
+   "case": "015_MintingFactoryV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.4;",
+   "flat_lines": 1512,
+   "stage": "functions_scored",
+   "seconds": 6.6,
+   "contract_confidence": 0.9001129269599915,
+   "functions": 145,
+   "flagged": 1,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 145
+  },
+  {
+   "case": "016_woonklyPOS",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.6;",
+   "flat_lines": 1018,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "017_TempusController",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.6;",
+   "flat_lines": 1533,
+   "stage": "functions_scored",
+   "seconds": 0.9,
+   "contract_confidence": 0.6641919612884521,
+   "functions": 101,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 101
+  },
+  {
+   "case": "018_ChimVesting",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+   "flat_lines": 1162,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "019_IDO",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.4;",
+   "flat_lines": 4995,
+   "stage": "functions_scored",
+   "seconds": 26.4,
+   "contract_confidence": 0.8567911386489868,
+   "functions": 602,
+   "flagged": 3,
+   "flagged_in_labelled_file": 3,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 602
+  },
+  {
+   "case": "020_MateCore",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity >=0.8.0;",
+   "flat_lines": 1575,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "021_OrderBook",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity >=0.8.0;",
+   "flat_lines": 1224,
+   "stage": "functions_scored",
+   "seconds": 15.0,
+   "contract_confidence": 0.9215083718299866,
+   "functions": 120,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 120
+  },
+  {
+   "case": "022_UniswapHandler",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity >=0.8.0;",
+   "flat_lines": 838,
+   "stage": "functions_scored",
+   "seconds": 1.2,
+   "contract_confidence": 0.8726202249526978,
+   "functions": 96,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 96
+  },
+  {
+   "case": "023_PowerBombAvaxCurve",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.9;",
+   "flat_lines": 2339,
+   "stage": "functions_scored",
+   "seconds": 15.4,
+   "contract_confidence": 0.9480302929878235,
+   "functions": 188,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 188
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity =0.8.9;",
+   "flat_lines": 913,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "025_Staking",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.8.11;",
+   "flat_lines": 1844,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 875,
+   "stage": "contract_cleared",
+   "seconds": 0.6,
+   "contract_confidence": 0.5685691833496094,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 67
+  },
+  {
+   "case": "027_Staking",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.7;",
+   "flat_lines": 3334,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "028_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1300,
+   "stage": "functions_scored",
+   "seconds": 67.1,
+   "contract_confidence": 0.8643724322319031,
+   "functions": 87,
+   "flagged": 11,
+   "flagged_in_labelled_file": 5,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 87
+  },
+  {
+   "case": "029_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1298,
+   "stage": "functions_scored",
+   "seconds": 67.5,
+   "contract_confidence": 0.8643724322319031,
+   "functions": 87,
+   "flagged": 11,
+   "flagged_in_labelled_file": 5,
+   "flagged_matching_a_label": 2,
+   "flatten_ok": true,
+   "graph_nodes": 87
+  },
+  {
+   "case": "030_MainWorkflow",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.10;",
+   "flat_lines": 1523,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "031_Staking",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.11;",
+   "flat_lines": 5063,
+   "stage": "functions_scored",
+   "seconds": 5.2,
+   "contract_confidence": 0.5715087652206421,
+   "functions": 587,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 587
+  },
+  {
+   "case": "032_BaseRewards",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.12;",
+   "flat_lines": 327,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "033_AMOCoinSale",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.18;",
+   "flat_lines": 1099,
+   "stage": "contract_cleared",
+   "seconds": 0.9,
+   "contract_confidence": 0.9021221399307251,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 72
+  },
+  {
+   "case": "034_Crowdfund",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.4.24;",
+   "flat_lines": 342,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "035_SNXFlashLoanTool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.6;",
+   "flat_lines": 1347,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "036_Vester",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 1861,
+   "stage": "functions_scored",
+   "seconds": 1.9,
+   "contract_confidence": 0.5159541368484497,
+   "functions": 122,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 122
+  },
+  {
+   "case": "037_Crowdsale",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.21;",
+   "flat_lines": 1134,
+   "stage": "functions_scored",
+   "seconds": 66.7,
+   "contract_confidence": 0.9625540971755981,
+   "functions": 114,
+   "flagged": 10,
+   "flagged_in_labelled_file": 5,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 114
+  },
+  {
+   "case": "038_FlashLoanLogic",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.7;",
+   "flat_lines": 5154,
+   "stage": "functions_scored",
+   "seconds": 18.3,
+   "contract_confidence": 0.918312668800354,
+   "functions": 221,
+   "flagged": 2,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 221
+  },
+  {
+   "case": "039_Swap_Factory_Future",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "",
+   "flat_lines": 468,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "040_AToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 2677,
+   "stage": "functions_scored",
+   "seconds": 23.7,
+   "contract_confidence": 0.7111657857894897,
+   "functions": 201,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 201
+  },
+  {
+   "case": "041_BankingNode",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 2672,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "042_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.12;",
+   "flat_lines": 1805,
+   "stage": "no_graph",
+   "seconds": 0.3,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "043_BufferBNBOptions",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 3370,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "044_code",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+   "flat_lines": 291,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "045_StakingProxyUniV3",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.10;",
+   "flat_lines": 1315,
+   "stage": "contract_cleared",
+   "seconds": 1.8,
+   "contract_confidence": 0.6204840540885925,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 131
+  },
+  {
+   "case": "046_CryptoHeroesUniverse",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.12;",
+   "flat_lines": 1670,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "047_SinglePool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity =0.6.12;",
+   "flat_lines": 862,
+   "stage": "contract_cleared",
+   "seconds": 1.9,
+   "contract_confidence": 0.5389736294746399,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 56
+  },
+  {
+   "case": "048_SkyRewardPool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 838,
+   "stage": "functions_scored",
+   "seconds": 14.4,
+   "contract_confidence": 0.9153705835342407,
+   "functions": 53,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 53
+  },
+  {
+   "case": "049_code",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1092,
+   "stage": "contract_cleared",
+   "seconds": 1.2,
+   "contract_confidence": 0.6767004728317261,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 74
+  },
+  {
+   "case": "050_LCToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1480,
+   "stage": "functions_scored",
+   "seconds": 1.2,
+   "contract_confidence": 0.586641788482666,
+   "functions": 106,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 106
+  },
+  {
+   "case": "051_HegicPool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.6;",
+   "flat_lines": 3755,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "052_Holdefi",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1944,
+   "stage": "functions_scored",
+   "seconds": 97.7,
+   "contract_confidence": 0.6291207671165466,
+   "functions": 116,
+   "flagged": 15,
+   "flagged_in_labelled_file": 13,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 116
+  },
+  {
+   "case": "053_masterchef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.7;",
+   "flat_lines": 1781,
+   "stage": "contract_cleared",
+   "seconds": 1.0,
+   "contract_confidence": 0.599968433380127,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 121
+  },
+  {
+   "case": "054_MasterMilker",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1753,
+   "stage": "functions_scored",
+   "seconds": 2.1,
+   "contract_confidence": 0.5497322082519531,
+   "functions": 114,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 114
+  },
+  {
+   "case": "055_LPool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.7.6;",
+   "flat_lines": 2540,
+   "stage": "contract_cleared",
+   "seconds": 6.5,
+   "contract_confidence": 0.5412667393684387,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 220
+  },
+  {
+   "case": "056_PikaPerpV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 3531,
+   "stage": "functions_scored",
+   "seconds": 34.6,
+   "contract_confidence": 0.9638839960098267,
+   "functions": 501,
+   "flagged": 5,
+   "flagged_in_labelled_file": 4,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 501
+  },
+  {
+   "case": "057_PMintBurn",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+   "flat_lines": 206,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "058_RToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 2640,
+   "stage": "functions_scored",
+   "seconds": 8.5,
+   "contract_confidence": 0.6960925459861755,
+   "functions": 195,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 195
+  },
+  {
+   "case": "059_MasterShiba",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1426,
+   "stage": "contract_cleared",
+   "seconds": 2.6,
+   "contract_confidence": 0.6727035045623779,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 98
+  },
+  {
+   "case": "060_LPGauge",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.11;",
+   "flat_lines": 788,
+   "stage": "contract_cleared",
+   "seconds": 2.1,
+   "contract_confidence": 0.8465297818183899,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 50
+  },
+  {
+   "case": "061_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1738,
+   "stage": "functions_scored",
+   "seconds": 13.8,
+   "contract_confidence": 0.5596930384635925,
+   "functions": 116,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 116
+  },
+  {
+   "case": "062_StakingV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+   "flat_lines": 1933,
+   "stage": "functions_scored",
+   "seconds": 65.6,
+   "contract_confidence": 0.9677822589874268,
+   "functions": 143,
+   "flagged": 9,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 143
+  },
+  {
+   "case": "063_LiquidityStaking",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+   "flat_lines": 543,
+   "stage": "functions_scored",
+   "seconds": 22.8,
+   "contract_confidence": 0.9655000567436218,
+   "functions": 41,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 41
+  },
+  {
+   "case": "064_bVault",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 454,
+   "stage": "contract_cleared",
+   "seconds": 5.2,
+   "contract_confidence": 0.6106927394866943,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 79
+  },
+  {
+   "case": "065_LighthouseLib",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.24;",
+   "flat_lines": 1259,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "066_RobotLiabilityLib",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.24;",
+   "flat_lines": 1414,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "067_FeeCollector",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 1580,
+   "stage": "functions_scored",
+   "seconds": 19.7,
+   "contract_confidence": 0.9780099987983704,
+   "functions": 88,
+   "flagged": 1,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 88
+  },
+  {
+   "case": "068_FixedRateSwap",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.9;",
+   "flat_lines": 1745,
+   "stage": "functions_scored",
+   "seconds": 6.8,
+   "contract_confidence": 0.5118280649185181,
+   "functions": 96,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 96
+  },
+  {
+   "case": "069_LimitOrderProtocol",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.6;",
+   "flat_lines": 1916,
+   "stage": "functions_scored",
+   "seconds": 111.8,
+   "contract_confidence": 0.8398867845535278,
+   "functions": 128,
+   "flagged": 15,
+   "flagged_in_labelled_file": 5,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 128
+  },
+  {
+   "case": "070_BaseParaSwapAdapter",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1189,
+   "stage": "contract_cleared",
+   "seconds": 16.0,
+   "contract_confidence": 0.6068722605705261,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 88
+  },
+  {
+   "case": "071_BaseParaSwapSellAdapter",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1459,
+   "stage": "contract_cleared",
+   "seconds": 3.8,
+   "contract_confidence": 0.6140146255493164,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 95
+  },
+  {
+   "case": "072_acyc",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 1438,
+   "stage": "functions_scored",
+   "seconds": 14.1,
+   "contract_confidence": 0.653357744216919,
+   "functions": 144,
+   "flagged": 1,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 144
+  },
+  {
+   "case": "073_AbyssEth2Depositor",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.11;",
+   "flat_lines": 545,
+   "stage": "contract_cleared",
+   "seconds": 9.7,
+   "contract_confidence": 0.9560773372650146,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 40
+  },
+  {
+   "case": "074_stakin_contract",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 849,
+   "stage": "functions_scored",
+   "seconds": 3.8,
+   "contract_confidence": 0.734845757484436,
+   "functions": 49,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 49
+  },
+  {
+   "case": "075_MasterChef",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 463,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "076_Pool",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 1434,
+   "stage": "functions_scored",
+   "seconds": 42.8,
+   "contract_confidence": 0.8304519057273865,
+   "functions": 194,
+   "flagged": 1,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 194
+  },
+  {
+   "case": "077_Vesting",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.8.4;",
+   "flat_lines": 317,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "078_BCubePublicSale",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.5.17;",
+   "flat_lines": 1238,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "079_BsktLPPool",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.5.0;",
+   "flat_lines": 459,
+   "stage": "functions_scored",
+   "seconds": 16.4,
+   "contract_confidence": 0.6600167751312256,
+   "functions": 55,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 55
+  },
+  {
+   "case": "080_Sliced",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity =0.8.12;",
+   "flat_lines": 819,
+   "stage": "functions_scored",
+   "seconds": 30.0,
+   "contract_confidence": 0.5444682240486145,
+   "functions": 72,
+   "flagged": 2,
+   "flagged_in_labelled_file": 2,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 72
+  },
+  {
+   "case": "081_Bollystake",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 1085,
+   "stage": "functions_scored",
+   "seconds": 55.8,
+   "contract_confidence": 0.8684656620025635,
+   "functions": 67,
+   "flagged": 4,
+   "flagged_in_labelled_file": 4,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 67
+  },
+  {
+   "case": "082_ProfitSplitter",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 1818,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "083_ProfitSplitter",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 1818,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "084_BsktEthLPPool",
+   "kinds": [
+    "reentrancy",
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.5.0;",
+   "flat_lines": 492,
+   "stage": "functions_scored",
+   "seconds": 22.1,
+   "contract_confidence": 0.5770913362503052,
+   "functions": 60,
+   "flagged": 3,
+   "flagged_in_labelled_file": 3,
+   "flagged_matching_a_label": 1,
+   "flatten_ok": true,
+   "graph_nodes": 60
+  },
+  {
+   "case": "085_CCapableErc20",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 2764,
+   "stage": "functions_scored",
+   "seconds": 55.4,
+   "contract_confidence": 0.7593884468078613,
+   "functions": 235,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 235
+  },
+  {
+   "case": "086_CryptoBatz",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.8;",
+   "flat_lines": 4033,
+   "stage": "no_graph",
+   "seconds": 0.3,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "087_Fundum",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.4;",
+   "flat_lines": 441,
+   "stage": "no_graph",
+   "seconds": 0.3,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "088_CurveV1",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 5407,
+   "stage": "no_graph",
+   "seconds": 0.7,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "089_UniswapV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 5921,
+   "stage": "no_graph",
+   "seconds": 0.6,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "090_UniswapV3",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 5677,
+   "stage": "no_graph",
+   "seconds": 0.5,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "091_YearnV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 5783,
+   "stage": "no_graph",
+   "seconds": 0.5,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "092_WETHGateway",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 4232,
+   "stage": "no_graph",
+   "seconds": 0.9,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "093_PoolService",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.4;",
+   "flat_lines": 4899,
+   "stage": "no_graph",
+   "seconds": 0.2,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "094_StakingRewardsV3-1",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.6;",
+   "flat_lines": 367,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "095_LockletTokenVault",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 2472,
+   "stage": "functions_scored",
+   "seconds": 12.7,
+   "contract_confidence": 0.702063262462616,
+   "functions": 156,
+   "flagged": 1,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 156
+  },
+  {
+   "case": "096_MiniDOGE",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.4;",
+   "flat_lines": 1197,
+   "stage": "functions_scored",
+   "seconds": 113.6,
+   "contract_confidence": 0.9939875602722168,
+   "functions": 177,
+   "flagged": 17,
+   "flagged_in_labelled_file": 17,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 177
+  },
+  {
+   "case": "097_moonship",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.8;",
+   "flat_lines": 1464,
+   "stage": "functions_scored",
+   "seconds": 94.3,
+   "contract_confidence": 0.8526752591133118,
+   "functions": 164,
+   "flagged": 13,
+   "flagged_in_labelled_file": 13,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 164
+  },
+  {
+   "case": "098_MainToken",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.23;",
+   "flat_lines": 744,
+   "stage": "contract_cleared",
+   "seconds": 11.1,
+   "contract_confidence": 0.9623024463653564,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 62
+  },
+  {
+   "case": "099_BasketFacet",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.7.1;",
+   "flat_lines": 1194,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "100_VIDBToken",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.5.0;",
+   "flat_lines": 790,
+   "stage": "contract_cleared",
+   "seconds": 10.8,
+   "contract_confidence": 0.861479640007019,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 67
+  },
+  {
+   "case": "101_yWETH",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 191,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "102_yToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.12;",
+   "flat_lines": 1887,
+   "stage": "contract_cleared",
+   "seconds": 17.5,
+   "contract_confidence": 0.6704574227333069,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 175
+  },
+  {
+   "case": "103_Main",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.21;",
+   "flat_lines": 715,
+   "stage": "functions_scored",
+   "seconds": 9.0,
+   "contract_confidence": 0.5379380583763123,
+   "functions": 56,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 56
+  },
+  {
+   "case": "104_YVaultAssetProxy",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 719,
+   "stage": "functions_scored",
+   "seconds": 4.3,
+   "contract_confidence": 0.6205427646636963,
+   "functions": 61,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 61
+  },
+  {
+   "case": "105_CoreVoting",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.0;",
+   "flat_lines": 410,
+   "stage": "contract_cleared",
+   "seconds": 1.8,
+   "contract_confidence": 0.7377697825431824,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 25
+  },
+  {
+   "case": "106_GnosisSafe",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.0;",
+   "flat_lines": 947,
+   "stage": "functions_scored",
+   "seconds": 9.0,
+   "contract_confidence": 0.652099072933197,
+   "functions": 55,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 55
+  },
+  {
+   "case": "107_StakefishERC721Wrapper",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.4;",
+   "flat_lines": 944,
+   "stage": "contract_cleared",
+   "seconds": 3.4,
+   "contract_confidence": 0.6950610280036926,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 72
+  },
+  {
+   "case": "108_CFVault",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+   "flat_lines": 854,
+   "stage": "no_graph",
+   "seconds": 0.3,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "109_PRA",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.6.0;",
+   "flat_lines": 494,
+   "stage": "functions_scored",
+   "seconds": 2.4,
+   "contract_confidence": 0.5127487182617188,
+   "functions": 29,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 29
+  },
+  {
+   "case": "110_OKLGTokenLocker",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.8.4;",
+   "flat_lines": 827,
+   "stage": "contract_cleared",
+   "seconds": 14.8,
+   "contract_confidence": 0.5189937353134155,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 62
+  },
+  {
+   "case": "111_BorrowerOperations",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.11;",
+   "flat_lines": 3250,
+   "stage": "functions_scored",
+   "seconds": 112.3,
+   "contract_confidence": 0.7013136744499207,
+   "functions": 534,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 534
+  },
+  {
+   "case": "112_Liquidator",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.7;",
+   "flat_lines": 203,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "113_VaultCore",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.5.11;",
+   "flat_lines": 2469,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "114_MarketOracle",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.4.24;",
+   "flat_lines": 363,
+   "stage": "contract_cleared",
+   "seconds": 3.9,
+   "contract_confidence": 0.7918659448623657,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 24
+  },
+  {
+   "case": "115_Hermez",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 2150,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "116_MetaTransactionsFeature",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.5;",
+   "flat_lines": 4501,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "117_UniswapFeature",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.5;",
+   "flat_lines": 1212,
+   "stage": "no_graph",
+   "seconds": 0.6,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "118_MixinScheduler",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.5.9;",
+   "flat_lines": 1809,
+   "stage": "contract_cleared",
+   "seconds": 2.8,
+   "contract_confidence": 0.5341001749038696,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 75
+  },
+  {
+   "case": "119_LendingPool",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.8;",
+   "flat_lines": 6337,
+   "stage": "no_graph",
+   "seconds": 0.7,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "120_Amp",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.9;",
+   "flat_lines": 2320,
+   "stage": "contract_cleared",
+   "seconds": 6.2,
+   "contract_confidence": 0.702375054359436,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 109
+  },
+  {
+   "case": "121_TransactionManager",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.4;",
+   "flat_lines": 2984,
+   "stage": "no_graph",
+   "seconds": 1.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "122_FLAaveV2",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.7.0;",
+   "flat_lines": 1957,
+   "stage": "functions_scored",
+   "seconds": 7.3,
+   "contract_confidence": 0.801429271697998,
+   "functions": 166,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 166
+  },
+  {
+   "case": "123_Hypervisor",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.7.6;",
+   "flat_lines": 3051,
+   "stage": "functions_scored",
+   "seconds": 17.5,
+   "contract_confidence": 0.8706109523773193,
+   "functions": 178,
+   "flagged": 1,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 178
+  },
+  {
+   "case": "124_UniProxy",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "",
+   "flat_lines": 1503,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "125_Exchange",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 1230,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "126_IdleCDO",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.8.4;",
+   "flat_lines": 4199,
+   "stage": "functions_scored",
+   "seconds": 18.0,
+   "contract_confidence": 0.7449945211410522,
+   "functions": 607,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 607
+  },
+  {
+   "case": "127_PaymentStartStandardExit",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity 0.5.11;",
+   "flat_lines": 2341,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "128_Pod",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+   "flat_lines": 2805,
+   "stage": "no_graph",
+   "seconds": 0.0,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "129_TokenDrop",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+   "flat_lines": 849,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "130_YearnV2YieldSource",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1968,
+   "stage": "contract_cleared",
+   "seconds": 4.5,
+   "contract_confidence": 0.5412561297416687,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 162
+  },
+  {
+   "case": "131_LockableERC777",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.3;",
+   "flat_lines": 1179,
+   "stage": "contract_cleared",
+   "seconds": 3.8,
+   "contract_confidence": 0.5544593334197998,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 67
+  },
+  {
+   "case": "132_SkaleBalances",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.3;",
+   "flat_lines": 3502,
+   "stage": "functions_scored",
+   "seconds": 43.7,
+   "contract_confidence": 0.7899227142333984,
+   "functions": 314,
+   "flagged": 4,
+   "flagged_in_labelled_file": 1,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 314
+  },
+  {
+   "case": "133_EternalHeroesFactory",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.5.16;",
+   "flat_lines": 598,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "134_DynamicLiquidTokenConverter",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.6.12;",
+   "flat_lines": 1666,
+   "stage": "contract_cleared",
+   "seconds": 14.0,
+   "contract_confidence": 0.9373586177825928,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 180
+  },
+  {
+   "case": "135_ARCToken",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "",
+   "flat_lines": 375,
+   "stage": "functions_scored",
+   "seconds": 5.9,
+   "contract_confidence": 0.8847447037696838,
+   "functions": 30,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 30
+  },
+  {
+   "case": "136_BAToken",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.10;",
+   "flat_lines": 92,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "137_Fundraiser",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.4.7;",
+   "flat_lines": 134,
+   "stage": "functions_scored",
+   "seconds": 1.6,
+   "contract_confidence": 0.9197516441345215,
+   "functions": 13,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 13
+  },
+  {
+   "case": "138_Fund",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity ^0.6.10;",
+   "flat_lines": 196,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "139_ProjectKudos",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.0;",
+   "flat_lines": 345,
+   "stage": "functions_scored",
+   "seconds": 1.2,
+   "contract_confidence": 0.9946098327636719,
+   "functions": 15,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 15
+  },
+  {
+   "case": "140_GovernorAlpha",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.6.0;",
+   "flat_lines": 340,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "141_GNTAllocation",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.4;",
+   "flat_lines": 287,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": null
+  },
+  {
+   "case": "142_Crowdsale",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.11;",
+   "flat_lines": 516,
+   "stage": "no_graph",
+   "seconds": 0.4,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "143_Controller",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity =0.6.10;",
+   "flat_lines": 1921,
+   "stage": "functions_scored",
+   "seconds": 12.0,
+   "contract_confidence": 0.8769441843032837,
+   "functions": 143,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 143
+  },
+  {
+   "case": "144_AdminImpl",
+   "kinds": [
+    "reentrancy"
+   ],
+   "pragma": "pragma solidity 0.5.4;",
+   "flat_lines": 2660,
+   "stage": "functions_scored",
+   "seconds": 20.0,
+   "contract_confidence": 0.9717564582824707,
+   "functions": 115,
+   "flagged": 1,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 115
+  },
+  {
+   "case": "145_ROSCA",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.4;",
+   "flat_lines": 547,
+   "stage": "functions_scored",
+   "seconds": 11.4,
+   "contract_confidence": 0.9884405136108398,
+   "functions": 25,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": true,
+   "graph_nodes": 25
+  },
+  {
+   "case": "146_Crowdsale",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.8;",
+   "flat_lines": 413,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  },
+  {
+   "case": "147_RLC",
+   "kinds": [
+    "timestamp"
+   ],
+   "pragma": "pragma solidity ^0.4.8;",
+   "flat_lines": 107,
+   "stage": "no_graph",
+   "seconds": 0.1,
+   "contract_confidence": null,
+   "functions": 0,
+   "flagged": 0,
+   "flagged_in_labelled_file": 0,
+   "flagged_matching_a_label": 0,
+   "flatten_ok": false,
+   "graph_nodes": null
+  }
+ ],
+ "labels": [
+  {
+   "case": "000_PriceHelper",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.8.10;",
+   "audit": "BlockSec-blocksec_alpaca_v1.0_signed",
+   "audit_function": "getTokenPrice",
+   "audit_lines": "// SWC-116-Block values as a proxy for time",
+   "flat_lines": [
+    [
+     795,
+     795
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "001_ImpossibleWrappedToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity =0.7.6;",
+   "audit": "BlockSec-blocksec_impossible_finance_swap_v1.2",
+   "audit_function": "deposit",
+   "audit_lines": "L53-61",
+   "flat_lines": [
+    [
+     844,
+     852
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "001_ImpossibleWrappedToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity =0.7.6;",
+   "audit": "BlockSec-blocksec_impossible_finance_swap_v1.2",
+   "audit_function": "deposit",
+   "audit_lines": "L65-73",
+   "flat_lines": [
+    [
+     856,
+     864
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "002_ve",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.11;",
+   "audit": "BlockSec-blocksec_multichain_vemult_v1.0_signed",
+   "audit_function": "withdraw",
+   "audit_lines": "L1097-1104",
+   "flat_lines": [
+    [
+     1098,
+     1105
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "ve.withdraw(uint256) L1080-1104 (99.31%)"
+   ]
+  },
+  {
+   "case": "003_contract",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.9;",
+   "audit": "Callisto_Network-McAfeeDex Security Audit",
+   "audit_function": "withdraw",
+   "audit_lines": "L224",
+   "flat_lines": [
+    [
+     225,
+     225
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "004_CToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.6;",
+   "audit": "Chainsecurity-Compound  cToken unredacted",
+   "audit_function": "_setComptroller",
+   "audit_lines": "L930-947",
+   "flat_lines": [
+    [
+     1767,
+     1784
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "005_Comptroller",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.6;",
+   "audit": "Chainsecurity-Compound  cToken unredacted",
+   "audit_function": "liquidateBorrowAllowed",
+   "audit_lines": "L465-501",
+   "flat_lines": [
+    [
+     3110,
+     3146
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "006_TokensRelayer",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.7.5;",
+   "audit": "Chainsecurity-POA Network  OmniBridge",
+   "audit_function": "_relayTokens",
+   "audit_lines": "L99-117",
+   "flat_lines": [
+    [
+     946,
+     964
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "007_ReferralFeeReceiver",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "Chainsulting-1inch",
+   "audit_function": "N/A",
+   "audit_lines": "L11",
+   "flat_lines": [
+    [
+     2117,
+     2117
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "008_LockupToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.4.24;",
+   "audit": "Chainsulting-DSLA Protocol-project1",
+   "audit_function": "constructor",
+   "audit_lines": "L24",
+   "flat_lines": [
+    [
+     89,
+     89
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "009_FountainBase",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "Chainsulting-Furucombo-project2",
+   "audit_function": "_depositAngel",
+   "audit_lines": "L290-291",
+   "flat_lines": [
+    [
+     1949,
+     1950
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "009_FountainBase",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "Chainsulting-Furucombo-project2",
+   "audit_function": "_withdrawAngel",
+   "audit_lines": "L295-L308",
+   "flat_lines": [
+    [
+     1954,
+     1967
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "010_CommunityVault",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "Coinbae-Barnbridge_Vault",
+   "audit_function": "setAllowance",
+   "audit_lines": "L19",
+   "flat_lines": [
+    [
+     185,
+     185
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "011_wHakka",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.5.17;",
+   "audit": "Coinbae-Hakka_Finance_wHakka",
+   "audit_function": "stakingRateMax",
+   "audit_lines": "L509",
+   "flat_lines": [
+    [
+     510,
+     510
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "stakingRateModel.stakingRateMax() L506-515 (97.12%)"
+   ]
+  },
+  {
+   "case": "011_wHakka",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.17;",
+   "audit": "Coinbae-Hakka_Finance_wHakka",
+   "audit_function": "stake",
+   "audit_lines": "L556 - L573",
+   "flat_lines": [
+    [
+     557,
+     574
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "wHakka.stake(address,uint256,uint256) L557-574 (99.90%)"
+   ]
+  },
+  {
+   "case": "011_wHakka",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.17;",
+   "audit": "Coinbae-Hakka_Finance_wHakka",
+   "audit_function": "unstake",
+   "audit_lines": "L576 - L592",
+   "flat_lines": [
+    [
+     577,
+     593
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "wHakka.unstake(address,uint256,uint256) L577-594 (99.95%)"
+   ]
+  },
+  {
+   "case": "011_wHakka",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.5.17;",
+   "audit": "Coinbae-Hakka_Finance_wHakka",
+   "audit_function": "unstake",
+   "audit_lines": "L580",
+   "flat_lines": [
+    [
+     581,
+     581
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "wHakka.unstake(address,uint256,uint256) L577-594 (99.95%)"
+   ]
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "add",
+   "audit_lines": "L105 - L127",
+   "flat_lines": [
+    [
+     1246,
+     1268
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "set",
+   "audit_lines": "L131 - L143",
+   "flat_lines": [
+    [
+     1272,
+     1284
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "deposit",
+   "audit_lines": "L227 - L266",
+   "flat_lines": [
+    [
+     1368,
+     1407
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "deposit",
+   "audit_lines": "L247 - L251",
+   "flat_lines": [
+    [
+     1388,
+     1392
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "withdraw",
+   "audit_lines": "L272 - L306",
+   "flat_lines": [
+    [
+     1413,
+     1447
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "emergencyWithdraw",
+   "audit_lines": "L310 - L329",
+   "flat_lines": [
+    [
+     1451,
+     1470
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "012_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.7;",
+   "audit": "Coinbae-Pud.Fi Masterchef_Audit",
+   "audit_function": "balance",
+   "audit_lines": "L378 - L381",
+   "flat_lines": [
+    [
+     1519,
+     1522
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "013_SpaceMonkey",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.4;",
+   "audit": "Coinbae-SpaceMonkey",
+   "audit_function": "transfer",
+   "audit_lines": "L53 - L64",
+   "flat_lines": [
+    [
+     446,
+     457
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "014_Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.11;",
+   "audit": "Coinbae-TapCoins_Token_Contract",
+   "audit_function": "setUpgradeAgent",
+   "audit_lines": "L373 - L394",
+   "flat_lines": [
+    [
+     374,
+     395
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "015_MintingFactoryV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.4;",
+   "audit": "Coinfabrik-MintingFactoryV2, BaseUpgradableMarketplace & KODAV3UpgradableGatedMarketplace",
+   "audit_function": "mintBatchEdition",
+   "audit_lines": "L93 - L112",
+   "flat_lines": [
+    [
+     1239,
+     1258
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "016_woonklyPOS",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.6;",
+   "audit": "Coinfabrik-Woonkly Security Audit (DEX STAKE)",
+   "audit_function": "processReward",
+   "audit_lines": "L743 - L769",
+   "flat_lines": [
+    [
+     744,
+     770
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "017_TempusController",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.6;",
+   "audit": "Coinspect-Tempus Audit",
+   "audit_function": "exitTempusAMMAndRedeem",
+   "audit_lines": "L352-386",
+   "flat_lines": [
+    [
+     1366,
+     1400
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "017_TempusController",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.6;",
+   "audit": "Coinspect-Tempus Audit",
+   "audit_function": "completeExitAndRedeem",
+   "audit_lines": "L395-436",
+   "flat_lines": [
+    [
+     1409,
+     1450
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "018_ChimVesting",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+   "audit": "Hacken-Chimeras",
+   "audit_function": "checkLocks",
+   "audit_lines": "L242",
+   "flat_lines": [
+    [
+     981,
+     981
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "019_IDO",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.4;",
+   "audit": "Hacken-Ground Zero",
+   "audit_function": "claim",
+   "audit_lines": "L86 - L110",
+   "flat_lines": [
+    [
+     4908,
+     4932
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "IDO.claim() L85-109 (99.96%)"
+   ]
+  },
+  {
+   "case": "020_MateCore",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "_canExecuteOrder",
+   "audit_lines": "L86",
+   "flat_lines": [
+    [
+     1385,
+     1385
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "020_MateCore",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "_executeOrder",
+   "audit_lines": "L166",
+   "flat_lines": [
+    [
+     1465,
+     1465
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "020_MateCore",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "_executeOrder",
+   "audit_lines": "L225",
+   "flat_lines": [
+    [
+     1524,
+     1524
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "021_OrderBook",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "placeOrder",
+   "audit_lines": "L76",
+   "flat_lines": [
+    [
+     1043,
+     1043
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "021_OrderBook",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "placeOrder",
+   "audit_lines": "L105",
+   "flat_lines": [
+    [
+     1072,
+     1072
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "021_OrderBook",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "cancelExpiredOrders",
+   "audit_lines": "L145",
+   "flat_lines": [
+    [
+     1112,
+     1112
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "OrderBook.cancelExpiredOrders(bytes32[]) L140-149 (89.93%)"
+   ]
+  },
+  {
+   "case": "022_UniswapHandler",
+   "kind": "timestamp",
+   "pragma": "pragma solidity >=0.8.0;",
+   "audit": "Hacken-Mate",
+   "audit_function": "_swap",
+   "audit_lines": "L38",
+   "flat_lines": [
+    [
+     796,
+     796
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "023_PowerBombAvaxCurve",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.9;",
+   "audit": "Hacken-Powerbomb-V1",
+   "audit_function": "claimReward",
+   "audit_lines": "L269-293",
+   "flat_lines": [
+    [
+     2195,
+     2219
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "startStaking",
+   "audit_lines": "L58-L60",
+   "flat_lines": [
+    [
+     717,
+     719
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "deposit",
+   "audit_lines": "L72",
+   "flat_lines": [
+    [
+     731,
+     731
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "deposit",
+   "audit_lines": "L82",
+   "flat_lines": [
+    [
+     741,
+     741
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "withdraw",
+   "audit_lines": "L99",
+   "flat_lines": [
+    [
+     758,
+     758
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "withdrawResidualBalance",
+   "audit_lines": "L125",
+   "flat_lines": [
+    [
+     784,
+     784
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "_percentageTimeRemaining",
+   "audit_lines": "L214",
+   "flat_lines": [
+    [
+     873,
+     873
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "_percentageTimeRemaining",
+   "audit_lines": "L216-L217",
+   "flat_lines": [
+    [
+     875,
+     876
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "024_StakingPlatform",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.9;",
+   "audit": "Hacken-Retreeb",
+   "audit_function": "_updateRewards",
+   "audit_lines": "L250-L252",
+   "flat_lines": [
+    [
+     909,
+     911
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "025_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.8.11;",
+   "audit": "Hacken-RichQUACK",
+   "audit_function": "startPool",
+   "audit_lines": "L125",
+   "flat_lines": [
+    [
+     1626,
+     1626
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "025_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.8.11;",
+   "audit": "Hacken-RichQUACK",
+   "audit_function": "endPool",
+   "audit_lines": "L134",
+   "flat_lines": [
+    [
+     1635,
+     1635
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "025_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.8.11;",
+   "audit": "Hacken-RichQUACK",
+   "audit_function": "deposit",
+   "audit_lines": "L176",
+   "flat_lines": [
+    [
+     1677,
+     1677
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Hacken-Samurai Legends",
+   "audit_function": "N/A",
+   "audit_lines": "L77",
+   "flat_lines": [
+    [
+     430,
+     430
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Hacken-Samurai Legends",
+   "audit_function": "lastTimeRewardActiveAt",
+   "audit_lines": "L156",
+   "flat_lines": [
+    [
+     509,
+     509
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Hacken-Samurai Legends",
+   "audit_function": "createPending",
+   "audit_lines": "L251",
+   "flat_lines": [
+    [
+     604,
+     604
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Hacken-Samurai Legends",
+   "audit_function": "getClaimablePendingPortion",
+   "audit_lines": "L333",
+   "flat_lines": [
+    [
+     686,
+     686
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "026_SamuraiLegendsStaking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Hacken-Samurai Legends",
+   "audit_function": "addReward",
+   "audit_lines": "L408",
+   "flat_lines": [
+    [
+     761,
+     761
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "027_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.7;",
+   "audit": "Hacken-Talent Protocol",
+   "audit_function": "adminWithdraw",
+   "audit_lines": "L444",
+   "flat_lines": [
+    [
+     2982,
+     2982
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "027_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.7;",
+   "audit": "Hacken-Talent Protocol",
+   "audit_function": "_checkpoint",
+   "audit_lines": "L601",
+   "flat_lines": [
+    [
+     3139,
+     3139
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "027_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.7;",
+   "audit": "Hacken-Talent Protocol",
+   "audit_function": "_updateS",
+   "audit_lines": "L650-L651",
+   "flat_lines": [
+    [
+     3188,
+     3189
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "027_Staking",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.7;",
+   "audit": "Hacken-Talent Protocol",
+   "audit_function": "onlyWhileStakingEnabled",
+   "audit_lines": "L748-L749",
+   "flat_lines": [
+    [
+     3286,
+     3287
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "028_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "ImmuneBytes-Bird Money(MasterChef)-Audit Report",
+   "audit_function": "deposit",
+   "audit_lines": "L262",
+   "flat_lines": [
+    [
+     1206,
+     1206
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "MasterChef.deposit(uint256,uint256) L260-283 (100.00%)"
+   ]
+  },
+  {
+   "case": "028_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "ImmuneBytes-Bird Money(MasterChef)-Audit Report",
+   "audit_function": "emergencyWithdraw",
+   "audit_lines": "L311",
+   "flat_lines": [
+    [
+     1255,
+     1255
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "029_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "ImmuneBytes-Bird Money-Final Audit Report",
+   "audit_function": "deposit",
+   "audit_lines": "L261-284",
+   "flat_lines": [
+    [
+     1205,
+     1228
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "MasterChef.deposit(uint256,uint256) L259-282 (100.00%)"
+   ]
+  },
+  {
+   "case": "029_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "ImmuneBytes-Bird Money-Final Audit Report",
+   "audit_function": "withdraw",
+   "audit_lines": "L287-306",
+   "flat_lines": [
+    [
+     1231,
+     1250
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "MasterChef.withdraw(uint256,uint256) L285-304 (100.00%)"
+   ]
+  },
+  {
+   "case": "030_MainWorkflow",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.10;",
+   "audit": "Inspex-SuperLauncher V.2",
+   "audit_function": "_transferOut",
+   "audit_lines": "L342",
+   "flat_lines": [
+    [
+     1422,
+     1422
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "031_Staking",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.11;",
+   "audit": "Inspex-Tokens, Farm & Shop",
+   "audit_function": "depositStable",
+   "audit_lines": "L674",
+   "flat_lines": [
+    [
+     4744,
+     4744
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "032_BaseRewards",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.12;",
+   "audit": "Iosiro-1inch Exchange Staking Rewards Smart Contract Audit",
+   "audit_function": "getReward",
+   "audit_lines": "L75",
+   "flat_lines": [
+    [
+     271,
+     271
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "033_AMOCoinSale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.18;",
+   "audit": "Iosiro-AMO Crowdsale Smart Contract Audit",
+   "audit_function": "onlyValidPurchase",
+   "audit_lines": "L132",
+   "flat_lines": [
+    [
+     733,
+     733
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "033_AMOCoinSale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.18;",
+   "audit": "Iosiro-AMO Crowdsale Smart Contract Audit",
+   "audit_function": "startSale",
+   "audit_lines": "L349",
+   "flat_lines": [
+    [
+     950,
+     950
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "033_AMOCoinSale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.18;",
+   "audit": "Iosiro-AMO Crowdsale Smart Contract Audit",
+   "audit_function": "endSale",
+   "audit_lines": "L358",
+   "flat_lines": [
+    [
+     959,
+     959
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "034_Crowdfund",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.4.24;",
+   "audit": "Iosiro-Etherparty Smart Contract Audit",
+   "audit_function": "duringCrowdfund",
+   "audit_lines": "L61、68、76、162、173、180",
+   "flat_lines": [
+    [
+     62,
+     181
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "035_SNXFlashLoanTool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.6;",
+   "audit": "Iosiro-SNX FlashBurn Smart Contract Audit",
+   "audit_function": "swap",
+   "audit_lines": "L143",
+   "flat_lines": [
+    [
+     1343,
+     1343
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "036_Vester",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Iosiro-Synthetix Vest Tool Smart Contract Audit",
+   "audit_function": "redeemWithTransfer",
+   "audit_lines": "L51 - L58",
+   "flat_lines": [
+    [
+     1746,
+     1753
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "036_Vester",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Iosiro-Synthetix Vest Tool Smart Contract Audit",
+   "audit_function": "mint",
+   "audit_lines": "L128 - L132",
+   "flat_lines": [
+    [
+     1823,
+     1827
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "037_Crowdsale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.21;",
+   "audit": "New_Alchemy_Security_Audit-The Abyss DAICO Smart Contract Audit (New)",
+   "audit_function": "isValidContribution",
+   "audit_lines": "L148",
+   "flat_lines": [
+    [
+     787,
+     787
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "038_FlashLoanLogic",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.7;",
+   "audit": "PeckShield-AaveV3",
+   "audit_function": "executeFlashLoanSimple",
+   "audit_lines": "L182-L240",
+   "flat_lines": [
+    [
+     5096,
+     5154
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "039_Swap_Factory_Future",
+   "kind": "reentrancy",
+   "pragma": "",
+   "audit": "PeckShield-Arche",
+   "audit_function": "Impl_Delivery",
+   "audit_lines": "L360-L380",
+   "flat_lines": [
+    [
+     361,
+     381
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "040_AToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "PeckShield-Atlantis",
+   "audit_function": "borrowFresh",
+   "audit_lines": "L738-L802",
+   "flat_lines": [
+    [
+     1956,
+     2020
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "041_BankingNode",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "PeckShield-BNPL",
+   "audit_function": "unstake",
+   "audit_lines": "L615-L637",
+   "flat_lines": [
+    [
+     2179,
+     2201
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "042_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.12;",
+   "audit": "PeckShield-BabySwap",
+   "audit_function": "withdraw",
+   "audit_lines": "L249-L267",
+   "flat_lines": [
+    [
+     1717,
+     1735
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "043_BufferBNBOptions",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "PeckShield-Buffer",
+   "audit_function": "create",
+   "audit_lines": "L142-L189",
+   "flat_lines": [
+    [
+     3047,
+     3094
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "044_code",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.0 <0.8.0;",
+   "audit": "PeckShield-COIN98",
+   "audit_function": "vote",
+   "audit_lines": "L181",
+   "flat_lines": [
+    [
+     182,
+     182
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "045_StakingProxyUniV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.10;",
+   "audit": "PeckShield-Convex_Frax",
+   "audit_function": "lockAdditional",
+   "audit_lines": "L94-L113",
+   "flat_lines": [
+    [
+     1138,
+     1157
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "046_CryptoHeroesUniverse",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.12;",
+   "audit": "PeckShield-CryptoHeroes",
+   "audit_function": "deposit",
+   "audit_lines": "L175 - L203",
+   "flat_lines": [
+    [
+     1584,
+     1612
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "047_SinglePool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity =0.6.12;",
+   "audit": "PeckShield-DSG",
+   "audit_function": "emergencyWithdraw",
+   "audit_lines": "L202-L214",
+   "flat_lines": [
+    [
+     843,
+     855
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "048_SkyRewardPool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-DarkCrypto",
+   "audit_function": "withdraw",
+   "audit_lines": "L217-L234",
+   "flat_lines": [
+    [
+     768,
+     785
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "049_code",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-ERC20_FAT",
+   "audit_function": "_delegate",
+   "audit_lines": "L1030 - L1040",
+   "flat_lines": [
+    [
+     1031,
+     1041
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "050_LCToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-ERC20_LuckyChip",
+   "audit_function": "_delegate",
+   "audit_lines": "L222-L232",
+   "flat_lines": [
+    [
+     1419,
+     1429
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "051_HegicPool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.6;",
+   "audit": "PeckShield-Hegic(v8888)",
+   "audit_function": "provideFrom",
+   "audit_lines": "L373 - L409",
+   "flat_lines": [
+    [
+     3552,
+     3588
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "052_Holdefi",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-Holdefi",
+   "audit_function": "repayBorrowInternal",
+   "audit_lines": "L1292-L1344",
+   "flat_lines": [
+    [
+     1828,
+     1880
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "053_masterchef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.7;",
+   "audit": "PeckShield-KaoyaSwap",
+   "audit_function": "deposit",
+   "audit_lines": "L196 - L208",
+   "flat_lines": [
+    [
+     1734,
+     1746
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "054_MasterMilker",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-MilkySwap",
+   "audit_function": "emergencyWithdraw",
+   "audit_lines": "L237-L244",
+   "flat_lines": [
+    [
+     1723,
+     1730
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "055_LPool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.7.6;",
+   "audit": "PeckShield-OpenLeverage1.0",
+   "audit_function": "borrowFresh",
+   "audit_lines": "L845-L885",
+   "flat_lines": [
+    [
+     2362,
+     2402
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "056_PikaPerpV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "PeckShield-PikaPerpV2",
+   "audit_function": "closePositionWithId",
+   "audit_lines": "L402-459",
+   "flat_lines": [
+    [
+     2945,
+     3002
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "057_PMintBurn",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+   "audit": "PeckShield-PlutosV1",
+   "audit_function": "deposit",
+   "audit_lines": "L48-L63",
+   "flat_lines": [
+    [
+     77,
+     92
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "058_RToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "PeckShield-Rikkei",
+   "audit_function": "borrowFresh",
+   "audit_lines": "L738-L802",
+   "flat_lines": [
+    [
+     1944,
+     2008
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "059_MasterShiba",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-ShibaNova",
+   "audit_function": "withdraw",
+   "audit_lines": "L339 - L341",
+   "flat_lines": [
+    [
+     1351,
+     1353
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "060_LPGauge",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.11;",
+   "audit": "PeckShield-StackerVC",
+   "audit_function": "deposit",
+   "audit_lines": "L75-L89",
+   "flat_lines": [
+    [
+     694,
+     708
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "061_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "PeckShield-SushiSwap",
+   "audit_function": "withdraw",
+   "audit_lines": "L219-L230",
+   "flat_lines": [
+    [
+     1702,
+     1713
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "062_StakingV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+   "audit": "PeckShield-TranchessV1.1",
+   "audit_function": "deposit",
+   "audit_lines": "L340-L359",
+   "flat_lines": [
+    [
+     1442,
+     1461
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "063_LiquidityStaking",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.10 <0.8.0;",
+   "audit": "PeckShield-Tranchessv1.0",
+   "audit_function": "deposit",
+   "audit_lines": "L60-L69",
+   "flat_lines": [
+    [
+     474,
+     483
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "064_bVault",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "PeckShield-btdotfinance",
+   "audit_function": "deposit",
+   "audit_lines": "L357-L375",
+   "flat_lines": [
+    [
+     358,
+     376
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "065_LighthouseLib",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.24;",
+   "audit": "PepperSec-Aira-Robonomic",
+   "audit_function": "withdraw",
+   "audit_lines": "L24",
+   "flat_lines": [
+    [
+     1193,
+     1193
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "066_RobotLiabilityLib",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.24;",
+   "audit": "PepperSec-Aira-Robonomic",
+   "audit_function": "finalize",
+   "audit_lines": "L104",
+   "flat_lines": [
+    [
+     1376,
+     1376
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "067_FeeCollector",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-1inch-Fee Collector",
+   "audit_function": "updateRewardNonLP",
+   "audit_lines": "L340 - L343",
+   "flat_lines": [
+    [
+     1393,
+     1396
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "068_FixedRateSwap",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.9;",
+   "audit": "QuillAudits-1inch-Fixed Rate Swap",
+   "audit_function": "depositFor",
+   "audit_lines": "L137",
+   "flat_lines": [
+    [
+     1442,
+     1442
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "068_FixedRateSwap",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.9;",
+   "audit": "QuillAudits-1inch-Fixed Rate Swap",
+   "audit_function": "_swap",
+   "audit_lines": "L323",
+   "flat_lines": [
+    [
+     1628,
+     1628
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "069_LimitOrderProtocol",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.6;",
+   "audit": "QuillAudits-1inch-Limit Order Protocol",
+   "audit_function": "fillOrderTo",
+   "audit_lines": "L28 - L346",
+   "flat_lines": [
+    [
+     1484,
+     1802
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "LimitOrderProtocol.fillOrderRFQTo(LimitOrderProtocol.OrderRFQ,bytes,uint256,uint256,address) L193-246 (99.80%)"
+   ]
+  },
+  {
+   "case": "070_BaseParaSwapAdapter",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "QuillAudits-AAVE-ParaSwap Adapter",
+   "audit_function": "_pullAToken",
+   "audit_lines": "L79",
+   "flat_lines": [
+    [
+     1142,
+     1142
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "071_BaseParaSwapSellAdapter",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "QuillAudits-AAVE-ParaSwap Adapter",
+   "audit_function": "_sellOnParaSwap",
+   "audit_lines": "L35",
+   "flat_lines": [
+    [
+     1402,
+     1402
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "072_acyc",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-ACYC Token Smart Contracts",
+   "audit_function": "_transfer",
+   "audit_lines": "L331",
+   "flat_lines": [
+    [
+     1159,
+     1159
+    ]
+   ],
+   "verdict": "line_outside_any_function",
+   "product_functions": []
+  },
+  {
+   "case": "073_AbyssEth2Depositor",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.11;",
+   "audit": "QuillAudits-Abyss Finance-Abyss Eth2 Depositor",
+   "audit_function": "deposit",
+   "audit_lines": "L82",
+   "flat_lines": [
+    [
+     511,
+     511
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "074_stakin_contract",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "QuillAudits-Algovest",
+   "audit_function": "AVSTokenDonation",
+   "audit_lines": "L74 - L84",
+   "flat_lines": [
+    [
+     453,
+     463
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "075_MasterChef",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "QuillAudits-Alium Finance Smart Contract",
+   "audit_function": "emergencyWithdraw",
+   "audit_lines": "L163 - L171",
+   "flat_lines": [
+    [
+     210,
+     218
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "076_Pool",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-Amplify Smart Contract",
+   "audit_function": "getBlockTimestamp",
+   "audit_lines": "L330",
+   "flat_lines": [
+    [
+     1435,
+     1435
+    ]
+   ],
+   "verdict": "line_outside_any_function",
+   "product_functions": []
+  },
+  {
+   "case": "077_Vesting",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.8.4;",
+   "audit": "QuillAudits-Amplify Smart Contract (vesting)",
+   "audit_function": "getBlockTimestamp",
+   "audit_lines": "L218",
+   "flat_lines": [
+    [
+     219,
+     219
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "078_BCubePublicSale",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.17;",
+   "audit": "QuillAudits-BCUBE Smart Contract",
+   "audit_function": "buyBcubeUsingUSDT",
+   "audit_lines": "L264 - L278",
+   "flat_lines": [
+    [
+     1129,
+     1143
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "079_BsktLPPool",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.5.0;",
+   "audit": "QuillAudits-BasketCoin Smart Contract",
+   "audit_function": "checkStart",
+   "audit_lines": "L363",
+   "flat_lines": [
+    [
+     364,
+     364
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "080_Sliced",
+   "kind": "timestamp",
+   "pragma": "pragma solidity =0.8.12;",
+   "audit": "QuillAudits-BitSliced Smart Contract",
+   "audit_function": "sendTokens",
+   "audit_lines": "L72",
+   "flat_lines": [
+    [
+     787,
+     787
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "Sliced.sendTokens() L70-80 (100.00%)"
+   ]
+  },
+  {
+   "case": "081_Bollystake",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-BollyStake Smart Contract (new)",
+   "audit_function": "relock_stake",
+   "audit_lines": "L1022",
+   "flat_lines": [
+    [
+     1023,
+     1023
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "Bollystake.relock.stake(uint256) L1011-1045 (98.47%)"
+   ]
+  },
+  {
+   "case": "082_ProfitSplitter",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "QuillAudits-Bond Appetit-Bond Appetit",
+   "audit_function": "_payToRecipients",
+   "audit_lines": "L228",
+   "flat_lines": [
+    [
+     1798,
+     1798
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "083_ProfitSplitter",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "QuillAudits-Bond Appetit-Bond Appetit",
+   "audit_function": "_payToRecipients",
+   "audit_lines": "L228",
+   "flat_lines": [
+    [
+     1798,
+     1798
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "084_BsktEthLPPool",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.5.0;",
+   "audit": "QuillAudits-BsktEthLPPool Smart Contract",
+   "audit_function": "updateReward",
+   "audit_lines": "L400, L417",
+   "flat_lines": [
+    [
+     401,
+     401
+    ],
+    [
+     418,
+     418
+    ]
+   ],
+   "verdict": "flagged",
+   "product_functions": [
+    "BsktEthLPPool.lastTimeRewardApplicable() L416-418 (99.61%)"
+   ]
+  },
+  {
+   "case": "084_BsktEthLPPool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.0;",
+   "audit": "QuillAudits-BsktEthLPPool Smart Contract",
+   "audit_function": "exit",
+   "audit_lines": "L459-462",
+   "flat_lines": [
+    [
+     460,
+     463
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "085_CCapableErc20",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "QuillAudits-C.R.E.A.M. Finance-Flashloan",
+   "audit_function": "gulp",
+   "audit_lines": "L133",
+   "flat_lines": [
+    [
+     2640,
+     2640
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "086_CryptoBatz",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.8;",
+   "audit": "QuillAudits-CryptoBatz Smart Contract",
+   "audit_function": "rollStartIndex",
+   "audit_lines": "L355 - L374",
+   "flat_lines": [
+    [
+     3822,
+     3841
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "087_Fundum",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.4;",
+   "audit": "QuillAudits-Fundum Smart Contract",
+   "audit_function": "swapTokensForETH",
+   "audit_lines": "L351,369,388",
+   "flat_lines": [
+    [
+     352,
+     352
+    ],
+    [
+     370,
+     370
+    ],
+    [
+     389,
+     389
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "088_CurveV1",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exchange",
+   "audit_lines": "L49 - L85",
+   "flat_lines": [
+    [
+     5327,
+     5363
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "089_UniswapV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "swapTokensForExactTokens",
+   "audit_lines": "L56",
+   "flat_lines": [
+    [
+     5587,
+     5587
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "089_UniswapV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "swapExactTokensForTokens",
+   "audit_lines": "L110",
+   "flat_lines": [
+    [
+     5641,
+     5641
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "090_UniswapV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exactInputSingle",
+   "audit_lines": "L52",
+   "flat_lines": [
+    [
+     5472,
+     5472
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "090_UniswapV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exactInput",
+   "audit_lines": "L106",
+   "flat_lines": [
+    [
+     5526,
+     5526
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "090_UniswapV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exactOutputSingle",
+   "audit_lines": "L153",
+   "flat_lines": [
+    [
+     5573,
+     5573
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "090_UniswapV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exactOutputSingle",
+   "audit_lines": "L154",
+   "flat_lines": [
+    [
+     5574,
+     5574
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "090_UniswapV3",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "exactOutput",
+   "audit_lines": "L210",
+   "flat_lines": [
+    [
+     5630,
+     5630
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "091_YearnV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "_deposit",
+   "audit_lines": "L78",
+   "flat_lines": [
+    [
+     5650,
+     5650
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "091_YearnV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "withdraw",
+   "audit_lines": "L132",
+   "flat_lines": [
+    [
+     5704,
+     5704
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "092_WETHGateway",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "addLiquidityETH",
+   "audit_lines": "L98 - L112",
+   "flat_lines": [
+    [
+     4089,
+     4103
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "092_WETHGateway",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "removeLiquidityETH",
+   "audit_lines": "L120 - L140",
+   "flat_lines": [
+    [
+     4111,
+     4131
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "092_WETHGateway",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "openCreditAccountETH",
+   "audit_lines": "L151 - L171",
+   "flat_lines": [
+    [
+     4142,
+     4162
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "092_WETHGateway",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "repayCreditAccountETH",
+   "audit_lines": "L179 - L199",
+   "flat_lines": [
+    [
+     4170,
+     4190
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "093_PoolService",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.4;",
+   "audit": "QuillAudits-GearBox Protocol-GearBox Protocol",
+   "audit_function": "lendCreditAccount",
+   "audit_lines": "L238 - L258",
+   "flat_lines": [
+    [
+     4654,
+     4674
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "094_StakingRewardsV3-1",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.6;",
+   "audit": "QuillAudits-Keep3r.Network-Keep3r.Network",
+   "audit_function": "deposit",
+   "audit_lines": "L210 - L226",
+   "flat_lines": [
+    [
+     211,
+     227
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "095_LockletTokenVault",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-Locklet Smart Contract",
+   "audit_function": "calculateClaim",
+   "audit_lines": "L410",
+   "flat_lines": [
+    [
+     2399,
+     2399
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "095_LockletTokenVault",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "QuillAudits-Locklet Smart Contract",
+   "audit_function": "blockTime",
+   "audit_lines": "430",
+   "flat_lines": [
+    [
+     2419,
+     2419
+    ]
+   ],
+   "verdict": "line_outside_any_function",
+   "product_functions": []
+  },
+  {
+   "case": "096_MiniDOGE",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.4;",
+   "audit": "QuillAudits-MiniDOGE Smart Contract",
+   "audit_function": "transfer",
+   "audit_lines": "L572-575,586-590",
+   "flat_lines": [
+    [
+     573,
+     576
+    ],
+    [
+     587,
+     591
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "097_moonship",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.8;",
+   "audit": "QuillAudits-Moonship Smart Contract",
+   "audit_function": "transfer",
+   "audit_lines": "L995.1009",
+   "flat_lines": [
+    [
+     997,
+     1011
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "098_MainToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.23;",
+   "audit": "QuillAudits-NomadLand Smart Contract",
+   "audit_function": "releaseOnce",
+   "audit_lines": "L481",
+   "flat_lines": [
+    [
+     482,
+     482
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "098_MainToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.23;",
+   "audit": "QuillAudits-NomadLand Smart Contract",
+   "audit_function": "releaseAll",
+   "audit_lines": "L509",
+   "flat_lines": [
+    [
+     510,
+     510
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "098_MainToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.23;",
+   "audit": "QuillAudits-NomadLand Smart Contract",
+   "audit_function": "freeze",
+   "audit_lines": "L526",
+   "flat_lines": [
+    [
+     527,
+     527
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "099_BasketFacet",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.7.1;",
+   "audit": "QuillAudits-PieDAO-ExperiPie",
+   "audit_function": "calcOutStandingAnnualizedFee",
+   "audit_lines": "L204",
+   "flat_lines": [
+    [
+     1085,
+     1085
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "099_BasketFacet",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.7.1;",
+   "audit": "QuillAudits-PieDAO-ExperiPie",
+   "audit_function": "chargeOutstandingAnnualizedFee",
+   "audit_lines": "L214",
+   "flat_lines": [
+    [
+     1095,
+     1095
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "100_VIDBToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.5.0;",
+   "audit": "QuillAudits-VIDB - v1.0",
+   "audit_function": "getLockedAmount",
+   "audit_lines": "L722",
+   "flat_lines": [
+    [
+     723,
+     723
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "101_yWETH",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "QuillAudits-Yearn Finance-Yearn Protocol V1",
+   "audit_function": "depositETH",
+   "audit_lines": "L90 - L104",
+   "flat_lines": [
+    [
+     109,
+     123
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "101_yWETH",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "QuillAudits-Yearn Finance-Yearn Protocol V1",
+   "audit_function": "withdrawETH",
+   "audit_lines": "L144 - L162",
+   "flat_lines": [
+    [
+     163,
+     181
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "102_yToken",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.12;",
+   "audit": "QuillAudits-Yearn Finance-Yearn Vaults V3",
+   "audit_function": "withdrawETH",
+   "audit_lines": "L187",
+   "flat_lines": [
+    [
+     1878,
+     1878
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "103_Main",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.21;",
+   "audit": "QuillAudits-coalichain",
+   "audit_function": "createBallot",
+   "audit_lines": "L51",
+   "flat_lines": [
+    [
+     655,
+     655
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "104_YVaultAssetProxy",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Runtime_Vеrification-ElementFinance",
+   "audit_function": "reserveDeposit",
+   "audit_lines": "L49 - L80",
+   "flat_lines": [
+    [
+     542,
+     573
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "105_CoreVoting",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.0;",
+   "audit": "Runtime_Vеrification-Element_Finance_Governance_Security_Audit_Report",
+   "audit_function": "execute",
+   "audit_lines": "L238 - L277",
+   "flat_lines": [
+    [
+     313,
+     352
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "106_GnosisSafe",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.0;",
+   "audit": "Runtime_Vеrification-GnosisSafe",
+   "audit_function": "execTransaction",
+   "audit_lines": "L70 - L105",
+   "flat_lines": [
+    [
+     677,
+     712
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "107_StakefishERC721Wrapper",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.4;",
+   "audit": "Runtime_Vеrification-stakefish_ethereum_staking_audit_report",
+   "audit_function": "mintTo",
+   "audit_lines": "L53-L71",
+   "flat_lines": [
+    [
+     720,
+     738
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "108_CFVault",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.4.21 <0.6.0;",
+   "audit": "SlowMist-CFFv2 Smart Contract Security Audit Report",
+   "audit_function": "withdraw",
+   "audit_lines": "L121 - L153",
+   "flat_lines": [
+    [
+     771,
+     803
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "109_PRA",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.6.0;",
+   "audit": "SlowMist-ForTube2.0 Smart Contract Security Audit Report",
+   "audit_function": "lock",
+   "audit_lines": "L66 - L80",
+   "flat_lines": [
+    [
+     454,
+     468
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "110_OKLGTokenLocker",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.8.4;",
+   "audit": "Solidity_Finance-OKLG - Smart Contract",
+   "audit_function": "withdrawLockedTokens",
+   "audit_lines": "L126",
+   "flat_lines": [
+    [
+     775,
+     775
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "111_BorrowerOperations",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.11;",
+   "audit": "Trail_of_Bits-Liquity",
+   "audit_function": "_moveTokensAndETHfromAdjustment",
+   "audit_lines": "L351",
+   "flat_lines": [
+    [
+     3096,
+     3096
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "112_Liquidator",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.7;",
+   "audit": "Trail_of_Bits-MapleFinance",
+   "audit_function": "liquidatePortion",
+   "audit_lines": "L41-L51",
+   "flat_lines": [
+    [
+     192,
+     202
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "113_VaultCore",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.11;",
+   "audit": "Trail_of_Bits-OriginDollar",
+   "audit_function": "mintMultiple",
+   "audit_lines": "L88 - L128",
+   "flat_lines": [
+    [
+     1856,
+     1896
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "114_MarketOracle",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.4.24;",
+   "audit": "Trail_of_Bits-ampleforth",
+   "audit_function": "getPriceAnd24HourVolume",
+   "audit_lines": "L34 - L60",
+   "flat_lines": [
+    [
+     253,
+     279
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "115_Hermez",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "Trail_of_Bits-hermez",
+   "audit_function": "addToken",
+   "audit_lines": "L642 - L664",
+   "flat_lines": [
+    [
+     1648,
+     1670
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "116_MetaTransactionsFeature",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.5;",
+   "audit": "consensys-0x_Exchange_v4",
+   "audit_function": "refundsAttachedEth",
+   "audit_lines": "L100-107",
+   "flat_lines": [
+    [
+     4050,
+     4057
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "117_UniswapFeature",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.5;",
+   "audit": "consensys-0x_Exchange_v4",
+   "audit_function": "sellToUniswap",
+   "audit_lines": "L203-206",
+   "flat_lines": [
+    [
+     944,
+     947
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "118_MixinScheduler",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.5.9;",
+   "audit": "consensys-0x_v3_Staking",
+   "audit_function": "_goToNextEpoch",
+   "audit_lines": "L71",
+   "flat_lines": [
+    [
+     1783,
+     1783
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "119_LendingPool",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.8;",
+   "audit": "consensys-Aave_Protocol_V2",
+   "audit_function": "deposit",
+   "audit_lines": "L92-119",
+   "flat_lines": [
+    [
+     5398,
+     5425
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "120_Amp",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.9;",
+   "audit": "consensys-Amp",
+   "audit_function": "_transferByPartition",
+   "audit_lines": "L1131-L1201",
+   "flat_lines": [
+    [
+     1844,
+     1914
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "121_TransactionManager",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.4;",
+   "audit": "consensys-Connext NXTP — Noncustodial Xchain Transfer Protocol",
+   "audit_function": "removeLiquidity",
+   "audit_lines": "L229 - L254",
+   "flat_lines": [
+    [
+     2364,
+     2389
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "122_FLAaveV2",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.7.0;",
+   "audit": "consensys-DeFi_Saver",
+   "audit_function": "executeOperation",
+   "audit_lines": "L106-137",
+   "flat_lines": [
+    [
+     1910,
+     1941
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "123_Hypervisor",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.7.6;",
+   "audit": "consensys-Gamma",
+   "audit_function": "withdraw",
+   "audit_lines": "L175-216",
+   "flat_lines": [
+    [
+     2642,
+     2683
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "124_UniProxy",
+   "kind": "reentrancy",
+   "pragma": "",
+   "audit": "consensys-Gamma",
+   "audit_function": "deposit",
+   "audit_lines": "L75-82",
+   "flat_lines": [
+    [
+     1173,
+     1180
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "125_Exchange",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "consensys-GrowthDeFi WHEAT",
+   "audit_function": "convertFundsFromInput",
+   "audit_lines": "L80-90",
+   "flat_lines": [
+    [
+     1137,
+     1147
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "126_IdleCDO",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.8.4;",
+   "audit": "consensys-Idle_Finance",
+   "audit_function": "_deposit",
+   "audit_lines": "L242-258",
+   "flat_lines": [
+    [
+     3686,
+     3702
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "127_PaymentStartStandardExit",
+   "kind": "timestamp",
+   "pragma": "pragma solidity 0.5.11;",
+   "audit": "consensys-OmiseGo_MoreVP",
+   "audit_function": "setupStartStandardExitData",
+   "audit_lines": "L124",
+   "flat_lines": [
+    [
+     2245,
+     2245
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "128_Pod",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+   "audit": "consensys-PoolTogether_Pods",
+   "audit_function": "depositTo",
+   "audit_lines": "L275-282",
+   "flat_lines": [
+    [
+     2410,
+     2417
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "129_TokenDrop",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity >=0.7.0 <0.8.0;",
+   "audit": "consensys-PoolTogether_Pods",
+   "audit_function": "claim",
+   "audit_lines": "L141-155",
+   "flat_lines": [
+    [
+     753,
+     767
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "130_YearnV2YieldSource",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "consensys-PoolTogether_Sushi_and_Yearn_V2_Yield_Sources",
+   "audit_function": "supplyTokenTo",
+   "audit_lines": "L118-L129",
+   "flat_lines": [
+    [
+     1810,
+     1821
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "131_LockableERC777",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.3;",
+   "audit": "consensys-Skale_Token",
+   "audit_function": "_burn",
+   "audit_lines": "L399-422",
+   "flat_lines": [
+    [
+     1061,
+     1084
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "132_SkaleBalances",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.3;",
+   "audit": "consensys-Skale_Token",
+   "audit_function": "tokensReceived",
+   "audit_lines": "L55-68",
+   "flat_lines": [
+    [
+     3468,
+     3481
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "133_EternalHeroesFactory",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.5.16;",
+   "audit": "consensys-Skyweaver",
+   "audit_function": "_buy",
+   "audit_lines": "L279-285",
+   "flat_lines": [
+    [
+     457,
+     463
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "134_DynamicLiquidTokenConverter",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.6.12;",
+   "audit": "consensys-Zer0_zBanc",
+   "audit_function": "reduceWeight",
+   "audit_lines": "L125-L130",
+   "flat_lines": [
+    [
+     1623,
+     1628
+    ]
+   ],
+   "verdict": "contract_cleared",
+   "product_functions": []
+  },
+  {
+   "case": "135_ARCToken",
+   "kind": "reentrancy",
+   "pragma": "",
+   "audit": "openzeppelin-Arcade_City_token",
+   "audit_function": "buyRecipient",
+   "audit_lines": "L231",
+   "flat_lines": [
+    [
+     232,
+     232
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "136_BAToken",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.10;",
+   "audit": "openzeppelin-Basic_Attention_Token",
+   "audit_function": "N/A",
+   "audit_lines": "L19-20",
+   "flat_lines": [
+    [
+     20,
+     21
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "137_Fundraiser",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.4.7;",
+   "audit": "openzeppelin-COSMOS_Fundraiser",
+   "audit_function": "donate",
+   "audit_lines": "L95",
+   "flat_lines": [
+    [
+     96,
+     96
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "138_Fund",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity ^0.6.10;",
+   "audit": "openzeppelin-Endaoment",
+   "audit_function": "finalizeGrant",
+   "audit_lines": "L119-134",
+   "flat_lines": [
+    [
+     174,
+     189
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "139_ProjectKudos",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.0;",
+   "audit": "openzeppelin-EtherCamp_ProjectKudos_public_code",
+   "audit_function": "onlyOwner",
+   "audit_lines": "L331,332",
+   "flat_lines": [
+    [
+     332,
+     332
+    ],
+    [
+     333,
+     333
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "140_GovernorAlpha",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.6.0;",
+   "audit": "openzeppelin-Fei_Protocol",
+   "audit_function": "votingPeriod",
+   "audit_lines": "L24",
+   "flat_lines": [
+    [
+     26,
+     26
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "141_GNTAllocation",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.4;",
+   "audit": "openzeppelin-Golem_Network_Token",
+   "audit_function": "GNTAllocation",
+   "audit_lines": "L22",
+   "flat_lines": [
+    [
+     239,
+     239
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "142_Crowdsale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.11;",
+   "audit": "openzeppelin-Hubii_Token",
+   "audit_function": "isCrowdsale",
+   "audit_lines": "L484,485",
+   "flat_lines": [
+    [
+     485,
+     485
+    ],
+    [
+     486,
+     486
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "143_Controller",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity =0.6.10;",
+   "audit": "openzeppelin-Opyn_Gamma_Protocol",
+   "audit_function": "_runActions",
+   "audit_lines": "L451-L508",
+   "flat_lines": [
+    [
+     1558,
+     1615
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "144_AdminImpl",
+   "kind": "reentrancy",
+   "pragma": "pragma solidity 0.5.4;",
+   "audit": "openzeppelin-Solo_Margin_Protocol",
+   "audit_function": "_setPriceOracle",
+   "audit_lines": "L258-L275",
+   "flat_lines": [
+    [
+     2559,
+     2576
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "145_ROSCA",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.4;",
+   "audit": "openzeppelin-WeTrust_ROSCA_contract_code",
+   "audit_function": "ROSCA",
+   "audit_lines": "L199",
+   "flat_lines": [
+    [
+     200,
+     200
+    ]
+   ],
+   "verdict": "missed",
+   "product_functions": []
+  },
+  {
+   "case": "146_Crowdsale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.8;",
+   "audit": "openzeppelin-iExec_RLC_Token",
+   "audit_function": "minCapNotReached",
+   "audit_lines": "L69",
+   "flat_lines": [
+    [
+     175,
+     175
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "146_Crowdsale",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.8;",
+   "audit": "openzeppelin-iExec_RLC_Token",
+   "audit_function": "",
+   "audit_lines": "L116、145、295",
+   "flat_lines": [
+    [
+     222,
+     401
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "147_RLC",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.8;",
+   "audit": "openzeppelin-iExec_RLC_Token",
+   "audit_function": "RLC",
+   "audit_lines": "L37",
+   "flat_lines": [
+    [
+     38,
+     38
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  },
+  {
+   "case": "147_RLC",
+   "kind": "timestamp",
+   "pragma": "pragma solidity ^0.4.8;",
+   "audit": "openzeppelin-iExec_RLC_Token",
+   "audit_function": "unlock",
+   "audit_lines": "L49",
+   "flat_lines": [
+    [
+     50,
+     50
+    ]
+   ],
+   "verdict": "no_graph",
+   "product_functions": []
+  }
+ ]
+}

@@ -6,6 +6,10 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL_PATH: str
     GRAPH_VUL_MODEL_PATH: str
     NODE_VUL_MODEL_PATH: str
+    # Reentrancy has its own encoder + GNN pair; it is skipped at startup when a checkpoint file is missing.
+    REENTRANCY_EMBEDDING_MODEL_PATH: str = "Quangnguyen711/codebert-solidity-re-entrancy"
+    REENTRANCY_GRAPH_VUL_MODEL_PATH: str = "src/infrastructure/analysis_model/best_model_GAT_2L_max_reentrancy.pt"
+    REENTRANCY_NODE_VUL_MODEL_PATH: str = "src/infrastructure/analysis_model/best_node_classifier_model_reentrancy.pt"
     
     # LLM
     MODEL_NAME: str

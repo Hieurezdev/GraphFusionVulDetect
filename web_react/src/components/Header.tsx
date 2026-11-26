@@ -9,7 +9,7 @@ const navLink = "relative inline-flex h-10 items-center whitespace-nowrap text-s
 const navActive = "text-ink after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-signal";
 
 const Header = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const t = useT();
 
   if (!isAuthenticated) {
@@ -31,6 +31,11 @@ const Header = () => {
           <NavLink to="/project" className={navLink} activeClassName={navActive}>
             {t("Projects")}
           </NavLink>
+          {user?.role === "expert" && (
+            <NavLink to="/review" className={navLink} activeClassName={navActive}>
+              {t("Expert review")}
+            </NavLink>
+          )}
         </nav>
 
         <div className="ml-auto flex items-center">

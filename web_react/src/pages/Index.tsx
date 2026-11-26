@@ -68,10 +68,6 @@ const Index = () => {
   };
 
   const handleAnalyze = async () => {
-    if (!projectName.trim()) {
-      toast.error(t("Enter a project name."));
-      return;
-    }
 
     let fileToUse = selectedFile;
     
@@ -109,7 +105,8 @@ const Index = () => {
     try {
       // First create the project in the backend
       const project = await projectService.createProject({
-        name: projectName.trim(),
+        // Unnamed quick scans get the file's name plus the time: project names must be unique per user.
+        name: projectName.trim() || `${fileToUse!.file.name} · ${new Date().toLocaleString(t.locale)}`,
         description: `Analysis project for ${fileToUse!.file.name}`
       });
 
@@ -152,7 +149,7 @@ const Index = () => {
     ? t("{name}: the source is fetched when the analysis starts", { name: selectedToken.name })
     : t("Waiting for a contract");
 
-  const startDisabled = !projectName.trim() || isCreatingProject || (activeTab === "upload" ? !selectedFile : (!selectedToken || !selectedPlatform));
+  const startDisabled = isCreatingProject || (activeTab === "upload" ? !selectedFile : (!selectedToken || !selectedPlatform));
 
   return (
     <div className="min-h-dvh bg-background">
@@ -185,7 +182,7 @@ const Index = () => {
         <section className="panel self-start p-6 sm:p-8 lg:col-span-5" aria-labelledby="new-analysis-head">
           <h2 id="new-analysis-head" className="sr-only">{t("New Analysis")}</h2>
           <div className="space-y-2">
-            <Label htmlFor="project-name">{t("Project Name")}</Label>
+            <Label htmlFor="project-name">{t("Project Name")} <span className="text-muted-foreground">({t("optional")})</span></Label>
             <Input
               id="project-name"
               placeholder={t("e.g., DeFi Protocol Audit")}
@@ -282,7 +279,7 @@ const Index = () => {
             </Button>
             {startDisabled && !isCreatingProject && (
               <p className="text-sm text-muted-foreground">
-                {!projectName.trim() ? t("Name the project first.") : activeTab === "upload" ? t("Choose a .sol file.") : t("Pick a token and its chain.")}
+                {activeTab === "upload" ? t("Choose a .sol file.") : t("Pick a token and its chain.")}
               </p>
             )}
           </div>

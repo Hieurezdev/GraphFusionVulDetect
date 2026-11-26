@@ -1,0 +1,1 @@
+{"id": "053_masterchef", "http": 200, "seconds": 1.0, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125931/053_masterchef.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.599968433380127}}], "raw": ""}

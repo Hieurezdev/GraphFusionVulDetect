@@ -13,6 +13,7 @@ interface User {
   bio?: string;
   created_at?: string;
   last_login?: string;
+  role?: "user" | "expert";
 }
 
 interface AuthContextType {
@@ -53,6 +54,7 @@ const mapUserProfileToUser = (profile: UserProfile): User => {
     bio: profile.bio,
     created_at: profile.created_at,
     last_login: profile.last_login,
+    role: profile.role,
     avatar: profile.email ? `https://api.dicebear.com/7.x/avataaars/svg?seed=${profile.email}` : undefined,
   };
 };

@@ -1,0 +1,1 @@
+{"id": "105_CoreVoting", "http": 200, "seconds": 1.8, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_131343/105_CoreVoting.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.7377697825431824}}], "raw": ""}

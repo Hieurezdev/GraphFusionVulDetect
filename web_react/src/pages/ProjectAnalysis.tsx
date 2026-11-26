@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import { ArrowLeft, Activity, XCircle, Play, Upload } from "lucide-react";
-import { StreamingResults } from "@/components/StreamingResults";
-import { ContractVisualization } from "@/components/ContractVisualization";
+import { AnalysisReport } from "@/components/AnalysisReport";
+import { flaggedFunctions, sessionResults } from "@/lib/findings";
 import { RefactorChatbot } from "@/components/RefactorChatbot";
 import { FileUpload } from "@/components/FileUpload";
 import { TruncatedText } from "@/components/TruncatedText";
@@ -142,13 +142,7 @@ const ProjectAnalysis = () => {
     navigate("/project");
   };
 
-  const toResults = (session: AnalysisSession) =>
-    (session.steps || []).map(step => ({
-      node: step.step_name,
-      status: step.status,
-      output: step.result_data,
-      timestamp: step.started_at
-    }));
+  const toResults = sessionResults;
 
   if (loading) {
     return (
@@ -307,24 +301,20 @@ const ProjectAnalysis = () => {
                   </div>
                 )}
 
-                {selectedSession.status === 'completed' && selectedSession.steps && (
-                  <ContractVisualization data={toResults(selectedSession)} />
-                )}
-
-                {selectedSession.status === 'completed' && (
-                  <Suspense fallback={null}>
-                    <ContractIDE key={selectedSession.id} sessionId={selectedSession.id} results={toResults(selectedSession)} reviews={selectedSession.reviews || []} onReviewed={handleReviewed} />
-                  </Suspense>
-                )}
-
                 {selectedSession.steps && selectedSession.steps.length > 0 && (
-                  <StreamingResults
+                  <AnalysisReport
                     results={toResults(selectedSession)}
                     isStreaming={false}
                     sessionId={selectedSession.id}
                     reviews={selectedSession.reviews || []}
                     onReviewed={handleReviewed}
                   />
+                )}
+
+                {selectedSession.status === 'completed' && (
+                  <Suspense fallback={null}>
+                    <ContractIDE key={selectedSession.id} sessionId={selectedSession.id} results={toResults(selectedSession)} reviews={selectedSession.reviews || []} onReviewed={handleReviewed} />
+                  </Suspense>
                 )}
               </>
             ) : (
@@ -339,13 +329,7 @@ const ProjectAnalysis = () => {
           key={selectedSession.id}
           sessionId={selectedSession.id}
           reviews={selectedSession.reviews || []}
-          vulnerableFunctions={
-            selectedSession.steps
-              ?.flatMap(step => step.result_data?.func_vulnerability_predictions || [])
-              .filter((func, index, self) =>
-                index === self.findIndex(f => f.function_name === func.function_name)
-              ) || []
-          }
+          vulnerableFunctions={flaggedFunctions(toResults(selectedSession))}
         />
       )}
     </div>

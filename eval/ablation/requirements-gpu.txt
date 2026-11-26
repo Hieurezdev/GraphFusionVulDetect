@@ -1,0 +1,11 @@
+huggingface-hub==0.36.2
+networkx==3.4.2
+numpy==1.26.4
+pandas==2.3.3
+safetensors==0.8.0
+scikit-learn==1.7.2
+scipy==1.15.3
+tokenizers==0.20.3
+torch==2.4.0+cu121
+transformers==4.46.3
+# dgl 2.4.0 built for torch 2.4 + CUDA 12.1 (conda: dglteam/label/th24_cu121); not on PyPI

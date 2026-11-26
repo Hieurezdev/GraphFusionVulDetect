@@ -1,0 +1,3422 @@
+{
+ "timestamp/neg__002d5f79eff9f8d6d47a61fdaf5bf0c6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x52e34238bacb8730d4804637891c87656b5407d5",
+  "contract": "IcoToken"
+ },
+ "timestamp/neg__032cf60cd0f1caefc33e33f687f018ff.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa5d1e58ece1fc438d64e65769d2ab730143a4caf",
+  "contract": "RobomedIco"
+ },
+ "timestamp/neg__03cb12826f2844106216a23484264edf.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x09678741bd50c3e74301f38fbd0136307099ae5d",
+  "contract": "LocalEthereumEscrows"
+ },
+ "timestamp/pos__056e44e7eb5f00cae045e0b5a34b9c3d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xcfc60841bb8a64446771704159a1130a526d4b86",
+  "contract": "DepositBank"
+ },
+ "timestamp/pos__0656292491c3f9c8b491925d00b04d75.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x6e3ed592e28006eb6db16a568a56e82437a32935",
+  "contract": "MarchMadness"
+ },
+ "timestamp/neg__06656896f605b885441aaf85085ca135.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xcff84054b8e0db57043376afdbfd2461a9965ce9",
+  "contract": "MilestonePricing"
+ },
+ "timestamp/pos__072123a8f7b1dc7bd849ebe6b9dd80d9.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x2ff994cdb80144fa84b2ab671fc46816d562b64c",
+  "contract": "ECHO"
+ },
+ "timestamp/pos__078b9c7ae51ff2ab0c3619cc94a6900a.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3726cc0cdb26106bfb297ee6697da2a8687f385b",
+  "contract": "Crypland"
+ },
+ "timestamp/pos__07a549b14805e8b9b1e5ad1445ec4c87.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xf6acaf5aa6b25abdb2af45c7590948ee29a812b5",
+  "contract": "RaffleStrangeLoop"
+ },
+ "timestamp/pos__082ed9ae36dd6c067358fd3d5e33bfac.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x26e75307fc0c021472feb8f727839531f112f317",
+  "contract": "C20"
+ },
+ "timestamp/neg__0844098b324a67a70124607068ac7531.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9bd8f4736877567e267ee445209a0b2aafc01402",
+  "contract": "DragonToken"
+ },
+ "timestamp/neg__09738c4cdd6175ff110a53fbdf539ab8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6e0ae69d262420b8ccd7ecdc11f12bb8b38104fc",
+  "contract": "PreICOProxyBuyer"
+ },
+ "timestamp/neg__09bcbbdaf41339b5d100fc390eca9522.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xaf7aea249098f2c2f50cc11d4000ccf798194373",
+  "contract": "ZTCrowdsale"
+ },
+ "timestamp/neg__09d2c64d42e6c6dda41415f5e10bf41c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xae42990ad29747c9ab0c16098b8c5393e53c6abe",
+  "contract": "DaoChallenge"
+ },
+ "timestamp/neg__0adbb9434478f6977b5a383b1c5515a2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa7f598984f6a77da416efaaf6ff18f5f7b9eeab2",
+  "contract": "CreaturesInterface"
+ },
+ "timestamp/pos__0bb4abd4e814830462937febb9ed8bbb.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6822aaf4ab22e6cca8352a927b9ae0a8fdb58d9d",
+  "contract": "ProfitSharing"
+ },
+ "timestamp/neg__0d2598d06a3dc507babe4fccc4325eb3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x39139b54e733d01fd0b46fdb32cf45e08696541c",
+  "contract": "Redvolution"
+ },
+ "timestamp/pos__0f455b192d1356519b25a44a5a8651c1.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x2771ef07defb079c309542e11219d97b562ab6b0",
+  "contract": "Avalanche"
+ },
+ "timestamp/pos__10b85e6a3876d6ae377495f68666844d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x76eacde255403972bde24dea3f464d0a4104d7da",
+  "contract": "ObizcoinCrowdsale"
+ },
+ "timestamp/neg__10d8ebaeb96ae9d85c7674ef39621efd.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3076d20cef23cf934fc6f857eb97e2baa63fc9fb",
+  "contract": "GoldeaSale"
+ },
+ "timestamp/neg__110268472a8346dcd64fd38fa5f1adc4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x0b6bc31fe6839ec3b8cfc98819cec7fa64158a8f",
+  "contract": "DeadMansSwitch"
+ },
+ "timestamp/neg__1103114e849561bb06a6bc4d7d000a0f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x62451d37ca2ec1f0499996bc3c7e2baf258e9729",
+  "contract": "preSale2"
+ },
+ "timestamp/pos__1268bd79d09ef5075c1c8cde6708bffd.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1ce7ae555139c5ef5a57cc8d814a867ee6ee33d8",
+  "contract": "TokenStore"
+ },
+ "timestamp/pos__1364094cf4b69a0af5d2f20e4209bd68.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x0684d80292961f6f662a214d52c940232c4dfba1",
+  "contract": "EtherGuess"
+ },
+ "timestamp/pos__1447d0e6626f4acc11c127a76405ed54.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x8b2c66d91f5751b905fa801668c9b61ae3975282",
+  "contract": "EthTermDeposits"
+ },
+ "timestamp/neg__154a050ab0b1d12ebd63f35d588770ca.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8a8ca863f73992fcc43dd64c7261ba9dcc8e2181",
+  "contract": "SpaceTRIEUToken"
+ },
+ "timestamp/pos__15fd65226e58cafbc4f3b01783999988.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7f30b108768dae75bfe036c94b207dc53f12ca6f",
+  "contract": "DutchAuction"
+ },
+ "timestamp/neg__173c653e053a60550dcad5fb32a8b4d7.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5b36208992284cefa4de83f2fb34b33d1a75d4b7",
+  "contract": "NullFinalizeAgentExt"
+ },
+ "timestamp/pos__174f52fe89187ef41341a3cece0ebb0e.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x995020804986274763df9deb0296b754f2659ca1",
+  "contract": "TulipCore"
+ },
+ "timestamp/pos__1755295f8936cd9cb482c178a155c89c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x96d0b9aa47356dc088b50d4e4ce72af31c8ae9b5",
+  "contract": "Cajutel"
+ },
+ "timestamp/neg__17f2e87d6f62e815dc918d768df6804f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x0214d7faa8145bddb0fb4977980ce26aa1f95cee",
+  "contract": "CrowdsaleTokenExt"
+ },
+ "timestamp/pos__187c97cc295dfaaac4b85f7c829214fc.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x1e1fe9186c223ee1679634e3cfb7c03276b19493",
+  "contract": "WaterCrowdsale"
+ },
+ "timestamp/pos__19923f55954365aea2560fcde3ab2ec1.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa138fdb33b51f8533b5e7a435f263ba9d4100c69",
+  "contract": "SnovCrowdsale"
+ },
+ "timestamp/neg__1ab6fc88bb9686fa8c7cdfb095d09d9a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x525aeef9af9ae896179ee287e024a40cf5fc7655",
+  "contract": "ReservedTokensFinalizeAgent"
+ },
+ "timestamp/neg__1bcbd72be9eea3b997b11d96f9d32e06.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xc56b13ebbcffa67cfb7979b900b736b3fb480d78",
+  "contract": "SocialActivityToken"
+ },
+ "timestamp/pos__1bd25758bfe88039f2335c7f6bbaad6f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc87b7887f62c6674a19103fc35c749474d78ff40",
+  "contract": "PreTGE"
+ },
+ "timestamp/pos__1e25239c7d3418f4f5b7308dc29e67f7.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa746a9a309e7d498f830cffeb683b6d5bb39cadb",
+  "contract": "CashPokerProICO"
+ },
+ "timestamp/pos__1e36c4a459324e00d3115867d64b0791.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd780ae2bf04cd96e577d3d014762f831d97129d0",
+  "contract": "EVNToken"
+ },
+ "timestamp/pos__1fcecaf0692abbfda4bf068199f2e07f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x4b667a378c1d9b2134cc4fa02d9cfba2cc2b11d4",
+  "contract": "IntermediateVault"
+ },
+ "timestamp/neg__2000e562b993f759d1fbd9e441af4dda.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xc70afb5612b16d36d2204052f81932064fd084c5",
+  "contract": "CryptoColors"
+ },
+ "timestamp/pos__200348aa3e402b99db035a6c79936461.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xdd1ace2f45962e4c1297c784009478865e3b13be",
+  "contract": "ViewlyMainSale"
+ },
+ "timestamp/neg__207a94d45ef3759b3c256f2eca789e8a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x311d745582a97be5d7abbce48855ecec72737c5d",
+  "contract": "Tokensale"
+ },
+ "timestamp/pos__20b25014c3fa8106a5d0df915e92145e.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x22a97c80d7e0a9ae616737e3b8b531248f4ef91d",
+  "contract": "Campaign"
+ },
+ "timestamp/neg__21696030663934632d50ff16763f0b02.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3c7767011c443efef2187cf1f2a4c02062da3998",
+  "contract": "CratePreSale"
+ },
+ "timestamp/neg__235f2a0a01a57075c2ee55316e94f26e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x30cefbcb5c26a5b19a019092ab8d09f8739c904f",
+  "contract": "VentanaToken"
+ },
+ "timestamp/pos__23c3d45b9850f875e28bc9a94b6dfcb4.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb3b33f59174f2ef62167770e4c9cabaa3879eb5d",
+  "contract": "JincorTokenICO"
+ },
+ "timestamp/neg__2484e44d0b37c2d9ac67f865e1d4a4da.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3aaa175924a77ee4b40606f714b727331e430ece",
+  "contract": "MonsterCreatorInterface"
+ },
+ "timestamp/neg__24b1d5da3702313312718bdaeb86f28d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xcfaafdd4ec90985108c3f4847b14e7c733eaf575",
+  "contract": "TrueloveCore"
+ },
+ "timestamp/pos__273d60e1f34f2dfbb2e6bc4126de6e7b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x761932818972b0368db57207ffb9c64b90e511bf",
+  "contract": "XmasCoinCrowdsale"
+ },
+ "timestamp/pos__27d7a8f31eca79b168da6a4a8cd5b5a9.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xfd2d4e7c0876575bc879f0edb9b59f32d789856d",
+  "contract": "ChristmasClub"
+ },
+ "timestamp/neg__28007d73eadb50ec681e0f5f832405eb.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9122e2cfab13d30237ebeef0c0521d64bf0b06dc",
+  "contract": "cEthereumlotteryNet"
+ },
+ "timestamp/neg__2802fcaf8814660aedd5cfc21884c107.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x2c68efdd296f8a4f83ee46b12152a66dbe74b686",
+  "contract": "RefereumPresaleToken"
+ },
+ "timestamp/neg__28d858d915a51fb614e3a02588cccbe5.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5b7ea49f9fa4cc48f6737b72bd36bb4b9732bb7d",
+  "contract": "GESTokenCrowdSale"
+ },
+ "timestamp/pos__2905d6a52900c3e1bb5a32ebf9b6ca31.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x2184a4b834d343ef0fb0a8a5039ce8b697004ac4",
+  "contract": "JoysoCrowdsale"
+ },
+ "timestamp/neg__291b479c02e67afb6e2e4c3d25602337.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x631b4cea5064e2577cdb73c37ed2de00c30ee14a",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__2b417165ed0e6da100526a639d2170a3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7c32db0645a259fae61353c1f891151a2e7f8c1e",
+  "contract": "POTENTIAM"
+ },
+ "timestamp/neg__2c0e03ab0171d10be5a59a65044d625e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe9ef26c4e9761e2305f455a0e0d4cd286e2d13a1",
+  "contract": "CommonSale"
+ },
+ "timestamp/neg__2c5c8d27c7b2b5a156bdfb8ca4f84f98.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x10b7d09dca7f9c6d33a9aeef5bf2bb5ce3ec1550",
+  "contract": "JBXICO"
+ },
+ "timestamp/pos__2d25d0445ff31904b2a5bc6aa9104a77.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x074d894cc81539853b77ed0f5cb5058a740010c3",
+  "contract": "CTCToken"
+ },
+ "timestamp/pos__2d5ee2de63144c6a8e7bae4ca2f4f06f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x293a7b4e8ad029ee50e52081b10df266fb1cb99d",
+  "contract": "TUStoken"
+ },
+ "timestamp/neg__2e6bebb0982f02b00d3c5947bdde1601.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xc83355ef25a104938275b46cffd94bf9917d0691",
+  "contract": "FUTR"
+ },
+ "timestamp/pos__2fb082696b83274b81c81f9f12bad6ed.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x28a40acf39b1d3c932f42dd8068ad00a5ad6448f",
+  "contract": "LudumToken"
+ },
+ "timestamp/neg__300a36c54cc1c82ff2fbf4ffb458b78c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3868eaf38f1319c70c4557c2234cd3e89947c633",
+  "contract": "CryptoversePreorder"
+ },
+ "timestamp/neg__306fc23c5d99501318efe5e94e0c047f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5fafe57bd692d07c4db048558752632210ccddf6",
+  "contract": "ProvocoPresale"
+ },
+ "timestamp/pos__30b5b6a7814903c04b286d932964be3d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xf45546fcb8c604703a0c5f1a652f01ce452ec511",
+  "contract": "ECT2Crowdsale2"
+ },
+ "timestamp/neg__30daf8415108165389473c320b172cea.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x14a3f4795076c0ae67c2aa9efc10e58427a00dff",
+  "contract": "EtherShipsCore"
+ },
+ "timestamp/pos__31eeb099e77105315e7837c7b9296a18.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xe65c53087e1a40b7c53b9a0ea3c2562ae2dfeb24",
+  "contract": "RichestTakeAll"
+ },
+ "timestamp/neg__329245db5ce9de76092fc33e056d139b.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x01d5d0108589f3c52fcce6e65503bb6515e66698",
+  "contract": "DcorpProxy"
+ },
+ "timestamp/neg__351f15f1fc21e6f87eab7bee322c7103.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb59a226a2b8a2f2b0512baa35cc348b6b213b671",
+  "contract": "EtherToken"
+ },
+ "timestamp/neg__357b58bea2ac0c616454208586edcdd2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x51036b0029e95ecbce4784df0a87987d1092ec7d",
+  "contract": "SolarEclipseToken"
+ },
+ "timestamp/neg__3710f7956a5fca9088e62eaa3c9c37a7.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfd743691ac893000f29c893ba21ed46f465c4de4",
+  "contract": "EtherSpeed"
+ },
+ "timestamp/pos__3985f5d8a42db907cec296771897210b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7a3ffe753a209cc8281d68356270e6848f098f71",
+  "contract": "AmbrosusSale"
+ },
+ "timestamp/pos__3a0d42b439eac1c20537c5c4f8f62e2d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xd3a661f28b33167d0982e88caf431675bdf4a3d4",
+  "contract": "EthereumHole"
+ },
+ "timestamp/pos__3a7f00abaf61b3dd5d128f609434afe2.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x422431dd7926165b83fbe433669c408843df23ee",
+  "contract": "ProvidencePresale"
+ },
+ "timestamp/neg__3afb0b4cf597df904f7cf98fcab6d19e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x2c3cc0f8dede2eccae43380ecf29b61fa6d10dca",
+  "contract": "DonationDoubler"
+ },
+ "timestamp/pos__3de2fba1fb4c173089352b777e78ad0c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa3c1772b12a7598568cee1e2d72281176d8b1f3d",
+  "contract": "ChargCoinContract"
+ },
+ "timestamp/neg__3e986d35c9248a39a73a9b3fd13e8972.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb104df39250112eda59b27f5db7013c7ee132d50",
+  "contract": "ITGToken"
+ },
+ "timestamp/neg__40434c4be919ee95b9e4352bde2a5a42.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb1690c08e213a35ed9bab7b318de14420fb57d8c",
+  "contract": "SaleClockAuction"
+ },
+ "timestamp/neg__41fd7d5882feed3cc226c5754ce74697.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7da90089a73edd14c75b0c827cb54f4248d47ecc",
+  "contract": "Dice"
+ },
+ "timestamp/pos__42e267c21c222ab5cb97cccaf17a92ef.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xbad989ff10f07c76b89abb1ecdad183e512b345e",
+  "contract": "BBDExchange"
+ },
+ "timestamp/neg__43c992f0a867437ffa835673b23b1750.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xad1aa68300588aa5842751ddcab2afd4a69e9016",
+  "contract": "ETH_ANONIM_TRANSFER"
+ },
+ "timestamp/neg__43ed6b5ec1c30671119d41652c50b580.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x225ad9683005ce6fde4eae78c7ed91a499182378",
+  "contract": "MobSquads"
+ },
+ "timestamp/pos__443bcfa03f35f2811129e99e67cd443d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xedab973d01970f6f83962fe3aaae818f1cd13487",
+  "contract": "IQNSecondPreICO"
+ },
+ "timestamp/pos__44cba5d7421fdb6273fc685c830d39b6.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x9a6ad871e40e3ad74c55d94495e0207bce77c762",
+  "contract": "Lescovex"
+ },
+ "timestamp/neg__4503365bc1a0e7b13bb667f14c14a3a3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa14c275277b788c20534066335e8bd3de77ffde4",
+  "contract": "ITO"
+ },
+ "timestamp/neg__4570e2ba095d9bba91882a67a4ee8fa9.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xcd806502ad2f9aeb32e23f8d647341d4b568201d",
+  "contract": "THTokenSale"
+ },
+ "timestamp/pos__45b758da7253bdcd27669cac748b4946.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x6f430927861d828bd625754a03d17a65eef5eb7e",
+  "contract": "DropletCrowdSale"
+ },
+ "timestamp/neg__474fd50d8f284b1ac8bd207b0229169c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb8bf73550f251562d308882e032225a700a7b9bc",
+  "contract": "DWorldCore"
+ },
+ "timestamp/pos__496449e6d6f96097c95308c7551aa418.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x728781e75735dc0962df3a51d7ef47e798a7107e",
+  "contract": "WolkExchange"
+ },
+ "timestamp/neg__49db1e055853dcf78e984d206a4726e2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x4e646a576917a6a47d5b0896c3e207693870869d",
+  "contract": "Dice"
+ },
+ "timestamp/neg__4a843f27752b3582681f84950c5c7acd.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7cb244b63ffa22d192c94d375e096f174e0faad2",
+  "contract": "Presale"
+ },
+ "timestamp/neg__4adce7d18ea22e9f5fd224269e0baad2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x80a92535c95d0e6cebece256df3c1b540c60dccb",
+  "contract": "Contest"
+ },
+ "timestamp/neg__4baad7e475a357dd8d7580d3be0afc02.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x4490f9807965c49a2471bd7b121a80f0b3861e5c",
+  "contract": "PreSale"
+ },
+ "timestamp/neg__4bc3ac502d6cf70ba84eb9dba6a1c6e6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe7dc501cb9ca414cf9211af214d5065ca3a30768",
+  "contract": "Controller"
+ },
+ "timestamp/pos__4cb0147e085a037e42dd892923e23214.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa667f7c9f8d9e7f54814f312ae42d08a31154889",
+  "contract": "ListingsERC20"
+ },
+ "timestamp/neg__4ff44cb73cbed3545d973b7d72fb1d49.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8b34fbc553db3462ad4909f2e5577cc22f63c216",
+  "contract": "LRCMidTermHoldingContract"
+ },
+ "timestamp/neg__50d22d4d3f3830c8fd94382a9bd2d98b.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa87c3ec87eb802aad080df0adb331e504d327e5d",
+  "contract": "CentrallyIssuedToken"
+ },
+ "timestamp/neg__5156ae9d80a0f2c59f2cb9f4fe8b6f08.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3744942c42451c2b42f43a51ee9bb6c6ad0fdc86",
+  "contract": "ICOEvent"
+ },
+ "timestamp/pos__52713e629e1353b00302037ab5e48fbf.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
+  "contract": "KittyCore"
+ },
+ "timestamp/pos__530aa81dc323f2b072e098be8cc52917.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xfacc5e3ee7e8a27215963e1a9440075cc50510a3",
+  "contract": "IAHCToken"
+ },
+ "timestamp/pos__535508e9c04b204d62cb85d1a13a80e8.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x94dd78dbe600cc5c4e9caa5f3444affd36b33505",
+  "contract": "EthDickMeasuringGamev2"
+ },
+ "timestamp/neg__53d983142dfc565b8196a72045480d66.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe642b6f79041c60d8447679b3a499f18d8b03b81",
+  "contract": "Dice"
+ },
+ "timestamp/neg__5520ef7276baf29282ea39f04ba93b0e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x49fddeae0b521dab8d0c4b77e7161094f971320d",
+  "contract": "Dice"
+ },
+ "timestamp/pos__55ba44ea334f865ade83857411b33872.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xac0a3337e7d50da5c35bee633803cf904e2e71f5",
+  "contract": "SpaceICOToken"
+ },
+ "timestamp/neg__567c70eed383eef0276a236c81ea81e1.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3cd4351f3c962f871024efef2922ae39896e4761",
+  "contract": "MintedTokenCappedCrowdsale"
+ },
+ "timestamp/pos__56a029aa9ad02e9d3d0ddbd1152fdded.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xf37c4a962e70d813a4d9825942141cd9bc5169fd",
+  "contract": "ChangeableRateCrowdsale"
+ },
+ "timestamp/pos__570022731e452a43a792ea0dccea89b7.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x0f1cd99bea68f0d994064395d2b45315b185882e",
+  "contract": "Countdown"
+ },
+ "timestamp/pos__57b81bc4321c5de813de2f180395ce07.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x4fb663c1616bfe80b5b6d5a214efa81d5a121801",
+  "contract": "HYIP"
+ },
+ "timestamp/neg__58e98e6eb7bb3599b931eb4c3fcebec9.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x19d7a9ad3b49252fd2ef640d0e43dfd651168499",
+  "contract": "BM_ICO"
+ },
+ "timestamp/pos__5a876adca0f5ffcdd9dd7c3def02cee4.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x03f839d3c0857202691f390c2f8723accd738286",
+  "contract": "XgoldCrowdsaleToken"
+ },
+ "timestamp/pos__5b8599ba149d02b310f1b28ebb3ff2e5.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7b533e19de8c1a2594e0d170c4131aba2d7ba39d",
+  "contract": "BizPyramid"
+ },
+ "timestamp/neg__5c118e978c9c2e4806c161a56be57f34.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7a46c781b593068d5e987b191e9c2f7413e22aee",
+  "contract": "MultiSigWallet"
+ },
+ "timestamp/pos__5c8be0525f4cb45a0655f1fcd3043aeb.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb71cd8f21d5c21edcd113ca2807189ddcaf9dd44",
+  "contract": "koth_v1b"
+ },
+ "timestamp/neg__5ca5f1ad8c2ad022aa9997134a0a2d80.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x14b233a46cd4bdfdb7ca29aa0fd2406f667f8ff6",
+  "contract": "Power"
+ },
+ "timestamp/neg__5d2c93af3a1f2604179d93e36304377e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd7e4ad7c318ffbafbf602e32e089e7e2326a2581",
+  "contract": "DOCTCrowdsale"
+ },
+ "timestamp/neg__5e471afcb225dc5e8bb921b59cf95eb8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1bb28e79f2482df6bf60efc7a33365703bcf1536",
+  "contract": "hodlEthereum"
+ },
+ "timestamp/neg__5ee03775f220d61b5261f8a95b648495.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8f548f0ceb23ddc9ee76e126b29fae94c607c3bc",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "timestamp/pos__5f20afb1af31f6e2d104239f530b670b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x01805928b325078683818329526dab3f74865e10",
+  "contract": "AumICO"
+ },
+ "timestamp/pos__5f77cf962701055ad05b234bb8daa52b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xb0d1132d97b2eb4a08b6d2f9379039610c3a0956",
+  "contract": "RENTCoin"
+ },
+ "timestamp/pos__613592ec713754ff414af093a3003ee2.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x943e99d9efd4b44d808f6c83373a9a2c1e15e0f8",
+  "contract": "ForegroundTokenSale"
+ },
+ "timestamp/pos__619903f61a9a9c05bf0c23411be7a717.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency",
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc23f76aea00b775aadc8504ccb22468f4fd2261a",
+  "contract": "NewCratePreSale"
+ },
+ "timestamp/pos__6209514e1b7fafb3c2930433fa7c79e3.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd566fa4a696eac66f749f7fe999d6673fee2026c",
+  "contract": "CHEXToken"
+ },
+ "timestamp/pos__62f168c0756a9c6e9e9feb0da2e6e6ef.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x34d1857175eb5693bbee49c214e2cd44b2f3058c",
+  "contract": "CandySale"
+ },
+ "timestamp/pos__6497645df2bb18a98abd503022e6062b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xd8f760ac90208423ecf9a5f320037cb224de8909",
+  "contract": "NYX"
+ },
+ "timestamp/neg__6564e9376ca7cd8681e48b4c0cd9895a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9e4ad79049282f942c1b4c9b418f0357a0637017",
+  "contract": "Noxon"
+ },
+ "timestamp/pos__65ed0e61a54c3bbae6be05e2c520f1fd.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x5c7621f7afb14b9ab20fefede40b428d9b4429f2",
+  "contract": "Gelios"
+ },
+ "timestamp/pos__65f9a69efef994274c0cc42977a85bd9.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xaae91d6c616ac2b07cd8cc0956ea8e60d4c220c5",
+  "contract": "Bombs"
+ },
+ "timestamp/pos__662e96aba0463e857799b3bbdd600a21.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x23166b7900d968f2a2100829b0a19540aa2f7cf1",
+  "contract": "CHEXToken"
+ },
+ "timestamp/neg__670db6c8e70b8f49a63da12fafb3e4f8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe691b7ff3c9fddb8c2437412208ee4816aba7258",
+  "contract": "LegalToken"
+ },
+ "timestamp/neg__672241d04178aac2aa32ebcd29108ffa.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8f199d74d89b977d3f0684f0572bc66b16120ed8",
+  "contract": "OptionToken"
+ },
+ "timestamp/pos__6a763614ca7648dff52056818f810fb6.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x67119bbdc1683df2ad85ccea4304619f5d62e000",
+  "contract": "TrumpFullTermToken"
+ },
+ "timestamp/pos__6c2c83535a4ffdf071abd5585b397c34.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x07222fc4cdacedfbcfc03cbed6e72fb329e8d0b6",
+  "contract": "CryptoCarsRent"
+ },
+ "timestamp/neg__6da06530ead7f32f03184d306bad327b.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3bb62bada8f9921dcf0b1be5d2c972d69c064d84",
+  "contract": "TokitDeployer"
+ },
+ "timestamp/pos__6e474b7a3e12ef562419ab71c0520aea.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x8dcff3aff91f0922f14e1c11cc409086cd1e4692",
+  "contract": "ChrisCoin"
+ },
+ "timestamp/pos__6e70ce4c41e5ba57835b23358af92214.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa67f436597852efa3967be824abff57f72c2f6d9",
+  "contract": "IungoPresale"
+ },
+ "timestamp/pos__6fab2d27933e8c26e2bf144353ea4226.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x94b9188cb5b6980c88484b6ed38d8c4001108a04",
+  "contract": "ForecasterReward"
+ },
+ "timestamp/neg__705913f4fe05f8e6e445d1e3727d34ca.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7c8b63c4cf7a6009e06dc78d9a8352cd0541556f",
+  "contract": "SYCEarlyPurchase"
+ },
+ "timestamp/neg__70a015ff90bd920aa01c03ee10ab2261.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x215b4a7cd7f4ad4594867bbcc91cac08c83ab507",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "timestamp/pos__712f9cf1008da8711299ccb604e5e81e.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xeb5518602c22154970fd43447939b1dfef053b9e",
+  "contract": "JobeumPresale"
+ },
+ "timestamp/pos__7167040d12494e69e1c42de4b0f8bea2.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa7fa7588cd7ebf3d0e128f07da7406dd74e241df",
+  "contract": "TWQCrowdsale"
+ },
+ "timestamp/neg__738cda6c5d4d0952633d7a91e88d6f6a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6d5cac36c1ae39f41d52393b7a425d0a610ad9f2",
+  "contract": "LLToken"
+ },
+ "timestamp/neg__740d58de759400575c5b7700f11a8e67.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe4fb506f5e6d8c68e71cb9f7cc2fde4c059d3925",
+  "contract": "EthMultiplicator"
+ },
+ "timestamp/neg__74a9cc8e9d2ced3567d9cd2dbcd44600.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
+  "contract": "StandardBounties"
+ },
+ "timestamp/neg__7664c901c397094e9fa2b9b250fabac1.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+  "contract": "DAO"
+ },
+ "timestamp/pos__76c0fb3498bd12505069726eabf3f30f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x919c9b9621b3da0809431b213c431a796cb8fa1f",
+  "contract": "LympoICO"
+ },
+ "timestamp/neg__76f86d8427d414b242165c7c96d0099d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x22164e957ac4c0cb0f19c49b05e627675436dfe1",
+  "contract": "Artwork"
+ },
+ "timestamp/neg__776db1c99d75c11ee0b71ff399dec3f4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x336db6c1ead9cc4d5b0a33ac03c057e20640126a",
+  "contract": "EtherTanksCore"
+ },
+ "timestamp/neg__781075ec09c15df6614568fd8fbf90f6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xadb41fcd3df9ff681680203a074271d3b3dae526",
+  "contract": "XrpcToken"
+ },
+ "timestamp/neg__78da1572241616fa5b453f5d7c23f05a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb28a3dd24036151c819c6d401f7a222d9aa3671b",
+  "contract": "AxiePresale"
+ },
+ "timestamp/pos__79c0309ed060e54a01c3c1b00e352e4d.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x4aea7cf559f67cedcad07e12ae6bc00f07e8cf65",
+  "contract": "EtherDelta"
+ },
+ "timestamp/neg__7a7b12f2e68a66ad1597de44d4a67252.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd77fc35cc9007557dcd18bfe26fe66f1ea3a0e7f",
+  "contract": "Crowdsale"
+ },
+ "timestamp/pos__7b48f8872cd4c0341402cd36505e1f73.sol": {
+  "label": 1,
+  "sources": [
+   "SWCregistry: SWC-116"
+  ],
+  "address": "",
+  "contract": "TimeLock"
+ },
+ "timestamp/neg__7b7807512399007d4ba9201bffb88a60.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xcadb1b36299fed994c966107573d78b2872ba490",
+  "contract": "MultiSigWallet"
+ },
+ "timestamp/neg__7b8ce73d7b597c2af51067e68d6693eb.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfe211f86be5de898c9ebffe2c2b1d49ee8460b7f",
+  "contract": "GMCToken"
+ },
+ "timestamp/neg__7c8c13e054d253c80776aa19cfc150e5.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd7bc93f391e94557fa621711699d1a5fd38d5ad5",
+  "contract": "DividendManager"
+ },
+ "timestamp/pos__7caa99a5c7caca49a3915980d5a69ea6.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x6651562d6251953dbee83d80c4014eb3f4c00f55",
+  "contract": "CccTokenIco"
+ },
+ "timestamp/pos__7d0e3f58927a4b3e5651892d5045b74c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x20073a27811c561ab54fd2f57f31c54717da49ce",
+  "contract": "BsPresale"
+ },
+ "timestamp/neg__7d27dd9bfa74287d2cdc390031d9578d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xdfc328c19c8de45ac0117f836646378c10e0cda3",
+  "contract": "SmartRoulette"
+ },
+ "timestamp/neg__7d6b9a034771315b63328b230f104990.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7352cb77c2478a59d21230a8d65146e04b59f58c",
+  "contract": "JouleProxy"
+ },
+ "timestamp/neg__7e833ddd83434ce7c79e6881f9933cce.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9b2e81b42907e2bbd2bd76e36ba8ce1911db537e",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__7ebd71a2ad69c9f4bcb733c440646994.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x060e1e5ca588561431822e296aeab1fdecc893dc",
+  "contract": "ApprovedTokenDone"
+ },
+ "timestamp/pos__7ece38ae4706a8abfb4b860044e380df.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc2e330dcb9d0e8edd70425e532f0288088b6d7cb",
+  "contract": "Protocol108"
+ },
+ "timestamp/neg__7f363250765430cfd54314c54825ed6e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x55648de19836338549130b1af587f16bea46f66b",
+  "contract": "Pebbles"
+ },
+ "timestamp/pos__80ebfc0b73433867a04f33c23a99f031.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xe3d631a5fc2aa15d8f051e5ecc8b7979312c4aef",
+  "contract": "BriskCoin"
+ },
+ "timestamp/pos__816d6a19201b207309c5dbecfa2d7df6.sol": {
+  "label": 1,
+  "sources": [
+   "JiuZhou: Time affected by miners"
+  ],
+  "address": "",
+  "contract": "TimedCrowdsale"
+ },
+ "timestamp/pos__81a70d4963643b4abf5b0ad0843690ea.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1f31d1168efe4bd22d00d31fc425e5bcb54c75e7",
+  "contract": "STeX_WL"
+ },
+ "timestamp/pos__82ccd5367f915d111504bd7afd3a29bf.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x20138727bad91ee61db094a5edba6343b6f67669",
+  "contract": "BlockFoodPreSale"
+ },
+ "timestamp/pos__82d73d1a6004acde53f9b27975fa4bc8.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x13dccb630ba92989299bbc276486c28673ca69e8",
+  "contract": "BitGallery"
+ },
+ "timestamp/neg__837fe9e491d6350b3d5a50b276089cdc.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1e2fbe6be9eb39fc894d38be976111f332172d83",
+  "contract": "Dice"
+ },
+ "timestamp/neg__83f6dea6686e660fcc648f7a601df9dc.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x141766882733cafa9033e8707548fdcac908db22",
+  "contract": "DungeonCoreBeta"
+ },
+ "timestamp/pos__845b7f66cc76ff0cca29e747a67e6ed7.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6f4e647f553397dc999382ad3a9c5336c5de27aa",
+  "contract": "CollectibleToken"
+ },
+ "timestamp/pos__8540baeea93fd0030d2bedb2f7e63e3a.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xd64e5b228561225b437dc38b81891c15fe98cfee",
+  "contract": "NYXAccount"
+ },
+ "timestamp/pos__855222da5dfcf3ecdb7d4cd2d510ee8f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x81190d066c1cca9a778a41703c9c7f6c506629d1",
+  "contract": "EthDickMeasuringGamev3"
+ },
+ "timestamp/neg__85974d2aff34a5c46c4b33df9a951fb2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xace62f87abe9f4ee9fd6e115d91548df24ca0943",
+  "contract": "MintedEthCappedCrowdsale"
+ },
+ "timestamp/pos__85d75177730994defebce91f5ee2f96b.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x18a672e11d637fffadccc99b152f4895da069601",
+  "contract": "Rouleth"
+ },
+ "timestamp/neg__86e3c4a0b7f363460f1547363099a6c6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x833ede3050c27d88e5da6922a312e3fdc15be29b",
+  "contract": "RefundVault"
+ },
+ "timestamp/pos__86e4a4bfa641c2d4c8f70b8b64a7aa9d.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x91a57b2f6fa86b373bce5716eb26c81cbb004223",
+  "contract": "Rouleth"
+ },
+ "timestamp/pos__87a814414d3301f272a4e9918ac7f82c.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x357f07ac89ee6329a70ca837d6bfc16b0275015f",
+  "contract": "EthereumSweepstakes"
+ },
+ "timestamp/neg__87c805086c85292a92de288bb7b5318e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9da53246714bf10010aee31ffdb9cf8cab8c6813",
+  "contract": "CentrallyIssuedToken"
+ },
+ "timestamp/pos__893113696917d779789f5ea47150d56e.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa5dc0165b798779ac80acc84c4da4ee77b79843f",
+  "contract": "EosPizzaSliceDonationraiser"
+ },
+ "timestamp/neg__897c7b9fd13f388844288b45a29d64a3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd0a6e6c54dbc68db5db3a091b171a77407ff7ccf",
+  "contract": "EOSSale"
+ },
+ "timestamp/neg__8aba41bc3197da224cb3fa80942679a6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe163f74937c8c3065518486e58d655504da0d4db",
+  "contract": "AidaICO"
+ },
+ "timestamp/neg__8ba454dc7fca853973ab5b2f2c7220e3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe386b139ed3715ca4b18fd52671bdcea1cdfe4b1",
+  "contract": "ZeusToken"
+ },
+ "timestamp/neg__8dee8c5353ecb38a25898c6c1dad7823.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x219218f117dc9348b358b8471c55a073e5e0da0b",
+  "contract": "GRX"
+ },
+ "timestamp/neg__8e891eef42d103cc7f6d6dfc0251dc12.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1e025340d6f75a2a4ef81139049cfbf976782eeb",
+  "contract": "IcoCrowdsale"
+ },
+ "timestamp/pos__8f7ae3d52fc17414ed141f1cb4fe3ed0.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x01e53a2e7122a63845b1c329d4fce8124dda5b06",
+  "contract": "Loan"
+ },
+ "timestamp/pos__905bd154dfa43b7cb1c0840a291a0ed3.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x1efd5dc066eb56d4db7e2ff38843c8bf8aa59168",
+  "contract": "BitkomSale"
+ },
+ "timestamp/pos__918665f31737bc76d4ff196e53aaca76.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+  "contract": "EtherDelta"
+ },
+ "timestamp/neg__91c7e42695d3ecbbc797ef67f258d2b4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x967081d634f01003b2c5b3d8ea5aa2c55000722e",
+  "contract": "ZEROCoin"
+ },
+ "timestamp/neg__93cdb5e42f79ef21c66a8f68a4d07c19.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe05cedd2838e4e1d99b539d8c768d6ef2a10f729",
+  "contract": "Contribution"
+ },
+ "timestamp/pos__9531ef97f59019c62d2348001e458830.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x041d26dcceda7fd82898cd7dce0ae7da6031ee51",
+  "contract": "SimpleAuction"
+ },
+ "timestamp/neg__9571b6f2f1a04891ef1640b74b657030.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5882d49d3511e09096cbbab7e19fbfb82f65f28d",
+  "contract": "BioToken"
+ },
+ "timestamp/pos__9645fb29c3b580d31224ab038a45bc30.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x053e43d155519efc4616bdc2a8fef5a4eb4cec4e",
+  "contract": "CandyClaim"
+ },
+ "timestamp/pos__964f94b10bde8775e94c9969cf91d519.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xe200641890772fce8ee6edc5354ccea30ac92f49",
+  "contract": "Who"
+ },
+ "timestamp/neg__974387b745f74d1c3cbe06d5034faf6b.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfdfe8b7ab6cf1bd1e3d14538ef40686296c42052",
+  "contract": "Skraps"
+ },
+ "timestamp/neg__977c04512560af4c6d39c31e349921e4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6abf810730a342add1374e11f3e97500ee774d1f",
+  "contract": "BCFMain"
+ },
+ "timestamp/neg__9795608a4a76b3be162bef7fdfad6afb.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x092d3374f942bb4a99ce64f37fa7e661fdd1e74c",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__987beebed3086ee6d2f5472e1d3ad186.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x0e915b35cc269b2dfc8bbd8e4a88ed4884a53efc",
+  "contract": "CrowdSale"
+ },
+ "timestamp/pos__9a17f7eb142dbbc787f0820d389c2c9e.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x9922bff8380e9062eda0ad2f5712d96a88c3d0b3",
+  "contract": "Bounty0xPresale"
+ },
+ "timestamp/neg__9a9fe9d646c548095b8431e977da6f2f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x635783f8dc5e941fc142235ea44cc3529c17695d",
+  "contract": "EtherHellFaucet"
+ },
+ "timestamp/pos__9ac0a5c5fc7b95661b63034ed62da6df.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc27590378690620a44b1382e7cf31db5a1f9b99e",
+  "contract": "HodlContract"
+ },
+ "timestamp/pos__9b94b1cac91ace65acee22ccca5de1e2.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x4895d0fcb5489434fd856f2942d578ea0c1aed15",
+  "contract": "IndaHashToken"
+ },
+ "timestamp/neg__9d1162fc83895528aee33d4ab9b17d03.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb49e984a83d7a638e7f2889fc8328952ba951abe",
+  "contract": "MON"
+ },
+ "timestamp/neg__9d5e7c652b2d27cbf8dbfc8e195c5620.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9b0f6a5a667cb92af0cd15dbe90e764e32f69e77",
+  "contract": "DSTContract"
+ },
+ "timestamp/pos__9d79677564be2d0efdeea19c67f515c0.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x03cf94938696812a3615a98cdfcf82598ef30158",
+  "contract": "ElectionsMarketSavingsBank"
+ },
+ "timestamp/pos__9eb97ca8a665e2fe3e2f85eb28caaf9d.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x373c55c277b866a69dc047cad488154ab9759466",
+  "contract": "EtherDelta"
+ },
+ "timestamp/pos__9ed531b1659bee273bc498bddee7f974.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x47d47c1f174bf9e7322974998e62968cec96257c",
+  "contract": "MineBlocks"
+ },
+ "timestamp/neg__a0e13201af904506574b468f75e930c4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa62bdee2f277c2e2c0f46cba96879b263796ee1c",
+  "contract": "HackerGold"
+ },
+ "timestamp/neg__a113d630c4433c6ac130093ded55871d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5fc6de61258e63706543bb57619b99cc0e5a5a1f",
+  "contract": "WanToken"
+ },
+ "timestamp/pos__a3869db03b727dd86887e16b578ef093.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xdd39457768927c7d13b7854931eb4e800fb1f347",
+  "contract": "BLOCKCHAIN_DEPOSIT_BETA"
+ },
+ "timestamp/neg__a38efe26a54d9e7cb47d3017104d9531.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xb3775fb83f7d12a36e0475abdd1fca35c091efbe",
+  "contract": "Hourglass"
+ },
+ "timestamp/neg__a411ba3b97a17ab4d62c394c49d45d5b.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xc00061de5d47f802daaf0de1498c9680732861c3",
+  "contract": "Mainsale"
+ },
+ "timestamp/neg__a623766a91093646d1683f6ee9c54459.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd9489f5a7c4420e814f6216505b6754ebd4213f7",
+  "contract": "LifMarketValidationMechanism"
+ },
+ "timestamp/pos__a68fbd324b10507b23a239b13535779c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x14e2ac9b6ca7bade21afdfa31b63708fc0b08d8f",
+  "contract": "KingOfTheHill"
+ },
+ "timestamp/neg__a6c230ff97ae1906c6f9c50c18250437.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x00674045bb7c17f0aa1cde34780d6c51af548728",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "timestamp/pos__a6f30242d8c1925cb6cb77326d502c76.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7338809d1a2c6fbb6e755470ab2a28e8c5dac63c",
+  "contract": "OZRealestatesToken"
+ },
+ "timestamp/neg__a820b9e52c6d2ff632a22149da0d2f5c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x39df5af51c47256e5c63b3dae1a21f3da4a58e89",
+  "contract": "MintedTokenCappedCrowdsale"
+ },
+ "timestamp/pos__a8296a943c5bb4586ca1703b6eee6761.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x3f796139c44bb79ea4744a1ca43b9ae91fdf62eb",
+  "contract": "ElecSaleSmartContract"
+ },
+ "timestamp/neg__a8dfd3ae4eb2961406ab589922188606.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa1877c74562821ff59ffc0bc999e6a2e164f4d87",
+  "contract": "Crowdsale"
+ },
+ "timestamp/pos__a9cd3c02ab49a90defa3e2e3772fcf70.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xbf29685856fae1e228878dfb35b280c0adcc3b05",
+  "contract": "DecentrEx"
+ },
+ "timestamp/neg__aab9b503e6f61cb0b4ab33490e3ea93f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x942ffef843d37805c59f30fabb99b46aad135288",
+  "contract": "PreTgeExperty"
+ },
+ "timestamp/pos__ac8959ffa55a2efa106c08e8f186274c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x3c63d4b0330a1ab969ff0f8b2ba227540a15b0ca",
+  "contract": "SpanCoin"
+ },
+ "timestamp/pos__ad32d63f634422902e7c4c39b9aecdfe.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xd79b4c6791784184e2755b2fc1659eaab0f80456",
+  "contract": "HonestDice"
+ },
+ "timestamp/neg__ae3832ff76e12b6d9a87985492e6ad8d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x2097175d0abb8258f2468e3487f8db776e29d076",
+  "contract": "Sale"
+ },
+ "timestamp/pos__aedb904ae894f07b5bc5bfcc94fa4c9e.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xb61802c06fc7d5bea7d8b4853e6a7fcb53c6a8b0",
+  "contract": "HolyCoin"
+ },
+ "timestamp/pos__afb5fb77476d43ecb7e40ccd46651b63.sol": {
+  "label": 1,
+  "sources": [
+   "SWCregistry: SWC-116"
+  ],
+  "address": "",
+  "contract": "TimedCrowdsale"
+ },
+ "timestamp/neg__b03647dac7ebe168bb4f95d35404bc5a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9c099997100fe55041b2028332a027ad7004aac4",
+  "contract": "DogezerICOPrivateCrowdSale"
+ },
+ "timestamp/pos__b06648b43eee1574795524dd8f6d14a3.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x4290563c2d7c255b5eec87f2d3bd10389f991d68",
+  "contract": "UnlimitedIPToken"
+ },
+ "timestamp/neg__b1523f4fa53a0d4a093da369e2e796b2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xea450e48e8d0da4332516a12c63c2232450caf6a",
+  "contract": "MintedTokenCappedCrowdsaleExt"
+ },
+ "timestamp/neg__b1d70f620b671dabb6f941c9c9fcecb1.sol": {
+  "label": 0,
+  "sources": [
+   "JiuZhou: Time affected by miners"
+  ],
+  "address": "",
+  "contract": "gray_TimeDependce"
+ },
+ "timestamp/neg__b1dc998b811e7d3ac3b6eabb7a0cd0f8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xdd98b423dc61a756e1070de151b1485425505954",
+  "contract": "Dice"
+ },
+ "timestamp/pos__b51fa5a295e5eee06b4a53af73b55217.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xa5b99587151ea5e63c642c474c6ce375812e5627",
+  "contract": "EthBird"
+ },
+ "timestamp/pos__b54d06f1d058d0179d7331534dbb5e90.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x5274a2293dbe075a82d41e873bb927403a9dce46",
+  "contract": "EthCapsule"
+ },
+ "timestamp/neg__b59800d512903ba1a0bb9de967b4d668.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x491559dd3dfdbca13edc74569e86c8a0d517975b",
+  "contract": "Sale"
+ },
+ "timestamp/neg__b5abbc2c1ab28d77460a6fb3bc032137.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x16885883e2785c56d279636b45fb85d8f9b0db23",
+  "contract": "DogezerICOPublicCrowdSale"
+ },
+ "timestamp/neg__b77f5d5db7bab7ef519d5e0f8a9ee4d6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x575cb87ab3c2329a0248c7d70e0ead8e57f3e3f7",
+  "contract": "AhooleeTokenSale"
+ },
+ "timestamp/neg__b845d738638a81cf34298171cd543497.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xc67c1f88f31e724b137a057292e55cb42a5f3241",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__b8c0698cbda4e088ef12b9f7e97a78a1.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x20d42f2e99a421147acf198d775395cac2e8b03d",
+  "contract": "Crowdfunding"
+ },
+ "timestamp/pos__ba75b91f513cdeb116ae91da6137e2d0.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfc668ae14b0f7702c04b105448fe733d96c558df",
+  "contract": "SmartPool"
+ },
+ "timestamp/neg__bc18223caf13ec34b42aba9e4eb36cb3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x97282a7a15f9beadc854e8793aae43b089f14b4e",
+  "contract": "Congress"
+ },
+ "timestamp/neg__bc9e1013fe90cd028495ed8531df2c98.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x94add786881a945e68f3dfd1478f586ba36769b5",
+  "contract": "FLescoinSale"
+ },
+ "timestamp/neg__bcfb41bde49b64c80b098f6e790a4682.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xbbc5d510bab53b2199fb17fe1d896eb78911e103",
+  "contract": "ReverseJackpot"
+ },
+ "timestamp/neg__bd9b469f7e44b99a7c9d3c3c1f25308e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x7ee41a4c66e92fe28abd5bde30ad644a2dc8b15f",
+  "contract": "Vault"
+ },
+ "timestamp/neg__bf04346ddf0338682d8bea38cb717736.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9ea80e204045329ba752d03c395f82a12799f13d",
+  "contract": "BlocklancerToken"
+ },
+ "timestamp/pos__bf0a656f5a377410936c159c459a9b4f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc03b0dbd201ee426d907e367f996706cf53b8028",
+  "contract": "HODLerParadise"
+ },
+ "timestamp/neg__c0103edee5c2f2f0d148e0030100a67e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x0dcfdb9f5496ed7f62dd0ac019c7daf184a66aef",
+  "contract": "LVRCrowdsale"
+ },
+ "timestamp/neg__c028b7485dcd3c24c82db62a577046ef.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x320274f5dd332cc3b617b360e8554d95a0b96978",
+  "contract": "ZillaCrowdsale"
+ },
+ "timestamp/neg__c215228a920394748f6bcfc25baf56e6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xea13644b32e570c95b767849011b48bbb0e6bbb9",
+  "contract": "LiveTreeCrowdsale"
+ },
+ "timestamp/neg__c2c8c6e2df2855ff84dab6c604319351.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8d2aae6a7eb63ba89c36e82385f096d41074cd87",
+  "contract": "Wallet"
+ },
+ "timestamp/neg__c319c9d07786ccad13bb3b2ff947583d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+  "contract": "Congress"
+ },
+ "timestamp/pos__c344bf59b3a6e98b99143beaf895520d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7702cbba3e02788dd50535afb691fabcb64308cd",
+  "contract": "AtomicSwap"
+ },
+ "timestamp/neg__c3d56e418d122ab83c143f45e12fe9fd.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xf300cc72613d575a4567405c2a07d2aaf182aebf",
+  "contract": "StasyqToken"
+ },
+ "timestamp/neg__c4a21695a16860841fa342d96585d373.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x1de4b791c6c7230dffb6d1ecce8eef1ed7f631f9",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__c57b05b71072e5fca179a077a3a8c2c2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8d80de8a78198396329dfa769ad54d24bf90e7aa",
+  "contract": "NamiCrowdSale"
+ },
+ "timestamp/neg__c581caa3d3c87b76018c5da612bdebd6.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5052787b0b9cec67442e2ff43d2176693377bc5a",
+  "contract": "PulsarToken"
+ },
+ "timestamp/pos__c73fa27f9ce017c02dd2e11d0ba91ff4.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x45d147c800d401350b24fc1cd5fbc98040b177c8",
+  "contract": "NinjaToken"
+ },
+ "timestamp/pos__c744104278a5253c34156c2a67900999.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x36490a555a0019ea8457401584de111213ebd31a",
+  "contract": "CTV"
+ },
+ "timestamp/pos__c85cda57e5a8a8708bc3cdd0b0591e10.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7b74e83cacf86443a1cad1152179cbeff8e25e29",
+  "contract": "RaiseFundsForACause"
+ },
+ "timestamp/pos__c980d3ebc5971f1b7ce75628fb471c9f.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x103c2c150a2dbcc277ee084c59881978060c8c22",
+  "contract": "SmartBillions"
+ },
+ "timestamp/neg__c98b235972487c3b733f6e5a49fb6818.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5d356ebdaed2798547889ffa12fc587347e5ad89",
+  "contract": "FortitudeRanchCrowdsale"
+ },
+ "timestamp/neg__cb806f0d7172a1df6247f651ca28a656.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x3339ec512996fcdfacae2fbe941b6820f2c4e8b2",
+  "contract": "Vault"
+ },
+ "timestamp/neg__cfd12aead9f74db6284acda67f6f9a5a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x9fa8fa61a10ff892e4ebceb7f4e0fc684c2ce0a9",
+  "contract": "HONG"
+ },
+ "timestamp/pos__d09506a32b5b02639cedfad23dd77dfa.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xe73dc97b050e3b7afa5aea0b0ba192712162899b",
+  "contract": "BRANDCOIN"
+ },
+ "timestamp/neg__d0faab1acaf40c6ef19b50eef87f0aaa.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x402b92b00552409ed1ad83a74ff037ce1a3d7276",
+  "contract": "Crowdsale"
+ },
+ "timestamp/pos__d307e1847a3d80e690e6fe57fef9001c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x0436d3110dee47f177bb5d9b7ea5ce5d712522e8",
+  "contract": "Dividend"
+ },
+ "timestamp/pos__d37bf7d548d26adaaad7251116f414f1.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x903e7414cb54e44766dcf03e4ab424fdf9259d78",
+  "contract": "ClaimableCrowdsale"
+ },
+ "timestamp/neg__d447c226996e366389740fbd692939c9.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xed7da010027967365e0a7c370c1dde2f9fe4477f",
+  "contract": "BokkyPooBahsEtherRefundablePrize"
+ },
+ "timestamp/neg__d614dc2933555070237c7c6f4f69a454.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa33c4a314faa9684eeffa6ba334688001ea99bbc",
+  "contract": "Phoenix"
+ },
+ "timestamp/pos__d62613474ea7ae298987886ba3abd065.sol": {
+  "label": 1,
+  "sources": [
+   "JiuZhou: Time affected by miners"
+  ],
+  "address": "",
+  "contract": "Game"
+ },
+ "timestamp/neg__d62df141ba02eddb30e3f3980d26456f.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xa37adde3ba20a396338364e2ddb5e0897d11a91d",
+  "contract": "WFee"
+ },
+ "timestamp/neg__d69ee92d90d235fd196c3e420de6a951.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xf0300337e920ae843040a71584f870ae719bf5ed",
+  "contract": "Crowdsale"
+ },
+ "timestamp/neg__d89b63cc266d62a8e318aef84870aead.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x15dbdb25f870f21eaf9105e68e249e0426dae916",
+  "contract": "MillionEther"
+ },
+ "timestamp/pos__d95e111486e361c6679c53ce46e835c3.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xcc89405e3cfd38412093840a3ac2f851dd395dfb",
+  "contract": "StatusBuyer"
+ },
+ "timestamp/pos__dcb113815ad25cbb7bc2a13215d53871.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc2b26fd43667ddb770689b13f95e4421080b7206",
+  "contract": "BeatOrgTokenMainSale"
+ },
+ "timestamp/pos__deceef5dfe102267ed92ad36c3f15169.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x5ba708a7d74e3f87b719c234231548d3de0cabad",
+  "contract": "ChronosCore"
+ },
+ "timestamp/pos__df344b6e3f25f1f32bed37736c1d06e9.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x096d7ce60278e623c0b5763a0d04fde844d2c537",
+  "contract": "Billiontix"
+ },
+ "timestamp/pos__e2d398e8152ef73efe6e6b35ec845309.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x5b5afaa565aba14833de0cee321e63a807fd407b",
+  "contract": "TulipMania"
+ },
+ "timestamp/pos__e672313e0a5500206b442c79034b2b4b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x30795a541aea7f76ceccae7dc5146682f6b04cd7",
+  "contract": "GraphenePowerToken"
+ },
+ "timestamp/pos__e6a81f14aa2b2851feb74d425451d059.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x6f6deb5db0c4994a8283a01d6cfeeb27fc3bbe9c",
+  "contract": "SmartBillions"
+ },
+ "timestamp/pos__e71c3e3c70bcdc95207c806874e84d23.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x73dd069c299a5d691e9836243bcaec9c8c1d8734",
+  "contract": "Bitcoineum"
+ },
+ "timestamp/pos__e8aa00604d5fcaa858ecaae3d086ad9f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xcb466ff479a7d53755bec07926ac61ae8f494eca",
+  "contract": "Freeze"
+ },
+ "timestamp/pos__e9469221238f5f3f5c8deccfccaa4e09.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x32ff276e98517ef6e0ad7bc7b2674baa0f1c388b",
+  "contract": "BillPokerPreICO"
+ },
+ "timestamp/pos__e9bfb1196c3d5b8f2515b073f5b9b94b.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc10c99cad6d252271d8465c63f8dbad09f43fba2",
+  "contract": "IQNCrowdsale"
+ },
+ "timestamp/pos__ed0a3936e5468deed4926edb8cdc8da8.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x9e7f9b0f29cace376ce86a636c749105ba9a9e0a",
+  "contract": "CrowdsalePre"
+ },
+ "timestamp/pos__eed10a52c5dad384f20562413f6bf666.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7e0b06a487b0060d447ea0bb8415b5cc6d7bd1d8",
+  "contract": "CrowdSaleTRH"
+ },
+ "timestamp/pos__ef070ffab235d8bf03803ddb44f72c8f.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xab51a20d744574f33e7f28a7b66b748dd5f7ce04",
+  "contract": "EthDickMeasuringGame"
+ },
+ "timestamp/pos__ef3c74dc6231ba37394c46b2fbe5dccf.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x58e55918c6aca854384d21b199b4af953a2acf46",
+  "contract": "Bagholder"
+ },
+ "timestamp/pos__f0cc245b44a751cbc1830693d6df857c.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x07f06a75ddf49de735d51dbf5c0a9062c034e7c6",
+  "contract": "TopKing"
+ },
+ "timestamp/pos__f16fb3a6c9f659a7cfe49f37c71460d9.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x96978ba07d6476a47a3f69c8ddebae8dcb16edbd",
+  "contract": "PotPotato"
+ },
+ "timestamp/pos__f1ebf70c7c03be63201aa30bdcd6b577.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x215a427c5f35c375525ecafa37c05d4b3ec9b573",
+  "contract": "BetterAuction"
+ },
+ "timestamp/pos__f56ee1e3f76f78740e5f66aa966e70d4.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0xc16cf13922c18de7842374f9baace4489f1d24af",
+  "contract": "DEEX"
+ },
+ "timestamp/pos__f5b8b402b211826b1544e6dd4b5d0267.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x5019066b46ae4b8673085b609be366400f53871b",
+  "contract": "MANACrowdsale"
+ },
+ "timestamp/pos__f67561db00377694df3b430d6f1549c2.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xe477292f1b3268687a29376116b0ed27a9c76170",
+  "contract": "HeroCoin"
+ },
+ "timestamp/pos__f704f3b48bfed35c39b10f4d787cf3c2.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x7bd52bdff0acf4e18dd80c6ee86db205d83f88ce",
+  "contract": "HodlerInvestmentClub"
+ },
+ "timestamp/pos__f769ba5715c4c0312ff47958b9ec595e.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x8c79ec3f260b067157b0a7db0bb465f90b87f8f1",
+  "contract": "StakeTreeWithTokenization"
+ },
+ "timestamp/pos__f7f32939f6bbf90331a501d27d28e64c.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0x2c6c596cfd4c2c3b039db90fd3c8acb564e13251",
+  "contract": "ATC"
+ },
+ "timestamp/pos__fba8edc34456e83401445955fb0cc9e8.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: timedependency"
+  ],
+  "address": "0x48299b98d25c700e8f8c4393b4ee49d525162513",
+  "contract": "QuasacoinTokenCrowdsale"
+ },
+ "timestamp/pos__fcdd06c3d73f2425c50916d0116ae936.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xadaac4cb430f4f4aa0d60741bc263f3dfec0790a",
+  "contract": "MiniMeToken"
+ },
+ "timestamp/pos__ff51b927b975723fea1b8fdd63c602e5.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Block Info Dependency"
+  ],
+  "address": "0xfeac34425a3ba2fafbbeedb367ac5f4b4bb701d2",
+  "contract": "Jackypot"
+ },
+ "reentrancy/pos__01dd4a2eacf1f751bcf9070bca20c3a2.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xdd4950f977ee28d2c132f1353d1595035db444ee",
+  "contract": "JIincForwarder"
+ },
+ "reentrancy/pos__02acbeead59dad91370efebd635b0f1a.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0x36e7e06e0bdc5c632fe7cd349f94c7dd03525aa2",
+  "contract": "Wallet"
+ },
+ "reentrancy/neg__07601b034f8e36319188e57a49bd5ce8.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x554712b13067f5a0e067d368cd2a67a2ab7acf78",
+  "contract": "PresalePool"
+ },
+ "reentrancy/neg__07e178810f331d9443ca152241111e46.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x098af9afa803e2598bda464ea2fa0e144649f3f9",
+  "contract": "OraclesPresale"
+ },
+ "reentrancy/pos__083e60356eeecf6edf0e82b79f66a4ba.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x384e762dad922b22a0d06f4d1229582473d2dee6",
+  "contract": "IconomiTokenTest"
+ },
+ "reentrancy/neg__09738c4cdd6175ff110a53fbdf539ab8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x6e0ae69d262420b8ccd7ecdc11f12bb8b38104fc",
+  "contract": "PreICOProxyBuyer"
+ },
+ "reentrancy/pos__0a7dcd7ad58d91e0373b21e4e4522cdf.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xe28942df3b9502193a3547e6f6bad16ce63b1e2d",
+  "contract": "Escrow"
+ },
+ "reentrancy/neg__0b1332e23b1204f98d5d2284a541dabe.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x988b3a538b618c7a603e1c11ab82cd16dbe28069",
+  "contract": "KlerosLiquid"
+ },
+ "reentrancy/neg__0bc87b374140bf4b45301142388b1ac2.sol": {
+  "label": 0,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x91efffb9c6cd3a66474688d0a48aa6ecfe515aa5",
+  "contract": "Wallet"
+ },
+ "reentrancy/neg__1268bd79d09ef5075c1c8cde6708bffd.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x1ce7ae555139c5ef5a57cc8d814a867ee6ee33d8",
+  "contract": "TokenStore"
+ },
+ "reentrancy/neg__1824868f49295ba740d6eaf203f06c1c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xc39d73fca64d4ffe2c78fb17e61b9c8489f7c5fb",
+  "contract": "YesNo"
+ },
+ "reentrancy/pos__1a5d927054ea9dbfcc7903c503f2924a.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xdda65daa223aaae4add64e4e390cda7101c4ab41",
+  "contract": "CrossWhitehatWithdraw"
+ },
+ "reentrancy/pos__1b1f54b3f4cefadf796b2e17b05cc2e7.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xd9f7cd813983bd89d18015cc3022f7b9b97d26d4",
+  "contract": "IconomiTokenTest"
+ },
+ "reentrancy/neg__20b25014c3fa8106a5d0df915e92145e.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x22a97c80d7e0a9ae616737e3b8b531248f4ef91d",
+  "contract": "Campaign"
+ },
+ "reentrancy/neg__22694af690cc92b66e8e52de58817bd4.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xbca230c0b76993bc21b67640d420fe9d8bc931aa",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__244dae4d20ed64a10f8c412410b0c541.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x903643251af408a3c5269c836b9a2a4a1f04d1cf",
+  "contract": "SysEscrow"
+ },
+ "reentrancy/neg__24673a9442923184ce224f682e454f21.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x0528c39ef9f1fd7a05ef18f64408108fae156ab1",
+  "contract": "ExToke"
+ },
+ "reentrancy/pos__261a8729f567dd034042a37e29ee9ff0.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: reentrancy"
+  ],
+  "address": "0xb5766f61911f8b520b0e938aae100834aa3048c6",
+  "contract": "BountyHunt"
+ },
+ "reentrancy/neg__2b2beb388fb5b103e463206b735ae1bd.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x16a0772b17ae004e6645e0e95bf50ad69498a34e",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__302accc3b3ac3ea565ee4d0b0fafdbbd.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy",
+   "NPChecker: Reentrancy"
+  ],
+  "address": "0x2138ffe292fd0953f7fe2569111246e4de9ff1dc",
+  "contract": "MarketPrice"
+ },
+ "reentrancy/neg__31b06ae14cd358592e7d6dc725e86230.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "usingOraclize"
+ },
+ "reentrancy/pos__33e0b1fef4e72a4efb6f0fcd049c2da2.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xcca5828374bbe5da0dedeb24fc16ca6c9047b8eb",
+  "contract": "Remittances"
+ },
+ "reentrancy/pos__36ee840ee2c730b0dd466462fb94221d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: reentrancy"
+  ],
+  "address": "0x0feb3ce318e239a230383fd3484fa1018e1efaa0",
+  "contract": "Forwarder"
+ },
+ "reentrancy/pos__393ff63c0199ed7185b34d4738e664b8.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x257586004f6828a01ba4a874d3cfd0757029f32a",
+  "contract": "dexBlue"
+ },
+ "reentrancy/pos__39afddc46dfaa99f28c85e727921bdae.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x53a54c442583d2e844733f179d142c32f3c004b7",
+  "contract": "Preallocation"
+ },
+ "reentrancy/pos__3afb0b4cf597df904f7cf98fcab6d19e.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x2c3cc0f8dede2eccae43380ecf29b61fa6d10dca",
+  "contract": "DonationDoubler"
+ },
+ "reentrancy/neg__3d21a1483fd84a0e9f51e721fa2622fb.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x615ed6779507f223d04722d43ccc0cd871964e2a",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__3d621d123e2dedc7eb65b7bc9f88ebc3.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xece701c76bd00d1c3f96410a0c69ea8dfcf5f34e",
+  "contract": "Etheroll"
+ },
+ "reentrancy/pos__40edf8345391a754091af7ba7b28678f.sol": {
+  "label": 1,
+  "sources": [
+   "NotSoSmartC: SWC-107"
+  ],
+  "address": "0xf91546835f756da0c10cfa0cda95b15577b84aa7",
+  "contract": "LedgerChannel"
+ },
+ "reentrancy/pos__424c69bd0b1d3c4d153c99eddce01b27.sol": {
+  "label": 1,
+  "sources": [
+   "JiuZhou: Re-entrancy vulnerability"
+  ],
+  "address": "",
+  "contract": "SplitReentrancy"
+ },
+ "reentrancy/pos__45b9d04500a28204c14979c1ab5c6109.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0xc1caec30b787711108957660a3f9306a5d967f66",
+  "contract": "BranchWallet"
+ },
+ "reentrancy/neg__46b2f61235579f0b557bf95f18407ea8.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xec987914ade432ce9806f418787a4ed0b0e77000",
+  "contract": "LuckyDice"
+ },
+ "reentrancy/pos__496449e6d6f96097c95308c7551aa418.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x728781e75735dc0962df3a51d7ef47e798a7107e",
+  "contract": "WolkExchange"
+ },
+ "reentrancy/pos__5074ee1ef1168d21ca760af0e0dae763.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x33098a5e8f5e932831434748cdad425487b9aaf1",
+  "contract": "CreatorInvoice"
+ },
+ "reentrancy/pos__5132a87a9e1ffe758aabb688e78013b5.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xe197529709d7cbaf31756c6d9b8742718e17fca5",
+  "contract": "Order"
+ },
+ "reentrancy/neg__516f52616877ecbbd0c2d5d87ed5fcc9.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xa11cad54917fe2466dda7e20d2d335b10647ac86",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__517731eb3fb9ae0024fa9d1b39cda7ac.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0x0d47d4aea9da60953fd4ae5c47d2165977c7fbea",
+  "contract": "EtherprisesLLC"
+ },
+ "reentrancy/pos__521629292ab18d062ec49f19e5ab393b.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "CarefulTransfer"
+ },
+ "reentrancy/neg__538baeca159e3d02a50a2b2dc678cec4.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xaa12936a79848938770bdbc5da0d49fe986678cc",
+  "contract": "PreSaleFund"
+ },
+ "reentrancy/pos__54d2cc0624756b4d38dab6d2f4898963.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0xaf0f6a53269fc9dbbd9da9f11c368d36b7a60006",
+  "contract": "Etheropt"
+ },
+ "reentrancy/neg__54d71e8cbee37d30173034d73ba5f1e2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__550e510addd549cd13825ac9081dd2b0.sol": {
+  "label": 1,
+  "sources": [
+   "NPChecker: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x2ef76694fbfd691141d83f921a5ba710525de9b0",
+  "contract": "LooneyLottery"
+ },
+ "reentrancy/neg__560ed84c5c67a0d82a341905ba33741e.sol": {
+  "label": 0,
+  "sources": [
+   "JiuZhou: Re-entrancy vulnerability"
+  ],
+  "address": "",
+  "contract": "EtherStore"
+ },
+ "reentrancy/pos__57c45eb3bd77499461a073dacd606f36.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x89d64bc7e46bdc49a89652ae9bb167418cbad62e",
+  "contract": "EthToken"
+ },
+ "reentrancy/neg__5c118e978c9c2e4806c161a56be57f34.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x7a46c781b593068d5e987b191e9c2f7413e22aee",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__5ee03775f220d61b5261f8a95b648495.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x8f548f0ceb23ddc9ee76e126b29fae94c607c3bc",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "reentrancy/pos__60d71b649e000c57f3c5121227b77c82.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0xbf4ed7b27f1d666546e30d74d50d173d20bca754",
+  "contract": "WithdrawDAO"
+ },
+ "reentrancy/neg__6564e9376ca7cd8681e48b4c0cd9895a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x9e4ad79049282f942c1b4c9b418f0357a0637017",
+  "contract": "Noxon"
+ },
+ "reentrancy/neg__659198bdeb834a7113ded23228569df2.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x1e2ca24d0d32580f6f514aaf01763b78cb7001cd",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__668a31c1379246b2b11c4ce5861b6357.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0xd8912c10681d8b21fd3742244f44658dba12264e",
+  "contract": "Pluton"
+ },
+ "reentrancy/neg__68b3147172092e5329d3a69c21bd56b7.sol": {
+  "label": 0,
+  "sources": [
+   "NotSoSmartC: SWC-107"
+  ],
+  "address": "",
+  "contract": "Reentrance"
+ },
+ "reentrancy/neg__69a1260348e9d08a7519556dd40a17ab.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x83c54a35e72ae07c46fc8f8f172a13ba19ac3bed",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__70a015ff90bd920aa01c03ee10ab2261.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x215b4a7cd7f4ad4594867bbcc91cac08c83ab507",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "reentrancy/pos__7664c901c397094e9fa2b9b250fabac1.sol": {
+  "label": 1,
+  "sources": [
+   "NotSoSmartC: SWC-107"
+  ],
+  "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+  "contract": "DAO"
+ },
+ "reentrancy/pos__77f72498629ed28ec71f29e12930c095.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x845f74aac51148bdd4ef6aed29822940c025a3a2",
+  "contract": "one"
+ },
+ "reentrancy/pos__798a0911ab2bc05583da97320bd7d643.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x60f573825ae6172d04b434ed439b97d079387227",
+  "contract": "Remittances"
+ },
+ "reentrancy/neg__79c0309ed060e54a01c3c1b00e352e4d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x4aea7cf559f67cedcad07e12ae6bc00f07e8cf65",
+  "contract": "EtherDelta"
+ },
+ "reentrancy/pos__7d6b9a034771315b63328b230f104990.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x7352cb77c2478a59d21230a8d65146e04b59f58c",
+  "contract": "JouleProxy"
+ },
+ "reentrancy/pos__7d889f717dc9653a45f2a230c2efea14.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x35bd607db942fe1f10ce12b309e3a67e16660fe1",
+  "contract": "OrangeGov_Main"
+ },
+ "reentrancy/neg__80165263e16c32c0a09f3d80142d08ac.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xe6517b766e6ee07f91b517435ed855926bcb1aae",
+  "contract": "IDice"
+ },
+ "reentrancy/neg__810355a7c028380b9908596702cbe8ce.sol": {
+  "label": 0,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x7da82c7ab4771ff031b66538d2fb9b0b047f6cf9",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__897c7b9fd13f388844288b45a29d64a3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xd0a6e6c54dbc68db5db3a091b171a77407ff7ccf",
+  "contract": "EOSSale"
+ },
+ "reentrancy/pos__8a051fd9de90b410e009445a486e1d10.sol": {
+  "label": 1,
+  "sources": [
+   "SWCregistry: SWC-107"
+  ],
+  "address": "",
+  "contract": "ModifierEntrancy"
+ },
+ "reentrancy/pos__8ba454dc7fca853973ab5b2f2c7220e3.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xe386b139ed3715ca4b18fd52671bdcea1cdfe4b1",
+  "contract": "ZeusToken"
+ },
+ "reentrancy/pos__8bf7ed7c21c1656d9a8f6662ae15c78d.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0xc5b2508e878af367ba4957bdbeb2bbc6da5bb349",
+  "contract": "Ethsplit"
+ },
+ "reentrancy/pos__8e2890a517758434bb73296643954d28.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0xf77089f2f00fca83501705b711cbb10a0de77628",
+  "contract": "HumanStandardToken"
+ },
+ "reentrancy/pos__90167a28f2218d3775ed3b252657f3a5.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
+  "contract": "WithdrawDAO"
+ },
+ "reentrancy/neg__918665f31737bc76d4ff196e53aaca76.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+  "contract": "EtherDelta"
+ },
+ "reentrancy/pos__92824bc00e630f9cfe39b28b9fd9f442.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "NamiMultiSigWallet"
+ },
+ "reentrancy/neg__92bead7a99a660d6202bd617dcdf4b8e.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xffcf7f75602157e36fbe09047e7fafaf69e530e8",
+  "contract": "DiceGame"
+ },
+ "reentrancy/neg__94daf252f5d1002a2b19f7b584f8a974.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x6ff323e36bfdb20502b23780695f4e77e36cde95",
+  "contract": "TriWallet"
+ },
+ "reentrancy/neg__951d21e4c9554a54ac3e767733323dc0.sol": {
+  "label": 0,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x56681d323bfd0f354e0a67683dd8d3d37d6492d5",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/neg__9af2918a940b4083f048ba28a9ceb391.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x4abc1ebf49ab9d98c83609f6475e6ec75ffe409b",
+  "contract": "PresalePool"
+ },
+ "reentrancy/neg__9b8576e934a2ccc4c929591e1d60e2d0.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xc6b330df38d6ef288c953f1f2835723531073ce2",
+  "contract": "EtherDelta"
+ },
+ "reentrancy/pos__9c37399dda2acd29509968dabe802aba.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x87902f1b5d50d1f71a17bc2ea613d38510e9aa67",
+  "contract": "BancorBuyer"
+ },
+ "reentrancy/neg__9eb97ca8a665e2fe3e2f85eb28caaf9d.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x373c55c277b866a69dc047cad488154ab9759466",
+  "contract": "EtherDelta"
+ },
+ "reentrancy/neg__a051e4d73e6375d48f5b59ef594bec57.sol": {
+  "label": 0,
+  "sources": [
+   "SWCregistry: SWC-107"
+  ],
+  "address": "",
+  "contract": "SimpleDAO"
+ },
+ "reentrancy/pos__a165ee7c076de1c22d895f6e6073b589.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x559506545e7fe0aa4b2895611329aeba988b06c8",
+  "contract": "Remittances"
+ },
+ "reentrancy/pos__a49d19fa114fec90da45ca9e38aa41da.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x80f1f62b8b365c5326100d462d8570771b8d0e57",
+  "contract": "DaoChallenge"
+ },
+ "reentrancy/neg__a6c230ff97ae1906c6f9c50c18250437.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x00674045bb7c17f0aa1cde34780d6c51af548728",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "reentrancy/neg__a794164d9ea7ec96d50ba1d3a1b98ae4.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xe5221f29861508d7556249f19924effe391db237",
+  "contract": "EnjinBuyer"
+ },
+ "reentrancy/neg__a9cd3c02ab49a90defa3e2e3772fcf70.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xbf29685856fae1e228878dfb35b280c0adcc3b05",
+  "contract": "DecentrEx"
+ },
+ "reentrancy/pos__ac09cdde645a2a499ee33d7f0808b73d.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x8c6f3d75873c66cf0300c9d6dfe8d607d1824204",
+  "contract": "ICOSyndicate"
+ },
+ "reentrancy/pos__ac5360a509ec3a18d46b515209efae9d.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: reentrancy"
+  ],
+  "address": "0x9c35fd2d966bdf2c28d906b0d862acb6600d28c8",
+  "contract": "Payee"
+ },
+ "reentrancy/neg__af23f64f2837b1a629f6c7903507ad68.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy",
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x035a401972f228b58dcae76bf318b54ed036d680",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__b0a615f17a640d6ee7a46abb962cb30f.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "Crowdsale"
+ },
+ "reentrancy/pos__b19fffc40442b87ff4d36bffff75780f.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x096ddaec18064b702f7e53a42afea68ee4a27f54",
+  "contract": "MultiSigWalletWithDailyLimit"
+ },
+ "reentrancy/neg__b4477ef57617863fe3525e116c295d6b.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xa2b9bb1a44c05560399df4779de7cdacf10185e1",
+  "contract": "PreICOProxyBuyer"
+ },
+ "reentrancy/neg__b6648d695c4a1544b6aa5aa6c2d303b1.sol": {
+  "label": 0,
+  "sources": [
+   "JiuZhou: Re-entrancy vulnerability"
+  ],
+  "address": "",
+  "contract": "gray_SimpleDAO"
+ },
+ "reentrancy/pos__b89b0de4c15fed659060c0f00cda7134.sol": {
+  "label": 1,
+  "sources": [
+   "ContractFuzzer: reentrancy",
+   "Doublade: reentrancy"
+  ],
+  "address": "0x7a8721a9d64c74da899424c1b52acbf58ddc9782",
+  "contract": "PrivateDeposit"
+ },
+ "reentrancy/neg__bc18223caf13ec34b42aba9e4eb36cb3.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x97282a7a15f9beadc854e8793aae43b089f14b4e",
+  "contract": "Congress"
+ },
+ "reentrancy/neg__bd9dd8bf1ac11515edf23d52fc9ce763.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xddf0d0b9914d530e0b743808249d9af901f1bd01",
+  "contract": "Etheroll"
+ },
+ "reentrancy/pos__c27fc45d979a95d3f4033b6f68da9bb6.sol": {
+  "label": 1,
+  "sources": [
+   "EverEvolvingG: reentrancy"
+  ],
+  "address": "0x0eb68f34efa0086e4136bca51fc4d0696580643e",
+  "contract": "BetingHouse"
+ },
+ "reentrancy/pos__c345948aa72330d38cf07554482748f4.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x753e1540934474162a7a1c7a3c865301b73a455b",
+  "contract": "SellETCSafely"
+ },
+ "reentrancy/pos__c3ac8617381f6dd433b387790b3c296f.sol": {
+  "label": 1,
+  "sources": [
+   "EverEvolvingG: reentrancy"
+  ],
+  "address": "0xd4cd7c881f5ceece4917d856ce73f510d7d0769e",
+  "contract": "DecentralizedExchanges"
+ },
+ "reentrancy/neg__c3c0b21ed74dbcf384fbd1185413bbe8.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0xbf35faa9c265baf50c9cff8c389c363b05753275",
+  "contract": "Wallet"
+ },
+ "reentrancy/neg__c6bc7996daf9cf5319935f1ba6def79e.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "KlerosLiquid"
+ },
+ "reentrancy/neg__c9637852a57f83876ad3234cdeedbb8c.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x9cb8921aa376219950ba134c15d8f5ee2769c599",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__caece3633abbe2b86f4202e608c3be36.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x949bed886c739f1a3273629b3320db0c5024c719",
+  "contract": "AMIS"
+ },
+ "reentrancy/pos__cbe4e1a3be73b3d3cb151202c48ea35b.sol": {
+  "label": 1,
+  "sources": [
+   "JiuZhou: Re-entrancy vulnerability"
+  ],
+  "address": "",
+  "contract": "SimpleDAO"
+ },
+ "reentrancy/pos__ce2c268994894ce68931a375392d738e.sol": {
+  "label": 1,
+  "sources": [
+   "SWCregistry: SWC-107"
+  ],
+  "address": "",
+  "contract": "SimpleDAO"
+ },
+ "reentrancy/neg__cfd12aead9f74db6284acda67f6f9a5a.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x9fa8fa61a10ff892e4ebceb7f4e0fc684c2ce0a9",
+  "contract": "HONG"
+ },
+ "reentrancy/neg__d780e6f0eccdae6e449e442113c65d0b.sol": {
+  "label": 0,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xad29d6fdf0f62a8388b7bc9675f3a4b9132f5302",
+  "contract": "Wallet"
+ },
+ "reentrancy/neg__db4ed99c2e2fcd0c9e14f3b44d134460.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "usingOraclize"
+ },
+ "reentrancy/pos__dd443a9352d9e4ef8e8e81310f45f607.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy",
+   "ContractFuzzer: reentrancy"
+  ],
+  "address": "0x9bbb9387c9e2477a6b5d81afece00255875c48ce",
+  "contract": "InkPublicPresale"
+ },
+ "reentrancy/pos__e1c9f22af278b508f32dbb2d636f2d39.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x7d86a87178d28f805716828837d1677fb7af6ff7",
+  "contract": "ThrottledFaucet"
+ },
+ "reentrancy/pos__e35ff142af0bda886bfa941faf169e28.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0x50f54ed2cafd4b7245e60557a6b56d9ac9193025",
+  "contract": "Wallet"
+ },
+ "reentrancy/neg__e6184a749b8354c86c131e72e2a1ea29.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x4473d7e836e473aba72af381536a979e5063f7f8",
+  "contract": "CobinhoodBuyer"
+ },
+ "reentrancy/pos__e6a4e0115f3c5ebe3b97da0efa5b6c9c.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0xdc895e94a0d5ad974af1b5729b10aa9cb7e58843",
+  "contract": "Wallet"
+ },
+ "reentrancy/pos__e710c808e54ef6263a3f9083f3ca26c0.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x9053d234a1ff2290f087a1ca9460e3263121e580",
+  "contract": "CreatorComission"
+ },
+ "reentrancy/pos__e7552d457c118b2d50a774d3673093a3.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x6d15c485bd22be99d7fa014917f736b7caa19051",
+  "contract": "ThrottledFaucet"
+ },
+ "reentrancy/neg__e804c36ca855c38c944c8e1091b5254c.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x22141343a20640daaf695226b2233baeef0f0d62",
+  "contract": "EnjinBuyer"
+ },
+ "reentrancy/neg__ec3a556742f883e7d185dc9d92b2e517.sol": {
+  "label": 0,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x91bd62e48282ea188998d04570ed8a3e237d3a6a",
+  "contract": "MultiSigWallet"
+ },
+ "reentrancy/pos__ec7ad4af1fc95654260069e7932dbf3d.sol": {
+  "label": 1,
+  "sources": [
+   "EverEvolvingG: reentrancy"
+  ],
+  "address": "0x72f60eca0db6811274215694129661151f97982e",
+  "contract": "DecentralizedExchanges"
+ },
+ "reentrancy/pos__ec847c962f9fb6580705ff8261582181.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0xb7dca185cebfa8288c4cf0c2f666c79a652e7b38",
+  "contract": "ETHToken"
+ },
+ "reentrancy/pos__ec9ea455a11617612ae57534c9668c1a.sol": {
+  "label": 1,
+  "sources": [
+   "eThor: reentrancy"
+  ],
+  "address": "0x273930d21e01ee25e4c219b63259d214872220a2",
+  "contract": "Wallet"
+ },
+ "reentrancy/pos__eeec1e8a9be3b58748c8e9f28342e429.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "DSExec"
+ },
+ "reentrancy/pos__ef0f4b8310ff1ff7275a75136ac5f11a.sol": {
+  "label": 1,
+  "sources": [
+   "CodeSmells: Reentrancy"
+  ],
+  "address": "0x14cf6193935b17fc72649ba420fdd5bfdf1f0001",
+  "contract": "OpenLongevityPresale"
+ },
+ "reentrancy/pos__f21a824407dfb37c81f7fbbd8d8e0e58.sol": {
+  "label": 1,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "DSExec"
+ },
+ "reentrancy/pos__f26ed098ddfa730dd9cebaaaab1bceac.sol": {
+  "label": 1,
+  "sources": [
+   "JiuZhou: Re-entrancy vulnerability"
+  ],
+  "address": "",
+  "contract": "Reentrance"
+ },
+ "reentrancy/neg__f40331f125cbb04c4b76d63feb921879.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "",
+  "contract": "usingOraclize"
+ },
+ "reentrancy/neg__f724adc25cd373596c4e727519bc758f.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xa5629861c9c345f50221996ef852fd9665eb1c05",
+  "contract": "IronHands"
+ },
+ "reentrancy/neg__f790bb39866041eb895855aeebef1748.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0xe63760e74ffd44ce7abdb7ca2e7fa01b357df460",
+  "contract": "DividendDistributorv2"
+ },
+ "reentrancy/pos__f93e1d3edaba7258a69c6015d5787689.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy"
+  ],
+  "address": "0x08d698358b31ca6926e329879db9525504802abf",
+  "contract": "DaoChallenge"
+ },
+ "reentrancy/pos__fecf36e77b56a894f82aadceda5b6399.sol": {
+  "label": 1,
+  "sources": [
+   "Zeus: Reentrancy",
+   "eThor: reentrancy"
+  ],
+  "address": "0x5f0d0c4c159970fda5adc93a6b7f17706fd3255c",
+  "contract": "SellETCSafely"
+ },
+ "reentrancy/neg__ffb80f16332c0d6d30c4b5288b11be77.sol": {
+  "label": 0,
+  "sources": [
+   "Doublade: reentrancy"
+  ],
+  "address": "0x5689774160fb27235337d328b45664e0d33f05c1",
+  "contract": "PowerCoin"
+ }
+}

@@ -1,0 +1,35 @@
+
+[1] DETECT + EXPLAIN: upload EtherStore.sol; both scans run side by side
+    scans: ['timestamp', 'reentrancy'] | event order: ['ti:convert_to_fcg', 'ti:detect_vulnerability_src', 're:convert_to_fcg', 'ti:detect_vulnerability_func', 're:detect_vulnerability_src', 're:detect_vulnerability_func', 'ti:explain_vulnerability_func', 're:explain_vulnerability_func']
+    Timestamp Dependency: flagged (confidence 92%, 1 function(s) flagged)
+    Reentrancy: flagged (confidence 84%, 1 function(s) flagged)
+    conclusion: alerts | manual review: []
+    finding: [timestamp] EtherStore.withdrawFunds(uint256) L9-16 (91.90%) stage=awaiting_review
+      explanation: 1. **Evidence:** Line 12, `require(now >= lastWithdrawTime[msg.sender] + 1 weeks);`, gates withdrawals on the block timestamp, and line 15, `lastWithdrawTime[ms
+    finding: [reentrancy] EtherStore.withdrawFunds(uint256) L9-16 (99.99%) stage=awaiting_review
+      explanation: 1. **Evidence:** The alert is supported. In `L13`, `require(msg.sender.call.value(_weiToWithdraw)());` sends Ether to the caller and hands over control before t
+
+[2] RULE: any user may propose and check a fix, but only an expert can review an alert
+    non-expert tries to confirm -> 403
+    user checks a fix before any expert review -> compiled: True | recorded: True
+    the finding still waits for the expert -> awaiting_review
+
+[3] EXPERT REVIEW: each alert is confirmed, rejected or sent to manual review
+    [timestamp] EtherStore.withdrawFunds(uint256) -> false_positive
+    [reentrancy] EtherStore.withdrawFunds(uint256) -> confirmed
+
+[4] FIX + COMPILE/RE-CHECK for [reentrancy] EtherStore.withdrawFunds(uint256)
+    a broken fix -> compiled: False | recorded: True | Does not compile with solc 0.4.10. See the compiler output.
+    expert tries to accept it -> 409 This fix does not compile and cannot be accepted
+    the prepared fix -> compiled: True (solc 0.4.10) | Slither findings on the function: 0 -> 0 | recorded: True
+
+[5] EXPERT APPROVAL of the checked fix
+    non-expert tries to accept -> 403
+    expert accepts -> 200
+
+[6] RESULT: where every finding stands, and the SARIF export for IDE/CI
+    [timestamp] EtherStore.withdrawFunds(uint256): closed_false_positive
+    [reentrancy] EtherStore.withdrawFunds(uint256): fix_accepted
+    SARIF: [('GFD-TS-CONTRACT', 'warning', None), ('GFD-RE-CONTRACT', 'warning', None), ('GFD-TS-FUNC', 'note', 'closed_false_positive'), ('GFD-RE-FUNC', 'error', 'fix_accepted')]
+
+session 6b07b4fe348d2e6046748e87 - a passing check is not proof of safety: accepted fixes still need the project's own tests and an audit.

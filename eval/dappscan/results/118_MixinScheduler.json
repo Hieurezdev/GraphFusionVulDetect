@@ -1,0 +1,1 @@
+{"id": "118_MixinScheduler", "http": 200, "seconds": 2.8, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_131613/118_MixinScheduler.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.5341001749038696}}], "raw": ""}

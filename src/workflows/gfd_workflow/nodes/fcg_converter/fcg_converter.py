@@ -10,7 +10,7 @@ import networkx as nx
 from langchain_core.runnables import RunnableConfig
 
 from src.workflows.gfd_workflow.graph.state import State
-from .embedding_generator import extract_function_code, get_embeddings
+from .embedding_generator import extract_function_code, get_embeddings, strip_comments
 from .graph_converter import get_call_graph
 
 
@@ -102,7 +102,8 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
             function_code = extract_function_code(
                 sol_file_src, data['node_source_code_start'], data['node_source_code_length']
             )
-            embeddings[node_name] = get_embeddings(tokenizer, model, function_code)
+            # Comments can hide a function body past the 512-token limit or plant keywords; the stored/displayed code keeps them.
+            embeddings[node_name] = get_embeddings(tokenizer, model, strip_comments(function_code))
             
             # Store contract index
             contract_indices[node_name] = contract_to_idx.get(data['contract_name'], -1)

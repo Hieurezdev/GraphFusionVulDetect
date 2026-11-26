@@ -1,0 +1,1 @@
+{"id": "010_CommunityVault", "http": 200, "seconds": 0.3, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125136/010_CommunityVault.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.8863705396652222}}], "raw": ""}

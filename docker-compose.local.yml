@@ -1,0 +1,30 @@
+# Local test stack next to production, with its own empty database and storage.
+#   docker compose -p scanguard-local -f docker-compose.prod.yml -f docker-compose.local.yml up -d --build
+# Open http://localhost:18511 (from another machine: ssh -L 18511:127.0.0.1:18511 <server>).
+# Stop:   docker compose -p scanguard-local -f docker-compose.prod.yml -f docker-compose.local.yml down
+# Wipe:   add -v to "down" to drop the local database and uploads.
+services:
+  backend:
+    restart: "no"
+
+  frontend:
+    build:
+      args:
+        - VITE_API_BASE_URL=http://localhost:18511
+    ports: !override
+      - "127.0.0.1:18511:8080"
+    restart: "no"
+
+  mongodb:
+    restart: "no"
+
+volumes:
+  hf_cache:  # reuse production's downloaded models instead of fetching them again (read-mostly cache)
+    external: true
+    name: scanguard_hf_cache
+
+networks:
+  default:  # Docker's default address pools are used up on this host: pick a free subnet by hand
+    ipam:
+      config:
+        - subnet: 10.254.151.0/24

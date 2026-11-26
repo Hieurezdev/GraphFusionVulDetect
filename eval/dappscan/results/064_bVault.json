@@ -1,0 +1,1 @@
+{"id": "064_bVault", "http": 200, "seconds": 5.2, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_130210/064_bVault.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.6106927394866943}}], "raw": ""}

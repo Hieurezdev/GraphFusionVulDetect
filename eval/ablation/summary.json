@@ -1,0 +1,297 @@
+{
+ "timestamp": {
+  "test_files": 193,
+  "scored_by_all": 187,
+  "vulnerable": 96,
+  "dedup_subset": 156,
+  "no_graph_on_test": 6,
+  "slither_failed_on_test": 6,
+  "systems": {
+   "full": {
+    "non_vulnerable": {
+     "P": 0.832,
+     "R": 0.868,
+     "F1": 0.849
+    },
+    "vulnerable": {
+     "P": 0.87,
+     "R": 0.833,
+     "F1": 0.851
+    },
+    "macro_F1": 0.85,
+    "accuracy": 0.85,
+    "predicted_vulnerable": 92,
+    "full_right_this_wrong": 0,
+    "full_wrong_this_right": 0,
+    "mcnemar_p": 1.0,
+    "macro_F1_dedup": 0.843
+   },
+   "no_semantics": {
+    "non_vulnerable": {
+     "P": 0.78,
+     "R": 0.703,
+     "F1": 0.74
+    },
+    "vulnerable": {
+     "P": 0.743,
+     "R": 0.812,
+     "F1": 0.776
+    },
+    "macro_F1": 0.758,
+    "accuracy": 0.759,
+    "predicted_vulnerable": 105,
+    "full_right_this_wrong": 28,
+    "full_wrong_this_right": 11,
+    "mcnemar_p": 0.0095,
+    "macro_F1_dedup": 0.719
+   },
+   "base_encoder": {
+    "non_vulnerable": {
+     "P": 0.75,
+     "R": 0.857,
+     "F1": 0.8
+    },
+    "vulnerable": {
+     "P": 0.843,
+     "R": 0.729,
+     "F1": 0.782
+    },
+    "macro_F1": 0.791,
+    "accuracy": 0.791,
+    "predicted_vulnerable": 83,
+    "full_right_this_wrong": 16,
+    "full_wrong_this_right": 5,
+    "mcnemar_p": 0.0266,
+    "macro_F1_dedup": 0.768
+   },
+   "slither": {
+    "non_vulnerable": {
+     "P": 0.75,
+     "R": 0.725,
+     "F1": 0.737
+    },
+    "vulnerable": {
+     "P": 0.747,
+     "R": 0.771,
+     "F1": 0.759
+    },
+    "macro_F1": 0.748,
+    "accuracy": 0.749,
+    "predicted_vulnerable": 99,
+    "full_right_this_wrong": 32,
+    "full_wrong_this_right": 13,
+    "mcnemar_p": 0.0066,
+    "macro_F1_dedup": 0.729
+   }
+  },
+  "resources": {
+   "base_encoder": {
+    "parameters": 6312386,
+    "train_seconds": 35.3,
+    "selected_epoch": 180,
+    "validation_macro_f1": 0.831,
+    "gnn_ms_per_contract": 2.93,
+    "peak_gpu_mb": 456,
+    "train_graphs": 610
+   },
+   "full": {
+    "parameters": 6312386,
+    "train_seconds": 30.9,
+    "selected_epoch": 151,
+    "validation_macro_f1": 0.865,
+    "gnn_ms_per_contract": 2.48,
+    "peak_gpu_mb": 456,
+    "train_graphs": 610
+   },
+   "no_semantics": {
+    "parameters": 4749762,
+    "train_seconds": 46.2,
+    "selected_epoch": 196,
+    "validation_macro_f1": 0.761,
+    "gnn_ms_per_contract": 3.79,
+    "peak_gpu_mb": 325,
+    "train_graphs": 610
+   }
+  },
+  "median_seconds_per_contract": {
+   "slither": 0.282,
+   "graph_and_embedding": 0.652
+  },
+  "config": {
+   "mtype": [
+    "GCN"
+   ],
+   "n_gph": 0,
+   "num_query_vectors": 2,
+   "hfeats": [
+    2048,
+    2048
+   ],
+   "gptype": "max",
+   "lr": 0.0005,
+   "batch": 128,
+   "epochs": 200
+  },
+  "encoder": "Quangnguyen711/codebert-solidity-time-dep",
+  "torch": "2.4.0+cu121",
+  "dgl": "2.4.0+cu121",
+  "device": "cuda"
+ },
+ "reentrancy": {
+  "test_files": 147,
+  "scored_by_all": 144,
+  "vulnerable": 71,
+  "dedup_subset": 123,
+  "no_graph_on_test": 3,
+  "slither_failed_on_test": 3,
+  "systems": {
+   "full": {
+    "non_vulnerable": {
+     "P": 0.807,
+     "R": 0.63,
+     "F1": 0.708
+    },
+    "vulnerable": {
+     "P": 0.69,
+     "R": 0.845,
+     "F1": 0.759
+    },
+    "macro_F1": 0.734,
+    "accuracy": 0.736,
+    "predicted_vulnerable": 87,
+    "full_right_this_wrong": 0,
+    "full_wrong_this_right": 0,
+    "mcnemar_p": 1.0,
+    "macro_F1_dedup": 0.727
+   },
+   "no_semantics": {
+    "non_vulnerable": {
+     "P": 0.659,
+     "R": 0.767,
+     "F1": 0.709
+    },
+    "vulnerable": {
+     "P": 0.712,
+     "R": 0.592,
+     "F1": 0.646
+    },
+    "macro_F1": 0.678,
+    "accuracy": 0.681,
+    "predicted_vulnerable": 59,
+    "full_right_this_wrong": 32,
+    "full_wrong_this_right": 24,
+    "mcnemar_p": 0.3497,
+    "macro_F1_dedup": 0.663
+   },
+   "base_encoder": {
+    "non_vulnerable": {
+     "P": 0.756,
+     "R": 0.425,
+     "F1": 0.544
+    },
+    "vulnerable": {
+     "P": 0.592,
+     "R": 0.859,
+     "F1": 0.701
+    },
+    "macro_F1": 0.623,
+    "accuracy": 0.639,
+    "predicted_vulnerable": 103,
+    "full_right_this_wrong": 26,
+    "full_wrong_this_right": 12,
+    "mcnemar_p": 0.0336,
+    "macro_F1_dedup": 0.601
+   },
+   "slither_any": {
+    "non_vulnerable": {
+     "P": 0.8,
+     "R": 0.274,
+     "F1": 0.408
+    },
+    "vulnerable": {
+     "P": 0.555,
+     "R": 0.93,
+     "F1": 0.695
+    },
+    "macro_F1": 0.551,
+    "accuracy": 0.597,
+    "predicted_vulnerable": 119,
+    "full_right_this_wrong": 31,
+    "full_wrong_this_right": 11,
+    "mcnemar_p": 0.0029,
+    "macro_F1_dedup": 0.531
+   },
+   "slither_eth": {
+    "non_vulnerable": {
+     "P": 0.602,
+     "R": 0.808,
+     "F1": 0.69
+    },
+    "vulnerable": {
+     "P": 0.696,
+     "R": 0.451,
+     "F1": 0.547
+    },
+    "macro_F1": 0.619,
+    "accuracy": 0.632,
+    "predicted_vulnerable": 46,
+    "full_right_this_wrong": 38,
+    "full_wrong_this_right": 23,
+    "mcnemar_p": 0.0722,
+    "macro_F1_dedup": 0.581
+   }
+  },
+  "resources": {
+   "base_encoder": {
+    "parameters": 55134658,
+    "train_seconds": 140.2,
+    "selected_epoch": 88,
+    "validation_macro_f1": 0.674,
+    "gnn_ms_per_contract": 14.27,
+    "peak_gpu_mb": 4378,
+    "train_graphs": 452
+   },
+   "full": {
+    "parameters": 55134658,
+    "train_seconds": 93.3,
+    "selected_epoch": 39,
+    "validation_macro_f1": 0.814,
+    "gnn_ms_per_contract": 6.39,
+    "peak_gpu_mb": 4378,
+    "train_graphs": 452
+   },
+   "no_semantics": {
+    "parameters": 42633666,
+    "train_seconds": 91.7,
+    "selected_epoch": 28,
+    "validation_macro_f1": 0.72,
+    "gnn_ms_per_contract": 6.05,
+    "peak_gpu_mb": 4077,
+    "train_graphs": 452
+   }
+  },
+  "median_seconds_per_contract": {
+   "slither": 0.226,
+   "graph_and_embedding": 0.363
+  },
+  "config": {
+   "mtype": [
+    "GAT"
+   ],
+   "n_gph": 2,
+   "num_query_vectors": 1,
+   "hfeats": [
+    2048,
+    2048
+   ],
+   "gptype": "max",
+   "lr": 0.0001,
+   "batch": 256,
+   "epochs": 100
+  },
+  "encoder": "Quangnguyen711/codebert-solidity-re-entrancy",
+  "torch": "2.4.0+cu121",
+  "dgl": "2.4.0+cu121",
+  "device": "cuda"
+ }
+}

@@ -2,6 +2,7 @@
 API Router for RefactorBot Service - Smart Contract Refactoring Assistant
 """
 
+import asyncio
 import json
 import logging
 from typing import List, Dict, Any, Optional
@@ -9,7 +10,7 @@ from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import StreamingResponse
 from fastapi.concurrency import run_in_threadpool
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from src.utils.language import normalize_language
 
 from src.services.refactorbot_service import RefactorBotService
@@ -17,6 +18,10 @@ from src.models.entity import UserInDB
 from src.infrastructure.database import get_analysis_sessions_collection
 from src.workflows.gfd_workflow.utils.fix_check import check_fix, WHOLE_FILE
 from .authentication_router import get_current_user
+from .analyze_router import _session_query
+from src.services.findings import find, replace_entry
+from src.models.entity import FunctionFix
+from src.utils.timezone import now_vietnam, ensure_utc_for_db
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +30,8 @@ router = APIRouter(prefix="/refactor", tags=["refactorbot"])
 # Request/Response Models
 class RefactoringAdviceRequest(BaseModel):
     """Request model for getting refactoring advice"""
-    code: str = Field(..., description="Solidity code to refactor", min_length=1)
-    issue_description: str = Field(..., description="Description of the issue or vulnerability", min_length=1)
+    code: str = Field(..., description="Solidity code to refactor", min_length=1, max_length=200_000)
+    issue_description: str = Field(..., description="Description of the issue or vulnerability", min_length=1, max_length=20_000)
     language: str = Field("en", description="Language for the answer: en or vi")
 
 class RefactoringSuggestion(BaseModel):
@@ -47,17 +52,22 @@ class RefactoringAdviceResponse(BaseModel):
 class ConversationMessage(BaseModel):
     """Model for a conversation message"""
     role: str = Field(..., description="Role of the message sender (user or assistant)")
-    content: str = Field(..., description="Content of the message")
+    content: str = Field(..., description="Content of the message", max_length=50_000)
 
 class ConversationRequest(BaseModel):
     """Request model for conversation-based refactoring"""
-    code: str = Field(..., description="Current code being discussed", min_length=1)
+    code: str = Field(..., description="Current code being discussed", min_length=1, max_length=200_000)
     conversation_history: List[ConversationMessage] = Field(
         ..., 
         description="Previous conversation messages",
         min_items=1
     )
     language: str = Field("en", description="Language for the answer: en or vi")
+
+    @field_validator("conversation_history")
+    @classmethod
+    def keep_recent(cls, history):
+        return history[-40:]  # every message goes to the LLM on each turn: cap the cost of long chats
 
 class ConversationResponse(BaseModel):
     """Response model for conversation"""
@@ -66,10 +76,11 @@ class ConversationResponse(BaseModel):
 
 class ValidationRequest(BaseModel):
     """Request model for validating refactored code"""
-    original_code: str = Field(..., description="Original code before refactoring", min_length=1)
-    suggested_code: str = Field(..., description="Suggested refactored code", min_length=1)
+    original_code: str = Field(..., description="Original code before refactoring", min_length=1, max_length=200_000)
+    suggested_code: str = Field(..., description="Suggested refactored code", min_length=1, max_length=200_000)
     session_id: Optional[str] = Field(None, description="Analysis session holding the contract; enables a real compile + Slither re-check")
     function_name: Optional[str] = Field(None, description="Flagged function the suggestion replaces")
+    vulnerability: Optional[str] = Field(None, description="Scan that flagged the function (timestamp or reentrancy); defaults to the first that did")
 
 class ValidationResponse(BaseModel):
     """Response model for validation"""
@@ -84,10 +95,15 @@ class ValidationResponse(BaseModel):
     findings_after: List[Dict[str, Any]] = Field(default_factory=list, description="Slither findings on the patched function")
     patched_lines: List[int] = Field(default_factory=list)
     requires_review: bool = Field(True, description="Always true: a passing check is not proof the fix is correct")
+    recorded: bool = Field(False, description="Whether this check was saved on the finding for an expert to approve")
+    record_note: Optional[str] = Field(None, description="Why the check was not saved, when it was not")
 
 
 # Service instance
 refactorbot_service = RefactorBotService()
+
+# solc + two Slither runs per check, on a host shared by every user: at most two checks at once.
+_CHECK_SLOTS = asyncio.Semaphore(2)
 
 
 @router.post("/advice", response_model=RefactoringAdviceResponse, status_code=status.HTTP_200_OK)
@@ -291,22 +307,21 @@ async def _check_against_contract(request: ValidationRequest, current_user: User
     """Splice the fix into the analysed contract, compile it and compare Slither findings before/after."""
     sessions = await get_analysis_sessions_collection()
     try:
-        session = await sessions.find_one({"_id": ObjectId(request.session_id), "user_id": current_user.id})
+        session = await sessions.find_one(_session_query(request.session_id, current_user))
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid session ID format")
     if not session:
         raise HTTPException(status_code=404, detail="Analysis session not found")
 
     span = None  # a whole edited file (the IDE) replaces everything, so no function span is needed
+    finding = find(session, request.function_name, request.vulnerability) if request.function_name else None
     if not WHOLE_FILE.search(request.suggested_code):
-        prediction = next((p for step in session.get("steps", [])
-                           for p in (step.get("result_data") or {}).get("func_vulnerability_predictions", [])
-                           if p.get("function_name") == request.function_name), None)
-        if not prediction or not prediction.get("span"):
+        if not finding or not finding["span"]:
             raise HTTPException(status_code=404, detail="Function source location not found; re-run the analysis")
-        span = prediction["span"]
+        span = finding["span"]
 
-    result = await run_in_threadpool(check_fix, session["file_path"], span, request.suggested_code)
+    async with _CHECK_SLOTS:  # waiting here, not inside a worker thread, so queued checks don't drain the shared threadpool
+        result = await run_in_threadpool(check_fix, session["file_path"], span, request.suggested_code)
     before, after = len(result["findings_before"]), len(result["findings_after"])
     scope = "this function" if span else "the contract"
     if result["compiled"]:
@@ -319,4 +334,13 @@ async def _check_against_contract(request: ValidationRequest, current_user: User
             message += " Slither could not analyse every version, so these counts are incomplete."
     else:
         message = f"Does not compile with solc {result['solc_version']}. See the compiler output."
-    return ValidationResponse(is_valid=result["compiled"], message=message, **result)
+    recorded, record_note = False, None
+    if finding:  # keep the check on the finding, so an expert can approve exactly what was compiled (anyone may propose a fix)
+        fix = FunctionFix(vulnerability=finding["vulnerability"], function_name=finding["function_name"], suggested_code=request.suggested_code,
+                          compiled=result["compiled"], solc_version=result["solc_version"], findings_before=before, findings_after=after,
+                          compiler_output=(result["compiler_output"] or "")[:2000], checked_by=current_user.username,
+                          checked_at=ensure_utc_for_db(now_vietnam())).dict()
+        fix["decision"] = fix["decision"].value
+        await sessions.update_one({"_id": session["_id"]}, replace_entry("fixes", fix))
+        recorded = True
+    return ValidationResponse(is_valid=result["compiled"], message=message, recorded=recorded, record_note=record_note, **result)

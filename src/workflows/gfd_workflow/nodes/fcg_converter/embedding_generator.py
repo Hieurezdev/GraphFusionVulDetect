@@ -25,6 +25,15 @@ def clean_function(function_list: List[str]) -> List[str]:
     ]
 
 
+_COMMENT = re.compile(r'("(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\')|/\*.*?\*/|//[^\n]*', re.S)
+
+
+def strip_comments(code: str, keep_lines: bool = False) -> str:
+    """Solidity source without // and /* */ comments; string literals are left alone. Only the model sees this, never the user.
+    keep_lines leaves a block comment's line breaks in place, so line numbers still match the original file."""
+    return _COMMENT.sub(lambda m: m.group(1) or ("\n" * m.group(0).count("\n") if keep_lines else ""), code)
+
+
 def get_embeddings(tokenizer, model, text: str) -> 'np.ndarray':
     """
     Generates a dense vector embedding for a given text using a transformer model.

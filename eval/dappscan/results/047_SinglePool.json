@@ -1,0 +1,1 @@
+{"id": "047_SinglePool", "http": 200, "seconds": 1.9, "events": [{"node": "convert_to_fcg", "output": {"fcg_file_path": "storage/20261124_125735/047_SinglePool.fcg"}}, {"node": "detect_vulnerability_src", "output": {"predicted_class": "Non-Vulnerable", "confidence_score": 0.5389736294746399}}], "raw": ""}

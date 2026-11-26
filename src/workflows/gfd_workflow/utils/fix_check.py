@@ -74,9 +74,13 @@ def check_fix(source_path: str, span: list, new_code: str) -> dict:
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / Path(source_path).name
         path.write_bytes(patched)
-        run = subprocess.run([solc, str(path)], capture_output=True, text=True, timeout=120, cwd=tmp)
-        compiled = run.returncode == 0
-        compiler_output = (run.stderr + run.stdout).replace(str(path), path.name).strip()[:4000]
+        try:
+            run = subprocess.run([solc, str(path)], capture_output=True, text=True, timeout=120, cwd=tmp)
+            compiled = run.returncode == 0
+            compiler_output = (run.stderr + run.stdout).replace(str(path), path.name).strip()[:4000]
+        except subprocess.TimeoutExpired:
+            compiled, compiler_output = False, "solc did not finish within 120 s; the fix was not checked."
+        # shortcut: Slither runs in-process with no time limit; move it to a subprocess with a timeout if heavy inputs stall checks.
         before = findings(source_path, original_solc, old_lines, "Slither on the original")
         after = findings(str(path), solc, new_lines, "Slither on the fix") if compiled else []
 

@@ -27,6 +27,7 @@ export interface UserProfile {
   bio?: string;
   created_at?: string;
   last_login?: string;
+  role?: "user" | "expert";
 }
 
 export interface AuthResponse {

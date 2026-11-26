@@ -45,6 +45,7 @@ export interface ProjectResponse {
 
 export interface AnalysisStep {
   step_name: string;
+  vulnerability?: string | null;
   status: string;
   result_data: Record<string, any>;
   started_at: string;
@@ -64,11 +65,45 @@ export interface AnalysisSession {
   completed_at?: string;
   error_message?: string;
   reviews?: FunctionReview[];
+  fixes?: FunctionFix[];
 }
 
 export type ReviewStatus = 'pending' | 'confirmed' | 'false_positive' | 'needs_manual_review';
 
+export type FixDecision = 'proposed' | 'accepted' | 'rejected' | 'needs_manual_review';
+
+export interface FunctionFix {
+  vulnerability: string;
+  function_name: string;
+  suggested_code: string;
+  compiled: boolean;
+  solc_version?: string | null;
+  findings_before: number;
+  findings_after: number;
+  checked_by: string;
+  checked_at: string;
+  decision: FixDecision;
+  decided_by?: string | null;
+  decided_at?: string | null;
+  note?: string | null;
+}
+
+export type FindingStage = 'awaiting_review' | 'closed_false_positive' | 'manual_review' | 'awaiting_fix' | 'fix_failed_check' | 'awaiting_fix_approval' | 'fix_accepted';
+
+export interface Finding {
+  vulnerability: string;
+  vulnerability_label: string;
+  function_name: string;
+  lines: number[];
+  confidence: string;
+  explanation?: string | null;
+  review?: FunctionReview | null;
+  fix?: FunctionFix | null;
+  stage: FindingStage;
+}
+
 export interface FunctionReview {
+  vulnerability?: string | null;
   function_name: string;
   status: ReviewStatus;
   note?: string | null;
@@ -271,12 +306,31 @@ class ProjectService {
   /**
    * Get a specific analysis session
    */
-  async reviewFunction(sessionId: string, functionName: string, status: ReviewStatus, note?: string): Promise<FunctionReview[]> {
+  async reviewFunction(sessionId: string, vulnerability: string, functionName: string, status: ReviewStatus, note?: string): Promise<FunctionReview[]> {
     return await apiFetch<FunctionReview[]>(`/api/v1/sessions/${sessionId}/reviews`, {
       method: 'PUT',
-      body: { function_name: functionName, status, note },
+      body: { vulnerability, function_name: functionName, status, note },
       requireAuth: true,
     });
+  }
+
+  /** Every flagged function with its review, its fix and its stage in the workflow. */
+  async getFindings(sessionId: string): Promise<Finding[]> {
+    return await apiFetch<Finding[]>(`/api/v1/sessions/${sessionId}/findings`, { requireAuth: true });
+  }
+
+  /** `suggestedCode` is the fix the expert looked at: the server refuses (409) if a different one was recorded since. */
+  async decideFix(sessionId: string, vulnerability: string, functionName: string, decision: FixDecision, suggestedCode: string, note?: string): Promise<FunctionFix[]> {
+    return await apiFetch<FunctionFix[]>(`/api/v1/sessions/${sessionId}/fixes`, {
+      method: 'PUT',
+      body: { vulnerability, function_name: functionName, decision, suggested_code: suggestedCode, note },
+      requireAuth: true,
+    });
+  }
+
+  /** Expert worklist: sessions from any user with at least one flagged function. */
+  async getReviewQueue(): Promise<AnalysisSession[]> {
+    return await apiFetch<AnalysisSession[]>(`/api/v1/reviews/queue`, { requireAuth: true });
   }
 
   async getSessionSource(sessionId: string): Promise<{ filename: string; source: string }> {
