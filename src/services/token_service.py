@@ -1,4 +1,5 @@
 import logging
+import posixpath
 import requests
 import json
 import os
@@ -19,6 +20,53 @@ class TokenNotFound(RuntimeError):
 
 class SourceNotVerified(RuntimeError):
     """The explorer knows the address but its source code was never published."""
+
+
+_IMPORT = re.compile(r'^[ \t]*import\b[^;"\']*["\']([^"\']+)["\'][^;]*;', re.M)
+_ONCE = re.compile(r'^.*SPDX-License-Identifier.*$|^[ \t]*pragma\s+(?:experimental|abicoder)\b[^;]*;', re.M)
+
+
+def flatten_sources(sources: Dict[str, str]) -> str:
+    """One compilable file from an explorer's multi-file source: every file after the files it imports, imports removed.
+    shortcut: aliased imports (import "x" as A / {B as C}) are not rewritten, flatten with solc's own resolver if such contracts matter."""
+    done, parts, seen_once = set(), [], set()
+
+    def resolve(spec: str, current: str) -> Optional[str]:
+        path = posixpath.normpath(posixpath.join(posixpath.dirname(current), spec)) if spec.startswith(".") else spec
+        if path in sources:
+            return path
+        # Remapped imports ("@openzeppelin/contracts/x.sol" stored as "lib/openzeppelin-contracts/contracts/x.sol"):
+        # match on the longest trailing part of the path that names exactly one file.
+        parts = path.lstrip("./").split("/")
+        for i in range(len(parts)):
+            hits = [name for name in sources if name == "/".join(parts[i:]) or name.endswith("/" + "/".join(parts[i:]))]
+            if len(hits) == 1:
+                return hits[0]
+            if hits and i == len(parts) - 1:   # same file name in several folders: prefer the one closest to the importer
+                return max(hits, key=lambda n: len(posixpath.commonprefix([n, current])))
+        return None
+
+    def once(match):  # solc rejects a second SPDX line or a repeated experimental pragma in one file
+        key = " ".join(match.group(0).split())
+        if key in seen_once or "SPDX" in key and any("SPDX" in k for k in seen_once):
+            return ""
+        seen_once.add(key)
+        return match.group(0)
+
+    def visit(name: str):
+        if name in done:
+            return
+        done.add(name)
+        for spec in _IMPORT.findall(sources[name]):
+            dep = resolve(spec, name)
+            if dep:
+                visit(dep)
+        body = _IMPORT.sub(lambda m: "\n" * m.group(0).count("\n"), sources[name])  # keep the file's own line count
+        parts.append(f"// File: {name}\n\n{_ONCE.sub(once, body)}\n")
+
+    for name in sources:
+        visit(name)
+    return "\n".join(parts)
 
 
 class TokenService:
@@ -151,37 +199,21 @@ class TokenService:
         if source_code.startswith("{{") and source_code.endswith("}}"):
              source_code = source_code[1:-1] # Remove double braces quirk of some APIs
 
-        final_source = ""
-        is_multi_file = False
-        
+        final_source = source_code
         try:
             if source_code.startswith("{"):
                 parsed = json.loads(source_code)
-                if "sources" in parsed:
-                    # Standard JSON input
-                    is_multi_file = True
-                    # Strategy: Concatenate or keep as structure. 
-                    # For simplicity in this app, let's concatenate with comments separators, 
-                    # or returning the raw content if the analysis engine supports it.
-                    # Let's concatenate for now as the existing 'token_to_sol.py' seemed to save multiple files.
-                    # But the frontend expects 'content' as a string.
-                    
-                    # We will concatenate them for display/analysis
-                    for fname, content_node in parsed["sources"].items():
-                        content = content_node.get("content", "")
-                        final_source += f"// File: {fname}\n\n{content}\n\n"
-                else:
-                    # Maybe flat dict
-                    for fname, content in parsed.items():
-                         if isinstance(content, dict) and "content" in content:
-                             final_source += f"// File: {fname}\n\n{content['content']}\n\n"
-            else:
-                final_source = source_code
+                files = parsed.get("sources", parsed)  # standard JSON input, or a flat {path: {content}} dict
+                final_source = flatten_sources({name: node["content"] for name, node in files.items()
+                                                if isinstance(node, dict) and "content" in node}) or source_code
         except json.JSONDecodeError:
-            final_source = source_code
+            pass
 
-        if not final_source.strip():
-             final_source = source_code # Fallback
+        # The pipeline picks solc from the first pragma. A flattened file carries one pragma per source ("^0.8.0" next to
+        # "^0.8.20"), so lead with the compiler the contract was actually deployed with.
+        deployed = re.search(r"v?(\d+\.\d+\.\d+)", data.get("CompilerVersion") or "")
+        if deployed:
+            final_source = f"pragma solidity {deployed.group(1)}; // compiler recorded by the explorer\n" + final_source
 
         return {
             "name": contract_name,

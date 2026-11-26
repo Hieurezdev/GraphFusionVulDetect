@@ -16,6 +16,12 @@ import re
 from typing import Optional
 
 
+def _span(item) -> tuple:
+    """(start, length) of a declaration; source_mapping is a dict in Slither 0.8 and an object from 0.9 on."""
+    sm = item.source_mapping
+    return (sm['start'], sm['length']) if isinstance(sm, dict) else (sm.start, sm.length)
+
+
 def _function_node(contract, function, filename_input: str) -> dict:
     """
     Creates a dictionary of attributes for a standard contract function node.
@@ -28,8 +34,7 @@ def _function_node(contract, function, filename_input: str) -> dict:
     Returns:
         dict: A dictionary containing the node's properties.
     """
-    node_function_source_code_start = function.source_mapping['start']
-    node_function_source_code_length = function.source_mapping['length']
+    node_function_source_code_start, node_function_source_code_length = _span(function)
     node_info = {
         'node_id': f"{filename_input}_{contract.id}_{contract.name}_{function.full_name}",
         'label': f"{filename_input}_{contract.name}_{function.full_name}",
@@ -309,8 +314,7 @@ def get_node_info(node):
         node_irs = None
 
     # print(node_label)
-    node_source_code_start = node.source_mapping['start']
-    node_source_code_length = node.source_mapping['length']
+    node_source_code_start, node_source_code_length = _span(node)
 
     return node_label, node_type, node_expression, node_irs, node_source_code_start, node_source_code_length
 

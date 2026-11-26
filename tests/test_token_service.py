@@ -50,3 +50,24 @@ def test_details_cache_keeps_only_platforms(monkeypatch):
     body = {"platforms": {"ethereum": "0xabc"}, "description": {"en": "x" * 30000}}
     monkeypatch.setattr(ts.requests, "get", lambda *a, **k: FakeResponse(200, body))
     assert TokenService().get_token_details("cache-test-coin") == {"platforms": {"ethereum": "0xabc"}}
+
+
+def test_multi_file_source_is_flattened_in_dependency_order_and_pinned_to_the_deployed_compiler():
+    sources = {
+        "contracts/Token.sol": {"content": '// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\nimport {Base} from "./lib/Base.sol";\nimport "@oz/Ctx.sol";\ncontract Token is Base {}'},
+        "contracts/lib/Base.sol": {"content": '// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\nimport "@oz/Ctx.sol";\ncontract Base is Ctx {}'},
+        "@oz/Ctx.sol": {"content": "pragma solidity ^0.8.0;\ncontract Ctx {}"},
+    }
+    import json
+    out = svc._process_contract_data({"SourceCode": "{" + json.dumps({"sources": sources}) + "}", "ContractName": "Token",
+                                      "CompilerVersion": "v0.8.24+commit.e11b9ed9"}, "0xabc")["source_code"]
+    assert out.startswith("pragma solidity 0.8.24;")
+    assert out.index("contract Ctx") < out.index("contract Base") < out.index("contract Token")
+    assert "import" not in out and out.count("SPDX-License-Identifier") == 1 and out.count("contract Ctx") == 1
+
+
+def test_flatten_follows_remapped_imports():
+    from src.services.token_service import flatten_sources
+    out = flatten_sources({"src/A.sol": 'import "@oz/contracts/utils/B.sol";\ncontract A is B {}',
+                           "lib/oz-contracts/contracts/utils/B.sol": "contract B {}"})
+    assert out.index("contract B") < out.index("contract A")

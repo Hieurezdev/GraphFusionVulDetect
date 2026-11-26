@@ -122,7 +122,8 @@ class VulnerabilityAnalysisService:
                     node_name, node_output_state = list(event.items())[0]
                     if node_name == "convert_to_fcg" and not str(node_output_state.get("fcg_file_path", "")).endswith(".fcg"):
                         raise RuntimeError("Could not build the call graph: the contract did not compile with the solc version of its pragma, "
-                                           "or it imports files that were not uploaded. It needs a manual review.")
+                                           "it imports files that were not uploaded, or it uses Solidity features newer than the analyzer "
+                                           "supports (custom errors, user-defined value types). It needs a manual review.")
                     await queue.put({**self._format_node_output(node_name, node_output_state), "vulnerability": vulnerability})
             except Exception as e:  # one scan failing must not hide the other's result
                 await queue.put({"node": "error", "vulnerability": vulnerability, "output": {"error": str(e)}})

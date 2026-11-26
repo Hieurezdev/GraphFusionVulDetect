@@ -1,0 +1,40 @@
+{
+ "paper": {
+  "P": 0.7,
+  "R": 0.93,
+  "F1": 0.8,
+  "acc": 0.77
+ },
+ "runs": {
+  "encoder=product protocol=ours": {
+   "P": 0.702,
+   "R": 0.831,
+   "F1": 0.761,
+   "acc": 0.743,
+   "epoch": 32,
+   "val_F1": 0.811
+  },
+  "encoder=product protocol=paper": {
+   "P": 0.667,
+   "R": 0.958,
+   "F1": 0.786,
+   "acc": 0.743,
+   "epoch": 18
+  },
+  "encoder=paper protocol=ours": {
+   "P": 0.705,
+   "R": 0.873,
+   "F1": 0.78,
+   "acc": 0.757,
+   "epoch": 10,
+   "val_F1": 0.876
+  },
+  "encoder=paper protocol=paper": {
+   "P": 0.691,
+   "R": 0.915,
+   "F1": 0.788,
+   "acc": 0.757,
+   "epoch": 91
+  }
+ }
+}

@@ -13,6 +13,9 @@ COPY uv.lock pyproject.toml .python-version ./
 # runs on torch 2.8 with old setuptools + torchdata 0.7.1 and graphbolt (unused) skipped. Drop this once the lock pins a Linux-installable dgl.
 RUN uv sync --frozen --no-dev --no-install-package dgl \
     && uv pip install --no-deps dgl==2.1.0 torchdata==0.7.1 "setuptools<70" \
+    # Slither 0.8.0 (the lock's pin) cannot parse custom errors or user-defined value types, i.e. most 0.8.x tokens. On the paper's
+    # test sets 0.9.6 builds the same nodes and gives the same verdicts but one (eval/generalization/out/slither096).
+    && uv pip install slither-analyzer==0.9.6 \
     && sed -i 's/^load_graphbolt()$/try:\n    load_graphbolt()\nexcept (FileNotFoundError, ImportError):\n    pass  # no torch 2.8 build; graphbolt is unused here/' \
        .venv/lib/python3.10/site-packages/dgl/graphbolt/__init__.py
 
