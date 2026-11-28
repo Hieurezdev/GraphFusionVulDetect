@@ -1,4 +1,5 @@
 import os
+import time
 import asyncio
 import tempfile
 import logging
@@ -14,14 +15,18 @@ from bson import ObjectId
 from pymongo import ReturnDocument
 from src.services.analysis_service import vulnerability_analysis_service
 from src.services.sarif import session_to_sarif
-from src.services.graph_loader import get_vulnerabilities
-from src.services.findings import find, session_findings, replace_entry
+from src.services.graph_loader import get_vulnerabilities, get_model_versions, get_pipeline_fingerprint
+from src.services.label_log import append_label_event, build_label_event
+from src.services.knowledge import add_item, add_from_label_event
+from src.services.findings import find, session_findings, replace_entry, pick_random_audits, audit_findings
+from src.config.settings import settings
+from src.utils.language import normalize_language
 from src.models.entity import (
     StreamingNodeOutput, AnalysisSession, AnalysisSessionCreate,
     AnalysisSessionStatus, AnalysisStep, ProjectFile, UserInDB,
     FunctionReview, FunctionReviewUpdate, FunctionFix, FixDecision, FixDecisionUpdate
 )
-from src.infrastructure.database import get_analysis_sessions_collection, get_projects_collection
+from src.infrastructure.database import get_analysis_sessions_collection, get_projects_collection, get_label_events_collection
 from src.utils.timezone import now_utc, now_vietnam, ensure_utc_for_db
 from .authentication_router import get_current_user
 
@@ -37,6 +42,7 @@ async def analyze_contract(
     file: UploadFile = File(..., description="Solidity file to analyze"),
     project_id: str = Form(None, description="Optional project ID to associate the analysis with"),
     language: str = Form("en", description="Language for generated explanations: en or vi"),
+    training_consent: bool = Form(False, description="Uploader agrees that this code and the expert verdicts on it may be used to retrain the models"),
     current_user: UserInDB = Depends(get_current_user)
 ):
     """
@@ -115,6 +121,10 @@ async def analyze_contract(
         "filename": filename,
         "file_hash": file_hash,
         "vulnerabilities": get_vulnerabilities(),
+        "model_versions": get_model_versions(),
+        "pipeline": get_pipeline_fingerprint(),
+        "language": normalize_language(language),
+        "training_consent": bool(training_consent),
         "status": AnalysisSessionStatus.PROCESSING,
         "steps": [],
         "started_at": ensure_utc_for_db(now_vietnam()),
@@ -166,49 +176,57 @@ async def analyze_contract(
                 }
             )
     
-    # Create streaming generator
-    async def stream_analysis():
+    # Same bytes, same model checkpoints, same explanation language -> same result: replay the stored steps (step 1.5).
+    cached = None
+    if settings.RESULT_CACHE:
+        cached = await sessions_collection.find_one(
+            {"_id": {"$ne": ObjectId(session_id)}, "file_hash": file_hash, "pipeline": session_doc["pipeline"],
+             "language": session_doc["language"], "status": AnalysisSessionStatus.COMPLETED, "steps.step_name": "summary"},
+            sort=[("completed_at", -1)])
+        if cached:
+            await sessions_collection.update_one({"_id": ObjectId(session_id)}, {"$set": {"cached_from": str(cached["_id"])}})
+
+    async def replay(doc):
+        """The stored events of an earlier scan of the same file, in their original order (expert reviews are not copied)."""
+        for st in doc.get("steps", []):
+            event = {"node": st.get("step_name"), "output": st.get("result_data") or {}}
+            if st.get("vulnerability"):
+                event["vulnerability"] = st["vulnerability"]
+            if event["node"] == "start":
+                event["output"] = {**event["output"], "cached_from": str(doc["_id"])}
+            yield json.dumps(event) + "\n"
+
+    async def run_job():
+        """The analysis itself, detached from the HTTP connection (step 1.6): a client that disconnects or reloads the page
+        no longer stops it. Every event is stored as a step; clients follow them with tail_session_events()."""
+        from src.services import metrics
+        t0, outcome = time.perf_counter(), "failed"
+        metrics.gauge_add("analysis_running", 1, help_text="Analyses running or waiting for a slot")
         try:
-            # Stream analysis results and save each step
-            async for result_line in vulnerability_analysis_service.analyze_solidity_file(
-                file_path, temp_dir, language
-            ):
-                # Parse the result
+            source = replay(cached) if cached else vulnerability_analysis_service.analyze_solidity_file(file_path, temp_dir, language)
+            async for result_line in source:
                 try:
                     result_data = json.loads(result_line.strip())
-                    
-                    # Save step to database
-                    step = AnalysisStep(
-                        step_name=result_data.get("node", "unknown"),
-                        vulnerability=result_data.get("vulnerability"),
-                        status="completed",
-                        result_data=result_data.get("output", {}),
-                        started_at=ensure_utc_for_db(now_vietnam()),
-                        completed_at=ensure_utc_for_db(now_vietnam())
-                    )
-                    
-                    await sessions_collection.update_one(
-                        {"_id": ObjectId(session_id)},
-                        {"$push": {"steps": step.dict()}}
-                    )
-                    
                 except json.JSONDecodeError:
-                    # Handle non-JSON lines
-                    pass
-                
-                # Send result to client
-                yield result_line
-            
-            # Mark session as completed
-            await sessions_collection.update_one(
-                {"_id": ObjectId(session_id)},
-                {
-                    "$set": {
-                        "status": AnalysisSessionStatus.COMPLETED,
-                        "completed_at": ensure_utc_for_db(now_vietnam())
-                    }
-                }
-            )
+                    continue
+                step = AnalysisStep(
+                    step_name=result_data.get("node", "unknown"),
+                    vulnerability=result_data.get("vulnerability"),
+                    status="completed",
+                    result_data=result_data.get("output", {}),
+                    started_at=ensure_utc_for_db(now_vietnam()),
+                    completed_at=ensure_utc_for_db(now_vietnam())
+                )
+                await sessions_collection.update_one({"_id": ObjectId(session_id)}, {"$push": {"steps": step.dict()}})
+                _notify(session_id)
+
+            # Mark session as completed; with the uploader's consent, queue a random sample of unflagged functions for experts
+            done = {"status": AnalysisSessionStatus.COMPLETED, "completed_at": ensure_utc_for_db(now_vietnam())}
+            if training_consent and settings.RANDOM_AUDIT_RATE > 0:
+                stored = await sessions_collection.find_one({"_id": ObjectId(session_id)}, {"steps": 1})
+                done["random_audits"] = pick_random_audits(stored or {}, settings.RANDOM_AUDIT_RATE, session_id)
+            await sessions_collection.update_one({"_id": ObjectId(session_id)}, {"$set": done})
+            outcome = "cached" if cached else "completed"
             
             # Update project status if provided
             if project_id:
@@ -222,13 +240,12 @@ async def analyze_contract(
                     }
                 )
                 
-        except (asyncio.CancelledError, GeneratorExit):
-            # The client disconnected: the scans were stopped, so close the session instead of leaving it "processing".
-            # A separate task, because this one is being cancelled and its own awaits would be cancelled too.
+        except asyncio.CancelledError:
+            # Only a server shutdown cancels the job now; fail_orphaned_sessions() closes it at the next start if this cannot.
             task = asyncio.get_running_loop().create_task(sessions_collection.update_one(
                 {"_id": ObjectId(session_id)},
                 {"$set": {"status": AnalysisSessionStatus.FAILED, "completed_at": ensure_utc_for_db(now_vietnam()),
-                          "error_message": "Analysis stopped: the connection closed before it finished. Run it again."}}))
+                          "error_message": "Analysis stopped: the server shut down before it finished. Run it again."}}))
             _background.add(task)  # the loop keeps only a weak reference to tasks
             task.add_done_callback(_background.discard)
             raise
@@ -259,21 +276,98 @@ async def analyze_contract(
                     }
                 )
             
-            # Send error as final message
-            error_output = {
-                "node": "error",
-                "output": {
-                    "error": f"Analysis failed: {str(e)}",
-                    "session_id": session_id
-                }
-            }
-            yield f"{json.dumps(error_output)}\n"
-    
+        finally:
+            _notify(session_id)  # wake the clients following this session so they see the final status at once
+            _session_signals.pop(session_id, None)  # followers already woken re-read the final status and stop
+            metrics.gauge_add("analysis_running", -1)
+            metrics.inc("analysis_jobs_total", help_text="Finished analyses by outcome", outcome=outcome)
+            metrics.observe("analysis_duration_seconds", time.perf_counter() - t0, help_text="Analysis duration (whole contract)", outcome=outcome)
+
+    job = asyncio.get_running_loop().create_task(run_job())
+    _background.add(job)  # the loop keeps only a weak reference to tasks
+    job.add_done_callback(_background.discard)
+
     return StreamingResponse(
-        stream_analysis(), 
+        tail_session_events(session_id),
         media_type="application/x-ndjson",
         headers={"X-Session-ID": session_id}
     )
+
+
+# Step 1.6: clients follow a session's stored steps instead of holding the analysis itself.
+_session_signals: dict = {}  # session id -> asyncio.Event, set when a step is stored (in-process wake-up; polling covers the rest)
+
+
+def _notify(session_id: str) -> None:
+    signal = _session_signals.get(session_id)
+    if signal:
+        signal.set()
+
+
+def step_to_event(step: dict) -> dict:
+    """A stored step back into the stream event it was saved from."""
+    event = {"node": step.get("step_name"), "output": step.get("result_data") or {}}
+    if step.get("vulnerability"):
+        event["vulnerability"] = step["vulnerability"]
+    return event
+
+
+async def tail_session_events(session_id: str, start: int = 0, poll_seconds: float = 0.5):
+    """NDJSON of a session's events from index `start`: those already stored, then each new one, until it finishes.
+
+    The status and the steps come from one read of the document, and steps are stored before the final status, so a
+    finished status means every step has been sent. A failed analysis ends with an error event, as the stream always did.
+    """
+    sessions_collection = await get_analysis_sessions_collection()
+    signal = _session_signals.setdefault(session_id, asyncio.Event())
+    sent = start
+    while True:
+        doc = await sessions_collection.find_one(
+            {"_id": ObjectId(session_id)}, {"steps": {"$slice": [sent, 100000]}, "status": 1, "error_message": 1})
+        if doc is None:
+            return
+        for step in doc.get("steps", []):
+            sent += 1
+            yield json.dumps(step_to_event(step)) + "\n"
+        status = doc.get("status")
+        if status in (AnalysisSessionStatus.COMPLETED, AnalysisSessionStatus.FAILED):
+            _session_signals.pop(session_id, None)  # no growth over a long run: one entry per running analysis at most
+        if status == AnalysisSessionStatus.COMPLETED:
+            return
+        if status == AnalysisSessionStatus.FAILED:
+            yield json.dumps({"node": "error", "output": {"error": f"Analysis failed: {doc.get('error_message') or 'unknown error'}",
+                                                         "session_id": session_id}}) + "\n"
+            return
+        signal = _session_signals.setdefault(session_id, signal)
+        signal.clear()
+        try:
+            await asyncio.wait_for(signal.wait(), timeout=poll_seconds)
+        except asyncio.TimeoutError:
+            pass
+
+
+async def fail_orphaned_sessions() -> int:
+    """At startup: analyses still 'processing' belonged to a server process that is gone; close them so clients stop waiting."""
+    sessions_collection = await get_analysis_sessions_collection()
+    result = await sessions_collection.update_many(
+        {"status": AnalysisSessionStatus.PROCESSING},
+        {"$set": {"status": AnalysisSessionStatus.FAILED, "completed_at": ensure_utc_for_db(now_vietnam()),
+                  "error_message": "The server restarted before this analysis finished. Run it again."}})
+    return result.modified_count
+
+
+@router.get("/sessions/{session_id}/events")
+async def session_events(session_id: str, start: int = Query(0, ge=0), current_user: UserInDB = Depends(get_current_user)):
+    """Follow an analysis from its `start`-th event: after a reload or a dropped connection, the client reattaches here."""
+    sessions_collection = await get_analysis_sessions_collection()
+    try:
+        doc = await sessions_collection.find_one(_session_query(session_id, current_user), {"_id": 1})
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not doc:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    return StreamingResponse(tail_session_events(session_id, start), media_type="application/x-ndjson",
+                             headers={"X-Session-ID": session_id})
 
 
 @router.get("/sessions", response_model=List[AnalysisSession])
@@ -345,16 +439,47 @@ async def require_expert(current_user: UserInDB = Depends(get_current_user)) -> 
 
 @router.get("/reviews/queue", response_model=List[AnalysisSession])
 async def review_queue(limit: int = Query(50, le=200), current_user: UserInDB = Depends(require_expert)):
-    """Sessions, from any user, in which the model flagged at least one function: the expert's worklist."""
+    """Sessions, from any user, with a flagged function or a random audit: the expert's worklist."""
     sessions_collection = await get_analysis_sessions_collection()
     cursor = sessions_collection.find(
-        {"steps.result_data.func_vulnerability_predictions.prediction": 1}
+        {"$or": [{"steps.result_data.func_vulnerability_predictions.prediction": 1}, {"random_audits.0": {"$exists": True}}]}
     ).sort("started_at", -1).limit(limit)
+    sessions = await cursor.to_list(length=limit)
+    # Step 1.7: work that is most likely right comes first. Sessions with unreviewed alerts are ordered by the highest
+    # (calibrated) contract-level confidence among them; sessions with only random audits follow; fully reviewed ones last.
+    sessions.sort(key=review_priority, reverse=True)
     result = []
-    for session in await cursor.to_list(length=limit):
+    for session in sessions:
         session["id"] = str(session.pop("_id"))
         result.append(AnalysisSession(**session))
     return result
+
+
+@router.get("/reviews/disagreements")
+async def review_disagreements(current_user: UserInDB = Depends(require_expert)):
+    """Step 2.6: items whose experts' final verdicts differ, plus agreement statistics. None of these is used for training
+    until a further review settles it."""
+    from src.services.label_log import disagreements, cohen_kappa, latest_verdicts, reviewer_rates
+    events = await (await get_label_events_collection()).find({}, sort=[("seq", 1)]).to_list(length=None)
+    both = [list(by.values())[:2] for by in latest_verdicts(events).values() if len(by) >= 2]
+    return {"disagreements": disagreements(events), "items_with_two_reviewers": len(both),
+            "cohen_kappa": cohen_kappa([tuple(p) for p in both]), "reviewers": reviewer_rates(events)}
+
+
+def review_priority(session: dict) -> tuple:
+    """(has unreviewed alerts, best contract confidence among them, has unreviewed audits, newest first)."""
+    reviewed = {(r.get("vulnerability") or "timestamp", r.get("function_name")) for r in session.get("reviews", [])
+                if r.get("status") not in (None, "pending")}
+    pending = [f for f in session_findings(session) if (f["vulnerability"], f["function_name"]) not in reviewed]
+    confidence = {}
+    for step in session.get("steps", []):
+        data = step.get("result_data") or {}
+        if data.get("predicted_class") == "Vulnerable":
+            confidence[step.get("vulnerability") or "timestamp"] = data.get("confidence_score") or 0.0
+    best = max((confidence.get(f["vulnerability"], 0.0) for f in pending), default=0.0)
+    audits = any((a["vulnerability"], a["function_name"]) not in reviewed for a in session.get("random_audits") or [])
+    started = session.get("started_at")
+    return (bool(pending), best, audits, started.timestamp() if hasattr(started, "timestamp") else 0)
 
 
 @router.put("/sessions/{session_id}/reviews", response_model=List[FunctionReview])
@@ -372,14 +497,19 @@ async def review_function(
     if not session_doc:
         raise HTTPException(status_code=404, detail="Analysis session not found")
 
-    if not find(session_doc, review.function_name, review.vulnerability):
-        raise HTTPException(status_code=404, detail="Function not flagged by this scan in this analysis")
+    finding = find(session_doc, review.function_name, review.vulnerability, include_audits=True)
+    if not finding:
+        raise HTTPException(status_code=404, detail="Function not flagged or sampled for audit by this scan in this analysis")
 
     entry = FunctionReview(**review.dict(), reviewer=current_user.username, reviewed_at=ensure_utc_for_db(now_vietnam())).dict()
     entry["status"] = review.status.value
     # Function names contain dots, so reviews live in a list rather than a dict keyed by name.
     updated = await sessions_collection.find_one_and_update(
         {"_id": ObjectId(session_id)}, replace_entry("reviews", entry), return_document=ReturnDocument.AFTER)
+    # Every verdict is also appended to the hash-chained label log: the session keeps only the latest one.
+    event = await append_label_event(await get_label_events_collection(),
+                                     build_label_event(session_doc, finding, entry, current_user.username, random_audit=bool(finding.get("random_audit"))))
+    await _remember(add_from_label_event, event)  # step 1.8: the verdict is retrievable for the next similar function
     return updated.get("reviews", [])
 
 
@@ -393,7 +523,8 @@ async def list_findings(session_id: str, current_user: UserInDB = Depends(get_cu
         raise HTTPException(status_code=400, detail="Invalid session ID format")
     if not session_doc:
         raise HTTPException(status_code=404, detail="Analysis session not found")
-    return session_findings(session_doc)
+    # Random audits are an expert's task, never an alert: the uploader does not see them
+    return session_findings(session_doc) + (audit_findings(session_doc) if current_user.role == "expert" else [])
 
 
 @router.put("/sessions/{session_id}/fixes", response_model=List[FunctionFix])
@@ -425,7 +556,24 @@ async def decide_fix(session_id: str, update: FixDecisionUpdate, current_user: U
         return_document=ReturnDocument.AFTER)
     if updated is None:
         raise HTTPException(status_code=409, detail="This fix changed since you opened it. Reload and review the current version.")
+    if update.decision == FixDecision.ACCEPTED and updated.get("training_consent"):
+        # Step 1.8: an accepted fix becomes a precedent for similar functions (original + fixed code)
+        await _remember(add_item, "approved_fix", update.vulnerability, _function_code(updated, update.vulnerability, update.function_name),
+                        note=update.note, source=f"session {session_id}", file_hash=updated.get("file_hash"), fixed_code=update.suggested_code)
     return updated.get("fixes", [])
+
+
+def _function_code(session: dict, vulnerability: str, function_name: str) -> str:
+    return next((p.get("function_code") or "" for step in session.get("steps", []) if (step.get("vulnerability") or "timestamp") == vulnerability
+                 for p in (step.get("result_data") or {}).get("func_vulnerability_predictions") or [] if p.get("function_name") == function_name), "")
+
+
+async def _remember(fn, *args, **kwargs):
+    """Add to the knowledge base in a worker thread (it encodes the code); a failure is logged, never returned to the expert."""
+    try:
+        await asyncio.to_thread(fn, *args, **kwargs)
+    except Exception as e:
+        logger.warning(f"knowledge base update failed: {e}")
 
 
 @router.get("/sessions/{session_id}/source")

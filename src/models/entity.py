@@ -177,6 +177,9 @@ class AnalysisSession(BaseModel):
     error_message: Optional[str] = Field(default=None, description="Error message if analysis failed")
     reviews: List[FunctionReview] = Field(default_factory=list, description="Expert verdicts on flagged functions")
     fixes: List[FunctionFix] = Field(default_factory=list, description="Checked fixes for confirmed findings and the expert's decision on each")
+    model_versions: Dict[str, Optional[str]] = Field(default_factory=dict, description="Checkpoint version that scored each vulnerability type")
+    training_consent: bool = Field(default=False, description="Uploader agreed that this code and the verdicts on it may be used for retraining")
+    random_audits: List[Dict[str, Any]] = Field(default_factory=list, description="Unflagged functions sampled at random for a blind expert check")
 
 # Analysis related schemas
 class VulnerabilityType(str, Enum):

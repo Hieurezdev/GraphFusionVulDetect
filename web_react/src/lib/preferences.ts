@@ -5,11 +5,13 @@ export type Preferences = {
   collapseFinishedSteps: boolean;
   startPage: "/analysis" | "/project";
   language: "en" | "vi";
+  /** Uploader agrees that their contracts and the expert verdicts on them may be used to retrain the models. Off by default. */
+  trainingConsent: boolean;
 };
 
 const KEY = "gf_preferences";
 const EVENT = "gf-preferences";
-const DEFAULTS: Preferences = { animateScans: true, collapseFinishedSteps: false, startPage: "/analysis", language: "en" };
+const DEFAULTS: Preferences = { animateScans: true, collapseFinishedSteps: false, startPage: "/analysis", language: "en", trainingConsent: false };
 
 export const readPreferences = (): Preferences => {
   try {

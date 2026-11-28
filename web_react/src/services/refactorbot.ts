@@ -66,6 +66,7 @@ class RefactorBotService {
     const response = await fetch(`${this.baseUrl}/advice`, {
       method: 'POST',
       headers: createAuthHeaders(),
+      credentials: 'include',  // httpOnly session cookie (step 2.5)
       body: JSON.stringify({
         code,
         issue_description: issueDescription,
@@ -91,6 +92,7 @@ class RefactorBotService {
     const response = await fetch(`${this.baseUrl}/conversation`, {
       method: 'POST',
       headers: createAuthHeaders(),
+      credentials: 'include',  // httpOnly session cookie (step 2.5)
       body: JSON.stringify({
         code,
         conversation_history: conversationHistory,
@@ -118,6 +120,7 @@ class RefactorBotService {
     const response = await fetch(`${this.baseUrl}/chat/stream`, {
       method: 'POST',
       headers: createAuthHeaders(),
+      credentials: 'include',  // httpOnly session cookie (step 2.5)
       signal,
       body: JSON.stringify({
         code,
@@ -165,6 +168,7 @@ class RefactorBotService {
     const response = await fetch(`${this.baseUrl}/validate`, {
       method: 'POST',
       headers: createAuthHeaders(),
+      credentials: 'include',  // httpOnly session cookie (step 2.5)
       body: JSON.stringify({
         original_code: originalCode,
         suggested_code: suggestedCode,

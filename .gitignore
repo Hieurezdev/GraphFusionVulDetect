@@ -186,3 +186,17 @@ src/infrastructure/analysis_model/*_reentrancy.pt
 assets/datasets/SourceCodeSyntaxDatasetFull/
 assets/datasets/*.zip
 1-s2.0-S2405959526000238-main.pdf
+
+# Full research dataset (extracted locally from the uploaded archive; not committed)
+assets/datasets/full/
+assets/datasets/*.zip
+
+# Any local env file or backup (.env.backup-*, .env.local, ...); only the two templates are tracked
+.env.*
+!.env.example
+!.env.production
+
+# Retraining artefacts (step 1.9): rebuilt graphs, dataset snapshots, candidate checkpoints and the local registry
+eval/retrain/graphs/
+eval/retrain/datasets/
+models/

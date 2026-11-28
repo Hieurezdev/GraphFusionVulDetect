@@ -73,7 +73,7 @@ class VulnerabilityAnalysisService:
         elif node_name == "detect_vulnerability_src":
             output_data["output"] = {
                 k: v for k, v in node_output_state.items() 
-                if k in ["predicted_class", "confidence_score"]
+                if k in ["predicted_class", "confidence_score", "shadow"]   # shadow: stored for the comparison, not shown
             }
         elif node_name == "detect_vulnerability_func":
             output_data["output"] = {

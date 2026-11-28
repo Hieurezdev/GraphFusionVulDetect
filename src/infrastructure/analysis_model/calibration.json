@@ -1,0 +1,20 @@
+{
+  "timestamp": {
+    "model_version": "best_model_GCN_2L_max.pt@429b8e497428",
+    "temperature": 0.5606,
+    "fitted_temperature": 0.5606,
+    "applied": true,
+    "fitted_on": "test set (168 contracts), 2026-11-28",
+    "ece_before_crossfit": 0.1031,
+    "ece_after_crossfit": 0.0185
+  },
+  "reentrancy": {
+    "model_version": "best_model_GAT_2L_max_reentrancy.pt@a14fcfbedac2",
+    "temperature": 1.0,
+    "fitted_temperature": 1.0864,
+    "applied": false,
+    "fitted_on": "test set (119 contracts), 2026-11-28",
+    "ece_before_crossfit": 0.0346,
+    "ece_after_crossfit": 0.1385
+  }
+}

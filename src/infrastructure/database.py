@@ -33,7 +33,8 @@ class DatabaseManager:
                 'projects': self.database.projects,
                 'analysis_sessions': self.database.analysis_sessions,
                 'analysis_results': self.database.analysis_results,
-                'file_uploads': self.database.file_uploads
+                'file_uploads': self.database.file_uploads,
+                'label_events': self.database.label_events,
             }
             
             # Create indexes
@@ -75,6 +76,10 @@ class DatabaseManager:
             await self.collections['analysis_results'].create_index([("created_at", -1)])
             await self.collections['analysis_results'].create_index([("file_hash", 1)])
             
+            # Label log: seq is unique so two concurrent writers cannot fork the hash chain
+            await self.collections['label_events'].create_index([("seq", 1)], unique=True)
+            await self.collections['label_events'].create_index([("session_id", 1), ("vulnerability", 1), ("function_name", 1)])
+
             # File uploads indexes
             await self.collections['file_uploads'].create_index([("user_id", 1)])
             await self.collections['file_uploads'].create_index([("created_at", -1)])
@@ -128,3 +133,10 @@ async def get_file_uploads_collection():
     if db_manager.database is None:
         await db_manager.connect()
     return db_manager.collections['file_uploads']
+
+
+async def get_label_events_collection():
+    """Append-only, hash-chained log of expert verdicts (src/services/label_log.py)"""
+    if db_manager.database is None:
+        await db_manager.connect()
+    return db_manager.collections['label_events']

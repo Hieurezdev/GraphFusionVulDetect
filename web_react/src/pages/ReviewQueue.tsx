@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { AnalysisReport } from "@/components/AnalysisReport";
-import { findReview, flaggedFunctions, sessionResults } from "@/lib/findings";
+import { findReview, flaggedFunctions, sessionResults, VULNERABILITY_LABELS } from "@/lib/findings";
+import { FunctionReviewControl, AUDIT_LABELS } from "@/components/FunctionReviewControl";
 import { TruncatedText } from "@/components/TruncatedText";
 import { useAuth } from "@/contexts/AuthContext";
 import { projectService, AnalysisSession, FunctionReview } from "@/services/project";
@@ -13,7 +14,7 @@ const ContractIDE = lazy(() => import("@/components/ContractIDE"));
 const toResults = sessionResults;
 
 const pendingCount = (session: AnalysisSession) =>
-  flaggedFunctions(toResults(session))
+  [...flaggedFunctions(toResults(session)), ...(session.random_audits || [])]
     .filter(p => (findReview(session.reviews, p.vulnerability, p.function_name)?.status ?? "pending") === "pending").length;
 
 /** Expert worklist: every analysis (from any user) with alerts, newest first. */
@@ -83,6 +84,26 @@ const ReviewQueue = () => {
                 </h2>
                 <AnalysisReport results={toResults(selected)} isStreaming={false} sessionId={selected.id}
                   reviews={selected.reviews || []} onReviewed={handleReviewed} />
+                {(selected.random_audits?.length ?? 0) > 0 && (
+                  <section aria-labelledby="audit-head">
+                    <h3 id="audit-head" className="text-lg">{t("Random checks")}</h3>
+                    <p className="mt-1 text-sm text-ink-2">
+                      {t("The model did not flag these functions. They were picked at random so that missed vulnerabilities are found too; the model's score is hidden so it does not sway your verdict.")}
+                    </p>
+                    <ul className="mt-4 space-y-6">
+                      {selected.random_audits!.map(a => (
+                        <li key={a.vulnerability + a.function_name} className="border-t border-rule pt-4">
+                          <p className="code-text text-sm text-ink">{a.function_name}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {t(VULNERABILITY_LABELS[a.vulnerability] ?? a.vulnerability)}{a.lines?.length ? ` · ${t("lines")} ${a.lines[0]}–${a.lines[a.lines.length - 1]}` : ""}
+                          </p>
+                          <FunctionReviewControl sessionId={selected.id} vulnerability={a.vulnerability} functionName={a.function_name}
+                            review={findReview(selected.reviews, a.vulnerability, a.function_name)} onReviewed={handleReviewed} labels={AUDIT_LABELS} />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
                 <Suspense fallback={null}>
                   <ContractIDE key={selected.id} sessionId={selected.id} results={toResults(selected)}
                     reviews={selected.reviews || []} onReviewed={handleReviewed} />

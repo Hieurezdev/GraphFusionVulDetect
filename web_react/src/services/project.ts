@@ -1,4 +1,4 @@
-import { apiFetch } from './api';
+import { apiFetch, CSRF_HEADERS } from './api';
 import { readPreferences } from "@/lib/preferences";
 
 export interface ProjectCreate {
@@ -53,6 +53,21 @@ export interface AnalysisStep {
   error_message?: string;
 }
 
+export interface RepairAgentResult {
+  function_name: string;
+  vulnerability: string;
+  rounds: number;
+  tool_calls: number;
+  seconds: number;
+  stopped: "submitted" | "round limit" | "token budget";
+  fix?: string | null;
+  summary?: string | null;
+  recorded?: boolean;
+  first_attempt_compiled?: boolean;
+  verification?: { compiled: boolean; findings_after: number; function_still_flagged?: boolean; contract_verdict?: string; holds: boolean };
+  note: string;
+}
+
 export interface AnalysisSession {
   id: string;
   project_id?: string;
@@ -66,6 +81,10 @@ export interface AnalysisSession {
   error_message?: string;
   reviews?: FunctionReview[];
   fixes?: FunctionFix[];
+  /** Unflagged functions sampled at random for a blind expert check (consenting uploads only). */
+  random_audits?: { vulnerability: string; function_name: string; lines: number[]; span: number[] }[];
+  training_consent?: boolean;
+  model_versions?: Record<string, string | null>;
 }
 
 export type ReviewStatus = 'pending' | 'confirmed' | 'false_positive' | 'needs_manual_review';
@@ -116,7 +135,7 @@ class ProjectService {
    * Create a new project
    */
   async createProject(projectData: ProjectCreate): Promise<ProjectResponse> {
-    return await apiFetch<ProjectResponse>('/api/v1/projects', {
+    return await apiFetch<ProjectResponse>('/api/v1/projects/', {  // trailing slash = the route itself, no 307 redirect
       method: 'POST',
       body: projectData,
       requireAuth: true,
@@ -140,7 +159,7 @@ class ProjectService {
       params.append('status', status);
     }
 
-    return await apiFetch<ProjectResponse[]>(`/api/v1/projects?${params}`, {
+    return await apiFetch<ProjectResponse[]>(`/api/v1/projects/?${params}`, {
       requireAuth: true,
     });
   }
@@ -185,13 +204,11 @@ class ProjectService {
     const formData = new FormData();
     formData.append('file', file);
 
-    // For file upload, we need to use fetch directly to handle FormData
-    const token = localStorage.getItem('auth_token');
+    // For file upload, we need to use fetch directly to handle FormData (the session cookie goes along)
     const response = await fetch(`/api/v1/projects/${projectId}/files`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { ...CSRF_HEADERS },
+      credentials: 'include',
       body: formData,
     });
 
@@ -225,26 +242,18 @@ class ProjectService {
       formData.append('project_id', projectId);
     }
     formData.append('language', readPreferences().language);
-
-    const token = localStorage.getItem('auth_token');
-    console.log('Token for analysis:', token ? 'Token exists' : 'No token found');
-    
-    if (!token) {
-      throw new Error('No authentication token found. Please login again.');
-    }
+    formData.append('training_consent', String(readPreferences().trainingConsent));
 
     const response = await fetch('/api/v1/analyze', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { ...CSRF_HEADERS },
+      credentials: 'include',  // the httpOnly session cookie (step 2.5)
       body: formData,
     });
 
     if (!response.ok) {
       if (response.status === 401) {
         // Clear invalid token and redirect to login
-        localStorage.removeItem('auth_token');
         localStorage.removeItem('auth_user');
         throw new Error('Authentication failed. Please login again.');
       }
@@ -261,6 +270,18 @@ class ProjectService {
       sessionId,
       stream: response.body,
     };
+  }
+
+  /**
+   * Follow an analysis that is running or finished, from its `start`-th event (after a reload or a dropped connection).
+   * The analysis runs on the server whether or not anyone is following it.
+   */
+  async followSession(sessionId: string, start = 0): Promise<ReadableStream> {
+    const response = await fetch(`/api/v1/sessions/${sessionId}/events?start=${start}`, { credentials: 'include' });
+    if (!response.ok || !response.body) {
+      throw new Error(`Could not reopen the analysis: ${response.statusText || response.status}`);
+    }
+    return response.body;
   }
 
   /**
@@ -324,6 +345,15 @@ class ProjectService {
     return await apiFetch<FunctionFix[]>(`/api/v1/sessions/${sessionId}/fixes`, {
       method: 'PUT',
       body: { vulnerability, function_name: functionName, decision, suggested_code: suggestedCode, note },
+      requireAuth: true,
+    });
+  }
+
+  /** Step 2.1: the repair agent proposes a fix and checks it (compile, Slither, re-scan); the fix waits for an expert. */
+  async runRepairAgent(sessionId: string, vulnerability: string, functionName: string): Promise<RepairAgentResult> {
+    return await apiFetch<RepairAgentResult>(`/api/v1/refactor/agent`, {
+      method: 'POST',
+      body: { session_id: sessionId, vulnerability, function_name: functionName, language: readPreferences().language },
       requireAuth: true,
     });
   }

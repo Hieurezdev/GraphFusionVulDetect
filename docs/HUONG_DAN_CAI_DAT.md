@@ -18,7 +18,7 @@ Cách chạy được hỗ trợ là **Docker Compose**. Image backend đã xử
 - Khoảng 15 GB ổ đĩa (image backend, các bản solc, cache model HuggingFace).
 - RAM 8 GB trở lên.
 - **Tuỳ chọn:** GPU NVIDIA và [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/). Không có GPU thì vẫn chạy được trên CPU (xem mục 3.3).
-- Một khoá API LLM tương thích OpenAI (Gemini hoặc nhà cung cấp khác) để có phần giải thích lỗ hổng và RefactorBot.
+- Một khoá API Claude Haiku (qua cổng Astral X, tương thích OpenAI) để có phần giải thích lỗ hổng và RefactorBot.
 - **Tuỳ chọn:** khoá Etherscan, để dùng tính năng tìm token theo tên.
 
 ## 2. Lấy mã nguồn và các file model
@@ -58,10 +58,10 @@ EMBEDDING_MODEL_PATH="Quangnguyen711/codebert-solidity-time-dep"
 GRAPH_VUL_MODEL_PATH="src/infrastructure/analysis_model/best_model_GCN_2L_max.pt"
 NODE_VUL_MODEL_PATH="src/infrastructure/analysis_model/best_node_classifier_model.pt"
 
-# LLM (API tương thích OpenAI). Không cần nếu đặt LOCAL_LLM_MODEL (xem bảng dưới)
-BASE_URL="https://<địa chỉ API>/v1"
-MODEL_NAME="<tên model>"
-GEMINI_API_KEY1="<khoá API>"      # lưu ý: tên biến có số 1 ở cuối
+# LLM: Claude Haiku qua cổng Astral X (tương thích OpenAI). Không cần nếu đặt LOCAL_LLM_MODEL (xem bảng dưới)
+CLAUDE_API_KEY="sk-<khoá Astral X>"
+BASE_URL="https://token.astralx.com.vn/v1"          # mặc định, có thể bỏ
+MODEL_NAME="byok/astral-x/claude-haiku-5-5"         # mặc định, có thể bỏ
 
 # Database (docker-compose.prod.yml tự đặt lại hai biến này cho container)
 MONGODB_URL="mongodb://localhost:27017"
@@ -80,7 +80,7 @@ Các biến tuỳ chọn:
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | 30 | Thời hạn phiên đăng nhập |
 | `CHATBOT_TEMPERATURE` / `CHATBOT_MAX_TOKENS` | 0.7 / 4096 | Tham số LLM |
 | `REENTRANCY_*_MODEL_PATH` | đường dẫn ở mục 2 | Chỉ đổi khi đặt model reentrancy ở chỗ khác |
-| `LOCAL_LLM_MODEL` | (trống) | Đặt tên model Hugging Face, ví dụ `suzeai/Qwen2.5-Coder-1.5B-explain-vul-wo-system`, để **chạy LLM ngay trên server thay cho API**. Khi đặt biến này, `BASE_URL`, `MODEL_NAME`, `GEMINI_API_KEY1` không cần nữa. Để trống thì dùng API như cũ |
+| `LOCAL_LLM_MODEL` | (trống) | Đặt tên model Hugging Face, ví dụ `suzeai/Qwen2.5-Coder-1.5B-explain-vul-wo-system`, để **chạy LLM ngay trên server thay cho API**. Khi đặt biến này, `BASE_URL`, `MODEL_NAME`, `CLAUDE_API_KEY` không cần nữa. Để trống thì dùng API như cũ |
 | `LOCAL_LLM_MAX_NEW_TOKENS` / `LOCAL_LLM_MAX_INPUT_TOKENS` | 1024 / 8192 | Độ dài câu trả lời / độ dài đầu vào tối đa của LLM chạy trên server |
 
 Sinh khoá bí mật:
@@ -89,7 +89,6 @@ Sinh khoá bí mật:
 sed -i "s|^SECRET_KEY=.*|SECRET_KEY=\"$(openssl rand -hex 32)\"|; s|^JWT_SECRET=.*|JWT_SECRET=\"$(openssl rand -hex 32)\"|" .env
 ```
 
-> `.env.example` ghi `GEMINI_API_KEY`, nhưng backend đọc `GEMINI_API_KEY1`. Hãy đặt đúng tên `GEMINI_API_KEY1`.
 > Đổi `JWT_SECRET` sẽ đăng xuất toàn bộ người dùng.
 
 ### 3.2. Chạy thử trên máy (stack local)
@@ -222,7 +221,8 @@ BASE=http://localhost:18511 USER_LOGIN=<user>:<mật khẩu> EXPERT_LOGIN=<exper
 
 | Hiện tượng | Nguyên nhân và cách xử lý |
 |---|---|
-| Backend thoát ngay, log báo `ValidationError ... Field required` | Thiếu biến bắt buộc trong `.env` (mục 3.1), thường là `GEMINI_API_KEY1` |
+| Backend thoát ngay, log báo `ValidationError ... Field required` | Thiếu biến bắt buộc trong `.env` (mục 3.1), ví dụ `MONGODB_URL` hoặc `JWT_SECRET` |
+| Backend thoát ngay, log báo `Please configure CLAUDE_API_KEY` | Chưa đặt `CLAUDE_API_KEY` trong `.env` (mục 3.1) |
 | Chỉ quét timestamp, không có reentrancy | Thiếu hai file model reentrancy (mục 2) |
 | "Could not build the call graph…" | Hợp đồng không biên dịch được với phiên bản solc trong `pragma`, có `import` tới file không được tải lên, hoặc dùng tính năng Solidity mới hơn Slither hỗ trợ. Cần rà soát thủ công |
 | `all predefined address pools have been fully subnetted` | Docker hết dải IP mặc định: đặt subnet riêng như trong `docker-compose.local.yml` |

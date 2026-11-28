@@ -15,3 +15,5 @@ class State(TypedDict):
     func_vulnerability_explanations: Optional[List[dict]]
     language: Optional[str]
     vulnerability: Optional[str]
+    # Step 2.7: prediction of the shadow candidate on the same graph (stored for comparison, not shown to users)
+    shadow: Optional[dict]

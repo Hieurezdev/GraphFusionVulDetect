@@ -1,3 +1,4 @@
+import hashlib
 import logging
 import os
 
@@ -19,10 +20,40 @@ MODEL_SPECS = {
 }
 
 
+def checkpoint_version(*paths: str) -> str:
+    """Short, stable id of the checkpoints in use: file names + a hash of their bytes (a retrained file gets a new id)."""
+    digest = hashlib.sha256()
+    for p in paths:
+        with open(p, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                digest.update(chunk)
+    return f"{os.path.basename(paths[0])}@{digest.hexdigest()[:12]}"
+
+
+def load_temperature(vulnerability: str, version: str) -> float:
+    """Contract-level temperature fitted for this checkpoint (eval/calibration/fit_temperature.py), else 1.0.
+
+    A temperature belongs to the checkpoint it was fitted on: after retraining, the old value is ignored, not reused.
+    """
+    import json
+    try:
+        with open(settings.CALIBRATION_PATH, encoding="utf-8") as f:
+            entry = json.load(f).get(vulnerability) or {}
+    except (OSError, ValueError):
+        return 1.0
+    if entry.get("model_version") != version:
+        if entry:
+            logger.warning("%s calibration ignored: fitted for %s, loaded checkpoint is %s", vulnerability, entry.get("model_version"), version)
+        return 1.0
+    return float(entry.get("temperature", 1.0))
+
+
 class GFDWorkflow:
     def __init__(self):
         self.device = torch.device(settings.DEVICE)
         self.models = {}  # vulnerability -> {embedd_tokenizer, embedd_model, graph_vul_model, node_vul_model}
+        self.versions = {}  # vulnerability -> "<checkpoint file>@<sha256 prefix>", stored on every scan and label
+        self.temperatures = {}  # vulnerability -> contract-level temperature (1.0 = uncalibrated)
         self.llm = None
 
     def initialize(self):
@@ -30,7 +61,10 @@ class GFDWorkflow:
         seed_everything(settings.SEED)
         prepare_solc_artifacts()
 
+        from src.services.model_registry import active_graph_path
         for name, spec in MODEL_SPECS.items():
+            # Step 1.9: a retrained checkpoint that passed the gate replaces the original one via models/registry.json
+            spec = {**spec, "graph": active_graph_path(name, spec["graph"])}
             missing = [p for p in (spec["graph"], spec["node"]) if not os.path.exists(p)]
             if missing and name != "timestamp":
                 logger.warning("%s scanning disabled: checkpoint not found: %s", name, ", ".join(missing))
@@ -42,6 +76,15 @@ class GFDWorkflow:
                 "graph_vul_model": self._load_graph_model(spec["graph"], spec["graph_arch"]),
                 "node_vul_model": self._load_node_model(spec["node"]),
             }
+            self.versions[name] = checkpoint_version(spec["graph"], spec["node"])
+            self.temperatures[name] = load_temperature(name, self.versions[name])
+            self.models[name]["temperature"] = self.temperatures[name]
+            # Step 2.7: a candidate in shadow mode is scored next to the active model, never shown to users
+            from src.services.model_registry import shadow_graph_path
+            shadow = shadow_graph_path(name)
+            if shadow:
+                self.models[name]["shadow_graph_model"] = self._load_graph_model(shadow, spec["graph_arch"])
+                self.models[name]["shadow_version"] = checkpoint_version(shadow, spec["node"])
         self._load_llm()
 
     def _load_embedding_model(self, emb_path):
@@ -81,7 +124,7 @@ class GFDWorkflow:
 
         self.llm = ChatOpenAI(
             model_name=settings.MODEL_NAME,
-            api_key=settings.GEMINI_API_KEY1,
+            api_key=settings.CLAUDE_API_KEY,
             base_url=settings.BASE_URL,
             temperature=settings.CHATBOT_TEMPERATURE,
             max_tokens=settings.CHATBOT_MAX_TOKENS,

@@ -64,9 +64,8 @@ export class AnalysisService {
 
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.UPLOAD}`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-        },
+        headers: { 'X-Requested-With': 'ScanGuard' },
+        credentials: 'include',
         body: formData,
       });
 
@@ -144,7 +143,6 @@ export class AnalysisService {
    * Stream analysis results (for real-time updates)
    */
   static createAnalysisStream(filePath: string): EventSource {
-    const token = localStorage.getItem('auth_token');
     const url = new URL(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}${this.ANALYSIS_ENDPOINTS.STREAM}`);
     url.searchParams.append('file_path', filePath);
     
@@ -152,10 +150,7 @@ export class AnalysisService {
       withCredentials: true,
     });
 
-    // Add auth header if possible (note: EventSource doesn't support custom headers in all browsers)
-    if (token) {
-      url.searchParams.append('token', token);
-    }
+    // The session cookie goes along (withCredentials); a token is never put in a URL.
 
     return eventSource;
   }

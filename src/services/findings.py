@@ -2,6 +2,7 @@
 
 Used by the analysis stream (the closing summary), the review and fix endpoints, the findings endpoint and SARIF.
 """
+import random
 from typing import Optional
 
 from src.workflows.gfd_workflow.graph.state import VULNERABILITIES
@@ -46,6 +47,9 @@ def summarize(events: list, order: Optional[list] = None) -> dict:
             manual.append({"vulnerability": vuln, "reason": "analysis_failed"})
         elif status == "flagged_no_function":
             manual.append({"vulnerability": vuln, "reason": "contract_flagged_no_function"})
+        for e in by_node.get("explain_vulnerability_func", {}).get("explanations") or []:
+            if (e.get("guard") or {}).get("ok") is False:   # failed the output checks even after a rewrite (output_guard)
+                manual.append({"vulnerability": vuln, "reason": "explanation_failed_check", "function_name": e.get("function_name")})
     statuses = {v["status"] for v in per.values()}
     conclusion = "alerts" if statuses & {"flagged", "flagged_no_function"} else "manual_review" if "failed" in statuses else "no_alerts"
     return {"vulnerabilities": per, "conclusion": conclusion, "manual_review": manual}
@@ -89,7 +93,37 @@ def session_findings(session: dict) -> list:
     return findings
 
 
-def find(session: dict, function_name: str, vulnerability: Optional[str] = None) -> Optional[dict]:
-    """The finding for a function; without a vulnerability type, the first scan that flagged it."""
-    return next((f for f in session_findings(session)
-                 if f["function_name"] == function_name and vulnerability in (None, f["vulnerability"])), None)
+def pick_random_audits(session: dict, rate: float, seed: str) -> list:
+    """Unflagged functions sent to an expert at random, so feedback also catches what the model missed (false negatives).
+
+    Without them experts only ever see flagged functions, and retraining on that feedback teaches the model to flag less.
+    Seeded by the session id: the same session always yields the same sample.
+    """
+    rng, picked = random.Random(seed), []
+    for step in session.get("steps", []):
+        vuln = vulnerability_of(step)
+        for p in (step.get("result_data") or {}).get("func_vulnerability_predictions") or []:
+            if p.get("prediction") == 0 and p.get("function_code") and rng.random() < rate:
+                picked.append({"vulnerability": vuln, "function_name": p.get("function_name"),
+                               "lines": p.get("lines") or [], "span": p.get("span") or []})
+    return picked
+
+
+def audit_findings(session: dict) -> list:
+    """The session's random audits as findings for an expert: no model confidence or explanation, so the verdict is blind."""
+    key = lambda item: (vulnerability_of(item), item.get("function_name"))
+    reviews = {key(r): r for r in session.get("reviews", [])}
+    return [{"vulnerability": a["vulnerability"], "vulnerability_label": VULNERABILITIES.get(a["vulnerability"], a["vulnerability"]),
+             "function_name": a["function_name"], "lines": a.get("lines") or [], "span": a.get("span") or [], "confidence": None,
+             "explanation": None, "review": reviews.get(key(a)), "fix": None, "stage": stage(reviews.get(key(a)), None),
+             "random_audit": True}
+            for a in session.get("random_audits") or []]
+
+
+def find(session: dict, function_name: str, vulnerability: Optional[str] = None, include_audits: bool = False) -> Optional[dict]:
+    """The finding for a function; without a vulnerability type, the first scan that flagged it.
+
+    include_audits: also look in the random audits (expert verdict endpoint only; they are never alerts).
+    """
+    pool = session_findings(session) + (audit_findings(session) if include_audits else [])
+    return next((f for f in pool if f["function_name"] == function_name and vulnerability in (None, f["vulnerability"])), None)

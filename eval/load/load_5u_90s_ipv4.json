@@ -1,0 +1,417 @@
+{
+ "summary": {
+  "users": 5,
+  "seconds": 90,
+  "requests": 744,
+  "errors": 67,
+  "by_kind": {
+   "analyze_full_stream": {
+    "n": 248,
+    "errors": 67,
+    "p50_s": 0.101,
+    "p95_s": 0.789,
+    "max_s": 1.522,
+    "mean_s": 0.265
+   },
+   "list_sessions": {
+    "n": 248,
+    "errors": 0,
+    "p50_s": 0.032,
+    "p95_s": 0.244,
+    "max_s": 0.667,
+    "mean_s": 0.064
+   },
+   "login": {
+    "n": 248,
+    "errors": 0,
+    "p50_s": 0.122,
+    "p95_s": 0.558,
+    "max_s": 0.854,
+    "mean_s": 0.175
+   }
+  },
+  "memory_mb": {
+   "first": 1231,
+   "last": 726,
+   "max": 1231
+  }
+ },
+ "memory": [
+  {
+   "t": 0,
+   "rss_mb": 1231
+  },
+  {
+   "t": 16,
+   "rss_mb": 1103
+  },
+  {
+   "t": 33,
+   "rss_mb": 1103
+  },
+  {
+   "t": 52,
+   "rss_mb": 730
+  },
+  {
+   "t": 69,
+   "rss_mb": 726
+  },
+  {
+   "t": 87,
+   "rss_mb": 726
+  }
+ ],
+ "errors": [
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.075,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.094,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.185,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.149,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.191,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.755,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.104,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.183,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.1,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.146,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.597,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.067,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.189,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.105,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.076,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.166,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.578,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.081,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.103,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.088,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.148,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.695,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.104,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.142,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.139,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.727,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.212,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.262,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.854,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.187,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.226,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 1.215,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.428,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 1.497,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.232,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.295,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.354,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.179,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.22,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.76,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.375,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.61,
+   "status": 599,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.265,
+   "status": 599,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.692,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.166,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.418,
+   "status": 599,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.744,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.216,
+   "status": 599,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.204,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "analyze_full_stream",
+   "t": 0.344,
+   "status": 599,
+   "ok": false,
+   "user": 3
+  }
+ ]
+}

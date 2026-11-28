@@ -95,7 +95,7 @@ docker-compose -f docker-compose.prod.yml down
 - `REDIS_URL`: Redis connection string (e.g., `redis://redis:6379/0`)
 - `MONGODB_URL`: MongoDB connection string
 - `MINIO_ENDPOINT`: MinIO server endpoint
-- `GEMINI_API_KEY`: Google Gemini API key
+- `CLAUDE_API_KEY`: Claude API key (Astral X gateway, used with `BASE_URL` and `MODEL_NAME`)
 - `SECRET_KEY`: Application secret key
 - `JWT_SECRET`: JWT signing secret
 

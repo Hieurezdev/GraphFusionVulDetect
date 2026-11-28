@@ -1,0 +1,19 @@
+# gitleaks configuration: default rules + placeholders that look like secrets but are not.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Template placeholders and research data"
+regexes = [
+  '''CHANGE_ME[_A-Za-z0-9]*''',
+  '''your_[a-z_]+''',
+  '''sk-your_claude_gateway_key''',
+  '''<openssl rand -hex 32>''',
+  '''YOUR_[A-Z_]*TOKEN''',
+]
+paths = [
+  '''(^|/)(\.venv|node_modules|\.git|storage|ge-sc-artifacts|__pycache__|dist)/''',
+  '''^assets/datasets/''',
+  '''^datasets/SmartContractVulnerabilityDetection/''',  # Solidity research data, old location in history
+  '''^eval/(dappscan|generalization)/''',
+]

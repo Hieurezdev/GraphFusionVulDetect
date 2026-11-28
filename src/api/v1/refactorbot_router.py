@@ -320,8 +320,12 @@ async def _check_against_contract(request: ValidationRequest, current_user: User
             raise HTTPException(status_code=404, detail="Function source location not found; re-run the analysis")
         span = finding["span"]
 
+    from src.services.sandbox import run_isolated, SandboxError
     async with _CHECK_SLOTS:  # waiting here, not inside a worker thread, so queued checks don't drain the shared threadpool
-        result = await run_in_threadpool(check_fix, session["file_path"], span, request.suggested_code)
+        try:  # step 2.3: user-supplied code is compiled and analysed in a separate, limited process
+            result = await run_in_threadpool(run_isolated, "check_fix", session["file_path"], span, request.suggested_code)
+        except SandboxError as e:
+            return ValidationResponse(is_valid=False, message=f"The check was stopped: {e}. Simplify the code or ask an expert to review it manually.")
     before, after = len(result["findings_before"]), len(result["findings_after"])
     scope = "this function" if span else "the contract"
     if result["compiled"]:
@@ -344,3 +348,53 @@ async def _check_against_contract(request: ValidationRequest, current_user: User
         await sessions.update_one({"_id": session["_id"]}, replace_entry("fixes", fix))
         recorded = True
     return ValidationResponse(is_valid=result["compiled"], message=message, recorded=recorded, record_note=record_note, **result)
+
+
+class AgentRequest(BaseModel):
+    session_id: str = Field(..., description="Analysis session holding the flagged function")
+    vulnerability: str = Field("timestamp", description="Scan that flagged the function")
+    function_name: str = Field(..., min_length=1, max_length=300)
+    language: Optional[str] = Field(default="en")
+    max_rounds: int = Field(default=4, ge=1, le=6)
+
+
+@router.post("/agent", status_code=status.HTTP_200_OK)
+async def repair_agent(request: AgentRequest, current_user: UserInDB = Depends(get_current_user)):
+    """Step 2.1: let the repair agent propose and check a fix (compile, Slither, re-scan) in a loop.
+
+    The final fix is verified again by the system and recorded on the finding like a hand-made fix proposal: it only
+    becomes final when an expert accepts it. Anyone who can open the session may run the agent; no expert power is given.
+    """
+    from src.services.fix_agent import run_agent
+    from src.workflows.gfd_workflow.nodes.func_vul_explainer import retrieve_cases
+    from src.services.graph_loader import gfd_workflow
+    sessions = await get_analysis_sessions_collection()
+    try:
+        session = await sessions.find_one(_session_query(request.session_id, current_user))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid session ID format")
+    if not session:
+        raise HTTPException(status_code=404, detail="Analysis session not found")
+    finding = find(session, request.function_name, request.vulnerability)
+    if not finding or not finding.get("span"):
+        raise HTTPException(status_code=404, detail="Function not flagged by this scan, or its source location is unknown")
+    code = next((p.get("function_code") for st in session.get("steps", []) if (st.get("vulnerability") or "timestamp") == request.vulnerability
+                 for p in (st.get("result_data") or {}).get("func_vulnerability_predictions") or [] if p.get("function_name") == request.function_name), "")
+    cases = await run_in_threadpool(retrieve_cases, {"function_code": code, "function_name": request.function_name},
+                                    request.vulnerability, session.get("file_hash"))
+    async with _CHECK_SLOTS:
+        result = await run_in_threadpool(run_agent, gfd_workflow.llm, finding, code, session["file_path"],
+                                         finding.get("explanation") or "", (finding.get("review") or {}).get("status", "pending"),
+                                         normalize_language(request.language), request.max_rounds, 60000, cases)
+    v = result.get("verification")
+    if result.get("fix") and v:
+        fix = FunctionFix(vulnerability=finding["vulnerability"], function_name=finding["function_name"], suggested_code=result["fix"],
+                          compiled=v["compiled"], solc_version=v["solc_version"], findings_before=v["findings_before"],
+                          findings_after=v["findings_after"], compiler_output=v["compiler_output"][:2000],
+                          checked_by=f"{current_user.username} (repair agent)", checked_at=ensure_utc_for_db(now_vietnam())).dict()
+        fix["decision"] = fix["decision"].value
+        await sessions.update_one({"_id": session["_id"]}, replace_entry("fixes", fix))
+        result["recorded"] = True
+    result["note"] = ("Model output, not proof: the fix is recorded for an expert to review and accept. "
+                      "Run the contract's own tests before deploying any change.")
+    return result

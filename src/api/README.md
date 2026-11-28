@@ -115,7 +115,7 @@ GRAPH_VUL_MODEL_PATH=path/to/graph/model
 NODE_VUL_MODEL_PATH=path/to/node/model
 MODEL_NAME=your_llm_model_name
 BASE_URL=your_llm_base_url
-GEMINI_API_KEY=your_api_key
+CLAUDE_API_KEY=your_api_key
 ```
 
 ## Model Loading

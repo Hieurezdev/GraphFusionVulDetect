@@ -1,0 +1,469 @@
+{
+ "summary": {
+  "users": 5,
+  "seconds": 300,
+  "requests": 2017,
+  "errors": 417,
+  "by_kind": {
+   "analyze_full_stream": {
+    "n": 580,
+    "errors": 140,
+    "p50_s": 0.1,
+    "p95_s": 3.643,
+    "max_s": 15.782,
+    "mean_s": 0.644
+   },
+   "list_sessions": {
+    "n": 580,
+    "errors": 0,
+    "p50_s": 0.013,
+    "p95_s": 0.093,
+    "max_s": 0.935,
+    "mean_s": 0.032
+   },
+   "login": {
+    "n": 857,
+    "errors": 277,
+    "p50_s": 0.06,
+    "p95_s": 0.581,
+    "max_s": 3.4,
+    "mean_s": 0.141
+   }
+  },
+  "memory_mb": {
+   "first": 255,
+   "last": 1235,
+   "max": 1272
+  }
+ },
+ "memory": [
+  {
+   "t": 0,
+   "rss_mb": 255
+  },
+  {
+   "t": 17,
+   "rss_mb": 198
+  },
+  {
+   "t": 33,
+   "rss_mb": 200
+  },
+  {
+   "t": 49,
+   "rss_mb": 194
+  },
+  {
+   "t": 65,
+   "rss_mb": 320
+  },
+  {
+   "t": 81,
+   "rss_mb": 1214
+  },
+  {
+   "t": 98,
+   "rss_mb": 1225
+  },
+  {
+   "t": 116,
+   "rss_mb": 1245
+  },
+  {
+   "t": 133,
+   "rss_mb": 1271
+  },
+  {
+   "t": 151,
+   "rss_mb": 1272
+  },
+  {
+   "t": 167,
+   "rss_mb": 1247
+  },
+  {
+   "t": 184,
+   "rss_mb": 1264
+  },
+  {
+   "t": 200,
+   "rss_mb": 1246
+  },
+  {
+   "t": 216,
+   "rss_mb": 1247
+  },
+  {
+   "t": 233,
+   "rss_mb": 1235
+  },
+  {
+   "t": 249,
+   "rss_mb": 1235
+  },
+  {
+   "t": 265,
+   "rss_mb": 1235
+  },
+  {
+   "t": 282,
+   "rss_mb": 1235
+  },
+  {
+   "t": 298,
+   "rss_mb": 1235
+  }
+ ],
+ "errors": [
+  {
+   "kind": "login",
+   "t": 2.532,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 2.612,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 2.612,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 2.612,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 2.714,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.077,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.081,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.137,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.137,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.12,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.155,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.099,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.09,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.091,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.173,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.073,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.131,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.167,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.21,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.232,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.183,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.212,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.15,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.15,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.244,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.162,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.226,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.226,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.244,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.126,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.08,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.108,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.194,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.165,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.146,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.064,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.117,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.098,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.229,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.179,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.067,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.115,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.145,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.096,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.12,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  },
+  {
+   "kind": "login",
+   "t": 0.131,
+   "status": 404,
+   "ok": false,
+   "user": 2
+  },
+  {
+   "kind": "login",
+   "t": 0.115,
+   "status": 404,
+   "ok": false,
+   "user": 4
+  },
+  {
+   "kind": "login",
+   "t": 0.159,
+   "status": 404,
+   "ok": false,
+   "user": 1
+  },
+  {
+   "kind": "login",
+   "t": 0.104,
+   "status": 404,
+   "ok": false,
+   "user": 3
+  },
+  {
+   "kind": "login",
+   "t": 0.138,
+   "status": 404,
+   "ok": false,
+   "user": 0
+  }
+ ]
+}

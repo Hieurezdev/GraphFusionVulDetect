@@ -32,6 +32,7 @@ const STATUS: Record<AnalysisSummary["vulnerabilities"][string]["status"], { lab
 const REASON = {
   analysis_failed: "the scan could not run on this contract (often a compile failure), so there is no result",
   contract_flagged_no_function: "the contract was flagged but no function was located; an auditor has to find the cause",
+  explanation_failed_check: "an explanation failed the automatic checks (a cited line outside the function, or a claim that the code is safe); an expert has to review it",
 };
 
 // One sentence a non-developer can read, per vulnerability type.
@@ -103,8 +104,8 @@ export const AnalysisReport = ({ results, isStreaming, sessionId, reviews, onRev
                 <h3 className="text-ink">{t("Needs manual review")}</h3>
                 <ul className="mt-1 list-disc pl-5 text-ink-2">
                   {summary.manual_review.map(m => (
-                    <li key={m.vulnerability + m.reason}>
-                      {t(VULNERABILITY_LABELS[m.vulnerability] ?? m.vulnerability)}: {t(REASON[m.reason])}
+                    <li key={m.vulnerability + m.reason + (m.function_name ?? "")}>
+                      {t(VULNERABILITY_LABELS[m.vulnerability] ?? m.vulnerability)}{m.function_name ? ` (${m.function_name})` : ""}: {t(REASON[m.reason])}
                     </li>
                   ))}
                 </ul>

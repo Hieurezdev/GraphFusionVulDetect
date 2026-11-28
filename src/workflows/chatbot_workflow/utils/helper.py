@@ -16,7 +16,9 @@ def build_chat_messages(code: str, conversation_history: List[Dict[str, str]], l
         f"```solidity\n{code}\n```\n"
         "Explain issues concretely and briefly. When you propose a fix, give the complete corrected "
         "function in a single ```solidity block."
-    ) + language_instruction(language)
+    )
+    from src.services.knowledge import chat_references   # step 2.2: precedents from expert reviews and accepted fixes
+    system += chat_references(code) + language_instruction(language)
     messages = [{"role": "system", "content": system}]
     for msg in conversation_history:
         role = "user" if msg.get("role") == "user" else "assistant"

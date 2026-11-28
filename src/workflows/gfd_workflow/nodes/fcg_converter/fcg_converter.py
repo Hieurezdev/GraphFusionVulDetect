@@ -11,6 +11,7 @@ from langchain_core.runnables import RunnableConfig
 
 from src.workflows.gfd_workflow.graph.state import State
 from .embedding_generator import extract_function_code, get_embeddings, strip_comments
+from .embedding_cache import cached_embeddings
 from .graph_converter import get_call_graph
 
 
@@ -103,7 +104,10 @@ def convert_to_fcg(state: State, config: RunnableConfig) -> State:
                 sol_file_src, data['node_source_code_start'], data['node_source_code_length']
             )
             # Comments can hide a function body past the 512-token limit or plant keywords; the stored/displayed code keeps them.
-            embeddings[node_name] = get_embeddings(tokenizer, model, strip_comments(function_code))
+            # Windows line endings are folded to LF for the encoder only: the models were trained on LF files, and a CRLF copy
+            # of the same contract scored differently (0.88 vs 0.93). Lines, spans and the displayed code keep the file's bytes.
+            encoder_text = strip_comments(function_code).replace("\r\n", "\n").replace("\r", "\n")
+            embeddings[node_name] = cached_embeddings(tokenizer, model, encoder_text, get_embeddings)
             
             # Store contract index
             contract_indices[node_name] = contract_to_idx.get(data['contract_name'], -1)

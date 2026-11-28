@@ -52,8 +52,10 @@ def detect_vulnerability_src(state: State, config: RunnableConfig) -> State:
         # Get the raw model output (logits)
         logits = model(batched_graph, features)
         
-        # Convert logits to a probability distribution using softmax
-        probabilities = F.softmax(logits, dim=1)
+        # Temperature scaling (step 1.7): logits / T before softmax makes the shown confidence match how often the model is
+        # right. T = 1 (no change) unless calibration.json holds a temperature fitted for this exact checkpoint.
+        temperature = config["configurable"].get("temperature", 1.0) or 1.0
+        probabilities = F.softmax(logits / temperature, dim=1)
         
         # Find the class with the highest probability
         confidence, predicted_idx_tensor = torch.max(probabilities, 1)
@@ -64,5 +66,14 @@ def detect_vulnerability_src(state: State, config: RunnableConfig) -> State:
     
     state["predicted_class"] = predicted_class_name
     state["confidence_score"] = confidence.item()
+
+    # Step 2.7: shadow candidate on the same graph (raw softmax: its temperature is unknown until it is calibrated)
+    shadow = config["configurable"].get("shadow_graph_model")
+    if shadow is not None:
+        with torch.no_grad():
+            p = F.softmax(shadow(batched_graph, features), dim=1)
+            c, i = torch.max(p, 1)
+        state["shadow"] = {"version": config["configurable"].get("shadow_version"), "predicted_class": class_map[i.item()],
+                           "confidence_score": round(c.item(), 4)}
     
     return state

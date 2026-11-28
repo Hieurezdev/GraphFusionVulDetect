@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { projectService, Finding, FindingStage, FixDecision } from "@/services/project";
+import { projectService, Finding, FindingStage, FixDecision, RepairAgentResult } from "@/services/project";
 import { useAuth } from "@/contexts/AuthContext";
 import { FINDINGS_CHANGED, VULNERABILITY_LABELS } from "@/lib/findings";
 import { REVIEW_LABELS } from "./FunctionReviewControl";
@@ -32,6 +32,8 @@ export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
   const { user } = useAuth();
   const [findings, setFindings] = useState<Finding[] | null>(null);
   const [saving, setSaving] = useState(false);
+  const [agentRunning, setAgentRunning] = useState<string | null>(null);
+  const [agentResults, setAgentResults] = useState<Record<string, RepairAgentResult>>({});
 
   const load = () => projectService.getFindings(sessionId).then(setFindings).catch(() => setFindings([]));
   useEffect(() => {
@@ -50,6 +52,22 @@ export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
       await load();  // e.g. 409: the fix changed since it was shown, so show the current one
     } finally {
       setSaving(false);
+    }
+  };
+
+  const runAgent = async (f: Finding) => {
+    const key = `${f.vulnerability}|${f.function_name}`;
+    setAgentRunning(key);
+    try {
+      const result = await projectService.runRepairAgent(sessionId, f.vulnerability, f.function_name);
+      setAgentResults(prev => ({ ...prev, [key]: result }));
+      if (result.verification?.holds) toast.success(t("The agent's fix passed the checks; it now waits for an expert."));
+      else toast.message(t("The agent stopped without a fix that passes every check."));
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : t("The repair agent failed"));
+    } finally {
+      setAgentRunning(null);
     }
   };
 
@@ -96,6 +114,24 @@ export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
                       </span>
                     </>
                   ) : "–"}
+                  {(() => {
+                    const key = `${f.vulnerability}|${f.function_name}`, r = agentResults[key];
+                    return (
+                      <div className="mt-2">
+                        {f.stage !== "fix_accepted" && f.stage !== "closed_false_positive" && (
+                          <Button size="sm" variant="outline" disabled={agentRunning !== null} onClick={() => runAgent(f)}>
+                            {agentRunning === key ? t("Agent working…") : t("Let the agent fix it")}
+                          </Button>
+                        )}
+                        {r && (
+                          <span className="mt-1 block text-xs text-muted-foreground">
+                            {t("Agent: {n} rounds, {c} tool calls", { n: r.rounds, c: r.tool_calls })} ·{" "}
+                            {r.verification ? (r.verification.holds ? t("passes compile, Slither and re-scan") : t("does not pass every check")) : t(r.stopped)}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </td>
                 <td className="px-4 py-3">
                   <Badge variant={STAGE[f.stage].variant}>{t(STAGE[f.stage].label)}</Badge>

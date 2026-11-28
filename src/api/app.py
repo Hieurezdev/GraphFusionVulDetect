@@ -48,11 +48,23 @@ def create_app():
         logger.info("Connecting to DB...")
         await db_manager.connect()
 
+        # Analyses left 'processing' by a previous server process will never finish: close them (step 1.6)
+        from src.api.v1.analyze_router import fail_orphaned_sessions
+        closed = await fail_orphaned_sessions()
+        if closed:
+            logger.info(f"Closed {closed} analysis session(s) left unfinished by a previous run")
+
         logger.info("Loading all ML/LLM models...")
         await load_all_models()
 
         logger.info("Building graph workflow...")
         build_global_graph()
+
+        # Step 1.8: judged functions for retrieval-augmented explanations
+        from src.services.knowledge import load_index
+        n_items = load_index()
+        logger.info(f"Knowledge base: {n_items} item(s) loaded")
+        print(f"Knowledge base: {n_items} item(s) loaded", flush=True)  # uvicorn's logging setup hides app INFO lines
 
         logger.info("System initialized successfully.")
 
@@ -65,6 +77,35 @@ def create_app():
 
     # ---- Routers ----
     app.include_router(create_router())
+
+    # ---- Metrics (step 1.10) ----
+    import time
+    from fastapi import Request, Response, HTTPException
+    from src.services import metrics
+
+    @app.middleware("http")
+    async def measure(request: Request, call_next):
+        t0 = time.perf_counter()
+        status = 500
+        try:
+            response = await call_next(request)
+            status = response.status_code
+            return response
+        finally:
+            route = request.scope.get("route")
+            path = getattr(route, "path", "unmatched")  # the route template, so /sessions/{session_id} is one series
+            metrics.inc("http_requests_total", help_text="HTTP requests by route and status", method=request.method, route=path, status=status)
+            # streaming endpoints are timed until their first byte, not until the stream ends
+            metrics.observe("http_request_duration_seconds", time.perf_counter() - t0, help_text="HTTP latency until the response starts",
+                            method=request.method, route=path)
+
+    @app.get("/metrics", include_in_schema=False)
+    async def prometheus_metrics(request: Request):
+        """Prometheus scrape endpoint. With METRICS_TOKEN set, a Bearer token is required (keep it off the public site)."""
+        from src.config.settings import settings
+        if settings.METRICS_TOKEN and request.headers.get("authorization") != f"Bearer {settings.METRICS_TOKEN}":
+            raise HTTPException(status_code=401, detail="metrics token required")
+        return Response(metrics.render(), media_type="text/plain; version=0.0.4")
 
     @app.get("/")
     async def root():

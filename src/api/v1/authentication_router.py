@@ -2,7 +2,7 @@ import jwt
 from datetime import timedelta
 from typing import Optional
 from src.utils.helper import get_password_hash, verify_password
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from bson import ObjectId
 from bson.errors import InvalidId
@@ -19,7 +19,23 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
 # HTTP Bearer token
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
+
+# Step 2.5: the browser keeps the token in an httpOnly cookie (JavaScript cannot read it, so XSS cannot steal it).
+# API clients and scripts keep sending "Authorization: Bearer". A request authenticated by the cookie that changes
+# something must also carry X-Requested-With: a page on another site cannot add that header without a CORS preflight.
+CSRF_HEADER, CSRF_VALUE = "X-Requested-With", "ScanGuard"
+SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
+
+
+def set_auth_cookie(response: Response, token: str) -> None:
+    response.set_cookie(settings.AUTH_COOKIE_NAME, token, max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60, httponly=True,
+                        secure=settings.AUTH_COOKIE_SECURE, samesite=settings.AUTH_COOKIE_SAMESITE, path="/")
+
+
+def clear_auth_cookie(response: Response) -> None:
+    response.delete_cookie(settings.AUTH_COOKIE_NAME, path="/", secure=settings.AUTH_COOKIE_SECURE,
+                           httponly=True, samesite=settings.AUTH_COOKIE_SAMESITE)
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
 
@@ -56,16 +72,24 @@ async def authenticate_user(username: str, password: str) -> Optional[UserInDB]:
     return user
 
 
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> UserInDB:
-    """Get current authenticated user from JWT token"""
+async def get_current_user(request: Request, credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)) -> UserInDB:
+    """Get current authenticated user from the bearer token, or from the httpOnly session cookie (browser)"""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    
+    if credentials is not None:
+        token = credentials.credentials
+    else:
+        token = request.cookies.get(settings.AUTH_COOKIE_NAME)
+        if not token:
+            raise credentials_exception
+        if request.method not in SAFE_METHODS and request.headers.get(CSRF_HEADER) != CSRF_VALUE:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Missing anti-CSRF header")
+
     try:
-        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
         user_id = ObjectId(payload["user_id"])
     except (jwt.PyJWTError, KeyError, TypeError, ValueError, InvalidId):
         raise credentials_exception
@@ -135,7 +159,7 @@ async def register_user(user_data: UserRegister):
 
 
 @router.post("/login", response_model=Token)
-async def login_for_access_token(user_data: UserLogin):
+async def login_for_access_token(user_data: UserLogin, response: Response):
     """Authenticate user and return access token"""
     users_collection = await get_users_collection()
     
@@ -159,7 +183,7 @@ async def login_for_access_token(user_data: UserLogin):
         data={"sub": user.username, "user_id": user.id, "ver": user.token_version},
         expires_delta=access_token_expires
     )
-    
+    set_auth_cookie(response, access_token)
     return Token(
         access_token=access_token,
         token_type="bearer",
@@ -182,8 +206,9 @@ async def read_users_me(current_user: UserInDB = Depends(get_current_user)):
 
 
 @router.post("/logout")
-async def logout(current_user: UserInDB = Depends(get_current_user)):
-    """Logout user (client should discard the token)"""
+async def logout(response: Response, current_user: UserInDB = Depends(get_current_user)):
+    """Logout user: the session cookie is cleared (an API client discards its bearer token)"""
+    clear_auth_cookie(response)
     return {"message": "Successfully logged out"}
 
 
@@ -227,6 +252,7 @@ async def update_profile(
 @router.post("/change-password", response_model=Token)
 async def change_password(
     password_data: PasswordChange,
+    response: Response,
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Change the password, sign out every other session and return a fresh token"""
@@ -245,15 +271,18 @@ async def change_password(
             "password_changed_at": ensure_utc_for_db(now_vietnam()),
         }}
     )
-    return issue_token(current_user, new_version)
+    token = issue_token(current_user, new_version)
+    set_auth_cookie(response, token.access_token)
+    return token
 
 
 @router.post("/logout-all")
-async def logout_all(current_user: UserInDB = Depends(get_current_user)):
+async def logout_all(response: Response, current_user: UserInDB = Depends(get_current_user)):
     """Invalidate every token issued for this user, this one included"""
     users_collection = await get_users_collection()
     await users_collection.update_one(
         {"_id": ObjectId(current_user.id)},
         {"$inc": {"token_version": 1}}
     )
+    clear_auth_cookie(response)
     return {"message": "Signed out on every device"}

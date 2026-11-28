@@ -51,7 +51,7 @@ NODE_VUL_MODEL_PATH = os.getenv("NODE_VUL_MODEL_PATH")
 
 MODEL_NAME = os.getenv("MODEL_NAME")
 BASE_URL = os.getenv("BASE_URL")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
 
 # Load the embedding tokenizer and model
 embedd_tokenizer = RobertaTokenizer.from_pretrained(EMBEDD_MODEL_PATH)
@@ -78,7 +78,7 @@ node_vul_model.eval()
 llm = ChatOpenAI(
     model_name=MODEL_NAME,
     base_url=BASE_URL,
-    api_key=GEMINI_API_KEY,
+    api_key=CLAUDE_API_KEY,
     temperature=0.5,
     max_retries=3,
     request_timeout=180

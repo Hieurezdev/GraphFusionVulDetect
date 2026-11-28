@@ -67,14 +67,25 @@ const Analysis = () => {
       projectId: data.projectId,
       projectName: data.projectName,
       fileName: data.fileName,
+      sessionId: data.sessionId,
     });
 
-    startAnalysis(fileContent, data.projectId, data.fileName);
+    // A reload reattaches to the analysis already running (or finished) on the server instead of uploading the file again.
+    if (data.sessionId) {
+      followAnalysis(data.sessionId);
+    } else {
+      startAnalysis(fileContent, data.projectId, data.fileName);
+    }
   }, [navigate]);
+
+  const rememberSession = (sessionId: string) => {
+    const stored = sessionStorage.getItem("contractAnalysis");
+    if (!stored || !sessionId) return;
+    sessionStorage.setItem("contractAnalysis", JSON.stringify({ ...JSON.parse(stored), sessionId }));
+  };
 
   const startAnalysis = async (fileContent: string, projectId: string, fileName: string) => {
     setIsStreaming(true);
-    
     try {
       // Create a File object from the content
       const blob = new Blob([fileContent], { type: 'text/plain' });
@@ -82,10 +93,33 @@ const Analysis = () => {
 
       // Use project service to start analysis with project association
       const { sessionId, stream } = await projectService.analyzeWithProject(file, projectId);
-      
-      // Update analysis data with session ID
       setAnalysisData(prev => prev ? { ...prev, sessionId } : null);
+      rememberSession(sessionId);
+      await consumeStream(stream);
+    } catch (error) {
+      failAnalysis(error);
+    }
+  };
 
+  const followAnalysis = async (sessionId: string) => {
+    setIsStreaming(true);
+    try {
+      await consumeStream(await projectService.followSession(sessionId));
+    } catch (error) {
+      failAnalysis(error);
+    }
+  };
+
+  const failAnalysis = (error: unknown) => {
+    console.error("Analysis error:", error);
+    setIsStreaming(false);
+    const errorMessage = error instanceof Error ? error.message : "Analysis failed";
+    setAnalysisData(prev => prev ? { ...prev, status: "error", error: errorMessage } : null);
+    toast.error(t("Analysis failed: {e}", { e: errorMessage }));
+  };
+
+  const consumeStream = async (stream: ReadableStream) => {
+    {
       // Process the stream
       const reader = stream.getReader();
       const decoder = new TextDecoder();
@@ -123,18 +157,6 @@ const Analysis = () => {
           }
         }
       }
-    } catch (error) {
-      console.error("Analysis error:", error);
-      setIsStreaming(false);
-      const errorMessage = error instanceof Error ? error.message : "Analysis failed";
-      
-      setAnalysisData(prev => prev ? {
-        ...prev,
-        status: "error",
-        error: errorMessage
-      } : null);
-      
-      toast.error(t("Analysis failed: {e}", { e: errorMessage }));
     }
   };
 

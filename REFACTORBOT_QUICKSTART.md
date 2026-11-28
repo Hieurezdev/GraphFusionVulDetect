@@ -22,7 +22,7 @@
 
 ### 4. Workflow Fix
 - **File**: [src/workflows/chatbot_workflow/workflow.py](src/workflows/chatbot_workflow/workflow.py)
-- **Fix**: Sửa lỗi tên biến GEMINI_API_KEY1
+- **Fix**: Đọc khoá API từ biến CLAUDE_API_KEY
 
 ### 5. Documentation
 - **File**: [src/api/v1/REFACTORBOT_API.md](src/api/v1/REFACTORBOT_API.md)
@@ -179,16 +179,12 @@ Tìm section "refactorbot" để test trực tiếp trên UI.
 Cần các settings sau trong `.env`:
 
 ```env
-# Primary API key
-GEMINI_API_KEY1=your_api_key_here
-
-# Optional: Additional keys for load balancing
-GEMINI_API_KEY2=another_key
-GEMINI_API_KEY3=yet_another_key
+# Claude API key (Astral X gateway)
+CLAUDE_API_KEY=your_api_key_here
 
 # LLM Configuration
-BASE_URL=https://api.openai.com/v1
-MODEL_NAME=gpt-4
+BASE_URL=https://token.astralx.com.vn/v1
+MODEL_NAME=byok/astral-x/claude-haiku-5-5
 
 # Optional: Chatbot specific settings
 CHATBOT_TEMPERATURE=0.7
@@ -254,7 +250,7 @@ Check logs để theo dõi:
 ## Troubleshooting
 
 ### LLM client không khởi tạo được
-- Check `GEMINI_API_KEY1` trong `.env`
+- Check `CLAUDE_API_KEY` trong `.env`
 - Verify API key valid
 - Check network connectivity
 

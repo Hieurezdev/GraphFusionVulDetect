@@ -52,6 +52,19 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
           </div>
         </section>
 
+        <section aria-labelledby="settings-data" className="mt-4">
+          <h3 id="settings-data" className="text-sm text-muted-foreground">{t("Data use")}</h3>
+          <div className="mt-2 border-t border-rule">
+            <SettingRow
+              id="pref-training-consent"
+              title={t("Allow my contracts to improve the models")}
+              note={t("Applies to contracts you analyse from now on. The code and the experts' verdicts on it may be used to retrain the detection models. Off by default.")}
+              checked={prefs.trainingConsent}
+              onChange={(v) => writePreferences({ trainingConsent: v })}
+            />
+          </div>
+        </section>
+
         <section aria-labelledby="settings-language" className="mt-4">
           <h3 id="settings-language" className="text-sm text-muted-foreground">{t("Language")}</h3>
           <p className="mt-1 text-xs text-muted-foreground">{t("Used for the interface and for explanations and RefactorBot replies generated from now on.")}</p>

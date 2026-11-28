@@ -54,29 +54,10 @@ class ChatbotWorkflow:
             print(f"Using local LLM: {settings.LOCAL_LLM_MODEL}")
             return
         
-        # Get API keys from settings
-        # Support multiple keys for load balancing
-        api_keys = []
-        
-        # Primary key
-        if hasattr(settings, 'GEMINI_API_KEY1') and settings.GEMINI_API_KEY1:
-            api_keys.append(settings.GEMINI_API_KEY1)
-            print(f"Found GEMINI_API_KEY1: {settings.GEMINI_API_KEY1[:8]}...")
-        else:
-            logger.warning("GEMINI_API_KEY1 not found or empty!")
-        
-        # Support for additional keys (GEMINI_API_KEY2, GEMINI_API_KEY3, etc.)
-        for i in range(2, 10):
-            key_name = f'GEMINI_API_KEY{i}'
-            if hasattr(settings, key_name):
-                key = getattr(settings, key_name)
-                if key:
-                    api_keys.append(key)
-                    print(f"Found {key_name}: {key[:8]}...")
-        
-        if not api_keys:
-            logger.error("No API keys found in settings!")
-            raise ValueError("No API keys found in settings. Please configure GEMINI_API_KEY1.")
+        if not settings.CLAUDE_API_KEY:
+            logger.error("CLAUDE_API_KEY is not set!")
+            raise ValueError("No API key found in settings. Please configure CLAUDE_API_KEY in .env.")
+        api_keys = [settings.CLAUDE_API_KEY]
         
         # Get LLM configuration from settings
         base_url = getattr(settings, 'BASE_URL', 'https://api.openai.com/v1')

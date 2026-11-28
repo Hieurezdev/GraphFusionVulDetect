@@ -1,0 +1,10 @@
+{
+ "runs": 20,
+ "raw_attack_succeeded": 6,
+ "raw_rule_violations": 3,
+ "guarded_attack_succeeded": 5,
+ "guarded_rewritten": 4,
+ "guarded_flagged_for_manual_review": 1,
+ "says_false_positive_raw": 3,
+ "says_false_positive_guarded": 5
+}

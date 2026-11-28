@@ -74,8 +74,9 @@ export class AuthService {
         body: credentials,
       });
 
-      // Store token in localStorage
-      localStorage.setItem('auth_token', tokenData.access_token);
+ // Step 2.5: the token stays in the httpOnly cookie set by the server; only its expiry is kept, for display.
+      localStorage.removeItem('auth_token');
+      localStorage.setItem('auth_expires_at', String(Date.now() + tokenData.expires_in * 1000));
       
       return tokenData;
     } catch (error) {
@@ -92,6 +93,7 @@ export class AuthService {
       const user = await apiFetch<UserProfile>(this.AUTH_ENDPOINTS.ME, {
         method: 'GET',
         requireAuth: true,
+        redirectOn401: false,
       });
       
       return user;
@@ -115,8 +117,7 @@ export class AuthService {
       // Don't throw error for logout - always clear local storage
     } finally {
       // Always clear local storage
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('auth_user');
+      AuthService.clearAuth();
     }
   }
 
@@ -147,7 +148,7 @@ export class AuthService {
       body: { current_password: currentPassword, new_password: newPassword },
       requireAuth: true,
     });
-    localStorage.setItem('auth_token', tokenData.access_token);
+    localStorage.setItem('auth_expires_at', String(Date.now() + tokenData.expires_in * 1000));
   }
 
   /**
@@ -157,8 +158,7 @@ export class AuthService {
     try {
       await apiFetch(this.AUTH_ENDPOINTS.LOGOUT_ALL, { method: 'POST', requireAuth: true });
     } finally {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('auth_user');
+      AuthService.clearAuth();
     }
   }
 
@@ -166,15 +166,20 @@ export class AuthService {
    * Check if user is authenticated
    */
   static isAuthenticated(): boolean {
-    const token = localStorage.getItem('auth_token');
-    return !!token;
+    return !!AuthService.getStoredUser();  // a hint only: the server decides, through the cookie
   }
 
   /**
    * Get stored token
    */
   static getToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return null;  // the token lives in an httpOnly cookie that JavaScript cannot read (step 2.5)
+  }
+
+  /** When the current session expires (ms since epoch), or null when unknown. */
+  static getExpiry(): number | null {
+    const v = Number(localStorage.getItem('auth_expires_at'));
+    return Number.isFinite(v) && v > 0 ? v : null;
   }
 
   /**
@@ -183,6 +188,7 @@ export class AuthService {
   static clearAuth(): void {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');
+    localStorage.removeItem('auth_expires_at');
   }
 
   /**

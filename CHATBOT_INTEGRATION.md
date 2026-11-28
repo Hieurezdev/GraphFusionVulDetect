@@ -304,7 +304,7 @@ To test the chatbot:
 - FastAPI
 - LangGraph
 - LangChain
-- Google Gemini API
+- Claude Haiku (Astral X gateway, OpenAI-compatible API)
 - Pydantic
 
 ## Configuration
@@ -312,7 +312,7 @@ To test the chatbot:
 Make sure your `.env` file contains:
 ```env
 VITE_API_BASE_URL=http://localhost:8000
-GEMINI_API_KEY1=your_gemini_api_key_here
+CLAUDE_API_KEY=your_claude_api_key_here
 ```
 
 ## Support

@@ -17,24 +17,11 @@ const apiConfig: ApiConfig = {
   },
 };
 
-// Helper function to get auth token
-const getAuthToken = (): string | null => {
-  return localStorage.getItem('auth_token');
-};
+// Step 2.5: the session lives in an httpOnly cookie the browser sends itself (credentials: 'include'); JavaScript never
+// sees the token. Requests that change something carry X-Requested-With, which the backend requires for cookie sessions.
+export const CSRF_HEADERS: Record<string, string> = { 'X-Requested-With': 'ScanGuard' };
 
-// Helper function to create headers with auth
-const createAuthHeaders = (): Record<string, string> => {
-  const token = getAuthToken();
-  const headers: Record<string, string> = {
-    ...apiConfig.headers,
-  };
-  
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-  
-  return headers;
-};
+const createAuthHeaders = (): Record<string, string> => ({ ...apiConfig.headers, ...CSRF_HEADERS });
 
 // Base fetch wrapper with error handling
 interface FetchOptions {
@@ -42,6 +29,8 @@ interface FetchOptions {
   headers?: Record<string, string>;
   body?: any;
   requireAuth?: boolean;
+  /** false for the session probe at start-up: a visitor without a session stays on the public page */
+  redirectOn401?: boolean;
 }
 
 const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promise<T> => {
@@ -50,6 +39,7 @@ const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promis
     headers = {},
     body,
     requireAuth = false,
+    redirectOn401 = true,
   } = options;
 
   const url = `${apiConfig.baseURL}${endpoint}`;
@@ -62,6 +52,7 @@ const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promis
   const fetchOptions: RequestInit = {
     method,
     headers: requestHeaders,
+    credentials: 'include',  // send / receive the httpOnly session cookie
   };
 
   if (body && method !== 'GET') {
@@ -73,11 +64,12 @@ const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promis
     
     // Handle 401 Unauthorized
     if (response.status === 401) {
-      // Clear local auth data
+      // Clear local auth data (no token is stored any more; old copies are removed too)
       localStorage.removeItem('auth_token');
       localStorage.removeItem('auth_user');
+      localStorage.removeItem('auth_expires_at');
       // Redirect to login if needed
-      if (window.location.pathname !== '/login') {
+      if (redirectOn401 && window.location.pathname !== '/login') {
         window.location.href = '/login';
       }
       throw new Error('Unauthorized');
@@ -102,5 +94,5 @@ const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promis
   }
 };
 
-export { apiFetch, getAuthToken, createAuthHeaders, apiConfig };
+export { apiFetch, createAuthHeaders, apiConfig };
 export type { ApiConfig, FetchOptions };

@@ -65,13 +65,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Check authentication status and load user data
   const checkAuthStatus = async () => {
-    const token = AuthService.getToken();
-    
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
-
+    // The session is an httpOnly cookie: ask the server rather than looking for a token in storage (step 2.5).
     try {
       // Try to get current user from API
       const userProfile = await AuthService.getCurrentUser();
@@ -79,10 +73,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(userData);
       AuthService.storeUser(userProfile);
     } catch (error) {
-      console.error('Auth check failed:', error);
-      // If API call fails, try to load from localStorage
+      // No session (401) clears everything; a network failure keeps the last known user so the page still renders
       const storedUser = AuthService.getStoredUser();
-      if (storedUser) {
+      if (storedUser && !(error instanceof Error && error.message === 'Unauthorized')) {
         const userData = mapUserProfileToUser(storedUser);
         setUser(userData);
       } else {

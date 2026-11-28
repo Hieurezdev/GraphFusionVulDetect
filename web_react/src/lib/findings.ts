@@ -39,7 +39,7 @@ export const findReview = (reviews: FunctionReview[] | undefined, vulnerability:
 export interface AnalysisSummary {
   vulnerabilities: Record<string, { label: string; status: "failed" | "not_flagged" | "flagged_no_function" | "flagged"; confidence: number | null; flagged_functions: number; error?: string | null }>;
   conclusion: "alerts" | "manual_review" | "no_alerts";
-  manual_review: { vulnerability: string; reason: "analysis_failed" | "contract_flagged_no_function" }[];
+  manual_review: { vulnerability: string; reason: "analysis_failed" | "contract_flagged_no_function" | "explanation_failed_check"; function_name?: string }[];
 }
 
 /** Fired after a review, a fix check or a fix decision, so the workflow table reloads. */

@@ -32,16 +32,8 @@ const formatDate = (t: ReturnType<typeof useT>, value?: string | number | null) 
   return date.toLocaleString(t.locale, { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 };
 
-const tokenExpiry = () => {
-  const token = AuthService.getToken();
-  if (!token) return null;
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
-    return typeof payload.exp === "number" ? payload.exp * 1000 : null;
-  } catch {
-    return null;
-  }
-};
+// The token is in an httpOnly cookie JavaScript cannot read (step 2.5): its expiry is recorded at sign-in instead.
+const tokenExpiry = () => AuthService.getExpiry();
 
 const SecurityDialog = ({ open, onOpenChange }: SecurityDialogProps) => {
   const { user, changePassword, logoutAll } = useAuth();
