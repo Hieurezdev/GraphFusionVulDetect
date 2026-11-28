@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import AuthService, { UserProfile } from '@/services/auth';
+import AuthService, { UserProfile, type Permission, type Role, type DataPolicy, type AccountType } from '@/services/auth';
+import { writePreferences } from '@/lib/preferences';
 import { toast } from 'sonner';
 import { translate } from "@/i18n";
 
@@ -13,7 +14,14 @@ interface User {
   bio?: string;
   created_at?: string;
   last_login?: string;
-  role?: "user" | "expert";
+  role?: Role;
+  organization_id?: string | null;
+  organization_name?: string | null;
+  personal_workspace?: boolean;
+  permissions: Permission[];
+  policy?: DataPolicy;
+  llm_external?: boolean;
+  consents_required: string[];
 }
 
 interface AuthContextType {
@@ -21,12 +29,18 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (name: string, email: string, password: string, username?: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string, account?: { type: AccountType; organization?: string }) => Promise<boolean>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   updateProfile: (profileData: Partial<UserProfile>) => Promise<boolean>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<string | null>;
   logoutAll: () => Promise<void>;
+  /** What the server lets this account do (it refuses the rest anyway): used to hide what would fail. */
+  can: (permission: Permission) => boolean;
+  /** RefactorBot and the repair agent: the role has the fix tools and the workspace lets code go to the configured LLM */
+  assistant: boolean;
+  /** Replace the user after an endpoint returned a fresh profile (consents). */
+  setProfile: (profile: UserProfile) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -55,6 +69,13 @@ const mapUserProfileToUser = (profile: UserProfile): User => {
     created_at: profile.created_at,
     last_login: profile.last_login,
     role: profile.role,
+    organization_id: profile.organization_id,
+    organization_name: profile.organization_name,
+    personal_workspace: profile.personal_workspace,
+    permissions: profile.permissions ?? [],
+    policy: profile.policy,
+    llm_external: profile.llm_external,
+    consents_required: profile.consents_required ?? [],
     avatar: profile.email ? `https://api.dicebear.com/7.x/avataaars/svg?seed=${profile.email}` : undefined,
   };
 };
@@ -91,6 +112,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuthStatus();
   }, []);
 
+  // A non-technical member sees the interface in everyday words (src/i18n/plain.ts)
+  useEffect(() => {
+    if (user) writePreferences({ plainLanguage: user.role === 'non_tech' });
+  }, [user?.role]);
+
   const login = async (usernameOrEmail: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
@@ -123,16 +149,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     name: string, 
     email: string, 
     password: string, 
-    username?: string
+    account?: { type: AccountType; organization?: string }
   ): Promise<boolean> => {
     setIsLoading(true);
     try {
       // Register user
       const userProfile = await AuthService.register({
-        username: username || email.split('@')[0], // Use email prefix if no username provided
+        username: email.split('@')[0].replace(/[^A-Za-z0-9_.-]/g, '_'),
         email: email,
         password: password,
         full_name: name,
+        account_type: account?.type ?? 'personal',
+        organization_name: account?.organization,
       });
 
       // After successful registration, automatically login
@@ -228,6 +256,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     updateProfile,
     changePassword,
     logoutAll,
+    can: (permission) => !!user?.permissions.includes(permission),
+    assistant: !!user?.permissions.includes("fix_tools") && (!user.llm_external || user.policy?.external_llm !== false),
+    setProfile: (profile) => {
+      setUser(mapUserProfileToUser(profile));
+      AuthService.storeUser(profile);
+    },
   };
 
   return (

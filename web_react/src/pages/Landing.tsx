@@ -50,6 +50,7 @@ const SignUp = () => {
   const t = useT();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [business, setBusiness] = useState(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,18 +58,34 @@ const SignUp = () => {
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const password = String(data.get("password") || "");
+    const organization = String(data.get("organization") || "").trim();
     setError("");
     if (!name || !email || password.length < 6) {
       setError(t("Fill in all three fields. The password needs at least 6 characters."));
       return;
     }
-    const ok = await register(name, email, password);
+    if (business && !organization) {
+      setError(t("Enter your organisation's name."));
+      return;
+    }
+    const ok = await register(name, email, password, business ? { type: "business", organization } : { type: "personal" });
     if (ok) navigate("/analysis");
     else setError(t("That account could not be created. Check the email, or sign in if you already have one."));
   };
 
   return (
     <form className="lp-form" onSubmit={onSubmit} noValidate>
+      <fieldset className="lp-field">
+        <legend><span>{t("Account type")}</span></legend>
+        <label className="lp-help"><input type="radio" name="account_type" checked={!business} onChange={() => setBusiness(false)} /> {t("Personal (guest): just me")}</label>
+        <label className="lp-help"><input type="radio" name="account_type" checked={business} onChange={() => setBusiness(true)} /> {t("Business: a team with roles")}</label>
+      </fieldset>
+      {business && (
+        <label className="lp-field">
+          <span>{t("Organisation name")}</span>
+          <input name="organization" autoComplete="organization" required />
+        </label>
+      )}
       <label className="lp-field">
         <span>{t("Name")}</span>
         <input name="name" autoComplete="name" required />

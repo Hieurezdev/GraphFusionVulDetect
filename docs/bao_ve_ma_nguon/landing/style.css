@@ -1,0 +1,56 @@
+/* Hallmark · shape: one-card briefing board · genre: modern-minimal · theme: custom · job: attend · idea: "Một màn hình cho Ban giám khảo thấy đề bài, luồng dữ liệu và minh chứng" · vibe: "kỹ thuật, tĩnh, rõ ràng, như bản vẽ"
+ * paper: oklch(97% 0 0) · accent: oklch(52% 0.16 38) · display: Be Vietnam Pro · body: Be Vietnam Pro · hero: sơ đồ luồng dữ liệu chiếm phần lớn thẻ, yêu cầu xếp bên phải · nav: none · footer: dải minh chứng · imagery: the product · signature: sơ đồ luồng mã nguồn từ tải lên tới dịch vụ ngoài
+ * axes: light/sans/rust · posture: board · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P3 H3 E3 S3 R2 V3 · weakest: R, một màn hình cố định theo yêu cầu người dùng, không có các phần cuộn */
+@import url("./fonts.css");
+@import url("./tokens.css");
+@import url("./base.css");
+
+html, body { height: 100%; }
+body { display: grid; place-items: center; padding: var(--pad-page) var(--gutter); min-height: 100vh; }
+.card {
+  width: 100%; max-width: var(--container); height: calc(100vh - 2 * var(--pad-page));
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: var(--gap-card);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); border-radius: 8px;
+  padding: var(--pad-card-y) var(--pad-card-x);
+}
+.top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: var(--gap-columns); align-items: end; }
+.top h1 { font-size: clamp(1.75rem, 3.4vh, 2.75rem); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.1; color: var(--color-ink); }
+.status { margin-top: var(--space-xs); display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; font-size: clamp(1rem, 1.7vh, 1.125rem); color: var(--color-ink-2); }
+.done { background: var(--color-accent); color: var(--color-accent-ink); padding: var(--space-3xs) var(--space-sm); border-radius: var(--radius-pill); font-weight: 600; }
+.status a { color: var(--color-ink-2); }
+.brief { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-3xs) var(--space-md); font-size: clamp(0.875rem, 1.45vh, 1rem); color: var(--color-ink-2); border-left: 2px solid var(--color-rule); padding-left: var(--space-md); }
+.brief dt { font-weight: 600; color: var(--color-ink); }
+.brief dd { margin: 0; }
+
+.main { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: var(--gap-columns); min-height: 0; }
+.flow { margin: 0; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--space-xs); }
+.flow a { display: block; min-height: 0; height: 100%; border: var(--rule-hair) solid var(--color-rule); border-radius: 6px; background: var(--color-paper); overflow: hidden; }
+.flow img { width: 100%; height: 100%; object-fit: contain; }
+.flow figcaption, .ev figcaption { font-size: var(--text-sm); color: var(--color-muted); }
+.flow a:hover, .ev a:hover { border-color: var(--color-ink-2); }
+.flow a:active, .ev a:active, .status a:active { opacity: 0.85; }
+.flow a, .ev a { transition: border-color var(--dur-short) var(--ease-out); }
+.flow a:focus-visible, .ev a:focus-visible, .status a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.reqs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-rows: repeat(4, minmax(0, 1fr)); gap: var(--space-sm); min-height: 0; }
+.reqs li { border-top: var(--rule-hair) solid var(--color-rule); padding-top: var(--pad-row); min-height: 0; }
+.reqs h2 { font-size: clamp(1.125rem, 2.1vh, 1.375rem); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2xs); }
+.reqs li:first-child h2 { color: var(--color-ink); }
+.reqs p { font-size: clamp(1rem, 1.75vh, 1.125rem); line-height: 1.45; color: var(--color-ink-2); }
+
+.ev { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 0.7fr); gap: var(--gap-columns); align-items: stretch; border-top: var(--rule-hair) solid var(--color-rule); padding-top: var(--pad-strip); }
+.ev figure { margin: 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--space-sm); align-items: center; }
+.ev a { display: block; border: var(--rule-hair) solid var(--color-rule); border-radius: 4px; overflow: hidden; background: var(--color-paper); }
+.ev img { width: 100%; height: clamp(64px, 11vh, 128px); object-fit: cover; object-position: left center; }
+.ev h3 { font-size: clamp(1rem, 1.75vh, 1.125rem); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-3xs); }
+.ev figcaption p { font-size: clamp(0.875rem, 1.5vh, 1rem); color: var(--color-ink-2); }
+.tests { display: grid; align-content: center; }
+.tests .figure { font-size: clamp(2rem, 4.4vh, 3.25rem); font-weight: 600; line-height: 1; color: var(--color-ink); font-variant-numeric: tabular-nums; }
+.tests p { font-size: clamp(0.875rem, 1.5vh, 1rem); color: var(--color-ink-2); margin-top: var(--space-2xs); }
+
+@media (max-width: 60rem) {
+  .card { height: auto; }
+  .top, .main, .ev { grid-template-columns: minmax(0, 1fr); }
+  .flow a { height: auto; }
+}

@@ -4,6 +4,8 @@ import { Download } from "lucide-react";
 import { ContractVisualization } from "./ContractVisualization";
 import { StreamingResults, downloadSarif } from "./StreamingResults";
 import { FindingWorkflow } from "./FindingWorkflow";
+import { SessionActions } from "./SessionActions";
+import { useAuth } from "@/contexts/AuthContext";
 import type { FunctionReview } from "@/services/project";
 import { VULNERABILITY_LABELS, flaggedFunctions, resultsFor, scannedVulnerabilities, summaryOf, type AnalysisSummary } from "@/lib/findings";
 import { useT } from "@/i18n";
@@ -54,6 +56,7 @@ const scanFinished = (scan: any[]) =>
 /** The whole result of an analysis: one conclusion, then each vulnerability scan, then the fix workflow. */
 export const AnalysisReport = ({ results, isStreaming, sessionId, reviews, onReviewed }: Props) => {
   const t = useT();
+  const { can } = useAuth();
   if (results.length === 0 && !isStreaming) return null;
   const summary = summaryOf(results);
   const scanned = scannedVulnerabilities(results);
@@ -70,7 +73,7 @@ export const AnalysisReport = ({ results, isStreaming, sessionId, reviews, onRev
               <span className="stage__spin keep-motion" aria-hidden="true" />
               {t("Analyzing…")}
             </Badge>
-          ) : sessionId && (
+          ) : sessionId && can("view_source") && (
             <Button size="sm" variant="outline" onClick={() => downloadSarif(sessionId, t)}
               title={t("Open in VS Code with the SARIF Viewer extension, or upload to GitHub code scanning")}>
               <Download className="h-3 w-3" aria-hidden="true" />
@@ -78,6 +81,7 @@ export const AnalysisReport = ({ results, isStreaming, sessionId, reviews, onRev
             </Button>
           )}
         </div>
+        {!isStreaming && sessionId && <div className="mt-3"><SessionActions sessionId={sessionId} /></div>}
         {summary ? (
           <>
             <p className="mt-3 text-ink-2">{t(CONCLUSION[summary.conclusion])}</p>

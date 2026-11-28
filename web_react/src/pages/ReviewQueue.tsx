@@ -17,19 +17,19 @@ const pendingCount = (session: AnalysisSession) =>
   [...flaggedFunctions(toResults(session)), ...(session.random_audits || [])]
     .filter(p => (findReview(session.reviews, p.vulnerability, p.function_name)?.status ?? "pending") === "pending").length;
 
-/** Expert worklist: every analysis (from any user) with alerts, newest first. */
+/** Expert worklist: the workspace's analyses with alerts (a ScanGuard reviewer: those sent for review), most urgent first. */
 const ReviewQueue = () => {
   const t = useT();
-  const { user } = useAuth();
+  const { user, can } = useAuth();
   const [sessions, setSessions] = useState<AnalysisSession[] | null>(null);
   const [selected, setSelected] = useState<AnalysisSession | null>(null);
 
   useEffect(() => {
-    if (user?.role !== "expert") return;
+    if (!can("review")) return;
     projectService.getReviewQueue()
       .then(list => { setSessions(list); setSelected(list[0] ?? null); })
       .catch(e => { setSessions([]); toast.error(e instanceof Error ? e.message : t("Could not load the review queue")); });
-  }, [user?.role]);
+  }, [user?.role]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleReviewed = (reviews: FunctionReview[]) => {
     if (!selected) return;
@@ -43,7 +43,7 @@ const ReviewQueue = () => {
       <Header />
       <main id="main" className="shell py-10 lg:py-12">
         <h1 className="text-4xl leading-none">{t("Expert review")}</h1>
-        {user?.role !== "expert" ? (
+        {!can("review") ? (
           <p className="mt-6 text-ink-2">{t("Only an expert account can open the review queue.")}</p>
         ) : sessions === null ? (
           <p className="mt-6 text-sm text-muted-foreground" role="status">{t("Loading…")}</p>

@@ -53,7 +53,7 @@ def retrieve_cases(func_info: dict, vulnerability: str, file_hash: str = None) -
         return []
 
 
-def build_prompt(func_info: dict, vulnerability: str, language: str, cases: list = None):
+def build_prompt(func_info: dict, vulnerability: str, language: str, cases: list = None, plain: bool = False):
     """(prompt, first_line, last_line) for one flagged function; shared by explain_one and the red-team evaluation."""
     cases = cases or []
     func_name = func_info["function_name"]
@@ -81,17 +81,17 @@ def build_prompt(func_info: dict, vulnerability: str, language: str, cases: list
     if cases:
         from src.services.knowledge import references_prompt
         prompt += references_prompt(vulnerability, cases)
-    prompt += language_instruction(language)
+    prompt += language_instruction(language, plain)
     return prompt, first_line, last_line
 
 
-def explain_one(llm, func_info: dict, vulnerability: str, language: str, cases: list = None) -> dict:
+def explain_one(llm, func_info: dict, vulnerability: str, language: str, cases: list = None, plain: bool = False) -> dict:
     """One flagged function -> its explanation, checked by output_guard and rewritten once if it breaks a rule.
 
     `cases`: retrieved precedents (step 1.8), added to the prompt as reference material and returned as `references`."""
     cases = cases or []
     func_name = func_info["function_name"]
-    prompt, first_line, last_line = build_prompt(func_info, vulnerability, language, cases)
+    prompt, first_line, last_line = build_prompt(func_info, vulnerability, language, cases, plain)
     references = [{"case": n, "kind": c["kind"], "verdict": c.get("verdict"), "score": c["score"], "source": c.get("source")}
                   for n, c in enumerate(cases, 1)]
     try:
@@ -130,7 +130,7 @@ def explain_vulnerability_func(state: State, config: RunnableConfig) -> State:
     llm = config["configurable"]["llm"]
     func_vulnerability_predictions = state.get("func_vulnerability_predictions", [])
 
-    if not llm or not func_vulnerability_predictions:
+    if not llm or state.get("allow_llm") is False or not func_vulnerability_predictions:
         state["func_vulnerability_explanations"] = []
         return state
 
@@ -144,5 +144,5 @@ def explain_vulnerability_func(state: State, config: RunnableConfig) -> State:
     with ThreadPoolExecutor(max_workers=workers) as pool:
         state["func_vulnerability_explanations"] = list(
             pool.map(lambda f: explain_one(llm, f, state.get("vulnerability"), state.get("language"),
-                                           retrieve_cases(f, state.get("vulnerability"), _file_hash(state))), flagged))
+                                           retrieve_cases(f, state.get("vulnerability"), _file_hash(state)), bool(state.get("plain"))), flagged))
     return state

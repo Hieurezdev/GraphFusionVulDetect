@@ -30,6 +30,10 @@ RUN B=https://binaries.soliditylang.org/linux-amd64 \
 
 COPY .project-root ./
 COPY src ./src
+# Maintenance scripts (seed_knowledge, verify_label_log, retrain, gate, shadow_report...) run inside this container;
+# retrain/gate import eval/retrain/common.py. Datasets are not baked in: mount assets/ when a script needs them.
+COPY scripts ./scripts
+COPY eval/retrain ./eval/retrain
 
 EXPOSE 8000
 

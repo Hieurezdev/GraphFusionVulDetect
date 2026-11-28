@@ -38,6 +38,16 @@ def client(monkeypatch):
         return users
 
     monkeypatch.setattr(auth, "get_users_collection", get_users)
+    from src.services import organizations
+
+    async def create_organization(name, personal):
+        return {"_id": ObjectId(), "name": name, "personal": personal, "policy": organizations.default_policy()}
+
+    async def get_organization(org_id):
+        return None
+
+    monkeypatch.setattr(organizations, "create_organization", create_organization)
+    monkeypatch.setattr(organizations, "get_organization", get_organization)
     app = FastAPI()
     app.include_router(auth.router)
     c = TestClient(app)

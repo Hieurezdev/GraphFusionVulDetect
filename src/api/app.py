@@ -48,6 +48,15 @@ def create_app():
         logger.info("Connecting to DB...")
         await db_manager.connect()
 
+        # Workspaces for accounts from before organisations (idempotent), then the purge of expired scans
+        from src.services.organizations import migrate_to_organizations
+        print(f"Organisations: {await migrate_to_organizations()}", flush=True)
+        from src.config.settings import settings as cfg
+        if cfg.RETENTION_ENABLED:
+            import asyncio
+            from src.services.data_lifecycle import retention_loop
+            app.state.retention = asyncio.get_running_loop().create_task(retention_loop())
+
         # Analyses left 'processing' by a previous server process will never finish: close them (step 1.6)
         from src.api.v1.analyze_router import fail_orphaned_sessions
         closed = await fail_orphaned_sessions()
@@ -69,6 +78,8 @@ def create_app():
         logger.info("System initialized successfully.")
 
     async def shutdown_event():
+        if getattr(app.state, "retention", None):
+            app.state.retention.cancel()
         logger.info("Disconnecting DB...")
         await db_manager.disconnect()
 

@@ -13,6 +13,7 @@ services:
     volumes:
       - hf_cache:/hf-cache
       - storage:/graphfusion/storage  # uploaded contracts; the fix check re-reads them
+      - models:/graphfusion/models    # models/registry.json + retrained checkpoints: must survive a rebuild
     deploy:
       resources:
         reservations:
@@ -46,3 +47,4 @@ volumes:
   mongodb_data:
   hf_cache:
   storage:
+  models:

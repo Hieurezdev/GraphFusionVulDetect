@@ -12,6 +12,7 @@ import { TruncatedText } from "@/components/TruncatedText";
 import { projectService, Project, AnalysisSession, FunctionReview } from "@/services/project";
 import { toast } from "sonner";
 import { useT } from "@/i18n";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Monaco is large: load the IDE only when a finished analysis shows it.
 const ContractIDE = lazy(() => import("@/components/ContractIDE"));
@@ -19,6 +20,7 @@ const ContractIDE = lazy(() => import("@/components/ContractIDE"));
 const ProjectAnalysis = () => {
   const navigate = useNavigate();
   const t = useT();
+  const { can, assistant } = useAuth();
   const { projectId } = useParams<{ projectId: string }>();
   const [project, setProject] = useState<Project | null>(null);
   const [analysisSessions, setAnalysisSessions] = useState<AnalysisSession[]>([]);
@@ -211,10 +213,12 @@ const ProjectAnalysis = () => {
             </dl>
           </div>
 
-          <Button onClick={() => setShowNewAnalysis(!showNewAnalysis)} aria-expanded={showNewAnalysis}>
-            <Upload className="h-4 w-4" />
-            {showNewAnalysis ? t("Hide Upload") : t("New Analysis")}
-          </Button>
+          {can("upload") && (
+            <Button onClick={() => setShowNewAnalysis(!showNewAnalysis)} aria-expanded={showNewAnalysis}>
+              <Upload className="h-4 w-4" />
+              {showNewAnalysis ? t("Hide Upload") : t("New Analysis")}
+            </Button>
+          )}
         </div>
 
         {showNewAnalysis && (
@@ -311,7 +315,7 @@ const ProjectAnalysis = () => {
                   />
                 )}
 
-                {selectedSession.status === 'completed' && (
+                {selectedSession.status === 'completed' && can("view_source") && (
                   <Suspense fallback={null}>
                     <ContractIDE key={selectedSession.id} sessionId={selectedSession.id} results={toResults(selectedSession)} reviews={selectedSession.reviews || []} onReviewed={handleReviewed} />
                   </Suspense>
@@ -324,7 +328,7 @@ const ProjectAnalysis = () => {
         </div>
       </main>
 
-      {selectedSession && (
+      {selectedSession && assistant && (
         <RefactorChatbot
           key={selectedSession.id}
           sessionId={selectedSession.id}

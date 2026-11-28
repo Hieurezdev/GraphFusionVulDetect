@@ -11,6 +11,7 @@ import { refactorBotService, ValidationResponse } from "@/services/refactorbot";
 import { FunctionReviewControl, REVIEW_LABELS } from "./FunctionReviewControl";
 import { FindingList } from "./RefactorChatbot";
 import { useT } from "@/i18n";
+import { useResolvedTheme } from "@/lib/preferences";
 import { VULNERABILITY_LABELS, explanationsByFinding, findReview, findingKey, flaggedFunctions } from "@/lib/findings";
 
 // Bundle Monaco locally (no CDN); Solidity needs only the base editor worker.
@@ -37,6 +38,7 @@ const COMPILER_LINE = /^[^:\n]+\.sol:(\d+):(\d+):\s*(\w*Error|Warning):\s*(.+)$/
 /** In-browser IDE: the whole contract with alerts on their lines, expert review beside them, and compile + Slither re-check of edits. */
 const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
   const t = useT();
+  const editorTheme = useResolvedTheme();
   const [original, setOriginal] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [checking, setChecking] = useState(false);
@@ -153,7 +155,7 @@ const ContractIDE = ({ sessionId, results, reviews, onReviewed }: Props) => {
           ) : (
             <Editor
               language="sol"
-              theme="vs-dark"
+              theme={editorTheme === "light" ? "light" : "vs-dark"}
               value={code}
               onChange={v => setCode(v ?? "")}
               onMount={editor => { editorRef.current = editor; paintAlerts(); }}

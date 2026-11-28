@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vòng tự cải thiện chỉ dùng dữ liệu được đồng ý</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;background:#f5f5f5;color:#2d3142;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.frame{max-width:1280px;width:100%}
+.eyebrow{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4f5d75;margin-bottom:.5rem}
+h1{font-family:'Noto Serif', serif;font-size:clamp(1.5rem,2.4vw + .75rem,2rem);font-weight:400;letter-spacing:-.01em;line-height:1.2;margin-bottom:1.5rem}
+.diagram-container{width:100%;overflow-x:auto}
+svg{width:100%;min-width:1280px;display:block}
+@media print{.diagram-container{overflow-x:visible}svg{min-width:0}}
+</style>
+</head>
+<body>
+<div class="frame">
+<p class="eyebrow">Vòng tự cải thiện · Bảo vệ mã nguồn</p>
+<h1>Vòng tự cải thiện chỉ dùng dữ liệu được đồng ý</h1>
+<div class="diagram-container">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="so-do-tu-cai-thien-title so-do-tu-cai-thien-desc">
+<title id="so-do-tu-cai-thien-title">Vòng tự cải thiện chỉ dùng dữ liệu được đồng ý</title>
+<desc id="so-do-tu-cai-thien-desc">Kết luận của chuyên gia trên các lượt quét có đồng ý được ghi vào nhật ký nhãn, gom thành bộ dữ liệu, huấn luyện lại, qua kiểm định và chạy song song trước khi thay mô hình; lượt quét đã xóa và dữ liệu bị rút đồng ý không đi vào vòng này.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bf4520"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f5f5f5"/>
+<path d="M232,276 H296" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M488,276 H552" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M744,276 H808" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="748" y="248" width="56" height="18" rx="2" fill="#f5f5f5"/><text x="776" y="262" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">đồng ý</text>
+<path d="M1000,276 H1064" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M1160,320 V432" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="1024" y="365" width="128" height="18" rx="2" fill="#f5f5f5"/><text x="1146" y="379" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="end">mô hình ứng viên</text>
+<path d="M1064,476 H1000" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="1014" y="448" width="36" height="18" rx="2" fill="#f5f5f5"/><text x="1032" y="462" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">đạt</text>
+<path d="M808,476 H744" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="754" y="448" width="44" height="18" rx="2" fill="#f5f5f5"/><text x="776" y="462" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">thay</text>
+<path d="M552,476 H144 Q136,476 136,468 V320" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="330" y="448" width="108" height="18" rx="2" fill="#f5f5f5"/><text x="384" y="462" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">quét lượt sau</text>
+<path d="M648,232 V136" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<rect x="656" y="173" width="84" height="18" rx="2" fill="#f5f5f5"/><text x="662" y="187" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">nếu đồng ý</text>
+<path d="M488,104 H552" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M904,136 V232" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="912" y="173" width="84" height="18" rx="2" fill="#f5f5f5"/><text x="918" y="187" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">bị loại ra</text>
+<rect x="40" y="232" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="40" y="232" width="192" height="88" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="136" y="262" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Lượt quét có đồng ý</text>
+<text x="136" y="280" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">người tải lên đồng ý</text>
+<text x="136" y="298" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">và Admin bật huấn luyện</text>
+<circle cx="230" cy="234" r="12" fill="#2d3142"/><text x="230" y="238.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text>
+<rect x="296" y="232" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="296" y="232" width="192" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="392" y="262" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Chuyên gia kết luận</text>
+<text x="392" y="280" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">hàm bị gắn cờ</text>
+<text x="392" y="298" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">và 5% hàm chọn ngẫu nhiên</text>
+<rect x="552" y="232" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="552" y="232" width="192" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="648" y="262" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Nhật ký nhãn</text>
+<text x="648" y="280" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chuỗi hash, chống sửa</text>
+<text x="648" y="298" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ lưu mã khi đồng ý</text>
+<rect x="808" y="232" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="808" y="232" width="192" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="904" y="262" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Bộ dữ liệu</text>
+<text x="904" y="280" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">2 chuyên gia thống nhất</text>
+<text x="904" y="298" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">giữ 30% để kiểm định</text>
+<rect x="1064" y="232" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="1064" y="232" width="192" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="1160" y="262" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Huấn luyện lại</text>
+<text x="1160" y="280" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">retrain.py</text>
+<text x="1160" y="298" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chưa thay mô hình</text>
+<rect x="1064" y="432" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="1064" y="432" width="192" height="88" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.4"/>
+<text x="1160" y="462" fill="#bf4520" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kiểm định</text>
+<text x="1160" y="480" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">F1 từng lớp, McNemar</text>
+<text x="1160" y="498" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">không đạt: giữ bản cũ</text>
+<rect x="808" y="432" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="808" y="432" width="192" height="88" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="904" y="462" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Chạy song song</text>
+<text x="904" y="480" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tùy chọn, so với bản cũ</text>
+<text x="904" y="498" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">trên lượt quét thật</text>
+<rect x="552" y="432" width="192" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="552" y="432" width="192" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="648" y="462" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Mô hình đang dùng</text>
+<text x="648" y="480" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">models/registry.json</text>
+<text x="648" y="498" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">quay lại bản cũ được</text>
+<rect x="296" y="72" width="192" height="64" rx="6" fill="#f5f5f5"/>
+<rect x="296" y="72" width="192" height="64" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="392" y="99" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Admin rút đồng ý</text>
+<text x="392" y="117" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">gỡ khỏi kho tri thức</text>
+<circle cx="486" cy="74" r="12" fill="#2d3142"/><text x="486" y="78.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text>
+<rect x="552" y="72" width="192" height="64" rx="6" fill="#f5f5f5"/>
+<rect x="552" y="72" width="192" height="64" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="648" y="99" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kho tri thức RAG</text>
+<text x="648" y="117" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ mục có đồng ý</text>
+<rect x="808" y="72" width="192" height="64" rx="6" fill="#f5f5f5"/>
+<rect x="808" y="72" width="192" height="64" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="904" y="99" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Xóa lượt quét</text>
+<text x="904" y="117" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mã bị tẩy khỏi nhật ký</text>
+<circle cx="998" cy="74" r="12" fill="#2d3142"/><text x="998" y="78.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">3</text>
+<text font-family="'Noto Serif', serif" font-style="italic" font-size="15" fill="#4f5d75"><tspan x="40" y="564">Mô hình đã huấn luyện không quên được dữ liệu cũ.</tspan><tspan x="40" y="586">Bản cũ được giữ để quay lại khi cần.</tspan></text>
+<line x1="40" y1="640" x2="1240" y2="640" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+<circle cx="50" cy="672" r="10" fill="#2d3142"/><text x="50" y="676.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text><text x="68" y="676.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Giới hạn quyền: chỉ dữ liệu được đồng ý</text><circle cx="418.4" cy="672" r="10" fill="#2d3142"/><text x="418.4" y="676.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">3</text><text x="436.4" y="676.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Khả năng xóa mã: lượt quét đã xóa bị loại</text>
+</svg>
+</div>
+</div>
+</body>
+</html>

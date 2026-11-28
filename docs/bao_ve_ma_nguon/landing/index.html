@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cải tiến bảo vệ mã nguồn tải lên của ScanGuard: giới hạn quyền, thời gian lưu, khả năng xóa mã và luồng dữ liệu.">
+<title>Bảo vệ mã nguồn tải lên · ScanGuard</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="card">
+  <header class="top">
+    <div>
+      <h1>Bảo vệ mã nguồn tải lên</h1>
+      <p class="status"><span class="done">Hoàn thành 3/3 yêu cầu</span> <span>Đang chạy trên <a href="https://scanguard.ptitai.org">scanguard.ptitai.org</a></span></p>
+    </div>
+    <dl class="brief">
+      <dt>Vấn đề</dt><dd>Hợp đồng và mã nguồn chưa công bố có thể chứa thông tin cần bảo vệ.</dd>
+      <dt>Yêu cầu</dt><dd>Giới hạn quyền, thời gian lưu và khả năng xóa mã; mô tả xử lý tại máy chủ/dịch vụ ngoài.</dd>
+      <dt>Minh chứng</dt><dd>Sơ đồ luồng dữ liệu, cấu hình quyền truy cập và demo xóa tệp.</dd>
+    </dl>
+  </header>
+
+  <section class="main" aria-label="Luồng dữ liệu và các yêu cầu">
+    <figure class="flow">
+      <a href="./img/so-do-luong-xu-ly.png" target="_blank" rel="noopener"><img src="./img/flow-main.png" alt="Sơ đồ luồng: người dùng qua cổng kiểm soát quyền, mã được phân tích và lưu tại máy chủ, chỉ mã hàm bị gắn cờ có thể gửi tới LLM bên ngoài, người ngoài doanh nghiệp bị chặn với mã 404"></a>
+      <figcaption>Luồng dữ liệu khi tải mã lên. Bấm vào sơ đồ để xem toàn màn hình.</figcaption>
+    </figure>
+    <ul class="reqs">
+      <li><h2>Giới hạn quyền</h2><p>4 vai trò, máy chủ kiểm tra ở mọi API.<br>Developer, Non-tech chỉ thấy mã của mình.<br>Người ngoài nhận 404, bị ghi nhật ký.</p></li>
+      <li><h2>Thời gian lưu</h2><p>Mặc định 30 ngày, Admin chỉnh 1 đến 365.<br>Tác vụ nền tự xóa mỗi giờ.<br>Ngày tự xóa hiện trên từng kết quả.</p></li>
+      <li><h2>Khả năng xóa mã</h2><p>Một hàm xóa cho cả 4 nơi lưu mã.<br>Xóa lượt quét, dự án, tài khoản.<br>Lịch sử xóa không chứa mã.</p></li>
+      <li><h2>Máy chủ và dịch vụ ngoài</h2><p>Tệp .sol chỉ nằm trên máy chủ.<br>Chỉ mã hàm bị gắn cờ ra LLM ngoài.<br>Mặc định bật, Admin tắt được.</p></li>
+    </ul>
+  </section>
+
+  <footer class="ev" aria-label="Minh chứng">
+    <figure>
+      <a href="./img/so-do-luong-xoa.png" target="_blank" rel="noopener"><img src="./img/flow-delete.png" alt="Sơ đồ luồng xóa mã"></a>
+      <figcaption><h3>Sơ đồ luồng</h3><p>Xử lý và xóa mã, hai sơ đồ.</p></figcaption>
+    </figure>
+    <figure>
+      <a href="./img/06-admin-members.png" target="_blank" rel="noopener"><img src="./img/members.png" alt="Admin cấp vai trò Admin, Developer, Non-tech, Expert cho thành viên"></a>
+      <figcaption><h3>Cấu hình quyền</h3><p>Admin cấp 4 vai trò cho thành viên.</p></figcaption>
+    </figure>
+    <figure>
+      <a href="./img/09-delete-confirm.png" target="_blank" rel="noopener"><img src="./img/delete-confirm.png" alt="Hộp thoại xác nhận xóa lượt quét: tệp, đồ thị, kết quả và bản sửa bị xóa vĩnh viễn"></a>
+      <figcaption><h3>Demo xóa tệp</h3><p>API 200 thành 404, thư mục và 5 tệp bị xóa.</p></figcaption>
+    </figure>
+    <div class="tests">
+      <p class="figure num">81/81</p>
+      <p>bài kiểm thử backend đạt</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

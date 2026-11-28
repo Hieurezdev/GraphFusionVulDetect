@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Một hàm xóa cho mọi nơi lưu mã</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;background:#f5f5f5;color:#2d3142;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.frame{max-width:1280px;width:100%}
+.eyebrow{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4f5d75;margin-bottom:.5rem}
+h1{font-family:'Noto Serif', serif;font-size:clamp(1.5rem,2.4vw + .75rem,2rem);font-weight:400;letter-spacing:-.01em;line-height:1.2;margin-bottom:1.5rem}
+.diagram-container{width:100%;overflow-x:auto}
+svg{width:100%;min-width:1280px;display:block}
+@media print{.diagram-container{overflow-x:visible}svg{min-width:0}}
+</style>
+</head>
+<body>
+<div class="frame">
+<p class="eyebrow">Luồng xóa · Bảo vệ mã nguồn</p>
+<h1>Một hàm xóa cho mọi nơi lưu mã</h1>
+<div class="diagram-container">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="so-do-luong-xoa-title so-do-luong-xoa-desc">
+<title id="so-do-luong-xoa-title">Một hàm xóa cho mọi nơi lưu mã</title>
+<desc id="so-do-luong-xoa-desc">Xóa theo yêu cầu hoặc khi hết thời hạn lưu đều đi qua một hàm, xóa mã ở bốn nơi lưu và ghi lịch sử xóa không chứa mã.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bf4520"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f5f5f5"/>
+<path d="M296,216 H340 Q348,216 348,224 V288 Q348,296 356,296 H400" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M296,408 H340 Q348,408 348,400 V336 Q348,328 356,328 H400" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M664,280 H696 Q704,280 704,272 V160 Q704,152 712,152 H800" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M664,300 H728 Q736,300 736,292 V280 Q736,272 744,272 H800" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M664,324 H728 Q736,324 736,332 V384 Q736,392 744,392 H800" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M664,344 H696 Q704,344 704,352 V504 Q704,512 712,512 H800" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M532,368 V488" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="540" y="417" width="64" height="18" rx="2" fill="#f5f5f5"/>
+<text x="546" y="431" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">ghi lại</text>
+<rect x="40" y="168" width="256" height="96" rx="6" fill="#f5f5f5"/>
+<rect x="40" y="168" width="256" height="96" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="168" y="203" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Xóa theo yêu cầu</text>
+<text x="168" y="222" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">lượt quét · dự án · tài khoản</text>
+<text x="168" y="241" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ người có quyền</text>
+<rect x="40" y="360" width="256" height="96" rx="6" fill="#f5f5f5"/>
+<rect x="40" y="360" width="256" height="96" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="168" y="395" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Hết thời hạn lưu</text>
+<text x="168" y="414" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mặc định 30 ngày, 1–365</text>
+<text x="168" y="433" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tác vụ nền chạy mỗi giờ</text>
+<rect x="400" y="256" width="264" height="112" rx="6" fill="#f5f5f5"/>
+<rect x="400" y="256" width="264" height="112" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.2"/>
+<text x="532" y="299" fill="#bf4520" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Hàm xóa dùng chung</text>
+<text x="532" y="318" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">delete_session()</text>
+<text x="532" y="337" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">một đường xóa cho mọi nơi</text>
+<rect x="400" y="488" width="264" height="96" rx="6" fill="#f5f5f5"/>
+<rect x="400" y="488" width="264" height="96" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="532" y="523" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Lịch sử xóa</text>
+<text x="532" y="542" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">ai, khi nào, lý do</text>
+<text x="532" y="561" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">không chứa mã</text>
+<rect x="800" y="112" width="400" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="800" y="112" width="400" height="80" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1000" y="148" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Thư mục lưu trữ</text>
+<text x="1000" y="167" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">xóa cả thư mục storage/&lt;id&gt;/</text>
+<rect x="800" y="232" width="400" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="800" y="232" width="400" height="80" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1000" y="268" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Bản ghi MongoDB</text>
+<text x="1000" y="287" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">xóa kết quả, mã hàm, bản sửa</text>
+<rect x="800" y="352" width="400" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="800" y="352" width="400" height="80" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1000" y="388" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kho tri thức RAG</text>
+<text x="1000" y="407" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">xóa các mục của lượt quét</text>
+<rect x="800" y="472" width="400" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="800" y="472" width="400" height="80" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1000" y="508" fill="#2d3142" font-size="16" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Nhật ký nhãn</text>
+<text x="1000" y="527" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tẩy mã, giữ kết luận; chuỗi hash vẫn hợp lệ</text>
+<text font-family="'Noto Serif', serif" font-style="italic" font-size="14" fill="#4f5d75"><tspan x="40" y="528">Sau khi xóa: API trả 404,</tspan><tspan x="40" y="548">thư mục không còn.</tspan></text>
+<line x1="40" y1="640" x2="1240" y2="640" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/><line x1="40" y1="664" x2="68" y2="664" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text x="80" y="668" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">thao tác xóa</text><rect x="208.8" y="656" width="28" height="16" rx="3" fill="rgba(191,69,32,0.08)" stroke="#bf4520"/>
+<text x="248.8" y="668" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">điểm xử lý chung</text><rect x="407.20000000000005" y="656" width="28" height="16" rx="3" fill="rgba(45,49,66,0.05)" stroke="#4f5d75"/>
+<text x="447.20000000000005" y="668" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">nơi lưu mã</text><rect x="561.2" y="656" width="28" height="16" rx="3" fill="rgba(79,93,117,0.10)" stroke="#5a6580"/>
+<text x="601.2" y="668" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">nguồn kích hoạt</text>
+</svg>
+</div>
+</div>
+</body>
+</html>

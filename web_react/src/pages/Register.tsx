@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { AuthLayout } from '@/components/AuthLayout';
 import { readPreferences } from '@/lib/preferences';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useT } from "@/i18n";
@@ -20,7 +21,9 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    organization: '',
   });
+  const [business, setBusiness] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
@@ -35,6 +38,11 @@ const Register = () => {
   const validateForm = () => {
     if (!formData.name.trim()) {
       setError(t('Enter your name.'));
+      return false;
+    }
+
+    if (business && !formData.organization.trim()) {
+      setError(t("Enter your organisation's name."));
       return false;
     }
 
@@ -70,7 +78,8 @@ const Register = () => {
       return;
     }
 
-    const success = await register(formData.name, formData.email, formData.password);
+    const success = await register(formData.name, formData.email, formData.password,
+      business ? { type: 'business', organization: formData.organization.trim() } : { type: 'personal' });
     
     if (success) {
       toast.success(t('Account created'));
@@ -88,6 +97,31 @@ const Register = () => {
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
+            )}
+
+            <fieldset className="space-y-2">
+              <legend className="text-sm">{t("Account type")}</legend>
+              <RadioGroup value={business ? 'business' : 'personal'} onValueChange={v => setBusiness(v === 'business')} className="grid gap-2">
+                <div className="flex items-start gap-3">
+                  <RadioGroupItem value="personal" id="acct-personal" className="mt-0.5" />
+                  <Label htmlFor="acct-personal" className="font-normal">
+                    {t("Personal (guest)")}<span className="block text-xs text-muted-foreground">{t("Just you. Your code and results stay in your own space.")}</span>
+                  </Label>
+                </div>
+                <div className="flex items-start gap-3">
+                  <RadioGroupItem value="business" id="acct-business" className="mt-0.5" />
+                  <Label htmlFor="acct-business" className="font-normal">
+                    {t("Business")}<span className="block text-xs text-muted-foreground">{t("You become the admin of your organisation: add members, give them roles and set how code is kept.")}</span>
+                  </Label>
+                </div>
+              </RadioGroup>
+            </fieldset>
+
+            {business && (
+              <div className="space-y-2">
+                <Label htmlFor="organization">{t("Organisation name")}</Label>
+                <Input id="organization" name="organization" value={formData.organization} onChange={handleChange} disabled={isLoading} required />
+              </div>
             )}
 
             <div className="space-y-2">

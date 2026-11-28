@@ -301,10 +301,12 @@ export const FunctionGraphVisualization = ({
 
           {selectedNode && (
             <div className="space-y-4">
+              {selectedNode.function_code != null && (
               <div>
                 <h4 className="mb-2 text-sm text-muted-foreground">{t("Function Code")}</h4>
                 <pre className="code-text well max-h-96 overflow-auto p-4 text-sm leading-relaxed text-ink-2">{selectedNode.function_code}</pre>
               </div>
+              )}
 
               <dl className="grid grid-cols-2 border-t border-rule pt-4 text-sm">
                 <div>

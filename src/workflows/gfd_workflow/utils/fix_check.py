@@ -21,6 +21,18 @@ def solc_for(source: str) -> str:
     return os.path.abspath(path if os.path.exists(path) else f"{ARTIFACTS}/solc-{DEFAULT_SOLC}/solc-{DEFAULT_SOLC}")
 
 
+_IMPORT_STMT = re.compile(r"(?:^|[;{}])\s*import\b", re.M)
+NO_IMPORTS = "Contracts with import statements are not checked: upload one flattened file without imports."
+
+
+def has_import(code) -> bool:
+    """An import statement outside comments. Slither (crytic-compile) resolves imports outside the upload folder, so an
+    `import "/etc/passwd";` would print the first line of a server file in its error message."""
+    from src.workflows.gfd_workflow.nodes.fcg_converter.embedding_generator import strip_comments
+    text = code.decode("utf-8", "replace") if isinstance(code, bytes) else (code or "")
+    return bool(_IMPORT_STMT.search(strip_comments(text)))
+
+
 def line_range(source: bytes, start: int, length: int) -> range:
     return range(source[:start].count(b"\n") + 1, source[:start + length].count(b"\n") + 2)
 
@@ -52,6 +64,9 @@ def check_fix(source_path: str, span: list, new_code: str) -> dict:
     """Compile the contract with `new_code` replacing the byte span (or the whole file if it is one)."""
     original = Path(source_path).read_bytes()
     new = new_code.strip().encode("utf-8")
+    if has_import(original) or has_import(new_code):
+        return {"compiled": False, "solc_version": "", "original_solc_version": "", "compiler_output": NO_IMPORTS,
+                "findings_before": [], "findings_after": [], "slither_error": None, "patched_lines": []}
     if WHOLE_FILE.search(new_code):
         patched, old_lines, new_lines = new, range(1, original.count(b"\n") + 2), range(1, new.count(b"\n") + 2)
     else:

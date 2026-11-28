@@ -19,10 +19,13 @@ import { Plus, Activity, Trash2 } from "lucide-react";
 import { projectService, ProjectResponse } from "@/services/project";
 import { toast } from "sonner";
 import { useT } from "@/i18n";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Projects = () => {
   const navigate = useNavigate();
   const t = useT();
+  const { user, can } = useAuth();
+  const canDelete = (p: ProjectResponse) => can("delete_project") || (p.user_id === user?.id && can("delete_own_session"));
   const [projects, setProjects] = useState<ProjectResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingProjectId, setDeletingProjectId] = useState<string | null>(null);
@@ -55,7 +58,7 @@ const Projects = () => {
       toast.success(t("Project \u201c{name}\u201d deleted", { name: projectName }));
     } catch (error) {
       console.error("Error deleting project:", error);
-      toast.error(t("Failed to delete project"));
+      toast.error(error instanceof Error && error.message ? error.message : t("Failed to delete project"));
     } finally {
       setDeletingProjectId(null);
     }
@@ -217,7 +220,7 @@ const Projects = () => {
                   <td className="measured hidden py-4 pr-4 text-right md:table-cell">{project.files_count}</td>
                   <td className="measured hidden py-4 pr-4 text-right md:table-cell">{project.analysis_count}</td>
                   <td className="measured hidden whitespace-nowrap py-4 pr-4 text-sm text-ink-2 lg:table-cell">{formatDate(project.created_at)}</td>
-                  <td className="py-3">{deleteDialog(project)}</td>
+                  <td className="py-3">{canDelete(project) && deleteDialog(project)}</td>
                 </tr>
               ))}
             </tbody>

@@ -35,6 +35,11 @@ class DatabaseManager:
                 'analysis_results': self.database.analysis_results,
                 'file_uploads': self.database.file_uploads,
                 'label_events': self.database.label_events,
+                # Protection of uploaded code (docs/KE_HOACH_BAO_VE_MA_NGUON.md)
+                'organizations': self.database.organizations,
+                'audit_log': self.database.audit_log,
+                'deletion_log': self.database.deletion_log,
+                'consents': self.database.consents,
             }
             
             # Create indexes
@@ -79,6 +84,13 @@ class DatabaseManager:
             # Label log: seq is unique so two concurrent writers cannot fork the hash chain
             await self.collections['label_events'].create_index([("seq", 1)], unique=True)
             await self.collections['label_events'].create_index([("session_id", 1), ("vulnerability", 1), ("function_name", 1)])
+
+            await self.collections['users'].create_index([("organization_id", 1)])
+            await self.collections['projects'].create_index([("organization_id", 1)])
+            await self.collections['analysis_sessions'].create_index([("organization_id", 1), ("started_at", 1)])
+            await self.collections['audit_log'].create_index([("organization_id", 1), ("at", -1)])
+            await self.collections['deletion_log'].create_index([("organization_id", 1), ("at", -1)])
+            await self.collections['consents'].create_index([("user_id", 1), ("at", -1)])
 
             # File uploads indexes
             await self.collections['file_uploads'].create_index([("user_id", 1)])
@@ -140,3 +152,10 @@ async def get_label_events_collection():
     if db_manager.database is None:
         await db_manager.connect()
     return db_manager.collections['label_events']
+
+
+async def get_collection(name: str):
+    """Any collection of DatabaseManager.collections by name (organizations, audit_log, deletion_log, consents, ...)."""
+    if db_manager.database is None:
+        await db_manager.connect()
+    return db_manager.collections[name]

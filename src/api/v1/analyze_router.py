@@ -29,6 +29,9 @@ from src.models.entity import (
 from src.infrastructure.database import get_analysis_sessions_collection, get_projects_collection, get_label_events_collection
 from src.utils.timezone import now_utc, now_vietnam, ensure_utc_for_db
 from .authentication_router import get_current_user
+from src.services import audit, data_lifecycle
+from src.services.access import can, is_platform_expert, plain_language, scope
+from src.services.organizations import llm_allowed, platform_review_orgs, policy_of
 
 _background: set = set()
 
@@ -65,6 +68,13 @@ async def analyze_contract(
     
     # Log received project_id for debugging
     logger.info(f"Analysis request - project_id: {project_id}, file: {file.filename}")
+    if not can(current_user, "upload"):
+        raise HTTPException(status_code=403, detail="Your role cannot upload code: ask a developer or the workspace admin")
+    policy = policy_of(current_user.organization)
+    # Training consent is the workspace's (its admin's) choice: an upload can opt out of it, never in against it
+    training_consent = bool(training_consent) and bool(current_user.organization) and policy["training_data"]
+    allow_llm = llm_allowed(current_user.organization)
+    plain = plain_language(current_user)  # explanations written without technical words
     
     # Read file content
     file_content = await file.read()
@@ -86,10 +96,7 @@ async def analyze_contract(
     # Validate project if provided
     if project_id:
         try:
-            project_doc = await projects_collection.find_one({
-                "_id": ObjectId(project_id),
-                "user_id": current_user.id
-            })
+            project_doc = await projects_collection.find_one({"_id": ObjectId(project_id), **scope(current_user)})
             if not project_doc:
                 raise HTTPException(
                     status_code=404,
@@ -117,6 +124,9 @@ async def analyze_contract(
     session_doc = {
         "project_id": project_id,
         "user_id": current_user.id,
+        "organization_id": current_user.organization_id,
+        "llm_explanations": allow_llm,
+        "plain_explanations": plain,
         "file_path": file_path,
         "filename": filename,
         "file_hash": file_hash,
@@ -124,7 +134,7 @@ async def analyze_contract(
         "model_versions": get_model_versions(),
         "pipeline": get_pipeline_fingerprint(),
         "language": normalize_language(language),
-        "training_consent": bool(training_consent),
+        "training_consent": training_consent,
         "status": AnalysisSessionStatus.PROCESSING,
         "steps": [],
         "started_at": ensure_utc_for_db(now_vietnam()),
@@ -181,7 +191,7 @@ async def analyze_contract(
     if settings.RESULT_CACHE:
         cached = await sessions_collection.find_one(
             {"_id": {"$ne": ObjectId(session_id)}, "file_hash": file_hash, "pipeline": session_doc["pipeline"],
-             "language": session_doc["language"], "status": AnalysisSessionStatus.COMPLETED, "steps.step_name": "summary"},
+             "language": session_doc["language"], "llm_explanations": allow_llm, "plain_explanations": plain, "status": AnalysisSessionStatus.COMPLETED, "steps.step_name": "summary"},
             sort=[("completed_at", -1)])
         if cached:
             await sessions_collection.update_one({"_id": ObjectId(session_id)}, {"$set": {"cached_from": str(cached["_id"])}})
@@ -203,7 +213,7 @@ async def analyze_contract(
         t0, outcome = time.perf_counter(), "failed"
         metrics.gauge_add("analysis_running", 1, help_text="Analyses running or waiting for a slot")
         try:
-            source = replay(cached) if cached else vulnerability_analysis_service.analyze_solidity_file(file_path, temp_dir, language)
+            source = replay(cached) if cached else vulnerability_analysis_service.analyze_solidity_file(file_path, temp_dir, language, allow_llm, plain)
             async for result_line in source:
                 try:
                     result_data = json.loads(result_line.strip())
@@ -359,15 +369,8 @@ async def fail_orphaned_sessions() -> int:
 @router.get("/sessions/{session_id}/events")
 async def session_events(session_id: str, start: int = Query(0, ge=0), current_user: UserInDB = Depends(get_current_user)):
     """Follow an analysis from its `start`-th event: after a reload or a dropped connection, the client reattaches here."""
-    sessions_collection = await get_analysis_sessions_collection()
-    try:
-        doc = await sessions_collection.find_one(_session_query(session_id, current_user), {"_id": 1})
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
-    return StreamingResponse(tail_session_events(session_id, start), media_type="application/x-ndjson",
-                             headers={"X-Session-ID": session_id})
+    await load_session(session_id, current_user)
+    return StreamingResponse(tail_session_events(session_id, start), media_type="application/x-ndjson", headers={"X-Session-ID": session_id})
 
 
 @router.get("/sessions", response_model=List[AnalysisSession])
@@ -381,7 +384,7 @@ async def list_analysis_sessions(
     sessions_collection = await get_analysis_sessions_collection()
     
     # Build query
-    query = {"user_id": current_user.id}
+    query = scope(current_user, await _platform_orgs(current_user))
     if project_id:
         try:
             query["project_id"] = project_id
@@ -395,9 +398,7 @@ async def list_analysis_sessions(
     # Convert to response format
     result = []
     for session in sessions:
-        session["id"] = str(session["_id"])
-        del session["_id"]
-        result.append(AnalysisSession(**session))
+        result.append(present(session, current_user))
     
     return result
 
@@ -408,50 +409,108 @@ async def get_analysis_session(
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Get a specific analysis session"""
-    sessions_collection = await get_analysis_sessions_collection()
-    
+    return present(await load_session(session_id, current_user), current_user)
+
+
+async def _platform_orgs(user: UserInDB) -> list:
+    return await platform_review_orgs() if is_platform_expert(user) else []
+
+
+async def session_query(session_id: str, user: UserInDB) -> dict:
+    """The filter for one scan this user may open: their workspace's, or (ScanGuard reviewer) one sent for review."""
     try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
+        oid = ObjectId(session_id)
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid session ID format")
-    
-    if not session_doc:
+    return {"_id": oid, **scope(user, await _platform_orgs(user))}
+
+
+async def load_session(session_id: str, user: UserInDB, need: str = None, action: str = None) -> dict:
+    """One scan, or 404 when it is outside this user's reach (logged for its workspace's admin when it exists), or 403 when
+    the role lacks `need`. `action` logs a successful access (opening the source, exporting SARIF)."""
+    sessions_collection = await get_analysis_sessions_collection()
+    query = await session_query(session_id, user)
+    doc = await sessions_collection.find_one(query)
+    if not doc:
+        other = await sessions_collection.find_one({"_id": query["_id"]}, {"organization_id": 1})
+        if other:
+            await audit.record(user, "access_denied", other.get("organization_id"), target=session_id, detail={"reason": "not visible to this account"})
         raise HTTPException(status_code=404, detail="Analysis session not found")
-    
-    session_doc["id"] = str(session_doc["_id"])
-    del session_doc["_id"]
-    return AnalysisSession(**session_doc)
+    if need and not can(user, need):
+        await audit.record(user, "access_denied", doc.get("organization_id"), target=session_id, detail={"reason": f"role lacks {need}"})
+        raise HTTPException(status_code=403, detail="Your role cannot open the code of this scan")
+    if action:
+        await audit.record(user, action, doc.get("organization_id"), target=session_id, detail={"filename": doc.get("filename")})
+    return doc
 
 
-def _session_query(session_id: str, user: UserInDB) -> dict:
-    """Owners see their own sessions; experts see every session so they can review it."""
-    query = {"_id": ObjectId(session_id)}
-    if user.role != "expert":
-        query["user_id"] = user.id
-    return query
+def present(doc: dict, user: UserInDB) -> AnalysisSession:
+    """A stored scan as the API returns it, with its automatic deletion date."""
+    doc = dict(doc)
+    doc["id"] = str(doc.pop("_id"))
+    days = policy_of(user.organization)["retention_days"] if user.organization_id == doc.get("organization_id") else None
+    from src.config.settings import settings
+    doc["expires_at"] = data_lifecycle.expires_at(doc, days or settings.RETENTION_DAYS)
+    return AnalysisSession(**doc)
+
+
+@router.delete("/sessions/{session_id}")
+async def delete_analysis_session(session_id: str, current_user: UserInDB = Depends(get_current_user)):
+    """Delete a scan and its code everywhere it is kept (files, results, knowledge base; scrubbed from the label log)."""
+    doc = await load_session(session_id, current_user)
+    mine = doc.get("user_id") == current_user.id
+    if not (can(current_user, "delete_any_session") or (mine and can(current_user, "delete_own_session"))):
+        await audit.record(current_user, "access_denied", doc.get("organization_id"), target=session_id, detail={"reason": "role cannot delete"})
+        raise HTTPException(status_code=403, detail="Your role cannot delete this scan")
+    if doc.get("status") == AnalysisSessionStatus.PROCESSING:
+        raise HTTPException(status_code=409, detail="The analysis is still running: delete it when it has finished")
+    removed = await data_lifecycle.delete_session(doc, current_user.username)
+    await audit.record(current_user, "delete_session", doc.get("organization_id"), target=session_id,
+                       detail={"filename": doc.get("filename"), **removed})
+    return {"message": "Scan deleted", "removed": removed}
+
+
+@router.post("/sessions/{session_id}/review-request", response_model=AnalysisSession)
+async def request_review(session_id: str, current_user: UserInDB = Depends(get_current_user)):
+    """Send a scan to the experts: the workspace's own, and ScanGuard reviewers when the workspace policy allows them."""
+    doc = await load_session(session_id, current_user)
+    if not can(current_user, "request_review"):
+        raise HTTPException(status_code=403, detail="Your role cannot send scans for review")
+    sessions_collection = await get_analysis_sessions_collection()
+    await sessions_collection.update_one({"_id": doc["_id"]}, {"$set": {
+        "review_requested": True, "review_requested_by": current_user.username, "review_requested_at": ensure_utc_for_db(now_vietnam())}})
+    await audit.record(current_user, "request_review", doc.get("organization_id"), target=session_id, detail={"filename": doc.get("filename")})
+    return present({**doc, "review_requested": True}, current_user)
 
 
 async def require_expert(current_user: UserInDB = Depends(get_current_user)) -> UserInDB:
-    if current_user.role != "expert":
+    if not can(current_user, "review"):
         raise HTTPException(status_code=403, detail="Only expert accounts can confirm or reject alerts")
     return current_user
 
 
+# shortcut: priority is computed in Python over the newest QUEUE_CANDIDATES sessions; store it on the session and sort in
+# MongoDB if the queue ever holds more than that.
+QUEUE_CANDIDATES = 2000
+
+
 @router.get("/reviews/queue", response_model=List[AnalysisSession])
 async def review_queue(limit: int = Query(50, le=200), current_user: UserInDB = Depends(require_expert)):
-    """Sessions, from any user, with a flagged function or a random audit: the expert's worklist."""
+    """Scans of the expert's workspace (a ScanGuard reviewer: scans sent for review where allowed) with a flagged function
+    or a random audit: the expert's worklist."""
     sessions_collection = await get_analysis_sessions_collection()
-    cursor = sessions_collection.find(
-        {"$or": [{"steps.result_data.func_vulnerability_predictions.prediction": 1}, {"random_audits.0": {"$exists": True}}]}
-    ).sort("started_at", -1).limit(limit)
-    sessions = await cursor.to_list(length=limit)
+    work = {"$or": [{"steps.result_data.func_vulnerability_predictions.prediction": 1}, {"random_audits.0": {"$exists": True}}]}
+    reach = ({"review_requested": True, "organization_id": {"$in": await platform_review_orgs()}} if is_platform_expert(current_user)
+             else {"organization_id": current_user.organization_id})
+    cursor = sessions_collection.find({"$and": [work, reach]}).sort("started_at", -1).limit(QUEUE_CANDIDATES)
+    sessions = await cursor.to_list(length=QUEUE_CANDIDATES)
     # Step 1.7: work that is most likely right comes first. Sessions with unreviewed alerts are ordered by the highest
     # (calibrated) contract-level confidence among them; sessions with only random audits follow; fully reviewed ones last.
-    sessions.sort(key=review_priority, reverse=True)
+    # Order before cutting to `limit`: cutting to the newest `limit` first hid older high-confidence alerts.
+    sessions = sorted(sessions, key=review_priority, reverse=True)[:limit]
     result = []
     for session in sessions:
-        session["id"] = str(session.pop("_id"))
-        result.append(AnalysisSession(**session))
+        result.append(present(session, current_user))
     return result
 
 
@@ -460,7 +519,9 @@ async def review_disagreements(current_user: UserInDB = Depends(require_expert))
     """Step 2.6: items whose experts' final verdicts differ, plus agreement statistics. None of these is used for training
     until a further review settles it."""
     from src.services.label_log import disagreements, cohen_kappa, latest_verdicts, reviewer_rates
-    events = await (await get_label_events_collection()).find({}, sort=[("seq", 1)]).to_list(length=None)
+    reach = scope(current_user, await _platform_orgs(current_user))
+    ids = [str(s["_id"]) async for s in (await get_analysis_sessions_collection()).find(reach, {"_id": 1})]
+    events = await (await get_label_events_collection()).find({"session_id": {"$in": ids}}, sort=[("seq", 1)]).to_list(length=None)
     both = [list(by.values())[:2] for by in latest_verdicts(events).values() if len(by) >= 2]
     return {"disagreements": disagreements(events), "items_with_two_reviewers": len(both),
             "cohen_kappa": cohen_kappa([tuple(p) for p in both]), "reviewers": reviewer_rates(events)}
@@ -490,13 +551,10 @@ async def review_function(
 ):
     """Record an expert verdict (confirmed / false positive / needs manual review) on a flagged function."""
     sessions_collection = await get_analysis_sessions_collection()
-    try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session_doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session_doc = await load_session(session_id, current_user)
 
+    if session_doc.get("user_id") == current_user.id:
+        raise HTTPException(status_code=403, detail="Experts cannot review their own uploads: another expert must judge them")
     finding = find(session_doc, review.function_name, review.vulnerability, include_audits=True)
     if not finding:
         raise HTTPException(status_code=404, detail="Function not flagged or sampled for audit by this scan in this analysis")
@@ -517,26 +575,16 @@ async def review_function(
 async def list_findings(session_id: str, current_user: UserInDB = Depends(get_current_user)):
     """Every flagged function with its expert review, its fix and where it stands in the workflow."""
     sessions_collection = await get_analysis_sessions_collection()
-    try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session_doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session_doc = await load_session(session_id, current_user)
     # Random audits are an expert's task, never an alert: the uploader does not see them
-    return session_findings(session_doc) + (audit_findings(session_doc) if current_user.role == "expert" else [])
+    return session_findings(session_doc) + (audit_findings(session_doc) if can(current_user, "review") else [])
 
 
 @router.put("/sessions/{session_id}/fixes", response_model=List[FunctionFix])
 async def decide_fix(session_id: str, update: FixDecisionUpdate, current_user: UserInDB = Depends(require_expert)):
     """Expert decision on a checked fix. Anyone may propose a fix; it can only be accepted for a confirmed finding, and only if it compiled."""
     sessions_collection = await get_analysis_sessions_collection()
-    try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session_doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session_doc = await load_session(session_id, current_user)
     finding = find(session_doc, update.function_name, update.vulnerability)
     if not finding or not finding["fix"]:
         raise HTTPException(status_code=404, detail="No checked fix is recorded for this finding; compile and re-check a fix first")
@@ -544,6 +592,19 @@ async def decide_fix(session_id: str, update: FixDecisionUpdate, current_user: U
         raise HTTPException(status_code=409, detail="Confirm the alert before accepting a fix for it")
     if update.decision == FixDecision.ACCEPTED and not finding["fix"].get("compiled"):
         raise HTTPException(status_code=409, detail="This fix does not compile and cannot be accepted")
+    if session_doc.get("user_id") == current_user.id or (finding["fix"].get("checked_by") or "").split(" ")[0] == current_user.username:
+        raise HTTPException(status_code=403, detail="Experts cannot decide on their own upload or their own fix: another expert must")
+    if update.decision == FixDecision.ACCEPTED:
+        # The session keeps only the latest review, so a later "confirmed" hides an earlier "false positive":
+        # the label log keeps every expert's verdict, and a fix is not accepted while they differ.
+        from src.services.label_log import latest_verdicts
+        events = await (await get_label_events_collection()).find(
+            {"session_id": session_id, "vulnerability": update.vulnerability, "function_name": update.function_name},
+            sort=[("seq", 1)]).to_list(length=None)
+        verdicts = next(iter(latest_verdicts(events).values()), {})
+        if len(set(verdicts.values())) > 1:
+            raise HTTPException(status_code=409, detail=f"Experts disagree on this alert ({', '.join(f'{k}: {v}' for k, v in verdicts.items())}): "
+                                                        "settle the verdict before accepting a fix")
     # Decide on exactly the code the expert was shown: if the owner re-checked a different fix since, nothing matches.
     match = {"vulnerability": update.vulnerability, "function_name": update.function_name, "suggested_code": update.suggested_code}
     if update.decision == FixDecision.ACCEPTED:
@@ -559,7 +620,8 @@ async def decide_fix(session_id: str, update: FixDecisionUpdate, current_user: U
     if update.decision == FixDecision.ACCEPTED and updated.get("training_consent"):
         # Step 1.8: an accepted fix becomes a precedent for similar functions (original + fixed code)
         await _remember(add_item, "approved_fix", update.vulnerability, _function_code(updated, update.vulnerability, update.function_name),
-                        note=update.note, source=f"session {session_id}", file_hash=updated.get("file_hash"), fixed_code=update.suggested_code)
+                        note=update.note, source=f"session {session_id}", file_hash=updated.get("file_hash"), fixed_code=update.suggested_code,
+                        session_id=session_id)
     return updated.get("fixes", [])
 
 
@@ -578,14 +640,8 @@ async def _remember(fn, *args, **kwargs):
 
 @router.get("/sessions/{session_id}/source")
 async def get_session_source(session_id: str, current_user: UserInDB = Depends(get_current_user)):
-    """The analysed contract's source, for the in-browser IDE."""
-    sessions_collection = await get_analysis_sessions_collection()
-    try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session_doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    """The analysed contract's source, for the in-browser IDE. Every opening is in the workspace's audit log."""
+    session_doc = await load_session(session_id, current_user, need="view_source", action="view_source")
     try:
         source = Path(session_doc["file_path"]).read_text(encoding="utf-8", errors="replace")
     except FileNotFoundError:
@@ -600,13 +656,7 @@ async def export_session_sarif(
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Export the alerts (lines, confidence, expert review) as SARIF for VS Code and GitHub code scanning."""
-    sessions_collection = await get_analysis_sessions_collection()
-    try:
-        session_doc = await sessions_collection.find_one(_session_query(session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session_doc:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session_doc = await load_session(session_id, current_user, need="view_source", action="export_sarif")
     return session_to_sarif(session_doc, uri or session_doc["filename"])
 
 

@@ -10,11 +10,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Settings, LogOut, Shield, Clock, Mail } from 'lucide-react';
+import { User, Settings, LogOut, Shield, Clock, Mail, Lock, Building2 } from 'lucide-react';
 import { toast } from 'sonner';
 import UserProfileDialog from './UserProfileDialog';
 import SettingsDialog from './SettingsDialog';
 import SecurityDialog from './SecurityDialog';
+import PrivacyDialog, { ROLE_LABELS } from './PrivacyDialog';
 import { useT } from "@/i18n";
 
 const UserProfile = () => {
@@ -23,6 +24,7 @@ const UserProfile = () => {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showSecurity, setShowSecurity] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   if (!user) return null;
 
@@ -107,6 +109,10 @@ const UserProfile = () => {
               <Mail className="h-3 w-3" />
               <span>{user.email}</span>
             </div>
+            <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+              <Building2 className="h-3 w-3" />
+              <span>{t('{org} · {role}', { org: user.organization_name || t('ScanGuard reviewer'), role: user.personal_workspace ? t('Personal (guest)') : t(ROLE_LABELS[user.role ?? 'admin'] ?? '') })}</span>
+            </div>
             {user.last_login && (
               <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                 <Clock className="h-3 w-3" />
@@ -135,6 +141,11 @@ const UserProfile = () => {
           <Shield className="mr-2 h-4 w-4" />
           <span>{t('Security')}</span>
         </DropdownMenuItem>
+
+        <DropdownMenuItem className="cursor-pointer" onClick={() => setShowPrivacy(true)}>
+          <Lock className="mr-2 h-4 w-4" />
+          <span>{t('Privacy')}</span>
+        </DropdownMenuItem>
         
         <DropdownMenuSeparator />
         
@@ -153,6 +164,7 @@ const UserProfile = () => {
       />
       <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
       <SecurityDialog open={showSecurity} onOpenChange={setShowSecurity} />
+      <PrivacyDialog open={showPrivacy} onOpenChange={setShowPrivacy} />
     </DropdownMenu>
   );
 };

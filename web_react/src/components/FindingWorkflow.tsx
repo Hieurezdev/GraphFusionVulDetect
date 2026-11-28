@@ -29,7 +29,7 @@ const DECISIONS: { decision: FixDecision; label: string }[] = [
 /** Where every alert stands between detection and an expert-approved fix, and the expert's decision on each checked fix. */
 export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
   const t = useT();
-  const { user } = useAuth();
+  const { user, can, assistant } = useAuth();
   const [findings, setFindings] = useState<Finding[] | null>(null);
   const [saving, setSaving] = useState(false);
   const [agentRunning, setAgentRunning] = useState<string | null>(null);
@@ -118,7 +118,7 @@ export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
                     const key = `${f.vulnerability}|${f.function_name}`, r = agentResults[key];
                     return (
                       <div className="mt-2">
-                        {f.stage !== "fix_accepted" && f.stage !== "closed_false_positive" && (
+                        {assistant && f.stage !== "fix_accepted" && f.stage !== "closed_false_positive" && (
                           <Button size="sm" variant="outline" disabled={agentRunning !== null} onClick={() => runAgent(f)}>
                             {agentRunning === key ? t("Agent working…") : t("Let the agent fix it")}
                           </Button>
@@ -136,7 +136,7 @@ export const FindingWorkflow = ({ sessionId }: { sessionId: string }) => {
                 <td className="px-4 py-3">
                   <Badge variant={STAGE[f.stage].variant}>{t(STAGE[f.stage].label)}</Badge>
                   {f.fix?.decided_by && <span className="mt-1 block text-xs text-muted-foreground">{f.fix.decided_by}</span>}
-                  {user?.role === "expert" && f.fix && f.review?.status === "confirmed" && (
+                  {can("review") && f.fix && f.review?.status === "confirmed" && (
                     <div className="mt-2 flex flex-wrap gap-2">
                       {DECISIONS.map(d => (
                         <Button

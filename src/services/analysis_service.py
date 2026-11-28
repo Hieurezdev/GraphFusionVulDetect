@@ -93,7 +93,7 @@ class VulnerabilityAnalysisService:
         
         return output_data
     
-    async def analyze_solidity_file(self, file_path: str, temp_dir: str, language: str = "en") -> AsyncGenerator[str, None]:
+    async def analyze_solidity_file(self, file_path: str, temp_dir: str, language: str = "en", allow_llm: bool = True, plain: bool = False) -> AsyncGenerator[str, None]:
         """
         Scan a Solidity file for every loaded vulnerability type at once and stream the results as NDJSON.
 
@@ -117,6 +117,8 @@ class VulnerabilityAnalysisService:
                     "fcg_save_dir": os.path.join(temp_dir, vulnerability),  # the two runs write graph files with the same name
                     "language": normalize_language(language),
                     "vulnerability": vulnerability,
+                    "allow_llm": allow_llm,  # the workspace may forbid sending code to the external LLM (no explanations then)
+                    "plain": plain,
                 }
                 async for event in self._run_sync_iterator_in_thread(self.app_graph.stream(initial_state, get_models_config(vulnerability))):
                     node_name, node_output_state = list(event.items())[0]
@@ -182,6 +184,9 @@ class VulnerabilityAnalysisService:
             content_str = content.decode('utf-8')
             if 'contract' not in content_str.lower() and 'pragma solidity' not in content_str.lower():
                 return False, "File does not appear to be a valid Solidity contract"
+            from src.workflows.gfd_workflow.utils.fix_check import has_import, NO_IMPORTS
+            if has_import(content_str):
+                return False, NO_IMPORTS
         except UnicodeDecodeError:
             return False, "File must be a valid text file"
         

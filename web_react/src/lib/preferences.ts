@@ -7,11 +7,14 @@ export type Preferences = {
   language: "en" | "vi";
   /** Uploader agrees that their contracts and the expert verdicts on them may be used to retrain the models. Off by default. */
   trainingConsent: boolean;
+  /** Everyday words instead of technical terms (set from the role: non-technical members) */
+  plainLanguage: boolean;
+  theme: "dark" | "light" | "system";
 };
 
 const KEY = "gf_preferences";
 const EVENT = "gf-preferences";
-const DEFAULTS: Preferences = { animateScans: true, collapseFinishedSteps: false, startPage: "/analysis", language: "en", trainingConsent: false };
+const DEFAULTS: Preferences = { animateScans: true, collapseFinishedSteps: false, startPage: "/analysis", language: "en", trainingConsent: false, plainLanguage: false, theme: "dark" };
 
 export const readPreferences = (): Preferences => {
   try {
@@ -44,3 +47,9 @@ export const usePreferences = (): Preferences => {
   }, []);
   return prefs;
 };
+
+/** The theme actually shown: "system" follows the operating system. */
+export const resolveTheme = (theme: Preferences["theme"]): "dark" | "light" =>
+  theme === "system" ? (window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark") : theme;
+
+export const useResolvedTheme = () => resolveTheme(usePreferences().theme);

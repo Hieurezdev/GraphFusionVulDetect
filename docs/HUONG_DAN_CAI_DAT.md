@@ -82,6 +82,17 @@ Các biến tuỳ chọn:
 | `REENTRANCY_*_MODEL_PATH` | đường dẫn ở mục 2 | Chỉ đổi khi đặt model reentrancy ở chỗ khác |
 | `LOCAL_LLM_MODEL` | (trống) | Đặt tên model Hugging Face, ví dụ `suzeai/Qwen2.5-Coder-1.5B-explain-vul-wo-system`, để **chạy LLM ngay trên server thay cho API**. Khi đặt biến này, `BASE_URL`, `MODEL_NAME`, `CLAUDE_API_KEY` không cần nữa. Để trống thì dùng API như cũ |
 | `LOCAL_LLM_MAX_NEW_TOKENS` / `LOCAL_LLM_MAX_INPUT_TOKENS` | 1024 / 8192 | Độ dài câu trả lời / độ dài đầu vào tối đa của LLM chạy trên server |
+| `AUTH_COOKIE_SECURE` | false | **Đặt `true` trên server HTTPS**: cookie đăng nhập chỉ được gửi qua HTTPS |
+| `AUTH_COOKIE_SAMESITE` | strict | Chính sách SameSite của cookie đăng nhập |
+| `GPU_MEMORY_FRACTION` | 0 (không giới hạn) | Tỉ lệ bộ nhớ GPU backend được dùng, ví dụ `0.3`. Nên đặt khi GPU dùng chung với dịch vụ khác |
+| `RANDOM_AUDIT_RATE` | 0.05 | Tỉ lệ hàm không bị gắn cờ được gửi chuyên gia kiểm tra ngẫu nhiên (chỉ với file có đồng ý dùng mã) |
+| `RAG_ENABLED` / `RAG_TOP_K` / `RAG_MIN_SCORE` | true / 3 / 0.97 | Dẫn chứng ca tương tự trong lời giải thích và RefactorBot. Dưới ngưỡng `RAG_MIN_SCORE` thì không trích dẫn |
+| `EMBEDDING_CACHE` / `RESULT_CACHE` | true / true | Cache vector CodeBERT và kết quả theo `file_hash` (lưu trong volume `storage`) |
+| `LLM_MAX_CONCURRENCY` | 4 | Số lời giải thích được gọi LLM song song trong một lần quét |
+| `CALIBRATION_PATH` | `src/infrastructure/analysis_model/calibration.json` | Nhiệt độ hiệu chỉnh độ tin cậy, gắn với checkpoint |
+| `MODEL_REGISTRY_PATH` | `models/registry.json` | Checkpoint đang dùng sau huấn luyện lại (lưu trong volume `models`) |
+| `SANDBOX_ENABLED` / `SANDBOX_TIMEOUT` / `SANDBOX_MEMORY_MB` | true / 120 / 2048 | Kiểm tra bản sửa chạy trong tiến trình riêng có giới hạn thời gian và bộ nhớ |
+| `METRICS_TOKEN` | (trống) | Khi đặt, `GET /metrics` của backend cần header `Authorization: Bearer <token>` |
 
 Sinh khoá bí mật:
 
@@ -152,6 +163,19 @@ Production chạy sau một nginx trên host có TLS: `https://<domain>` → ngi
 Cập nhật code mới thì chạy lại bước 3. Database và file upload nằm trong các volume `scanguard_mongodb_data` và `scanguard_storage`, nên không mất khi build lại.
 
 Nginx trong container (`docker/nginx.conf`) đã giới hạn tần suất theo IP: đăng nhập/đăng ký 10 lần/phút; `/analyze`, `/refactor`, `/token` 20 lần/phút. Giới hạn này dựa vào header `X-Real-IP` do nginx host đặt.
+
+### 3.5. Script bảo trì (chạy trong container backend)
+
+Image backend có sẵn thư mục `scripts/`. Dữ liệu huấn luyện không nằm trong image, nên với script cần dữ liệu thì mount thư mục `assets/` vào:
+
+```bash
+B="docker compose -p scanguard -f docker-compose.prod.yml"
+$B exec backend python scripts/verify_label_log.py                 # kiểm tra chuỗi hash của nhật ký nhãn
+$B exec backend python scripts/label_agreement.py                  # độ đồng thuận giữa các chuyên gia
+$B run --rm -v "$PWD/assets:/graphfusion/assets:ro" backend python scripts/seed_knowledge.py   # nạp kho tri thức RAG
+```
+
+`models/registry.json` và các checkpoint huấn luyện lại nằm trong volume `models`, nên không mất khi build lại image.
 
 ## 4. Tài khoản và phân quyền
 

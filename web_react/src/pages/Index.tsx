@@ -15,10 +15,12 @@ import { toast } from "sonner";
 import { projectService } from "@/services/project";
 import { tokenService, TokenSearchResult } from "@/services/token";
 import { useT } from "@/i18n";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const navigate = useNavigate();
   const t = useT();
+  const { user, can } = useAuth();
   const [projectName, setProjectName] = useState("");
   const [selectedFile, setSelectedFile] = useState<{ file: File; content: string } | null>(null);
   const [isCreatingProject, setIsCreatingProject] = useState(false);
@@ -157,6 +159,18 @@ const Index = () => {
   const noSupportedChain = Boolean(selectedToken) && platformsLoaded && Object.keys(tokenPlatforms).length === 0;
   const startDisabled = isCreatingProject || (activeTab === "upload" ? !selectedFile : (!selectedToken || !selectedPlatform));
 
+  if (!can("upload")) {
+    return (
+      <div className="min-h-dvh bg-background">
+        <Header />
+        <main id="main" className="shell py-12 lg:py-16">
+          <h1 className="text-4xl leading-none">{t("Smart Contract Analyzer")}</h1>
+          <p className="mt-4 max-w-[60ch] text-ink-2">{t("Your role reads the reports of your workspace. A developer or the workspace admin uploads contracts; their reports are under Projects.")}</p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-dvh bg-background">
       <Header />
@@ -187,6 +201,16 @@ const Index = () => {
 
         <section className="panel self-start p-6 sm:p-8 lg:col-span-5" aria-labelledby="new-analysis-head">
           <h2 id="new-analysis-head" className="sr-only">{t("New Analysis")}</h2>
+          {user?.policy && (
+            <div className="mb-6 border-l-2 border-rule-2 pl-3 text-xs text-ink-2" role="note">
+              <p>{t("Your contract is stored on the ScanGuard server and deleted automatically after {d} days. The detection models run on the server.", { d: user.policy.retention_days })}</p>
+              <p className="mt-1">
+                {user.llm_external && user.policy.external_llm
+                  ? t("The code of each flagged function is sent to an external AI service to write explanations and fix suggestions. Your workspace admin can turn this off.")
+                  : t("No code is sent to an external AI service.")}
+              </p>
+            </div>
+          )}
           <div className="space-y-2">
             <Label htmlFor="project-name">{t("Project Name")} <span className="text-muted-foreground">({t("optional")})</span></Label>
             <Input

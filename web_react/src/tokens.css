@@ -26,3 +26,22 @@
   --font-outlier: "JetBrains Mono", ui-monospace, monospace;
   --text-reading: clamp(3rem, 3vw + 1.5rem, 4.5rem); --graph-height: 520px;
 }
+
+/* Light mode (Settings or the sun/moon button in the header): the same roles, re-tuned for a white ground. The accent
+   darkens from lime to a deep green so it still reads as text and carries white button labels. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-paper: oklch(97.6% 0.004 235); --color-paper-2: oklch(100% 0 0); --color-paper-3: oklch(95.8% 0.006 235);
+  --color-ink: oklch(21% 0.02 240); --color-ink-2: oklch(35% 0.02 240); --color-muted: oklch(50% 0.02 235);
+  --color-rule: oklch(90.5% 0.008 235); --color-rule-2: oklch(83% 0.01 235);
+  --color-accent: oklch(50% 0.14 134); --color-accent-hi: oklch(45% 0.14 134); --color-accent-ink: oklch(98.5% 0.01 126); --color-focus: oklch(50% 0.14 134);
+  --color-accent-soft: oklch(93.5% 0.06 126);
+  --point-lo: oklch(72% 0.02 235); --point-mid: oklch(50% 0.04 235); --point-hi: oklch(24% 0.03 240);
+  --color-slot: oklch(94% 0.008 235);
+  --color-cool: oklch(46% 0.08 235); --color-cool-soft: oklch(94% 0.025 230);
+  --color-ok: oklch(47% 0.1 165); --color-ok-soft: oklch(94% 0.04 165);
+  --color-bad: oklch(52% 0.19 27); --color-bad-soft: oklch(94.5% 0.035 25);
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(47% 0.1 165);
+  --shadow-card: 0 1px 2px oklch(21% 0.02 240 / 0.06), 0 0 0 1px oklch(21% 0.02 240 / 0.05);
+}
+:root[data-theme="light"] .panel { box-shadow: var(--shadow-card); }

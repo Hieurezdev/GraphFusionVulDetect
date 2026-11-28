@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vòng đời mã nguồn: quyền, lưu, xóa, gửi ra ngoài</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;background:#f5f5f5;color:#2d3142;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.frame{max-width:1600px;width:100%}
+.eyebrow{font-family:'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4f5d75;margin-bottom:.5rem}
+h1{font-family:'Noto Serif', serif;font-size:clamp(1.5rem,2.4vw + .75rem,2rem);font-weight:400;letter-spacing:-.01em;line-height:1.2;margin-bottom:1.5rem}
+.diagram-container{width:100%;overflow-x:auto}
+svg{width:100%;min-width:1600px;display:block}
+@media print{.diagram-container{overflow-x:visible}svg{min-width:0}}
+</style>
+</head>
+<body>
+<div class="frame">
+<p class="eyebrow">Luồng tổng hợp · Bảo vệ mã nguồn</p>
+<h1>Vòng đời mã nguồn: quyền, lưu, xóa, gửi ra ngoài</h1>
+<div class="diagram-container">
+<svg viewBox="0 0 1600 860" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="so-do-tong-hop-title so-do-tong-hop-desc">
+<title id="so-do-tong-hop-title">Vòng đời mã nguồn: quyền, lưu, xóa, gửi ra ngoài</title>
+<desc id="so-do-tong-hop-desc">Sơ đồ bốn làn cho thấy mã nguồn đi qua cổng kiểm soát quyền, được phân tích và lưu tại máy chủ theo thời hạn, bị xóa ở bốn nơi qua một hàm dùng chung, và chỉ mã hàm bị gắn cờ có thể gửi tới LLM bên ngoài.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bf4520"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#f5f5f5"/>
+<rect x="24" y="640" width="1552" height="140" fill="rgba(45,49,66,0.025)"/>
+<line x1="24" y1="40" x2="1576" y2="40" stroke="rgba(45,49,66,0.14)" stroke-width="1"/>
+<text font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" font-size="13" font-weight="600" fill="#5a6580"><tspan x="32" y="106">Người dùng</tspan></text>
+<line x1="24" y1="176" x2="1576" y2="176" stroke="rgba(45,49,66,0.14)" stroke-width="1"/>
+<text font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" font-size="13" font-weight="600" fill="#5a6580"><tspan x="32" y="242">Cổng kiểm soát</tspan><tspan x="32" y="260">quyền</tspan></text>
+<line x1="24" y1="312" x2="1576" y2="312" stroke="rgba(45,49,66,0.14)" stroke-width="1"/>
+<text font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" font-size="13" font-weight="600" fill="#5a6580"><tspan x="32" y="474">Máy chủ</tspan><tspan x="32" y="492">ScanGuard</tspan></text>
+<line x1="24" y1="640" x2="1576" y2="640" stroke="rgba(45,49,66,0.14)" stroke-width="1"/>
+<text font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" font-size="13" font-weight="600" fill="#5a6580"><tspan x="32" y="708">Dịch vụ</tspan><tspan x="32" y="726">bên ngoài</tspan></text>
+<line x1="24" y1="780" x2="1576" y2="780" stroke="rgba(45,49,66,0.14)" stroke-width="1"/>
+<path d="M274,136 V208" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="282" y="145" width="48" height="18" rx="2" fill="#f5f5f5"/><text x="288" y="159" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">HTTPS</text>
+<path d="M510,136 V168" fill="none" stroke="#2d3142" stroke-width="1.2" stroke-dasharray="5,4"/><line x1="498" y1="170" x2="522" y2="170" stroke="#2d3142" stroke-width="2"/>
+<rect x="518" y="141" width="36" height="18" rx="2" fill="#f5f5f5"/><text x="524" y="155" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">404</text>
+<path d="M372,244 H412" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M608,244 H648" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<path d="M510,296 V344" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="518" y="317" width="80" height="18" rx="2" fill="#f5f5f5"/><text x="524" y="331" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">được phép</text>
+<path d="M608,388 H648" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M844,388 H884" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<path d="M1218,136 V208" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="1226" y="145" width="36" height="18" rx="2" fill="#f5f5f5"/><text x="1232" y="159" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">đặt</text>
+<path d="M1218,296 V344" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="1226" y="317" width="72" height="18" rx="2" fill="#f5f5f5"/><text x="1232" y="331" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">thời hạn</text>
+<path d="M1316,388 H1356" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M1454,136 V344" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="1462" y="233" width="36" height="18" rx="2" fill="#f5f5f5"/><text x="1468" y="247" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">xóa</text>
+<path d="M1454,432 V488" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M1356,544 H1316" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M490,432 V672" fill="none" stroke="#2e5aa8" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/>
+<rect x="374" y="525" width="108" height="18" rx="2" fill="#f5f5f5"/><text x="476" y="539" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="end">hàm bị gắn cờ</text>
+<path d="M560,432 V608 Q560,616 568,616 H738 Q746,616 746,624 V672" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+<rect x="176" y="64" width="196" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="176" y="64" width="196" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="274" y="86" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Thành viên</text>
+<text x="274" y="104" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Admin, Developer,</text>
+<text x="274" y="122" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Non-tech, Expert</text>
+<rect x="412" y="64" width="196" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="412" y="64" width="196" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="510" y="95" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Người ngoài</text>
+<text x="510" y="113" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">doanh nghiệp khác</text>
+<rect x="1120" y="64" width="196" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="1120" y="64" width="196" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="1218" y="95" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Admin</text>
+<text x="1218" y="113" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">đặt chính sách dữ liệu</text>
+<rect x="1356" y="64" width="196" height="72" rx="6" fill="#f5f5f5"/>
+<rect x="1356" y="64" width="196" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#5a6580" stroke-width="1"/>
+<text x="1454" y="86" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Lệnh xóa</text>
+<text x="1454" y="104" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">lượt quét, dự án,</text>
+<text x="1454" y="122" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tài khoản</text>
+<rect x="176" y="208" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="176" y="208" width="196" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="274" y="238" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Đăng nhập</text>
+<text x="274" y="256" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">đồng ý điều khoản</text>
+<text x="274" y="274" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chưa đồng ý: 403</text>
+<rect x="412" y="208" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="412" y="208" width="196" height="88" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.4"/>
+<text x="510" y="238" fill="#bf4520" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Vai trò và phạm vi</text>
+<text x="510" y="256" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Dev, Non-tech: mã của mình</text>
+<text x="510" y="274" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Admin: cả doanh nghiệp</text>
+<circle cx="606" cy="210" r="12" fill="#2d3142"/><text x="606" y="214.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text>
+<rect x="648" y="208" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="648" y="208" width="196" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="746" y="238" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Nhật ký kiểm toán</text>
+<text x="746" y="256" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mở mã, bị từ chối</text>
+<text x="746" y="274" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">không chứa mã</text>
+<rect x="1120" y="208" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="1120" y="208" width="196" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="1218" y="238" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Chính sách dữ liệu</text>
+<text x="1218" y="256" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">thời hạn, gửi mã ra ngoài</text>
+<text x="1218" y="274" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chia sẻ dữ liệu huấn luyện</text>
+<rect x="412" y="344" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="412" y="344" width="196" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="510" y="374" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Phân tích tại máy chủ</text>
+<text x="510" y="392" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Slither, CodeBERT, GNN</text>
+<text x="510" y="410" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tệp .sol không rời máy chủ</text>
+<circle cx="606" cy="346" r="12" fill="#2d3142"/><text x="606" y="350.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">4</text>
+<rect x="648" y="344" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="648" y="344" width="196" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="746" y="374" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kho lưu mã</text>
+<text x="746" y="392" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">storage/&lt;id&gt;/</text>
+<text x="746" y="410" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">MongoDB</text>
+<rect x="884" y="344" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="884" y="344" width="196" height="88" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="982" y="374" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kho tri thức RAG</text>
+<text x="982" y="392" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ khi Admin đồng ý</text>
+<text x="982" y="410" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mặc định tắt</text>
+<rect x="1120" y="344" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="1120" y="344" width="196" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="1218" y="365" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Thời hạn lưu</text>
+<text x="1218" y="383" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mặc định 30 ngày, 1–365</text>
+<text x="1218" y="401" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">kiểm tra mỗi giờ</text>
+<text x="1218" y="419" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">ngày xóa hiện trên kết quả</text>
+<circle cx="1314" cy="346" r="12" fill="#2d3142"/><text x="1314" y="350.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">2</text>
+<rect x="1356" y="344" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="1356" y="344" width="196" height="88" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.4"/>
+<text x="1454" y="374" fill="#bf4520" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Hàm xóa dùng chung</text>
+<text x="1454" y="392" fill="#5a6580" font-size="12" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">delete_session()</text>
+<text x="1454" y="410" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">xóa tay hoặc hết hạn</text>
+<circle cx="1550" cy="346" r="12" fill="#2d3142"/><text x="1550" y="350.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">3</text>
+<rect x="1356" y="488" width="196" height="112" rx="6" fill="#f5f5f5"/>
+<rect x="1356" y="488" width="196" height="112" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1454" y="512" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Xóa ở 4 nơi</text>
+<text x="1454" y="530" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">thư mục storage/&lt;id&gt;/</text>
+<text x="1454" y="548" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">MongoDB</text>
+<text x="1454" y="566" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">kho tri thức RAG</text>
+<text x="1454" y="584" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">nhật ký nhãn: tẩy mã</text>
+<rect x="1120" y="488" width="196" height="112" rx="6" fill="#f5f5f5"/>
+<rect x="1120" y="488" width="196" height="112" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+<text x="1218" y="530" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Lịch sử xóa</text>
+<text x="1218" y="548" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">ai, khi nào, lý do</text>
+<text x="1218" y="566" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">không chứa mã</text>
+<rect x="412" y="672" width="196" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="412" y="672" width="196" height="80" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+<text x="510" y="698" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">LLM bên ngoài</text>
+<text x="510" y="716" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ mã hàm bị gắn cờ</text>
+<text x="510" y="734" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">mặc định bật, Admin tắt</text>
+<circle cx="606" cy="674" r="12" fill="#2d3142"/><text x="606" y="678.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">4</text>
+<rect x="648" y="672" width="196" height="80" rx="6" fill="#f5f5f5"/>
+<rect x="648" y="672" width="196" height="80" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+<text x="746" y="698" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">CoinGecko, Etherscan</text>
+<text x="746" y="716" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">tra cứu token</text>
+<text x="746" y="734" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">dữ liệu công khai</text>
+<path d="M746,432 V488" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="754" y="449" width="108" height="18" rx="2" fill="#f5f5f5"/><text x="760" y="463" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">hàm bị gắn cờ</text>
+<path d="M844,532 H884" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+<rect x="648" y="488" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="648" y="488" width="196" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+<text x="746" y="518" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Kết luận chuyên gia</text>
+<text x="746" y="536" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">xác nhận hoặc bác bỏ</text>
+<text x="746" y="554" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">ghi vào nhật ký nhãn</text>
+<rect x="884" y="488" width="196" height="88" rx="6" fill="#f5f5f5"/>
+<rect x="884" y="488" width="196" height="88" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="982" y="518" fill="#2d3142" font-size="15" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">Huấn luyện lại</text>
+<text x="982" y="536" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">chỉ dữ liệu được đồng ý</text>
+<text x="982" y="554" fill="#5a6580" font-size="12" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">qua kiểm định mới thay</text>
+<circle cx="1078" cy="490" r="12" fill="#2d3142"/><text x="1078" y="494.5" fill="#f5f5f5" font-size="13" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text>
+<text font-family="'Noto Serif', serif" font-style="italic" font-size="15" fill="#4f5d75"><tspan x="884" y="704">Đặt LOCAL_LLM_MODEL thì không đoạn mã nào</tspan><tspan x="884" y="726">rời máy chủ.</tspan></text>
+<circle cx="42" cy="820" r="10" fill="#2d3142"/><text x="42" y="824.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">1</text><text x="60" y="824.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Giới hạn quyền</text><circle cx="220.39999999999998" cy="820" r="10" fill="#2d3142"/><text x="220.39999999999998" y="824.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">2</text><text x="238.39999999999998" y="824.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Thời gian lưu</text><circle cx="391.2" cy="820" r="10" fill="#2d3142"/><text x="391.2" y="824.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">3</text><text x="409.2" y="824.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Khả năng xóa mã</text><circle cx="577.2" cy="820" r="10" fill="#2d3142"/><text x="577.2" y="824.5" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif" text-anchor="middle">4</text><text x="595.2" y="824.5" fill="#2d3142" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">Máy chủ và dịch vụ ngoài</text><line x1="845.6" y1="820" x2="873.6" y2="820" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/><text x="883.6" y="824.5" fill="#5a6580" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">luồng dữ liệu</text><line x1="1017.8" y1="820" x2="1045.8" y2="820" stroke="#2e5aa8" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/><text x="1055.8" y="824.5" fill="#5a6580" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">gửi ra ngoài</text><line x1="1182.6" y1="820" x2="1210.6" y2="820" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/><text x="1220.6" y="824.5" fill="#5a6580" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">có điều kiện</text><line x1="1347.3999999999999" y1="820" x2="1371.3999999999999" y2="820" stroke="#2d3142" stroke-width="1.2" stroke-dasharray="5,4"/><line x1="1373.3999999999999" y1="813" x2="1373.3999999999999" y2="827" stroke="#2d3142" stroke-width="2"/><text x="1385.3999999999999" y="824.5" fill="#5a6580" font-size="13" font-family="'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif">bị chặn</text>
+</svg>
+</div>
+</div>
+</body>
+</html>

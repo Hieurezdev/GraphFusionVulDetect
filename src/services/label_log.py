@@ -6,6 +6,10 @@ event: the function, what the model predicted, the expert's verdict, and whether
 being used for training. Each event carries `seq` (unique index: concurrent writers cannot fork the chain) and
 `hash` = sha256 of its canonical JSON, which includes the previous event's hash. Editing or deleting any stored event
 breaks every hash after it, which `verify_events` reports.
+
+Version 2 events can still be scrubbed when their contract is deleted: the fields that may carry code or a person's
+name (SCRUBBABLE) are left out of the hash and replaced in it by their sha256 (`<field>_sha`). A scrubbed field is
+listed in `scrubbed`; a field that is still present must match its sha, so editing it is still detected.
 """
 import hashlib
 import json
@@ -16,6 +20,8 @@ from pymongo.errors import DuplicateKeyError
 
 GENESIS = "0" * 64
 HASHED_OUT = ("_id", "hash")  # fields not covered by the hash
+SCRUBBABLE = ("function_code", "file_path", "graph_path", "note", "reviewer")
+HASH_VERSION = 2
 
 
 def now_iso() -> str:
@@ -23,9 +29,25 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="microseconds")
 
 
+def _canon(value) -> bytes:
+    return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def field_sha(value) -> Optional[str]:
+    return None if value is None else hashlib.sha256(_canon(value)).hexdigest()
+
+
+def seal(event: dict) -> dict:
+    """Make an event version 2: each scrubbable field is covered by its sha instead of its value."""
+    for f in SCRUBBABLE:
+        event[f + "_sha"] = field_sha(event.get(f))
+    event["hash_version"] = HASH_VERSION
+    return event
+
+
 def event_hash(event: dict) -> str:
-    body = {k: v for k, v in event.items() if k not in HASHED_OUT}
-    return hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest()
+    out = HASHED_OUT + ((*SCRUBBABLE, "scrubbed") if event.get("hash_version", 1) >= 2 else ())
+    return hashlib.sha256(_canon({k: v for k, v in event.items() if k not in out})).hexdigest()
 
 
 def verify_events(events: Iterable[dict]) -> Optional[dict]:
@@ -38,6 +60,10 @@ def verify_events(events: Iterable[dict]) -> Optional[dict]:
             return {"seq": e["seq"], "problem": "prev_hash does not match the previous event"}
         if event_hash(e) != e.get("hash"):
             return {"seq": e["seq"], "problem": "content changed after it was written"}
+        if e.get("hash_version", 1) >= 2:
+            changed = [f for f in SCRUBBABLE if f not in (e.get("scrubbed") or []) and field_sha(e.get(f)) != e.get(f + "_sha")]
+            if changed:
+                return {"seq": e["seq"], "problem": f"{', '.join(changed)} changed after it was written"}
         prev, expected_seq = e["hash"], expected_seq + 1
     return None
 
@@ -48,6 +74,7 @@ async def append_label_event(collection, event: dict, attempts: int = 8) -> dict
         last = await collection.find_one(sort=[("seq", -1)])
         doc = {**event, "seq": (last["seq"] + 1) if last else 0, "prev_hash": last["hash"] if last else GENESIS}
         doc.setdefault("created_at", now_iso())
+        seal(doc)
         doc["hash"] = event_hash(doc)
         try:
             await collection.insert_one(dict(doc))
@@ -73,7 +100,8 @@ def build_label_event(session: dict, finding: dict, review: dict, reviewer: str,
         "file_path": session.get("file_path"),
         "vulnerability": vuln,
         "function_name": finding.get("function_name"),
-        "function_code": prediction.get("function_code"),
+        # Without the uploader's consent the code is not kept here: nothing may train on it (the sha still identifies it)
+        "function_code": prediction.get("function_code") if session.get("training_consent") else None,
         "lines": finding.get("lines") or prediction.get("lines"),
         "graph_path": graph,
         "model_prediction": prediction.get("prediction"),
@@ -87,6 +115,36 @@ def build_label_event(session: dict, finding: dict, review: dict, reviewer: str,
         "training_consent": bool(session.get("training_consent", False)),
         "random_audit": random_audit,
     }
+
+
+
+async def scrub(collection, query: dict, values: dict) -> int:
+    """Blank or replace scrubbable fields of the matching events without breaking the chain (version 2 events).
+
+    A version 1 event hashes these fields directly: scrubbing it breaks the chain from there on, so run
+    scripts/migrate_label_log_v2.py first. Privacy wins: version 1 events are scrubbed too and the count is logged.
+    """
+    assert set(values) <= set(SCRUBBABLE), "only scrubbable fields can be scrubbed"
+    result = await collection.update_many(query, {"$set": values, "$addToSet": {"scrubbed": {"$each": list(values)}}})
+    return result.modified_count
+
+
+def migrate_to_v2(events: list) -> list:
+    """The same chain as version 2 events, re-linked in seq order. Refuses a chain that does not verify as it is."""
+    problem = verify_events(events)
+    if problem:
+        raise ValueError(f"label log does not verify, not migrating: {problem}")
+    prev, out = GENESIS, []
+    for e in events:
+        doc = {k: v for k, v in e.items() if k != "hash"}
+        if doc.get("hash_version", 1) < 2:
+            doc["v1_hash"] = e["hash"]
+            seal(doc)
+        doc["prev_hash"] = prev
+        doc["hash"] = event_hash(doc)
+        prev = doc["hash"]
+        out.append(doc)
+    return out
 
 
 # ---- Step 2.6: two-expert agreement --------------------------------------------------------------------------------

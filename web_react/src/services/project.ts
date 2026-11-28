@@ -34,6 +34,8 @@ export interface Project {
 
 export interface ProjectResponse {
   id: string;
+  /** Who created the project: they may delete it when their role may delete its own scans */
+  user_id?: string | null;
   name: string;
   description?: string;
   status: 'created' | 'analyzing' | 'completed' | 'failed';
@@ -85,6 +87,11 @@ export interface AnalysisSession {
   random_audits?: { vulnerability: string; function_name: string; lines: number[]; span: number[] }[];
   training_consent?: boolean;
   model_versions?: Record<string, string | null>;
+  organization_id?: string | null;
+  /** The owner sent this scan to the experts */
+  review_requested?: boolean;
+  /** When the scan and its code are deleted automatically (the workspace's retention period) */
+  expires_at?: string | null;
 }
 
 export type ReviewStatus = 'pending' | 'confirmed' | 'false_positive' | 'needs_manual_review';
@@ -373,9 +380,19 @@ class ProjectService {
   }
 
   async getAnalysisSession(sessionId: string): Promise<AnalysisSession> {
-    return await apiFetch<AnalysisSession>(`/api/v1/analyze/sessions/${sessionId}`, {
+    return await apiFetch<AnalysisSession>(`/api/v1/sessions/${sessionId}`, {
       requireAuth: true,
     });
+  }
+
+  /** Delete a scan and its code everywhere it is kept; returns what was removed. */
+  async deleteSession(sessionId: string): Promise<{ removed: Record<string, number> }> {
+    return await apiFetch(`/api/v1/sessions/${sessionId}`, { method: 'DELETE', requireAuth: true });
+  }
+
+  /** Send a scan to the experts for review. */
+  async requestReview(sessionId: string): Promise<AnalysisSession> {
+    return await apiFetch<AnalysisSession>(`/api/v1/sessions/${sessionId}/review-request`, { method: 'POST', requireAuth: true });
   }
 }
 

@@ -1,0 +1,31 @@
+screenshot 00-register-account-type
+register admin 200
+before consent GET /sessions -> 403 {'detail': {'code': 'consent_required', 'missing': ['terms', 'privacy', 'upload_rights']}}
+screenshot 01-consent
+screenshot 02-consent-checked
+admin accepted consents
+policy (200, {'retention_days': 30, 'external_llm': False, 'training_data': False, 'platform_experts': False})
+add member dev.demo developer 201
+add member sep.demo non_tech 201
+add member expert.demo expert 201
+screenshot 02b-consent-english
+create project 200
+scan 200 session 6b0a52e1f1b2106a5b01932c last event summary
+stored at ./storage/20261128_040449_292pp6qj/EtherStore.sol expires_at 2026-12-28T04:04:49.183000Z
+non_tech GET source -> 200
+business admin fix assistant -> 403
+screenshot 04-nontech-result
+screenshot 04b-nontech-result-detail
+other workspace GET source -> 404
+another member (developer) GET source -> 404
+screenshot 05-admin-overview
+screenshot 06-admin-members
+screenshot 07-admin-policy
+screenshot 08-admin-audit
+storage before delete: ['20261128_040449_292pp6qj', 'embedding_cache.sqlite', 'embedding_cache.sqlite-shm', 'embedding_cache.sqlite-wal']
+screenshot 09-delete-confirm
+after delete GET source -> 404 {'detail': 'Analysis session not found'}
+storage after delete: ['embedding_cache.sqlite', 'embedding_cache.sqlite-shm', 'embedding_cache.sqlite-wal'] dir still there: False
+screenshot 10-admin-deletions
+deletion log: {"organization_id": "6b0a52b9f1b2106a5b019311", "kind": "session", "target_id": "6b0a52e1f1b2106a5b01932c", "actor": "admin.demo", "reason": "manual", "removed": {"files": 5, "knowledge_items": 0, "label_events_scrubbed": 0}, "at": "2026-11-28T04:05:05.209000", "filename": "EtherStore.sol", "project_id": "6b0a52e1f1b2106a5b01932b"}
+audit: [["admin.demo", "delete_session", null], ["admin.demo", "view_source", null], ["dev.demo", "access_denied", "not visible to this account"], ["outsider", "access_denied", "not visible to this account"], ["sep.demo", "view_source", null], ["sep.demo", "view_source", null], ["expert.demo", "consent", null], ["sep.demo", "consent", null], ["dev.demo", "consent", null], ["admin.demo", "member_add", null], ["admin.demo", "member_add", null], ["admin.demo", "member_add", null], ["admin.demo", "policy_change", null], ["admin.demo", "consent", null]]

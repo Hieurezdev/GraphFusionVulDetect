@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { usePreferences, writePreferences, type Preferences } from "@/lib/preferences";
 import { useT } from "@/i18n";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SettingsDialogProps {
   open: boolean;
@@ -23,6 +24,7 @@ const SettingRow = ({ id, title, note, checked, onChange }: { id: string; title:
 const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
   const prefs = usePreferences();
   const t = useT();
+  const { user } = useAuth();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -55,14 +57,34 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
         <section aria-labelledby="settings-data" className="mt-4">
           <h3 id="settings-data" className="text-sm text-muted-foreground">{t("Data use")}</h3>
           <div className="mt-2 border-t border-rule">
-            <SettingRow
-              id="pref-training-consent"
-              title={t("Allow my contracts to improve the models")}
-              note={t("Applies to contracts you analyse from now on. The code and the experts' verdicts on it may be used to retrain the detection models. Off by default.")}
-              checked={prefs.trainingConsent}
-              onChange={(v) => writePreferences({ trainingConsent: v })}
-            />
+            {user?.policy?.training_data ? (
+              <SettingRow
+                id="pref-training-consent"
+                title={t("Allow my contracts to improve the models")}
+                note={t("Your workspace allows it. Applies to contracts you analyse from now on; turn it off to keep your own uploads out.")}
+                checked={prefs.trainingConsent}
+                onChange={(v) => writePreferences({ trainingConsent: v })}
+              />
+            ) : (
+              <p className="py-4 text-xs text-muted-foreground">{t("Your workspace does not allow its code to be used as training data. Only the workspace admin can change this.")}</p>
+            )}
           </div>
+        </section>
+
+        <section aria-labelledby="settings-theme" className="mt-4">
+          <h3 id="settings-theme" className="text-sm text-muted-foreground">{t("Appearance")}</h3>
+          <RadioGroup
+            className="mt-3 grid grid-cols-3 gap-3"
+            value={prefs.theme}
+            onValueChange={(v) => writePreferences({ theme: v as Preferences["theme"] })}
+          >
+            {(["dark", "light", "system"] as const).map(v => (
+              <div key={v} className="flex items-center gap-3">
+                <RadioGroupItem value={v} id={`theme-${v}`} />
+                <Label htmlFor={`theme-${v}`} className="text-sm text-ink">{t(v === "dark" ? "Dark" : v === "light" ? "Light" : "Same as device")}</Label>
+              </div>
+            ))}
+          </RadioGroup>
         </section>
 
         <section aria-labelledby="settings-language" className="mt-4">

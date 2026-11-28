@@ -82,11 +82,15 @@ const renderDetail = (result: StageResult, t: ReturnType<typeof useT>, review: R
                     <span className="measured w-12 text-right text-sm text-cool">{func.confidence}</span>
                   </AccordionTrigger>
                   <AccordionContent className="px-2">
+                    {func.function_code == null ? (
+                      <p className="text-xs text-muted-foreground">{t("Lines {a}–{b}. Your role sees the conclusions, not the code.", { a: func.lines?.[0] ?? "?", b: func.lines?.[1] ?? "?" })}</p>
+                    ) : (
                     <pre className="code-text well overflow-x-auto p-4 text-xs leading-relaxed text-ink-2">{
                       func.lines?.length === 2
                         ? (func.function_code as string).split("\n").map((line, i) => `${String(func.lines[0] + i).padStart(4)} | ${line}`).join("\n")
                         : func.function_code
                     }</pre>
+                    )}
                     {func.prediction === 1 && review.onReviewed && (
                       <FunctionReviewControl
                         key={review.sessionId}

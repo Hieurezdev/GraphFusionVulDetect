@@ -35,7 +35,9 @@ class Settings(BaseSettings):
     # Step 1.8: retrieval of similar judged functions for the explanations
     RAG_ENABLED: bool = True
     RAG_TOP_K: int = 3
-    RAG_MIN_SCORE: float = 0.0
+    # Cosine similarity of CodeBERT vectors: unrelated functions score ~0.89 (p90 0.967), near-copies >= 0.987
+    # (40 test functions, timestamp encoder). Below this nothing is cited, so a precedent must be a close match.
+    RAG_MIN_SCORE: float = 0.97
     # Step 1.9: which retrained contract-level checkpoint is active (absent file = the original checkpoints above)
     MODEL_REGISTRY_PATH: str = "models/registry.json"
     # Step 1.10: when set, GET /metrics requires "Authorization: Bearer <token>"
@@ -48,6 +50,10 @@ class Settings(BaseSettings):
     AUTH_COOKIE_NAME: str = "gf_session"
     AUTH_COOKIE_SECURE: bool = False
     AUTH_COOKIE_SAMESITE: str = "strict"
+    # Protection of uploaded code: default retention of a new organisation, and the background purge of expired scans
+    RETENTION_DAYS: int = 30
+    RETENTION_ENABLED: bool = True
+    RETENTION_INTERVAL_SECONDS: int = 3600
 
     # Database
     MONGODB_URL: str
@@ -60,6 +66,10 @@ class Settings(BaseSettings):
 
     # Other configs
     DEVICE: str = "cpu"
+    # Share of the GPU's memory this backend may allocate (0 = no cap). The GPU is shared with other services, and
+    # concurrent analyses, the local LLM and a shadow model all allocate on it: past the cap PyTorch raises OOM here
+    # instead of starving the neighbours.
+    GPU_MEMORY_FRACTION: float = 0.0
     SEED: int = 42
 
     model_config = SettingsConfigDict(

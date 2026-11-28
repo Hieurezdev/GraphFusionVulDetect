@@ -11,6 +11,9 @@ class UserRegister(BaseModel):
     email: EmailStr = Field(..., description="Email address for the account")
     password: str = Field(..., min_length=6, description="Password for the account")
     full_name: Optional[str] = Field(default=None, max_length=100, description="Full name of the user")
+    account_type: str = Field(default="personal", pattern=r"^(personal|business)$",
+                              description="personal: a guest workspace for one person; business: an organisation whose admin adds members")
+    organization_name: Optional[str] = Field(default=None, max_length=100, description="Required for a business account")
 
 class UserLogin(BaseModel):
     username: str = Field(..., description="Username or email")
@@ -33,7 +36,14 @@ class UserProfile(BaseModel):
     bio: Optional[str] = Field(default=None, description="A short bio of the user")
     created_at: Optional[datetime] = Field(default=None, description="Account creation timestamp")
     last_login: Optional[datetime] = Field(default=None, description="Last login timestamp")
-    role: str = Field(default="user", description="user, or expert: only experts confirm or reject alerts")
+    role: str = Field(default="admin", description="admin, developer, non_tech or expert (src/services/access.py)")
+    organization_id: Optional[str] = Field(default=None, description="Workspace the account belongs to; none for a ScanGuard reviewer")
+    organization_name: Optional[str] = None
+    personal_workspace: bool = Field(default=True, description="The account is alone in its own workspace")
+    permissions: List[str] = Field(default_factory=list, description="What the server lets this account do")
+    policy: Dict[str, Any] = Field(default_factory=dict, description="The workspace's data policy")
+    llm_external: bool = Field(default=True, description="The server's LLM is an outside service (code leaves the server when used)")
+    consents_required: List[str] = Field(default_factory=list, description="Legal documents to accept before using the service")
 
 class UserInDB(BaseModel):
     id: str = Field(..., alias="_id")
@@ -46,7 +56,10 @@ class UserInDB(BaseModel):
     last_login: Optional[datetime] = None
     token_version: int = 0
     password_changed_at: Optional[datetime] = None
-    role: str = "user"  # set to "expert" in the database; there is no self-service way to become one
+    role: str = "user"  # admin, developer, non_tech or expert; "user" = an account from before organisations (admin)
+    organization_id: Optional[str] = None
+    organization: Optional[Dict[str, Any]] = None  # loaded with the user on every request, never stored
+    consents: Dict[str, str] = Field(default_factory=dict)  # legal document -> accepted version
 
 class PasswordChange(BaseModel):
     current_password: str = Field(..., min_length=1)
@@ -88,6 +101,7 @@ class Project(BaseModel):
 
 class ProjectResponse(BaseModel):
     id: str = Field(..., description="Unique project identifier")
+    user_id: Optional[str] = Field(default=None, description="Who created the project")
     name: str = Field(..., description="Project name")
     description: Optional[str] = Field(default=None, description="Project description")
     status: ProjectStatus = Field(..., description="Project status")
@@ -180,6 +194,9 @@ class AnalysisSession(BaseModel):
     model_versions: Dict[str, Optional[str]] = Field(default_factory=dict, description="Checkpoint version that scored each vulnerability type")
     training_consent: bool = Field(default=False, description="Uploader agreed that this code and the verdicts on it may be used for retraining")
     random_audits: List[Dict[str, Any]] = Field(default_factory=list, description="Unflagged functions sampled at random for a blind expert check")
+    organization_id: Optional[str] = Field(default=None, description="Workspace that owns the scan")
+    review_requested: bool = Field(default=False, description="The owner asked an expert to review this scan")
+    expires_at: Optional[datetime] = Field(default=None, description="When the scan and its code are deleted automatically")
 
 # Analysis related schemas
 class VulnerabilityType(str, Enum):
@@ -283,3 +300,30 @@ class FileInfo(BaseModel):
     file_type: str = Field(..., description="Type/extension of the file")
     upload_timestamp: datetime = Field(default_factory=now_utc, description="When the file was uploaded")
     saved_path: str = Field(..., description="Path where the file is saved on the server")
+
+# Protection of uploaded code (docs/KE_HOACH_BAO_VE_MA_NGUON.md)
+class ConsentSubmit(BaseModel):
+    terms: bool = False
+    privacy: bool = False
+    upload_rights: bool = False
+    training_data: Optional[bool] = Field(default=None, description="Workspace admins only: may the workspace's code be used for training")
+
+class AccountDelete(BaseModel):
+    password: str = Field(..., min_length=1)
+
+class MemberCreate(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50, pattern=r"^[A-Za-z0-9_.-]+$")
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+    full_name: Optional[str] = Field(default=None, max_length=100)
+    role: str = Field(..., pattern=r"^(admin|developer|non_tech|expert)$")
+
+class MemberUpdate(BaseModel):
+    role: Optional[str] = Field(default=None, pattern=r"^(admin|developer|non_tech|expert)$")
+    is_active: Optional[bool] = None
+
+class PolicyUpdate(BaseModel):
+    retention_days: Optional[int] = Field(default=None, ge=1, le=365)
+    external_llm: Optional[bool] = None
+    training_data: Optional[bool] = None
+    platform_experts: Optional[bool] = None

@@ -36,7 +36,7 @@ interface Props {
 /** Expert verdict on one model alert: an alert is only a lead until a person confirms or rejects it. */
 export const FunctionReviewControl = ({ sessionId, vulnerability = DEFAULT_VULNERABILITY, functionName, review, onReviewed, labels = REVIEW_LABELS }: Props) => {
   const t = useT();
-  const { user } = useAuth();
+  const { user, can } = useAuth();
   const [note, setNote] = useState(review?.note ?? "");
   const [saving, setSaving] = useState(false);
   const current = review?.status ?? "pending";
@@ -55,7 +55,7 @@ export const FunctionReviewControl = ({ sessionId, vulnerability = DEFAULT_VULNE
     }
   };
 
-  if (user?.role !== "expert") {
+  if (!can("review")) {
     return (
       <div className="mt-3 border-t border-rule pt-3 text-xs text-muted-foreground">
         {t("Expert review")}: <span className="text-ink">{t(labels[current])}</span>

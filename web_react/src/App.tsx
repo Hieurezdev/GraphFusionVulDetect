@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { usePreferences } from "@/lib/preferences";
+import { usePreferences, resolveTheme } from "@/lib/preferences";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -16,14 +16,23 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import ReviewQueue from "./pages/ReviewQueue";
+import Consent from "./pages/Consent";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
 const LanguageSync = () => {
-  const { language } = usePreferences();
+  const { language, theme } = usePreferences();
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
+  useEffect(() => {
+    const apply = () => { document.documentElement.dataset.theme = resolveTheme(theme); };
+    apply();
+    const media = window.matchMedia?.("(prefers-color-scheme: light)");
+    media?.addEventListener("change", apply);
+    return () => media?.removeEventListener("change", apply);
+  }, [theme]);
   return null;
 };
 
@@ -49,6 +58,8 @@ const App = () => (
             <Route path="/project" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
             <Route path="/project/:projectId" element={<ProtectedRoute><ProjectAnalysis /></ProtectedRoute>} />
             <Route path="/review" element={<ProtectedRoute><ReviewQueue /></ProtectedRoute>} />
+            <Route path="/consent" element={<ProtectedRoute><Consent /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             <Route path="/projects" element={<Navigate to="/project" replace />} />
             <Route path="/projects/:projectId" element={<LegacyProjectRedirect />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

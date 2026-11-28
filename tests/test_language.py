@@ -46,3 +46,10 @@ def test_conversation_prompt_follows_language():
     state = {"code": "contract A {}", "language": "vi", "conversation_history": [{"role": "user", "content": "fix it"}]}
     handle_conversation(state, {"configurable": {"llm_client": client}})
     assert llm.prompts and "Vietnamese" in llm.prompts[0][0]["content"]
+
+
+def test_plain_language_instruction_for_non_technical_readers():
+    from src.utils.language import language_instruction
+    assert "does not program" in language_instruction("vi", plain=True)
+    assert "does not program" not in language_instruction("vi")
+    assert "Vietnamese" in language_instruction("vi", plain=True)

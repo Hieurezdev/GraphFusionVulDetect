@@ -10,6 +10,17 @@ from src.models.entity import (
 from src.infrastructure.database import get_projects_collection, get_analysis_sessions_collection
 from src.utils.timezone import now_vietnam, ensure_utc_for_db, to_vietnam
 from .authentication_router import get_current_user
+from src.services import audit, data_lifecycle
+from src.services.access import can, scope
+
+
+def can_delete_project(user: UserInDB, project: dict) -> bool:
+    return can(user, "delete_project") or (project.get("user_id") == user.id and can(user, "delete_own_session"))
+
+
+def require_upload(user: UserInDB) -> None:
+    if not can(user, "upload"):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Your role cannot create or change projects")
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 logger = logging.getLogger("GraphFusionVulDetect-Projects")
@@ -29,11 +40,12 @@ async def create_project(
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Create a new project"""
+    require_upload(current_user)
     projects_collection = await get_projects_collection()
     
     # Check if user already has a project with this name
     existing_project = await projects_collection.find_one({
-        "user_id": current_user.id,
+        **scope(current_user),
         "name": project_data.name
     })
     
@@ -48,6 +60,7 @@ async def create_project(
         "name": project_data.name,
         "description": project_data.description,
         "user_id": current_user.id,
+        "organization_id": current_user.organization_id,
         "status": ProjectStatus.CREATED,
         "files": [],
         "analysis_count": 0,
@@ -62,6 +75,7 @@ async def create_project(
     # Return project response
     return ProjectResponse(
         id=str(project_doc["_id"]),
+        user_id=project_doc.get("user_id"),
         name=project_doc["name"],
         description=project_doc["description"],
         status=project_doc["status"],
@@ -83,7 +97,7 @@ async def list_projects(
     projects_collection = await get_projects_collection()
     
     # Build query
-    query = {"user_id": current_user.id}
+    query = {**scope(current_user)}
     if status:
         query["status"] = status
     
@@ -95,6 +109,7 @@ async def list_projects(
     return [
         ProjectResponse(
             id=str(project["_id"]),
+            user_id=project.get("user_id"),
             name=project["name"],
             description=project.get("description"),
             status=project["status"],
@@ -118,7 +133,7 @@ async def get_project(
     try:
         project_doc = await projects_collection.find_one({
             "_id": ObjectId(project_id),
-            "user_id": current_user.id
+            **scope(current_user)
         })
     except Exception:
         raise HTTPException(
@@ -145,13 +160,14 @@ async def update_project(
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Update a project"""
+    require_upload(current_user)
     projects_collection = await get_projects_collection()
     
     try:
         # Check if project exists and belongs to user
         existing_project = await projects_collection.find_one({
             "_id": ObjectId(project_id),
-            "user_id": current_user.id
+            **scope(current_user)
         })
     except Exception:
         raise HTTPException(
@@ -171,7 +187,7 @@ async def update_project(
     if project_data.name is not None:
         # Check for name conflicts
         name_conflict = await projects_collection.find_one({
-            "user_id": current_user.id,
+            **scope(current_user),
             "name": project_data.name,
             "_id": {"$ne": ObjectId(project_id)}
         })
@@ -199,6 +215,7 @@ async def update_project(
     
     return ProjectResponse(
         id=str(updated_project["_id"]),
+        user_id=updated_project.get("user_id"),
         name=updated_project["name"],
         description=updated_project.get("description"),
         status=updated_project["status"],
@@ -214,27 +231,21 @@ async def delete_project(
     project_id: str,
     current_user: UserInDB = Depends(get_current_user)
 ):
-    """Delete a project"""
+    """Delete a project with every scan in it, and their code everywhere it is kept (the workspace admin, or whoever created
+    the project when their role may delete its own scans)"""
     projects_collection = await get_projects_collection()
-    
     try:
-        result = await projects_collection.delete_one({
-            "_id": ObjectId(project_id),
-            "user_id": current_user.id
-        })
+        project_doc = await projects_collection.find_one({"_id": ObjectId(project_id), **scope(current_user)})
     except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid project ID"
-        )
-    
-    if result.deleted_count == 0:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found"
-        )
-    
-    return {"message": "Project deleted successfully"}
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid project ID")
+    if not project_doc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+    if not can_delete_project(current_user, project_doc):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only the workspace admin or the project's creator can delete it")
+    removed = await data_lifecycle.delete_project(project_doc, current_user.username)
+    await audit.record(current_user, "delete_project", project_doc.get("organization_id"), target=project_id,
+                       detail={"name": project_doc.get("name"), **removed})
+    return {"message": "Project deleted successfully", "removed": removed}
 
 
 @router.post("/{project_id}/files", response_model=ProjectFile)
@@ -244,13 +255,14 @@ async def add_file_to_project(
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Add a file to a project"""
+    require_upload(current_user)
     projects_collection = await get_projects_collection()
     
     try:
         # Check if project exists and belongs to user
         project_doc = await projects_collection.find_one({
             "_id": ObjectId(project_id),
-            "user_id": current_user.id
+            **scope(current_user)
         })
     except Exception:
         raise HTTPException(
@@ -315,7 +327,7 @@ async def get_project_analysis_sessions(
     # Build query for this project
     query = {
         "project_id": project_id,
-        "user_id": current_user.id
+        **scope(current_user)
     }
     
     # Execute query
@@ -324,15 +336,13 @@ async def get_project_analysis_sessions(
     
     # Convert to response format
     result = []
+    from .analyze_router import present
     for session in sessions:
-        session["id"] = str(session["_id"])
-        del session["_id"]
-        analysis_session = AnalysisSession(**session)
+        analysis_session = present(session, current_user)
         analysis_session.started_at = to_vietnam(analysis_session.started_at)
         analysis_session.completed_at = to_vietnam(analysis_session.completed_at)
         for step in analysis_session.steps:
             step.started_at = to_vietnam(step.started_at)
             step.completed_at = to_vietnam(step.completed_at)
         result.append(analysis_session)
-    print(result)
     return result

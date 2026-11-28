@@ -30,6 +30,10 @@ SYSTEM = (
 )
 
 
+MAX_CALLS_PER_ROUND = 2
+MAX_TOOL_CALLS = 8
+
+
 def _patch(source: bytes, span, new_code: str) -> bytes:
     start, length = span
     return source[:start] + new_code.strip().encode("utf-8") + source[start + length:]
@@ -38,13 +42,21 @@ def _patch(source: bytes, span, new_code: str) -> bytes:
 def rescan(source_path: str, span, new_code: str, vulnerability: str, function_name: str) -> dict:
     """Detection models on the patched contract: contract verdict + whether the same function is still flagged."""
     from src.services.graph_loader import get_models_config
+    from src.workflows.gfd_workflow.utils.fix_check import has_import, NO_IMPORTS
+    cfg = get_models_config(vulnerability)
+    patched = _patch(Path(source_path).read_bytes(), span, new_code)
+    if has_import(patched):
+        return {"graph_built": False, "note": NO_IMPORTS}
+    with tempfile.TemporaryDirectory(prefix="agent_") as tmp:  # was mkdtemp and never removed
+        return _rescan_in(tmp, source_path, patched, cfg, vulnerability, function_name)
+
+
+def _rescan_in(tmp: str, source_path: str, patched: bytes, cfg, vulnerability: str, function_name: str) -> dict:
     from src.workflows.gfd_workflow.nodes.fcg_converter.fcg_converter import convert_to_fcg
     from src.workflows.gfd_workflow.nodes.src_vul_detector import detect_vulnerability_src
     from src.workflows.gfd_workflow.nodes.func_vul_detector import detect_vulnerability_func
-    cfg = get_models_config(vulnerability)
-    tmp = tempfile.mkdtemp(prefix="agent_")
     path = os.path.join(tmp, Path(source_path).name)
-    Path(path).write_bytes(_patch(Path(source_path).read_bytes(), span, new_code))
+    Path(path).write_bytes(patched)
     state = convert_to_fcg({"sol_file_path": path, "fcg_save_dir": tmp, "vulnerability": vulnerability}, cfg)
     if not str(state.get("fcg_file_path", "")).endswith(".fcg"):
         return {"graph_built": False, "note": "the patched contract could not be analysed (does it compile?)"}
@@ -100,8 +112,9 @@ def run_agent(llm, finding: dict, function_code: str, source_path: str, explanat
     @tool
     def similar_cases() -> str:
         """Similar functions already judged by experts or labelled in the training data, with accepted fixes when available."""
-        return json.dumps([{"kind": c["kind"], "verdict": c.get("verdict"), "score": c["score"], "code": c["code"][:800],
-                            "accepted_fix": (c.get("fixed_code") or "")[:800]} for c in (cases or [])]) or "[]"
+        from src.services.knowledge import prompt_code
+        return json.dumps([{"kind": c["kind"], "verdict": c.get("verdict"), "score": c["score"], "code": prompt_code(c["code"], 800),
+                            "accepted_fix": prompt_code(c.get("fixed_code") or "", 800)} for c in (cases or [])]) or "[]"
 
     @tool
     def submit_fix(fixed_function: str, summary: str) -> str:
@@ -124,20 +137,27 @@ def run_agent(llm, finding: dict, function_code: str, source_path: str, explanat
         if not calls:
             trace.append({"round": round_no, "text": (response.content or "")[:500]})
             messages.append(HumanMessage("Use the tools: check your fix, then call submit_fix."))
-        for call in calls:
+        # One reply may ask for many parallel tool calls (each check runs solc + Slither): cap per round and per run.
+        allowed = calls[:max(0, min(MAX_CALLS_PER_ROUND, MAX_TOOL_CALLS - sum("tool" in t for t in trace)))]
+        for call in calls[len(allowed):]:
+            messages.append(ToolMessage(content="skipped: tool-call limit reached", tool_call_id=call["id"]))
+        for call in allowed:
             fn = tools.get(call["name"])
             try:
                 result = fn.invoke(call["args"]) if fn else f"unknown tool {call['name']}"
             except Exception as e:  # a failing tool is reported back to the agent, not raised
                 result = f"tool error: {e}"
-            trace.append({"round": round_no, "tool": call["name"], "result": str(result)[:600]})
+            # similar_cases returns other users' (consented) code: the agent sees it, the caller's trace does not.
+            shown = f"{len(cases or [])} similar case(s) consulted" if call["name"] == "similar_cases" else str(result)[:600]
+            trace.append({"round": round_no, "tool": call["name"], "result": shown})
             messages.append(ToolMessage(content=str(result), tool_call_id=call["id"]))
-        if submitted or tokens > max_tokens or round_no > max_rounds:
+        if submitted or tokens > max_tokens or round_no > max_rounds or sum("tool" in t for t in trace) >= MAX_TOOL_CALLS:
             break
     result = {"function_name": name, "vulnerability": vuln, "rounds": len({t["round"] for t in trace}),
               "tool_calls": sum("tool" in t for t in trace), "tokens": tokens, "seconds": round(time.time() - t0, 1), "trace": trace,
               "fix": submitted.get("code"), "summary": submitted.get("summary"),
-              "stopped": "submitted" if submitted else ("token budget" if tokens > max_tokens else "round limit")}
+              "stopped": "submitted" if submitted else ("token budget" if tokens > max_tokens else
+                                                        "tool-call limit" if sum("tool" in t for t in trace) >= MAX_TOOL_CALLS else "round limit")}
     if submitted:
         result["verification"] = verify(source_path, span, submitted["code"], vuln, name)
         # first attempt = the first fixed_function the agent checked: did it already compile?

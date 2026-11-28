@@ -129,11 +129,11 @@ class RefactorBotService:
                 "error": str(e)
             }
 
-    async def stream_chat(self, code: str, conversation_history: List[Dict[str, str]], language: str = "en") -> AsyncIterator[Dict[str, Any]]:
+    async def stream_chat(self, code: str, conversation_history: List[Dict[str, str]], language: str = "en", plain: bool = False) -> AsyncIterator[Dict[str, Any]]:
         """Stream one assistant reply as events: {"delta": text}..., then {"done": True} or {"error": message}."""
         try:
             llm = self.workflow.llm_client.get_instance()
-            async for chunk in llm.astream(build_chat_messages(code, conversation_history, language)):
+            async for chunk in llm.astream(build_chat_messages(code, conversation_history, language, plain)):
                 if chunk.content:
                     yield {"delta": chunk.content}
             yield {"done": True}

@@ -3,7 +3,6 @@
 import re
 from typing import List
 import numpy as np
-import torch
 
 
 def clean_function(function_list: List[str]) -> List[str]:
@@ -52,6 +51,7 @@ def get_embeddings(tokenizer, model, text: str) -> 'np.ndarray':
     inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True)
     inputs = {key: value.to(model.device) for key, value in inputs.items()}
     
+    import torch  # here, not at module level: the fix-check sandbox imports strip_comments under a memory cap too small for torch
     with torch.no_grad():
         outputs = model(**inputs)
 

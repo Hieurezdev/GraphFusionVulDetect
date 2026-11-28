@@ -60,6 +60,9 @@ class GFDWorkflow:
         """Called ONCE during app startup."""
         seed_everything(settings.SEED)
         prepare_solc_artifacts()
+        if settings.DEVICE.startswith("cuda") and 0 < settings.GPU_MEMORY_FRACTION < 1 and torch.cuda.is_available():
+            torch.cuda.set_per_process_memory_fraction(settings.GPU_MEMORY_FRACTION)
+            logger.info("GPU memory capped at %.0f%% of the device", settings.GPU_MEMORY_FRACTION * 100)
 
         from src.services.model_registry import active_graph_path
         for name, spec in MODEL_SPECS.items():

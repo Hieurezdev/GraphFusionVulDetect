@@ -3,6 +3,7 @@ API Router for RefactorBot Service - Smart Contract Refactoring Assistant
 """
 
 import asyncio
+from contextlib import asynccontextmanager
 import json
 import logging
 from typing import List, Dict, Any, Optional
@@ -18,7 +19,9 @@ from src.models.entity import UserInDB
 from src.infrastructure.database import get_analysis_sessions_collection
 from src.workflows.gfd_workflow.utils.fix_check import check_fix, WHOLE_FILE
 from .authentication_router import get_current_user
-from .analyze_router import _session_query
+from .analyze_router import load_session
+from src.services.access import can, plain_language
+from src.services.organizations import llm_allowed
 from src.services.findings import find, replace_entry
 from src.models.entity import FunctionFix
 from src.utils.timezone import now_vietnam, ensure_utc_for_db
@@ -102,14 +105,42 @@ class ValidationResponse(BaseModel):
 # Service instance
 refactorbot_service = RefactorBotService()
 
+
+async def fix_tools_user(current_user: UserInDB = Depends(get_current_user)) -> UserInDB:
+    if not can(current_user, "fix_tools"):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Your role cannot use the fix tools: ask a developer or an expert")
+    return current_user
+
+
+async def llm_user(current_user: UserInDB = Depends(fix_tools_user)) -> UserInDB:
+    """The fix assistant sends code to the configured LLM: only where the workspace policy allows it."""
+    if not llm_allowed(current_user.organization):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Your workspace does not allow sending code to the external AI service (workspace admin: data policy)")
+    return current_user
+
 # solc + two Slither runs per check, on a host shared by every user: at most two checks at once.
 _CHECK_SLOTS = asyncio.Semaphore(2)
+_agent_users: set = set()  # one repair-agent run per user at a time
+
+
+@asynccontextmanager
+async def check_slot(wait: float = 120):
+    """A fix-check slot, or 503 after `wait` seconds: a queue behind long agent runs must not hang requests forever."""
+    try:
+        await asyncio.wait_for(_CHECK_SLOTS.acquire(), wait)
+    except asyncio.TimeoutError:
+        raise HTTPException(status_code=503, detail="Fix checking is busy right now. Try again in a minute.")
+    try:
+        yield
+    finally:
+        _CHECK_SLOTS.release()
 
 
 @router.post("/advice", response_model=RefactoringAdviceResponse, status_code=status.HTTP_200_OK)
 async def get_refactoring_advice(
     request: RefactoringAdviceRequest,
-    current_user: UserInDB = Depends(get_current_user)
+    current_user: UserInDB = Depends(llm_user)
 ):
     """
     Get AI-powered refactoring advice for smart contract code.
@@ -177,7 +208,7 @@ async def get_refactoring_advice(
 @router.post("/conversation", response_model=ConversationResponse, status_code=status.HTTP_200_OK)
 async def continue_refactoring_conversation(
     request: ConversationRequest,
-    current_user: UserInDB = Depends(get_current_user)
+    current_user: UserInDB = Depends(llm_user)
 ):
     """
     Continue a conversational interaction for iterative code refinement.
@@ -240,13 +271,13 @@ async def continue_refactoring_conversation(
 @router.post("/chat/stream")
 async def stream_refactoring_chat(
     request: ConversationRequest,
-    current_user: UserInDB = Depends(get_current_user)
+    current_user: UserInDB = Depends(llm_user)
 ):
     """Stream the assistant's next reply as NDJSON: {"delta"} lines, then {"done"} or {"error"}."""
     history = [{"role": msg.role, "content": msg.content} for msg in request.conversation_history]
 
     async def events():
-        async for event in refactorbot_service.stream_chat(request.code, history, normalize_language(request.language)):
+        async for event in refactorbot_service.stream_chat(request.code, history, normalize_language(request.language), plain_language(current_user)):
             yield json.dumps(event, ensure_ascii=False) + "\n"
 
     return StreamingResponse(events(), media_type="application/x-ndjson", headers={"X-Accel-Buffering": "no"})
@@ -255,7 +286,7 @@ async def stream_refactoring_chat(
 @router.post("/validate", response_model=ValidationResponse, status_code=status.HTTP_200_OK)
 async def validate_refactoring(
     request: ValidationRequest,
-    current_user: UserInDB = Depends(get_current_user)
+    current_user: UserInDB = Depends(fix_tools_user)
 ):
     """
     Validate suggested refactored code.
@@ -306,12 +337,7 @@ async def validate_refactoring(
 async def _check_against_contract(request: ValidationRequest, current_user: UserInDB) -> ValidationResponse:
     """Splice the fix into the analysed contract, compile it and compare Slither findings before/after."""
     sessions = await get_analysis_sessions_collection()
-    try:
-        session = await sessions.find_one(_session_query(request.session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session = await load_session(request.session_id, current_user, need="fix_tools")
 
     span = None  # a whole edited file (the IDE) replaces everything, so no function span is needed
     finding = find(session, request.function_name, request.vulnerability) if request.function_name else None
@@ -321,7 +347,7 @@ async def _check_against_contract(request: ValidationRequest, current_user: User
         span = finding["span"]
 
     from src.services.sandbox import run_isolated, SandboxError
-    async with _CHECK_SLOTS:  # waiting here, not inside a worker thread, so queued checks don't drain the shared threadpool
+    async with check_slot():  # waiting here, not inside a worker thread, so queued checks don't drain the shared threadpool
         try:  # step 2.3: user-supplied code is compiled and analysed in a separate, limited process
             result = await run_in_threadpool(run_isolated, "check_fix", session["file_path"], span, request.suggested_code)
         except SandboxError as e:
@@ -359,7 +385,7 @@ class AgentRequest(BaseModel):
 
 
 @router.post("/agent", status_code=status.HTTP_200_OK)
-async def repair_agent(request: AgentRequest, current_user: UserInDB = Depends(get_current_user)):
+async def repair_agent(request: AgentRequest, current_user: UserInDB = Depends(llm_user)):
     """Step 2.1: let the repair agent propose and check a fix (compile, Slither, re-scan) in a loop.
 
     The final fix is verified again by the system and recorded on the finding like a hand-made fix proposal: it only
@@ -369,12 +395,7 @@ async def repair_agent(request: AgentRequest, current_user: UserInDB = Depends(g
     from src.workflows.gfd_workflow.nodes.func_vul_explainer import retrieve_cases
     from src.services.graph_loader import gfd_workflow
     sessions = await get_analysis_sessions_collection()
-    try:
-        session = await sessions.find_one(_session_query(request.session_id, current_user))
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid session ID format")
-    if not session:
-        raise HTTPException(status_code=404, detail="Analysis session not found")
+    session = await load_session(request.session_id, current_user, need="fix_tools")
     finding = find(session, request.function_name, request.vulnerability)
     if not finding or not finding.get("span"):
         raise HTTPException(status_code=404, detail="Function not flagged by this scan, or its source location is unknown")
@@ -382,10 +403,16 @@ async def repair_agent(request: AgentRequest, current_user: UserInDB = Depends(g
                  for p in (st.get("result_data") or {}).get("func_vulnerability_predictions") or [] if p.get("function_name") == request.function_name), "")
     cases = await run_in_threadpool(retrieve_cases, {"function_code": code, "function_name": request.function_name},
                                     request.vulnerability, session.get("file_hash"))
-    async with _CHECK_SLOTS:
-        result = await run_in_threadpool(run_agent, gfd_workflow.llm, finding, code, session["file_path"],
-                                         finding.get("explanation") or "", (finding.get("review") or {}).get("status", "pending"),
-                                         normalize_language(request.language), request.max_rounds, 60000, cases)
+    if current_user.id in _agent_users:
+        raise HTTPException(status_code=429, detail="Your previous repair-agent run is still going. Wait for it to finish.")
+    _agent_users.add(current_user.id)
+    try:
+        async with check_slot():
+            result = await run_in_threadpool(run_agent, gfd_workflow.llm, finding, code, session["file_path"],
+                                             finding.get("explanation") or "", (finding.get("review") or {}).get("status", "pending"),
+                                             normalize_language(request.language), request.max_rounds, 60000, cases)
+    finally:
+        _agent_users.discard(current_user.id)
     v = result.get("verification")
     if result.get("fix") and v:
         fix = FunctionFix(vulnerability=finding["vulnerability"], function_name=finding["function_name"], suggested_code=result["fix"],

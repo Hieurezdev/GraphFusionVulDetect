@@ -10,6 +10,7 @@ import { RefactorChatbot } from "@/components/RefactorChatbot";
 import { projectService, FunctionReview } from "@/services/project";
 import { toast } from "sonner";
 import { useT } from "@/i18n";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Monaco is large: load the IDE only when a finished analysis shows it.
 const ContractIDE = lazy(() => import("@/components/ContractIDE"));
@@ -27,6 +28,7 @@ interface AnalysisData {
 const Analysis = () => {
   const navigate = useNavigate();
   const t = useT();
+  const { can, assistant } = useAuth();
   const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
   const [streamingResults, setStreamingResults] = useState<any[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -223,7 +225,7 @@ const Analysis = () => {
             onReviewed={setReviews}
           />
 
-          {analysisData.status === "complete" && analysisData.sessionId && (
+          {analysisData.status === "complete" && analysisData.sessionId && can("view_source") && (
             <Suspense fallback={null}>
               <ContractIDE key={analysisData.sessionId} sessionId={analysisData.sessionId} results={streamingResults} reviews={reviews} onReviewed={setReviews} />
             </Suspense>
@@ -231,11 +233,11 @@ const Analysis = () => {
         </div>
       </main>
 
-      <RefactorChatbot
+      {assistant && <RefactorChatbot
         sessionId={analysisData.sessionId}
         reviews={reviews}
         vulnerableFunctions={flaggedFunctions(streamingResults)}
-      />
+      />}
     </div>
   );
 };

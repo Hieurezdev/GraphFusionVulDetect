@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const t = useT();
   const location = useLocation();
 
@@ -27,6 +27,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (!isAuthenticated) {
     // Redirect to login page with return url
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // The server refuses every request until the current legal texts are accepted: go there first
+  if (user?.consents_required.length && location.pathname !== '/consent') {
+    return <Navigate to="/consent" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

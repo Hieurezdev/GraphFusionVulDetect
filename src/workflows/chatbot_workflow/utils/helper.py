@@ -8,7 +8,7 @@ from typing import List, Dict, Any
 from src.utils.language import language_instruction
 
 
-def build_chat_messages(code: str, conversation_history: List[Dict[str, str]], language: str = "en") -> List[Dict[str, str]]:
+def build_chat_messages(code: str, conversation_history: List[Dict[str, str]], language: str = "en", plain: bool = False) -> List[Dict[str, str]]:
     """Chat messages for the LLM: the code under discussion as system context, then the whole history."""
     system = (
         "You are RefactorBot, a smart contract security assistant. "
@@ -18,7 +18,7 @@ def build_chat_messages(code: str, conversation_history: List[Dict[str, str]], l
         "function in a single ```solidity block."
     )
     from src.services.knowledge import chat_references   # step 2.2: precedents from expert reviews and accepted fixes
-    system += chat_references(code) + language_instruction(language)
+    system += chat_references(code) + language_instruction(language, plain)
     messages = [{"role": "system", "content": system}]
     for msg in conversation_history:
         role = "user" if msg.get("role") == "user" else "assistant"

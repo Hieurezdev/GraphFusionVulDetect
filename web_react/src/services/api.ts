@@ -78,7 +78,12 @@ const apiFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promis
     // Handle other HTTP errors
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `HTTP ${response.status}: ${response.statusText}`);
+      // The server refuses everything until the current legal texts are accepted
+      if (response.status === 403 && errorData.detail?.code === 'consent_required' && window.location.pathname !== '/consent') {
+        window.location.href = '/consent';
+      }
+      const detail = typeof errorData.detail === 'string' ? errorData.detail : errorData.detail?.code;
+      throw new Error(detail || `HTTP ${response.status}: ${response.statusText}`);
     }
 
     // Handle successful response

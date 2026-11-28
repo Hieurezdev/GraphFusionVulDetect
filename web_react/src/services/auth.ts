@@ -6,7 +6,12 @@ export interface UserRegister {
   email: string;
   password: string;
   full_name?: string;
+  /** personal: a guest workspace for one person; business: an organisation whose admin adds members */
+  account_type?: AccountType;
+  organization_name?: string;
 }
+
+export type AccountType = "personal" | "business";
 
 export interface UserLogin {
   username: string;
@@ -27,7 +32,33 @@ export interface UserProfile {
   bio?: string;
   created_at?: string;
   last_login?: string;
-  role?: "user" | "expert";
+  role?: Role;
+  organization_id?: string | null;
+  organization_name?: string | null;
+  personal_workspace?: boolean;
+  permissions?: Permission[];
+  policy?: DataPolicy;
+  llm_external?: boolean;
+  consents_required?: string[];
+}
+
+export type Role = "admin" | "developer" | "non_tech" | "expert";
+export type Permission = "upload" | "view_source" | "fix_tools" | "request_review" | "delete_own_session"
+  | "delete_any_session" | "delete_project" | "review" | "manage_organization";
+
+export interface DataPolicy {
+  retention_days: number;
+  external_llm: boolean;
+  training_data: boolean;
+  platform_experts: boolean;
+}
+
+export interface LegalDocument {
+  key: string;
+  title: string;
+  version: string;
+  required: boolean;
+  content: string;
 }
 
 export interface AuthResponse {
@@ -45,7 +76,26 @@ export class AuthService {
     PROFILE: '/api/v1/auth/profile',
     CHANGE_PASSWORD: '/api/v1/auth/change-password',
     LOGOUT_ALL: '/api/v1/auth/logout-all',
+    LEGAL: '/api/v1/auth/legal',
+    CONSENTS: '/api/v1/auth/consents',
+    ACCOUNT: '/api/v1/auth/account',
   };
+
+  /** The terms, privacy policy, upload commitment and training-data text (public). */
+  static legal(lang: string): Promise<LegalDocument[]> {
+    return apiFetch<LegalDocument[]>(`${this.AUTH_ENDPOINTS.LEGAL}?lang=${lang}`);
+  }
+
+  /** Accept the required texts; a workspace admin also answers training_data. Returns the updated profile. */
+  static submitConsents(body: { terms: boolean; privacy: boolean; upload_rights: boolean; training_data?: boolean }): Promise<UserProfile> {
+    return apiFetch<UserProfile>(this.AUTH_ENDPOINTS.CONSENTS, { method: 'POST', body, requireAuth: true });
+  }
+
+  /** Delete the account (and, alone in a workspace, everything in it). */
+  static async deleteAccount(password: string): Promise<void> {
+    await apiFetch(this.AUTH_ENDPOINTS.ACCOUNT, { method: 'DELETE', body: { password }, requireAuth: true });
+    AuthService.clearAuth();
+  }
 
   /**
    * Register a new user

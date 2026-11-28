@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from bson import ObjectId
 from bson.errors import InvalidId
-from src.models.entity import UserRegister, UserLogin, Token, UserProfile, UserInDB, PasswordChange
+from src.models.entity import UserRegister, UserLogin, Token, UserProfile, UserInDB, PasswordChange, ConsentSubmit, AccountDelete
 from src.infrastructure.database import get_users_collection
 from src.utils.timezone import now_utc, now_vietnam, ensure_utc_for_db
 from src.config.settings import settings
@@ -100,9 +100,31 @@ async def get_current_user(request: Request, credentials: Optional[HTTPAuthoriza
         raise credentials_exception
     user_doc["_id"] = str(user_doc["_id"])
     user = UserInDB(**user_doc)
-    if payload.get("ver", 0) != user.token_version:
+    if payload.get("ver", 0) != user.token_version or not user.is_active:
         raise credentials_exception
+    from src.services.organizations import get_organization
+    user.organization = await get_organization(user.organization_id)
+    # Nothing but reading and accepting the legal texts (or leaving) until the current versions are accepted
+    from src.services.legal import missing_consents
+    missing = missing_consents(user)
+    if missing and not request.url.path.rstrip("/").endswith(CONSENT_FREE_PATHS):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={"code": "consent_required", "missing": missing})
     return user
+
+
+CONSENT_FREE_PATHS = ("/auth/me", "/auth/consents", "/auth/logout", "/auth/logout-all", "/auth/change-password", "/auth/account")
+
+
+def profile_of(user: UserInDB) -> UserProfile:
+    from src.services.access import allowed, is_personal
+    from src.services.legal import missing_consents
+    from src.services.organizations import policy_of, llm_is_external
+    return UserProfile(
+        user_id=user.id, username=user.username, email=user.email, full_name=user.full_name,
+        created_at=user.created_at, last_login=user.last_login, role=user.role if user.role != "user" else "admin",
+        organization_id=user.organization_id, organization_name=(user.organization or {}).get("name"),
+        personal_workspace=is_personal(user), permissions=allowed(user), policy=policy_of(user.organization) if user.organization else {},
+        llm_external=llm_is_external(), consents_required=missing_consents(user))
 
 
 def issue_token(user: UserInDB, token_version: int) -> Token:
@@ -132,7 +154,14 @@ async def register_user(user_data: UserRegister):
             detail="Username or email already registered"
         )
     
-    # Create new user
+    # Create new user: a self-registered account gets its own workspace and is its admin. A personal (guest) workspace
+    # stays one person; a business one is an organisation the admin fills with members.
+    business = user_data.account_type == "business"
+    if business and not (user_data.organization_name or "").strip():
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="A business account needs the organisation's name")
+    from src.services.organizations import create_organization
+    org = await create_organization((user_data.organization_name or "").strip() if business else (user_data.full_name or user_data.username),
+                                    personal=not business)
     hashed_password = get_password_hash(user_data.password)
     user_doc = {
         "username": user_data.username,
@@ -140,6 +169,9 @@ async def register_user(user_data: UserRegister):
         "full_name": user_data.full_name,
         "hashed_password": hashed_password,
         "is_active": True,
+        "role": "admin",
+        "organization_id": str(org["_id"]),
+        "consents": {},
         "created_at": ensure_utc_for_db(now_vietnam()),
         "last_login": None
     }
@@ -193,16 +225,8 @@ async def login_for_access_token(user_data: UserLogin, response: Response):
 
 @router.get("/me", response_model=UserProfile)
 async def read_users_me(current_user: UserInDB = Depends(get_current_user)):
-    """Get current user profile"""
-    return UserProfile(
-        user_id=current_user.id,
-        username=current_user.username,
-        email=current_user.email,
-        full_name=current_user.full_name,
-        created_at=current_user.created_at,
-        last_login=current_user.last_login,
-        role=current_user.role
-    )
+    """Get current user profile, with the workspace, permissions and the legal texts still to accept"""
+    return profile_of(current_user)
 
 
 @router.post("/logout")
@@ -238,15 +262,8 @@ async def update_profile(
     
     # Get updated user
     updated_user = await get_user(current_user.username)
-    return UserProfile(
-        user_id=updated_user.id,
-        username=updated_user.username,
-        email=updated_user.email,
-        full_name=updated_user.full_name,
-        created_at=updated_user.created_at,
-        last_login=updated_user.last_login,
-        role=updated_user.role
-    )
+    updated_user.organization = current_user.organization
+    return profile_of(updated_user)
 
 
 @router.post("/change-password", response_model=Token)
@@ -286,3 +303,94 @@ async def logout_all(response: Response, current_user: UserInDB = Depends(get_cu
     )
     clear_auth_cookie(response)
     return {"message": "Signed out on every device"}
+
+
+# ---- Legal texts, consent and account deletion (docs/KE_HOACH_BAO_VE_MA_NGUON.md, section 5) -----------------------
+@router.get("/legal")
+async def legal_documents(lang: str = "vi"):
+    """The terms and licence, privacy policy, upload commitment and training-data text, in English or Vietnamese (public)."""
+    from src.services.legal import documents
+    return documents(lang)
+
+
+@router.post("/consents", response_model=UserProfile)
+async def submit_consents(body: ConsentSubmit, current_user: UserInDB = Depends(get_current_user)):
+    """Accept the current versions of the required documents. A workspace admin also chooses whether its code may be
+    used for training; for other members that is their admin's decision, so their answer is ignored."""
+    from src.services.legal import DOCUMENTS
+    from src.services.access import can
+    from src.services import audit
+    from src.infrastructure.database import get_collection
+    required = [k for k, (_, _, req) in DOCUMENTS.items() if req]
+    refused = [k for k in required if not getattr(body, k)]
+    if refused:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail={"code": "consent_refused", "missing": refused})
+    now = ensure_utc_for_db(now_vietnam())
+    accepted = {k: DOCUMENTS[k][1] for k in required}
+    rows = [{"user_id": current_user.id, "document": k, "version": v, "accepted": True, "at": now} for k, v in accepted.items()]
+    if body.training_data is not None and current_user.organization_id and can(current_user, "manage_organization"):
+        rows.append({"user_id": current_user.id, "document": "training_data", "version": DOCUMENTS["training_data"][1],
+                     "accepted": bool(body.training_data), "organization_id": current_user.organization_id, "at": now})
+        from src.api.v1.organization_router import apply_policy
+        await apply_policy(current_user, {"training_data": bool(body.training_data)})
+    await (await get_collection("consents")).insert_many(rows)
+    await (await get_users_collection()).update_one({"_id": ObjectId(current_user.id)},
+                                                    {"$set": {f"consents.{k}": v for k, v in accepted.items()}})
+    await audit.record(current_user, "consent", current_user.organization_id, detail={r["document"]: r["accepted"] for r in rows})
+    current_user.consents = {**current_user.consents, **accepted}
+    if body.training_data is not None and current_user.organization:
+        current_user.organization = {**current_user.organization,
+                                     "policy": {**(current_user.organization.get("policy") or {}), "training_data": bool(body.training_data)}}
+    return profile_of(current_user)
+
+
+def pseudonym(user: UserInDB) -> str:
+    import hashlib
+    return "deleted-user-" + hashlib.sha256(user.id.encode()).hexdigest()[:8]
+
+
+@router.delete("/account")
+async def delete_account(body: AccountDelete, response: Response, current_user: UserInDB = Depends(get_current_user)):
+    """Delete this account. Alone in a workspace: the workspace with all its projects, scans and code goes too. In a
+    shared workspace the scans stay with the organisation that owns them. The name on expert verdicts becomes a pseudonym."""
+    from src.services import audit, data_lifecycle
+    from src.services.access import is_personal, role_of
+    from src.services.label_log import scrub
+    from src.infrastructure.database import (get_collection, get_analysis_sessions_collection, get_projects_collection,
+                                             get_label_events_collection)
+    if not verify_password(body.password, current_user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password is incorrect")
+    users = await get_users_collection()
+    org_id = current_user.organization_id
+    others = await users.count_documents({"organization_id": org_id, "_id": {"$ne": ObjectId(current_user.id)}}) if org_id else 0
+    if org_id and others and role_of(current_user) == "admin" and not await users.count_documents(
+            {"organization_id": org_id, "role": "admin", "is_active": True, "_id": {"$ne": ObjectId(current_user.id)}}):
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Make another member an admin before deleting the last admin account")
+    name, removed = pseudonym(current_user), {}
+    if org_id and not others:  # alone: the workspace and everything in it
+        sessions, projects = await get_analysis_sessions_collection(), await get_projects_collection()
+        n = 0
+        async for p in projects.find({"organization_id": org_id}):
+            n += (await data_lifecycle.delete_project(p, name))["sessions"]
+        async for s in sessions.find({"organization_id": org_id}):
+            await data_lifecycle.delete_session(s, name, reason="account_deleted")
+            n += 1
+        await (await get_collection("organizations")).delete_one({"_id": ObjectId(org_id)})
+        removed["sessions"] = n
+    elif not org_id:  # a ScanGuard reviewer: their own uploads
+        sessions = await get_analysis_sessions_collection()
+        async for s in sessions.find({"user_id": current_user.id}):
+            await data_lifecycle.delete_session(s, name, reason="account_deleted")
+    u = current_user.username
+    removed["label_events_pseudonymised"] = await scrub(await get_label_events_collection(), {"reviewer": u}, {"reviewer": name})
+    sessions = await get_analysis_sessions_collection()
+    await sessions.update_many({"reviews.reviewer": u}, {"$set": {"reviews.$[r].reviewer": name}}, array_filters=[{"r.reviewer": u}])
+    for field, value in (("checked_by", u), ("checked_by", f"{u} (repair agent)"), ("decided_by", u)):
+        await sessions.update_many({f"fixes.{field}": value}, {"$set": {f"fixes.$[f].{field}": value.replace(u, name, 1)}},
+                                   array_filters=[{f"f.{field}": value}])
+    await users.delete_one({"_id": ObjectId(current_user.id)})
+    if org_id and others:
+        await audit.record(name, "delete_account", org_id, detail=removed)
+    await data_lifecycle.log_deletion(org_id if others else None, "account", name, name, "manual", removed)
+    clear_auth_cookie(response)
+    return {"message": "Account deleted", "removed": removed}
